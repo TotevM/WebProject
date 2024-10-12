@@ -1,4 +1,4 @@
-﻿namespace FitnessApp.Web.FitnessApp.Data.Models.Enumerations
+﻿namespace FitnessApp.Data.Models.Enumerations
 {
     public enum Goal
     {

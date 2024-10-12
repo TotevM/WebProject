@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace FitnessApp.Web.Data.Migrations
+namespace WebApplication1.Data.Migrations
 {
     public partial class CreateIdentitySchema : Migration
     {

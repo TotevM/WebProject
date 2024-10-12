@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitnessApp.Web", "FitnessApp.Web.csproj", "{379B2997-3929-4290-9801-9AD1C96E458D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitnessApp.Web", "FitnessApp.Web.csproj", "{379B2997-3929-4290-9801-9AD1C96E458D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitnessApp.Data", "..\FitnessApp.Data\FitnessApp.Data.csproj", "{3DC7AF21-F196-4944-B93B-1A880FE015A5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitnessApp.Common", "..\FitnessApp.Common\FitnessApp.Common.csproj", "{F7CC5FCD-6B98-43F1-8760-0A4757DA11F1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{379B2997-3929-4290-9801-9AD1C96E458D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{379B2997-3929-4290-9801-9AD1C96E458D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{379B2997-3929-4290-9801-9AD1C96E458D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3DC7AF21-F196-4944-B93B-1A880FE015A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DC7AF21-F196-4944-B93B-1A880FE015A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DC7AF21-F196-4944-B93B-1A880FE015A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DC7AF21-F196-4944-B93B-1A880FE015A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7CC5FCD-6B98-43F1-8760-0A4757DA11F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7CC5FCD-6B98-43F1-8760-0A4757DA11F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7CC5FCD-6B98-43F1-8760-0A4757DA11F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7CC5FCD-6B98-43F1-8760-0A4757DA11F1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
