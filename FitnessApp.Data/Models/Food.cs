@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using static FitnessApp.Web.Common.EntityValidationConstants.FoodValidation;
+using static FitnessApp.Common.EntityValidationConstants.FoodValidation;
 
 namespace FitnessApp.Data.Models
 {

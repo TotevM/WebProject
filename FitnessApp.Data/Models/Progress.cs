@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using static FitnessApp.Web.Common.EntityValidationConstants.ProgressValidation;
+using static FitnessApp.Common.EntityValidationConstants.ProgressValidation;
 
 namespace FitnessApp.Data.Models
 {
@@ -13,5 +13,8 @@ namespace FitnessApp.Data.Models
         public required decimal Weight { get; set; }
         [Range(HeightMin, HeightMax)]
         public required int Height { get; set; }
+
+        public required string UserID { get; set; }
+        public virtual ApplicationUser User { get; set; }
     }
 }

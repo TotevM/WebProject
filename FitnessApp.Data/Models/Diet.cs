@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using static FitnessApp.Web.Common.EntityValidationConstants.DietValidation;
+using static FitnessApp.Common.EntityValidationConstants.DietValidation;
 
 namespace FitnessApp.Data.Models
 {
@@ -15,6 +15,9 @@ namespace FitnessApp.Data.Models
         [MinLength(DescriptionMinLength)]
         [MaxLength(DescriptionMaxLength)]
         public required string Description { get; set; } = null!;
+
+        public required string UserID { get; set; }
+        public virtual ApplicationUser User { get; set; }
 
         public virtual ICollection<DietFood> DietsFoods { get; set; } = new HashSet<DietFood>();
 

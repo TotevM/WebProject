@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using FitnessApp.Data.Models.Enumerations;
 using FitnessApp;
-using static FitnessApp.Web.Common.EntityValidationConstants.ExerciseValidation;
+using static FitnessApp.Common.EntityValidationConstants.ExerciseValidation;
 
 namespace FitnessApp.Data.Models
 {

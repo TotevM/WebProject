@@ -1,4 +1,4 @@
-﻿namespace FitnessApp.Web.Common
+﻿namespace FitnessApp.Common
 {
     public static class EntityValidationConstants
     {
@@ -50,9 +50,9 @@
         {
             public const int RecipeNameMinLength = 3;
             public const int RecipeNameMaxLength = 32;
-            
+
             public const int IngredientsNameMinLength = 3;
-            public const int IngredientsNameMaxLength = 512; 
+            public const int IngredientsNameMaxLength = 512;
 
             public const int PreparationNameMinLength = 16;
             public const int PreparationNameMaxLength = 1024;

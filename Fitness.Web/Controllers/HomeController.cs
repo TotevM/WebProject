@@ -1,16 +1,20 @@
 using System.Diagnostics;
+using FitnessApp.Data.Models;
 using FitnessApp.Web.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FitnessApp.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<HomeController> logger;
+        private readonly UserManager<ApplicationUser> user;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> _logger, UserManager<ApplicationUser> _user)
         {
-            _logger = logger;
+            logger = _logger;
+            user = _user;
         }
 
         public IActionResult Index()

@@ -6,10 +6,10 @@ namespace FitnessApp.Data.Models
     {
         public required Guid WorkoutId { get; set; }
         [ForeignKey(nameof(WorkoutId))]
-        public virtual Workout Workout { get; set; }
+        public virtual Workout Workout { get; set; } = null!;
 
         public required Guid ExerciseId { get; set; }
         [ForeignKey(nameof(ExerciseId))]
-        public virtual Exercise Exercise { get; set; }
+        public virtual Exercise Exercise { get; set; } = null!;
     }
 }

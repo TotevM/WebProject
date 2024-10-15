@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using static FitnessApp.Web.Common.EntityValidationConstants.RecipeValidation;
+using System.ComponentModel.DataAnnotations.Schema;
+using static FitnessApp.Common.EntityValidationConstants.RecipeValidation;
 
 namespace FitnessApp.Data.Models
 {
@@ -19,7 +20,9 @@ namespace FitnessApp.Data.Models
         [MinLength(PreparationNameMinLength)]
         [MaxLength(PreparationNameMaxLength)]
         public required string Preparation { get; set; }
+        public required string UserID { get; set; }
 
-        public required int GoalId { get; set; }
+        [ForeignKey(nameof(UserID))]
+        public virtual ApplicationUser User { get; set; }
     }
 }
