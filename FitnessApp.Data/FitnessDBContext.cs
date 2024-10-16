@@ -1,4 +1,5 @@
-﻿using FitnessApp.Data.Models;
+﻿using FitnessApp.Data.EntityConfiguration;
+using FitnessApp.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -22,17 +23,15 @@ namespace FitnessApp.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            builder.Entity<Progress>()
-                .Property(p => p.Weight)
-                .HasPrecision(18, 2);
 
-            builder.Entity<Workout>()
-                .Property(p => p.Price)
-                .HasPrecision(18, 2);
-
-
-            builder.Entity<DietFood>().HasKey(df => new { df.DietId, df.FoodId });
-            builder.Entity<WorkoutExercise>().HasKey(we => new { we.WorkoutId, we.ExerciseId });
+            builder.ApplyConfiguration(new DietConfiguration());
+            builder.ApplyConfiguration(new DietFoodConfiguration());
+            builder.ApplyConfiguration(new ExerciseConfiguration());
+            builder.ApplyConfiguration(new FoodConfiguration());
+            builder.ApplyConfiguration(new ProgressConfiguration());
+            builder.ApplyConfiguration(new RecipeConfiguration());
+            builder.ApplyConfiguration(new WorkoutConfiguration());
+            builder.ApplyConfiguration(new WorkoutExerciseConfiguration());
         }
         public DbSet<Workout> Workouts { get; set; } = null!;
         public DbSet<Diet> Diets { get; set; } = null!;

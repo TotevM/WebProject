@@ -1,11 +1,13 @@
 using System.Diagnostics;
 using FitnessApp.Data.Models;
 using FitnessApp.Web.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FitnessApp.Web.Controllers
 {
+    
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> logger;
