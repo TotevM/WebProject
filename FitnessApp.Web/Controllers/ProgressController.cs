@@ -19,6 +19,5 @@ namespace FitnessApp.Web.Controllers
 		{
 			return View();
 		}
-
 	}
 }

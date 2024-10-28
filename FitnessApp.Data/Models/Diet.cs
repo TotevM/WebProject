@@ -16,7 +16,7 @@ namespace FitnessApp.Data.Models
         [MaxLength(DescriptionMaxLength)]
         public required string Description { get; set; } = null!;
 
-        public required string UserID { get; set; }
+        public string UserID { get; set; }
         public virtual ApplicationUser User { get; set; }
 
         public virtual ICollection<DietFood> DietsFoods { get; set; } = new HashSet<DietFood>();

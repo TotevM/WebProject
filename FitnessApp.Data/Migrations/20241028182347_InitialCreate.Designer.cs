@@ -12,15 +12,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FitnessApp.Data.Migrations
 {
     [DbContext(typeof(FitnessDBContext))]
-    [Migration("20241015190410_AddedDietsAndFoods")]
-    partial class AddedDietsAndFoods
+    [Migration("20241028182347_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.0")
+                .HasAnnotation("ProductVersion", "8.0.10")
                 .HasAnnotation("Proxies:ChangeTracking", false)
                 .HasAnnotation("Proxies:CheckEquality", false)
                 .HasAnnotation("Proxies:LazyLoading", true)
@@ -209,8 +209,8 @@ namespace FitnessApp.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<decimal>("Weight")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(5, 2)
+                        .HasColumnType("decimal(5,2)");
 
                     b.HasKey("Id");
 
@@ -266,7 +266,6 @@ namespace FitnessApp.Data.Migrations
                         .HasColumnType("nvarchar(32)");
 
                     b.Property<decimal>("Price")
-                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("UserID")
