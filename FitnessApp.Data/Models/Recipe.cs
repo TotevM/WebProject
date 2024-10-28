@@ -20,7 +20,9 @@ namespace FitnessApp.Data.Models
         [MinLength(PreparationNameMinLength)]
         [MaxLength(PreparationNameMaxLength)]
         public required string Preparation { get; set; }
-        public required string UserID { get; set; }
+
+        public string? ImageUrl { get; set; } = null!;
+        public string? UserID { get; set; }
 
         [ForeignKey(nameof(UserID))]
         public virtual ApplicationUser User { get; set; }

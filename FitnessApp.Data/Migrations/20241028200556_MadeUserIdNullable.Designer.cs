@@ -4,6 +4,7 @@ using FitnessApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FitnessApp.Data.Migrations
 {
     [DbContext(typeof(FitnessDBContext))]
-    partial class FitnessDBContextModelSnapshot : ModelSnapshot
+    [Migration("20241028200556_MadeUserIdNullable")]
+    partial class MadeUserIdNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -222,9 +225,6 @@ namespace FitnessApp.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("ImageUrl")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Ingredients")
                         .IsRequired()
                         .HasMaxLength(512)
@@ -248,23 +248,6 @@ namespace FitnessApp.Data.Migrations
                     b.HasIndex("UserID");
 
                     b.ToTable("Recipes");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("0320bda7-0349-406a-86d0-61b170390d63"),
-                            Ingredients = "Eggs, salt",
-                            Name = "Scrambled eggs",
-                            Preparation = "Cook the eggs and put salt on them"
-                        },
-                        new
-                        {
-                            Id = new Guid("df00043f-dfe1-486e-a2e5-288d167b7a8d"),
-                            ImageUrl = "https://sire-media-foxbg.fichub.com/24k_bg/custompage-main/302854.1024x576.jpg",
-                            Ingredients = "Eggs, salt",
-                            Name = "Eye eggs",
-                            Preparation = "Cook the eggs and put salt on them"
-                        });
                 });
 
             modelBuilder.Entity("FitnessApp.Data.Models.Workout", b =>

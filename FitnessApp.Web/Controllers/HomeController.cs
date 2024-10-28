@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using FitnessApp.Data;
 using FitnessApp.Data.Models;
 using FitnessApp.Web.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -12,11 +13,13 @@ namespace FitnessApp.Web.Controllers
     {
         private readonly ILogger<HomeController> logger;
         private readonly UserManager<ApplicationUser> user;
+        private readonly FitnessDBContext context;
 
-        public HomeController(ILogger<HomeController> _logger, UserManager<ApplicationUser> _user)
+        public HomeController(ILogger<HomeController> _logger, UserManager<ApplicationUser> _user, FitnessDBContext _context)
         {
             logger = _logger;
             user = _user;
+            context = _context;
         }
 
         public IActionResult Index()
