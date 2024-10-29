@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using FitnessApp.Data.Models.Enumerations;
 using static FitnessApp.Common.EntityValidationConstants.RecipeValidation;
 
 namespace FitnessApp.Data.Models
@@ -22,7 +23,10 @@ namespace FitnessApp.Data.Models
         public required string Preparation { get; set; }
 
         public string? ImageUrl { get; set; } = null!;
+        public required Goal Goal { get; set; }
         public string? UserID { get; set; }
+
+        
 
         [ForeignKey(nameof(UserID))]
         public virtual ApplicationUser User { get; set; }

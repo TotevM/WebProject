@@ -47,9 +47,6 @@ namespace FitnessApp.Data.Migrations
                     b.Property<int>("Gender")
                         .HasColumnType("int");
 
-                    b.Property<int>("Goal")
-                        .HasColumnType("int");
-
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
@@ -222,6 +219,9 @@ namespace FitnessApp.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("Goal")
+                        .HasColumnType("int");
+
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
@@ -252,14 +252,16 @@ namespace FitnessApp.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("0320bda7-0349-406a-86d0-61b170390d63"),
+                            Id = new Guid("4225bcb7-962d-4725-966a-f1932a887814"),
+                            Goal = 1,
                             Ingredients = "Eggs, salt",
                             Name = "Scrambled eggs",
                             Preparation = "Cook the eggs and put salt on them"
                         },
                         new
                         {
-                            Id = new Guid("df00043f-dfe1-486e-a2e5-288d167b7a8d"),
+                            Id = new Guid("74b1e36c-56ce-40e3-bf79-4c8c523dea36"),
+                            Goal = 0,
                             ImageUrl = "https://sire-media-foxbg.fichub.com/24k_bg/custompage-main/302854.1024x576.jpg",
                             Ingredients = "Eggs, salt",
                             Name = "Eye eggs",

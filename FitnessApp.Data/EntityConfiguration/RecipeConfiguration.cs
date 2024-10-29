@@ -1,4 +1,5 @@
 ﻿using FitnessApp.Data.Models;
+using FitnessApp.Data.Models.Enumerations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -28,6 +29,7 @@ namespace FitnessApp.Data.EntityConfiguration
 				Name = "Scrambled eggs",
 				Ingredients = "Eggs, salt",
 				Preparation = "Cook the eggs and put salt on them",
+				Goal = Goal.FatLoss,
 				UserID = null
 			}, new Recipe
 			{
@@ -36,6 +38,7 @@ namespace FitnessApp.Data.EntityConfiguration
 				Ingredients = "Eggs, salt",
 				Preparation = "Cook the eggs and put salt on them",
                 ImageUrl= "https://sire-media-foxbg.fichub.com/24k_bg/custompage-main/302854.1024x576.jpg",
+                Goal = Goal.MassGain,
                 UserID = null
 			});
 		}

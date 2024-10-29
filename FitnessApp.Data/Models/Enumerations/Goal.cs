@@ -2,9 +2,8 @@
 {
     public enum Goal
     {
-        MuscleGain,
+        MassGain,
         FatLoss,
-        Maintenance,
-        StrengthBuilding
+        Health
     }
 }

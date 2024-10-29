@@ -9,9 +9,8 @@ namespace FitnessApp.Data.Models
     {
         //[MinLength(UsernameMinLength)]
         //[MaxLength(UsernameMaxLength)]
-        //public string? Usernames { get; set; }
+        //public override string? UserName { get; set; }
         public required Gender Gender { get; set; }
-        public required Goal Goal { get; set; }
 
         //public virtual ICollection<UserWorkout> UsersWorkouts { get; set; } = new HashSet<UserWorkout>();
         //public virtual ICollection<UserDiet> UsersDiets { get; set; } = new HashSet<UserDiet>();
