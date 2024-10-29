@@ -33,24 +33,22 @@
 							<li class="nav-item">
 								<a class="nav-link text-dark" asp-area="" asp-controller="Diet" asp-action="Index">Diets</a>
 							</li>
-							<li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Recipe" asp-action="Index">Recipes</a>
-							</li>
+							<div>
+								<li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Recipes</a>
+									<div class="dropdown-menu">
+										<a class="dropdown-item" asp-controller="Recipe" asp-action="Index">All Recipes</a>
+										<div class="dropdown-divider"></div>
+										<a class="dropdown-item" asp-controller="Recipe" asp-action="Index" asp-route-goal="FatLoss">Weight Loss</a>
+										<div class="dropdown-divider"></div>
+										<a class="dropdown-item" asp-controller="Recipe" asp-action="Index" asp-route-goal="MassGain">Mass Gain</a>
+										<div class="dropdown-divider"></div>
+										<a class="dropdown-item" asp-controller="Recipe" asp-action="Index" asp-route-goal="Health">Healthy</a>
+									</div>
+								</li>
+							</div>
                         }
-						<div>
-							<li class="nav-item dropdown">
-								<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Recipes</a>
-								<div class="dropdown-menu">
-									<a class="dropdown-item" asp-controller="Recipe" asp-action="Index">All Recipes</a>
-									<div class="dropdown-divider"></div>
-									<a class="dropdown-item" asp-controller="Recipe" asp-action="Index" asp-route-goal="FatLoss">Weight Loss</a>
-									<div class="dropdown-divider"></div>
-									<a class="dropdown-item" asp-controller="Recipe" asp-action="Index" asp-route-goal="MassGain">Mass Gain</a>
-									<div class="dropdown-divider"></div>
-									<a class="dropdown-item" asp-controller="Recipe" asp-action="Index" asp-route-goal="Health">Healthy</a>
-								</div>
-							</li>
-						</div>
+
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>

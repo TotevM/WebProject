@@ -16,9 +16,6 @@ namespace FitnessApp.Data.EntityConfiguration
 			builder.Property(w => w.Price)
 				   .IsRequired();
 
-			builder.Property(w => w.MuscleGroup)
-				   .IsRequired()
-				   .HasConversion<int>();
 
 			builder.Property(w => w.UserID)
 				   .IsRequired();

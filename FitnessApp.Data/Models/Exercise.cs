@@ -13,6 +13,7 @@ namespace FitnessApp.Data.Models
         [MaxLength(ExerciseNameMaxLength)]
         public required string Name { get; set; }
         public required Difficulty Difficulty { get; set; }
+        public required MuscleGroup MuscleGroup { get; set; }
         public virtual ICollection<WorkoutExercise> WorkoutsExercises { get; set; } = new HashSet<WorkoutExercise>();
     }
 }
