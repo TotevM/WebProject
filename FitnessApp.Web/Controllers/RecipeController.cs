@@ -1,5 +1,6 @@
 ﻿using FitnessApp.Data;
 using FitnessApp.Data.Models;
+using FitnessApp.Data.Models.Enumerations;
 using FitnessApp.Web.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -20,9 +21,16 @@ namespace FitnessApp.Web.Controllers
             context = _context;
         }
 
-		public IActionResult Index()
+        public IActionResult Index(Goal? goal = null)
         {
-            var model = context.Recipes. /*Where(r=>r.UserID==null)*/Select(r => new RecipesIndexView
+            var recipesQuery = context.Recipes.AsQueryable();
+
+            if (goal.HasValue)
+            {
+                recipesQuery = recipesQuery.Where(r => r.Goal == goal.Value);
+            }
+
+            var model = recipesQuery.Select(r => new RecipesIndexView
             {
                 ImageUrl = r.ImageUrl,
                 Name = r.Name,
@@ -30,7 +38,7 @@ namespace FitnessApp.Web.Controllers
             }).ToList();
 
             return View(model);
-		}
+        }
 
         public IActionResult Add()
         {
