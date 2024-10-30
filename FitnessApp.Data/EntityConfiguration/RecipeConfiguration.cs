@@ -24,15 +24,20 @@ namespace FitnessApp.Data.EntityConfiguration
 			builder.Property(r => r.UserID)
 				   .IsRequired(false);
 
-            string path = Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "FitnessApp.Data", "Datasets", "recipes.json");
-            string data = File.ReadAllText(path);
-            var recipes = JsonSerializer.Deserialize<List<Recipe>>(data);
+            builder.HasMany(d => d.DietsRecipes)
+                .WithOne(df => df.Recipe)
+                .HasForeignKey(df => df.RecipeId)
+                .OnDelete(DeleteBehavior.Cascade);
 
-            if (recipes != null)
-            {
-                builder
-                    .HasData(recipes);
-            }
+            //string path = Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "FitnessApp.Data", "Datasets", "recipes.json");
+            //string data = File.ReadAllText(path);
+            //var recipes = JsonSerializer.Deserialize<List<Recipe>>(data);
+
+            //if (recipes != null)
+            //{
+            //    builder
+            //        .HasData(recipes);
+            //}
 		}
 	}
 }

@@ -3,12 +3,12 @@ using FitnessApp.Data.Models;
 
 namespace FitnessApp.Data.Models
 {
-    public class DietFood
+    public class DietRecipe
     {
         public required Guid DietId { get; set; }
         [ForeignKey(nameof(DietId))] public virtual Diet Diet { get; set; } = null!;
-        public required int FoodId { get; set; }
-        [ForeignKey(nameof(FoodId))]
-        public virtual Food Food { get; set; } = null!;
+        public required Guid RecipeId { get; set; }
+        [ForeignKey(nameof(RecipeId))]
+        public virtual Recipe Recipe { get; set; } = null!;
     }
 }

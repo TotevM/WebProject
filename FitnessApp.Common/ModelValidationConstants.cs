@@ -2,14 +2,14 @@
 {
     public static class EntityValidationConstants
     {
-        public static class UserValidation
-        {
-            public const int UsernameMinLength = 3;
-            public const int UsernameMaxLength = 32;
+        //public static class UserValidation
+        //{
+        //    public const int UsernameMinLength = 3;
+        //    public const int UsernameMaxLength = 32;
 
-            public const int PasswordMinLength = 6;
-            public const int PasswordMaxLength = 32;
-        }
+        //    public const int PasswordMinLength = 6;
+        //    public const int PasswordMaxLength = 32;
+        //}
 
         public static class DietValidation
         {
@@ -24,17 +24,6 @@
         {
             public const int ExerciseNameMinLength = 3;
             public const int ExerciseNameMaxLength = 32;
-        }
-
-        public static class FoodValidation
-        {
-            public const int FoodNameMinLength = 3;
-            public const int FoodNameMaxLength = 32;
-
-            public const int CalsMax = 1_000;
-            public const int ProteinMax = 100;
-            public const int CarbsMax = 100;
-            public const int FatsMax = 100;
         }
 
         public static class ProgressValidation
@@ -56,6 +45,11 @@
 
             public const int PreparationNameMinLength = 16;
             public const int PreparationNameMaxLength = 1024;
+
+            public const int CalsMax = 5000;
+            public const int ProteinMax = 500;
+            public const int CarbsMax = 500;
+            public const int FatsMax = 500;
         }
 
         public static class WorkoutValidation

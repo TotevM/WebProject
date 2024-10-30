@@ -11,8 +11,6 @@ namespace FitnessApp.Data
         public FitnessDBContext(DbContextOptions<FitnessDBContext> options)
             : base(options)
         {
-            //Database.EnsureDeleted();
-            //Database.EnsureCreated();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -25,9 +23,8 @@ namespace FitnessApp.Data
             base.OnModelCreating(builder);
 
             builder.ApplyConfiguration(new DietConfiguration());
-            builder.ApplyConfiguration(new DietFoodConfiguration());
+            builder.ApplyConfiguration(new DietRecipeConfiguration());
             builder.ApplyConfiguration(new ExerciseConfiguration());
-            builder.ApplyConfiguration(new FoodConfiguration());
             builder.ApplyConfiguration(new ProgressConfiguration());
             builder.ApplyConfiguration(new RecipeConfiguration());
             builder.ApplyConfiguration(new WorkoutConfiguration());
@@ -35,9 +32,8 @@ namespace FitnessApp.Data
         }
         public DbSet<Workout> Workouts { get; set; } = null!;
         public DbSet<Diet> Diets { get; set; } = null!;
-        public DbSet<DietFood> DietsFoods { get; set; } = null!;
+        public DbSet<DietRecipe> DietsRecipes { get; set; } = null!;
         public DbSet<Exercise> Exercises { get; set; } = null!;
-        public DbSet<Food> Foods { get; set; } = null!;
         public DbSet<Progress> Progresses { get; set; } = null!;
         public DbSet<Recipe> Recipes { get; set; } = null!;
         public DbSet<WorkoutExercise> WorkoutsExercises { get; set; } = null!;

@@ -20,7 +20,7 @@ namespace FitnessApp.Data.EntityConfiguration
 			builder.Property(d => d.UserID)
 				.IsRequired();
 
-			builder.HasMany(d => d.DietsFoods)
+			builder.HasMany(d => d.DietsRecipes)
 				.WithOne(df => df.Diet)
 				.HasForeignKey(df => df.DietId)
 				.OnDelete(DeleteBehavior.Cascade);
