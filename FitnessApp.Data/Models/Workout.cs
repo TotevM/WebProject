@@ -12,8 +12,8 @@ namespace FitnessApp.Data.Models
         [MinLength(WorkoutNameMinLength)]
         [MaxLength(WorkoutNameMaxLength)]
         public required string Name { get; set; }
-        [Range(typeof(decimal), WorkoutMinPrice, WorkoutMaxPrice)]
-        public required decimal Price { get; set; }
+
+        public DateTime CreatedOn { get; set; }
         public string UserID { get; set; }
         public virtual ApplicationUser User { get; set; }
         public virtual ICollection<WorkoutExercise> WorkoutsExercises { get; set; } = new HashSet<WorkoutExercise>();

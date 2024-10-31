@@ -13,10 +13,6 @@ namespace FitnessApp.Data.EntityConfiguration
 			builder.Property(w => w.Name)
 				   .IsRequired();
 
-			builder.Property(w => w.Price)
-				   .IsRequired();
-
-
 			builder.Property(w => w.UserID)
 				   .IsRequired();
 
