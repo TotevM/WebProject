@@ -19,6 +19,8 @@ namespace FitnessApp.Data.Models
         public string UserID { get; set; }
         public virtual ApplicationUser User { get; set; }
 
+        public DateTime CreatedOn { get; set; }
+
         public virtual ICollection<DietRecipe> DietsRecipes { get; set; } = new HashSet<DietRecipe>();
 
     }

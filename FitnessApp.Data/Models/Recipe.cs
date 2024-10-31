@@ -25,6 +25,8 @@ namespace FitnessApp.Data.Models
         public string? ImageUrl { get; set; } = null!;
         public required Goal Goal { get; set; }
 
+        public DateTime CreatedOn { get; set; }
+
         [Range(0, CalsMax)]
         public required int Calories { get; set; }
         [Range(0, ProteinMax)]
@@ -37,6 +39,7 @@ namespace FitnessApp.Data.Models
 
         [ForeignKey(nameof(UserID))]
         public virtual ApplicationUser User { get; set; }
+        public bool IsDeleted { get; set; } = false;
         public virtual ICollection<DietRecipe> DietsRecipes { get; set; } = new HashSet<DietRecipe>();
     }
 }

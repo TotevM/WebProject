@@ -23,7 +23,11 @@ namespace FitnessApp.Web.Controllers
 
         public IActionResult Index(Goal? goal = null)
         {
-            var recipesQuery = context.Recipes.AsQueryable();
+            var recipesQuery = context.Recipes
+                .Where(d=>!d.IsDeleted)
+                .OrderByDescending(r=>r.CreatedOn)
+                .ThenBy(d=>d.Name)
+                .AsQueryable();
 
             if (goal.HasValue)
             {

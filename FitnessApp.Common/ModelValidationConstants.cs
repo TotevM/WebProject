@@ -38,7 +38,7 @@
         public static class RecipeValidation
         {
             public const int RecipeNameMinLength = 3;
-            public const int RecipeNameMaxLength = 32;
+            public const int RecipeNameMaxLength = 64;
 
             public const int IngredientsNameMinLength = 3;
             public const int IngredientsNameMaxLength = 512;
@@ -50,6 +50,8 @@
             public const int ProteinMax = 500;
             public const int CarbsMax = 500;
             public const int FatsMax = 500;
+
+            public const string DateFormat = "dd/mm/YYYY";
         }
 
         public static class WorkoutValidation

@@ -27,17 +27,17 @@ namespace FitnessApp.Data.EntityConfiguration
             builder.HasMany(d => d.DietsRecipes)
                 .WithOne(df => df.Recipe)
                 .HasForeignKey(df => df.RecipeId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
-            //string path = Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "FitnessApp.Data", "Datasets", "recipes.json");
-            //string data = File.ReadAllText(path);
-            //var recipes = JsonSerializer.Deserialize<List<Recipe>>(data);
+			string path = Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "FitnessApp.Data", "Datasets", "recipes.json");
+			string data = File.ReadAllText(path);
+			var recipes = JsonSerializer.Deserialize<List<Recipe>>(data);
 
-            //if (recipes != null)
-            //{
-            //    builder
-            //        .HasData(recipes);
-            //}
+			if (recipes != null)
+			{
+				builder
+					.HasData(recipes);
+			}
 		}
 	}
 }
