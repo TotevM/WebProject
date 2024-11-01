@@ -54,7 +54,7 @@ namespace FitnessApp.Web.Controllers
                 .ToList();
 
 
-            AddRecipeView model = new AddRecipeView()
+            var model = new AddRecipeView()
             {
                 Goals = goals,
             };
@@ -82,7 +82,7 @@ namespace FitnessApp.Web.Controllers
                 throw new InvalidOperationException("Invalid data!");
             }
 
-            Recipe recipe = new Recipe()
+            var recipe = new Recipe()
             {
                 Id = Guid.NewGuid(),
                 Name = model.RecipeName,
@@ -92,10 +92,10 @@ namespace FitnessApp.Web.Controllers
                 ImageUrl = model.ImageUrl,
                 UserID = User.FindFirstValue(ClaimTypes.NameIdentifier)!,
                 Goal = goal,
-                Calories = model.Calories,
-                Protein = model.Protein,
-                Carbs = model.Carbs,
-                Fats = model.Fats
+                Calories = (int)model.Calories!,
+                Protein = (int)model.Protein!,
+                Carbohydrates = (int)model.Carbohydrates!,
+                Fats = (int)model.Fats!
             };
 
             await context.Recipes.AddAsync(recipe);

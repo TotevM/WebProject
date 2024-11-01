@@ -3,7 +3,7 @@
     public enum Goal
     {
         MassGain,
-        FatLoss,
+        WeightLoss,
         Health
     }
 }

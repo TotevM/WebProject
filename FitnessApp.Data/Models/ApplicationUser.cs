@@ -9,5 +9,6 @@ namespace FitnessApp.Data.Models
         //[MaxLength(UsernameMaxLength)]
         //public override string? UserName { get; set; }
         public required Gender Gender { get; set; }
+        public bool IsDeleted { get; set; } = false;
     }
 }

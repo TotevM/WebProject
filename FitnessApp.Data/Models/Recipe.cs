@@ -32,7 +32,7 @@ namespace FitnessApp.Data.Models
         [Range(0, ProteinMax)]
         public required int Protein { get; set; }
         [Range(0, CarbsMax)]
-        public required int Carbs { get; set; }
+        public required int Carbohydrates { get; set; }
         [Range(0, FatsMax)]
         public required int Fats { get; set; }
         public string? UserID { get; set; }
