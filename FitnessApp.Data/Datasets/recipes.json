@@ -4,13 +4,13 @@
         "Name": "Protein Pancakes",
         "Ingredients": "Oats, banana, protein powder, eggs",
         "Preparation": "In a blender, combine the oats, banana, protein powder, and eggs. Blend until the mixture is smooth and free of lumps. Heat a non-stick pan over medium heat and lightly coat it with cooking spray. Pour a small amount of the batter onto the pan and cook for 2-3 minutes until bubbles appear on the surface. Flip the pancake and cook for an additional 2 minutes on the other side. Serve warm, topped with fresh berries or a drizzle of honey for added flavor.",
-        "Goal": 0,
+        "Goal": 2,
         "UserID": null,
         "ImageUrl": "https://www.whollytasteful.com/wp-content/uploads/2022/09/protein-pancakes-with-oats-featured.jpg",
         "CreatedOn": "2024-01-15",
         "Calories": 350,
         "Fats": 8,
-        "Carbs": 45,
+        "Carbohydrates": 45,
         "Protein": 25
     },
     {
@@ -24,7 +24,7 @@
         "CreatedOn": "2024-01-16",
         "Calories": 450,
         "Fats": 10,
-        "Carbs": 55,
+        "Carbohydrates": 55,
         "Protein": 35
     },
     {
@@ -38,7 +38,7 @@
         "CreatedOn": "2024-01-17",
         "Calories": 600,
         "Fats": 20,
-        "Carbs": 75,
+        "Carbohydrates": 75,
         "Protein": 30
     },
     {
@@ -46,13 +46,13 @@
         "Name": "Beef and Sweet Potato Power Bowl",
         "Ingredients": "Ground beef, sweet potato, olive oil, spinach, garlic, salt, pepper",
         "Preparation": "1. Preheat the oven to 400°F (200°C). 2. Peel and cube the sweet potato, then toss with 1 tablespoon of olive oil, salt, and pepper. 3. Spread the cubes on a baking sheet and roast for 20-25 minutes, turning halfway, until tender and golden. 4. While the sweet potato cooks, heat a skillet over medium heat and add 1 tablespoon of olive oil. 5. Add 1 minced garlic clove, cooking until fragrant. Add the ground beef, seasoning with salt and pepper, and cook until browned, breaking it apart as it cooks. 6. Remove the beef from the heat and set aside. 7. In the same pan, lightly sauté a handful of spinach until wilted. 8. In a bowl, layer the roasted sweet potatoes, beef, and spinach, adding more seasoning if desired. Serve warm.",
-        "Goal": 0,
+        "Goal": 1,
         "UserID": null,
         "ImageUrl": "https://dianasdelishdishes.com/wp-content/uploads/2023/06/C42B7659-56C9-42D0-BF0E-0A34B78BE0A5.jpeg",
         "CreatedOn": "2024-02-15",
         "Calories": 650,
         "Fats": 28,
-        "Carbs": 50,
+        "Carbohydrates": 50,
         "Protein": 40
     },
     {
@@ -60,13 +60,13 @@
         "Name": "Chicken Avocado Wrap",
         "Ingredients": "Grilled chicken breast, whole wheat wrap, avocado, tomato, lettuce, Greek yogurt",
         "Preparation": "1. Slice the grilled chicken breast into thin strips. 2. Warm the whole wheat wrap in a dry skillet over medium heat for 1-2 minutes on each side. 3. While the wrap warms, peel and mash 1/2 avocado in a bowl until smooth. 4. Spread a thin layer of Greek yogurt onto the center of the warm wrap. 5. Add the sliced chicken, mashed avocado, tomato slices, and a handful of lettuce. 6. Season with salt and pepper to taste. 7. Fold the bottom of the wrap up, then roll tightly from one side to the other. 8. Cut in half and enjoy immediately.",
-        "Goal": 0,
+        "Goal": 1,
         "UserID": null,
         "ImageUrl": "https://tastesbetterfromscratch.com/wp-content/uploads/2014/03/Chicken-Bacon-Avocado-Wrap-1.jpg",
         "CreatedOn": "2024-01-02",
         "Calories": 480,
         "Fats": 15,
-        "Carbs": 40,
+        "Carbohydrates": 40,
         "Protein": 30
     },
     {
@@ -80,7 +80,7 @@
         "CreatedOn": "2024-01-11",
         "Calories": 300,
         "Fats": 10,
-        "Carbs": 20,
+        "Carbohydrates": 20,
         "Protein": 25
     },
     {
@@ -94,7 +94,7 @@
         "CreatedOn": "2024-01-12",
         "Calories": 150,
         "Fats": 5,
-        "Carbs": 3,
+        "Carbohydrates": 3,
         "Protein": 20
     },
     {
@@ -108,7 +108,7 @@
         "CreatedOn": "2024-01-11",
         "Calories": 500,
         "Fats": 20,
-        "Carbs": 30,
+        "Carbohydrates": 30,
         "Protein": 40
     },
     {
@@ -116,13 +116,13 @@
         "Name": "Greek Yogurt Parfait",
         "Ingredients": "Greek yogurt, berries, honey, granola",
         "Preparation": "In a glass or bowl, start by adding a layer of Greek yogurt at the bottom. Next, add a layer of fresh berries like strawberries, blueberries, or raspberries. Drizzle a teaspoon of honey over the berries to add a touch of sweetness. Add a layer of granola for crunch. Repeat the layers until the glass or bowl is filled, finishing with a few berries and a final drizzle of honey on top. Serve immediately for a refreshing and protein-packed breakfast or snack.",
-        "Goal": 0,
+        "Goal": 2,
         "UserID": null,
         "ImageUrl": "https://images.getrecipekit.com/20230919180123-greek-20yogurt-20parfait.png?aspect_ratio=1:1&quality=90&",
         "CreatedOn": "2024-01-11",
         "Calories": 300,
         "Fats": 8,
-        "Carbs": 45,
+        "Carbohydrates": 45,
         "Protein": 15
     },
     {
@@ -136,7 +136,7 @@
         "CreatedOn": "2024-01-16",
         "Calories": 250,
         "Fats": 4,
-        "Carbs": 30,
+        "Carbohydrates": 30,
         "Protein": 20
     },
     {
@@ -144,13 +144,13 @@
         "Name": "Scrambled Eggs with Veggies",
         "Ingredients": "Eggs, salt, bell pepper, spinach",
         "Preparation": "Crack the eggs into a bowl, add a pinch of salt, and whisk until smooth. Heat a small amount of olive oil in a non-stick skillet over medium heat. Add diced bell pepper and cook for 2-3 minutes until softened. Add the spinach and cook until wilted, about 1 minute. Pour the eggs into the pan and gently stir with a spatula, folding the eggs over themselves until just set. Remove from heat while the eggs are still slightly soft. Serve hot, garnished with fresh herbs if desired.",
-        "Goal": 1,
+        "Goal": 2,
         "UserID": null,
         "ImageUrl": "https://tealnotes.com/wp-content/uploads/2023/05/Featured-Image-46-800x530.png",
         "CreatedOn": "2024-01-02",
         "Calories": 200,
         "Fats": 15,
-        "Carbs": 5,
+        "Carbohydrates": 5,
         "Protein": 12
     },
     {
@@ -164,7 +164,7 @@
         "CreatedOn": "2024-02-17",
         "Calories": 300,
         "Fats": 12,
-        "Carbs": 10,
+        "Carbohydrates": 10,
         "Protein": 28
     },
     {
@@ -178,7 +178,7 @@
         "CreatedOn": "2024-03-11",
         "Calories": 350,
         "Fats": 15,
-        "Carbs": 12,
+        "Carbohydrates": 12,
         "Protein": 35
     },
     {
@@ -186,13 +186,13 @@
         "Name": "Quinoa Bowl",
         "Ingredients": "Quinoa, black beans, corn, avocado, lime",
         "Preparation": "Cook quinoa according to package instructions. In a large bowl, combine cooked quinoa, rinsed black beans, corn, and diced avocado. Squeeze fresh lime juice over the top and toss gently to combine. Season with salt and pepper to taste. For added flavor, you can also add chopped cilantro or diced jalapeño. Serve chilled or at room temperature as a nutritious and filling meal.",
-        "Goal": 1,
+        "Goal": 2,
         "UserID": null,
         "ImageUrl": "https://cdn.loveandlemons.com/wp-content/uploads/2023/05/quinoa-bowl-recipe.jpg",
         "CreatedOn": "2024-01-14",
         "Calories": 450,
         "Fats": 15,
-        "Carbs": 65,
+        "Carbohydrates": 65,
         "Protein": 15
     },
     {
@@ -206,7 +206,7 @@
         "CreatedOn": "2024-01-01",
         "Calories": 200,
         "Fats": 10,
-        "Carbs": 5,
+        "Carbohydrates": 5,
         "Protein": 25
     },
     {
@@ -214,13 +214,13 @@
         "Name": "Stuffed Peppers",
         "Ingredients": "Bell peppers, ground beef, rice, cheese",
         "Preparation": "Preheat the oven to 375°F (190°C). Slice the tops off the bell peppers and remove the seeds. In a skillet, brown the ground beef over medium heat. Mix in cooked rice and season with salt, pepper, and Italian herbs. Stuff the mixture into each bell pepper and place them in a baking dish. Top with shredded cheese and bake for about 25-30 minutes until the peppers are tender and the cheese is bubbly.",
-        "Goal": 0,
+        "Goal": 1,
         "UserID": null,
         "ImageUrl": "https://mojo.generalmills.com/api/public/content/wD6Zdi1fS0OIerKfD62IBA_webp_base.webp?v=baa249d0&t=191ddcab8d1c415fa10fa00a14351227",
         "CreatedOn": "2024-01-01",
         "Calories": 400,
         "Fats": 18,
-        "Carbs": 35,
+        "Carbohydrates": 35,
         "Protein": 25
     },
     {
@@ -228,13 +228,13 @@
         "Name": "Veggie Omelette",
         "Ingredients": "Eggs, bell peppers, cheese, spinach",
         "Preparation": "Whisk the eggs in a bowl and season with salt and pepper. Heat a non-stick skillet over medium heat and add a little oil. Pour in the eggs and let them cook for about 1-2 minutes until the edges start to set. Add diced bell peppers and cheese on one half of the omelette. Carefully fold the other half over the filling and cook for another minute until the cheese melts and the eggs are fully cooked. Serve hot with a side of toast or fresh fruit.",
-        "Goal": 0,
+        "Goal": 2,
         "UserID": null,
         "ImageUrl": "https://heavenlyhomecooking.com/wp-content/uploads/2021/04/Vegetable-Omelette-Recipe-Featured-1.jpg",
         "CreatedOn": "2024-01-01",
         "Calories": 300,
         "Fats": 20,
-        "Carbs": 5,
+        "Carbohydrates": 5,
         "Protein": 18
     },
     {
@@ -242,13 +242,13 @@
         "Name": "Baked Salmon",
         "Ingredients": "Salmon fillet, lemon, herbs, asparagus",
         "Preparation": "Preheat the oven to 400°F (200°C). Place the salmon fillet on a baking sheet lined with parchment paper. Squeeze fresh lemon juice over the top and sprinkle with herbs like dill or parsley. Arrange asparagus around the salmon and drizzle with olive oil. Bake for about 15-20 minutes until the salmon is cooked through and flakes easily with a fork. Serve warm with a side of your choice.",
-        "Goal": 0,
+        "Goal": 1,
         "UserID": null,
         "ImageUrl": "https://saltpepperskillet.com/wp-content/uploads/oven-baked-salmon-on-sheet-pan-horizontal-1.jpg",
         "CreatedOn": "2024-01-21",
         "Calories": 400,
         "Fats": 22,
-        "Carbs": 8,
+        "Carbohydrates": 8,
         "Protein": 40
     },
     {
@@ -256,13 +256,13 @@
         "Name": "Chickpea Salad",
         "Ingredients": "Chickpeas, cucumber, tomatoes, lemon, olive oil",
         "Preparation": "In a bowl, combine drained chickpeas, diced cucumber, and chopped tomatoes. Drizzle with lemon juice and olive oil, and season with salt and pepper. Toss everything together until well mixed. This salad can be served immediately or chilled for a refreshing side dish or light meal.",
-        "Goal": 0,
+        "Goal": 2,
         "UserID": null,
         "ImageUrl": "https://cdn.loveandlemons.com/wp-content/uploads/2023/05/chickpea-salad-500x500.jpg",
         "CreatedOn": "2024-01-30",
         "Calories": 250,
         "Fats": 10,
-        "Carbs": 30,
+        "Carbohydrates": 30,
         "Protein": 12
     },
     {
@@ -270,13 +270,13 @@
         "Name": "Sweet Potato Fries",
         "Ingredients": "Sweet potatoes, olive oil, salt, pepper",
         "Preparation": "Preheat the oven to 425°F (220°C). Cut sweet potatoes into thin strips and place them in a bowl. Drizzle with olive oil, salt, and pepper, and toss to coat evenly. Spread the sweet potatoes on a baking sheet lined with parchment paper in a single layer. Bake for 20-25 minutes until they are crispy and golden, flipping halfway through. Serve hot as a side dish or snack.",
-        "Goal": 0,
+        "Goal": 1,
         "UserID": null,
         "ImageUrl": "https://www.kitchensanctuary.com/wp-content/uploads/2021/10/Sweet-Potato-Fries-wideFS-20.webp",
         "CreatedOn": "2024-02-27",
         "Calories": 200,
         "Fats": 8,
-        "Carbs": 32,
+        "Carbohydrates": 32,
         "Protein": 3
     },
     {
@@ -284,13 +284,13 @@
         "Name": "Avocado Toast",
         "Ingredients": "Bread, avocado, salt, pepper, lemon",
         "Preparation": "Toast the bread to your desired crispiness. Mash the avocado in a bowl and season with salt, pepper, and a squeeze of lemon juice. Spread the mashed avocado over the toasted bread. Optional toppings include sliced tomatoes, radishes, or a poached egg.",
-        "Goal": 0,
+        "Goal": 2,
         "UserID": null,
         "ImageUrl": "https://www.allrecipes.com/thmb/8NccFzsaq0_OZPDKmf7Yee-aG78=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/AvocadoToastwithEggFranceC4x3-bb87e3bbf1944657b7db35f1383fabdb.jpg",
         "CreatedOn": "2024-04-04",
         "Calories": 350,
         "Fats": 20,
-        "Carbs": 30,
+        "Carbohydrates": 30,
         "Protein": 10
     },
     {
@@ -298,13 +298,13 @@
         "Name": "Chocolate Chia Pudding",
         "Ingredients": "Chia seeds, almond milk, cocoa powder, honey",
         "Preparation": "In a bowl, mix chia seeds, cocoa powder, and almond milk. Stir well to combine and ensure there are no clumps. Add honey for sweetness. Cover and refrigerate for at least 4 hours or overnight until it thickens. Serve chilled, topped with fruit or nuts.",
-        "Goal": 0,
+        "Goal": 2,
         "UserID": null,
         "ImageUrl": "https://simple-veganista.com/wp-content/uploads/2017/04/chocolate-chia-pudding-1.jpg",
         "CreatedOn": "2024-11-02",
         "Calories": 200,
         "Fats": 10,
-        "Carbs": 25,
+        "Carbohydrates": 25,
         "Protein": 5
     },
     {
@@ -312,13 +312,13 @@
         "Name": "Coconut Curry Lentil Soup",
         "Ingredients": "Lentils, coconut milk, curry powder, vegetables",
         "Preparation": "In a pot, sauté chopped vegetables until soft. Add lentils, coconut milk, curry powder, and water. Bring to a boil, then reduce heat and simmer until lentils are tender, about 20-25 minutes. Season with salt and pepper to taste.",
-        "Goal": 0,
+        "Goal": 2,
         "UserID": null,
         "ImageUrl": "https://assets.bonappetit.com/photos/5a05c9df3388d32a6ed54e97/1:1/w_2560%2Cc_limit/curried-lentil-tomato-and-coconut-soup.jpg",
         "CreatedOn": "2024-11-04",
         "Calories": 300,
         "Fats": 10,
-        "Carbs": 40,
+        "Carbohydrates": 40,
         "Protein": 15
     },
     {
@@ -326,13 +326,13 @@
         "Name": "Zucchini Noodles with Pesto",
         "Ingredients": "Zucchini, pesto, cherry tomatoes, olive oil",
         "Preparation": "Spiralize zucchini into noodles. In a skillet, heat olive oil over medium heat and add zucchini noodles, cooking for 2-3 minutes until slightly softened. Stir in pesto and halved cherry tomatoes. Cook for an additional 2 minutes. Serve warm.",
-        "Goal": 0,
+        "Goal": 1,
         "UserID": null,
         "ImageUrl": "https://www.sweetashoney.co/wp-content/uploads/Zucchini-Noodles-With-Pesto-2-1.jpg",
         "CreatedOn": "2024-11-10",
         "Calories": 200,
         "Fats": 15,
-        "Carbs": 10,
+        "Carbohydrates": 10,
         "Protein": 5
     },
     {
@@ -346,7 +346,7 @@
         "CreatedOn": "2024-12-02",
         "Calories": 400,
         "Fats": 18,
-        "Carbs": 52,
+        "Carbohydrates": 52,
         "Protein": 12
     },
     {
@@ -354,13 +354,13 @@
         "Name": "Shrimp Tacos",
         "Ingredients": "Shrimp, corn tortillas, cabbage, lime",
         "Preparation": "Season shrimp with salt and pepper. In a skillet, cook shrimp over medium heat until pink, about 2-3 minutes per side. Warm corn tortillas in a separate pan. Assemble tacos by placing shrimp on tortillas, topping with shredded cabbage, and squeezing lime juice over them.",
-        "Goal": 1,
+        "Goal": 0,
         "UserID": null,
         "ImageUrl": "https://www.nutritiousdeliciousness.com/wp-content/uploads/2024/02/Asian-Shrimp-Tacos1.jpg",
         "CreatedOn": "2024-11-06",
         "Calories": 300,
         "Fats": 12,
-        "Carbs": 30,
+        "Carbohydrates": 30,
         "Protein": 25
     },
     {
@@ -368,13 +368,13 @@
         "Name": "Egg and Spinach Breakfast Wrap",
         "Ingredients": "Eggs, spinach, whole wheat wrap, cheese",
         "Preparation": "Whisk the eggs in a bowl. In a skillet, cook spinach until wilted. Add eggs and cook, stirring gently. Place the egg and spinach mixture on a whole wheat wrap, sprinkle with cheese, and roll tightly. Serve warm.",
-        "Goal": 1,
+        "Goal": 0,
         "UserID": null,
         "ImageUrl": "https://onebalancedlife.com/wp-content/uploads/2020/08/Breakfast-Wrap-scaled-720x720.jpg",
         "CreatedOn": "2024-11-03",
         "Calories": 350,
         "Fats": 15,
-        "Carbs": 30,
+        "Carbohydrates": 30,
         "Protein": 25
     },
     {
@@ -382,12 +382,12 @@
         "Name": "Chili Con Carne",
         "Ingredients": "Ground beef, kidney beans, tomatoes, chili powder",
         "Preparation": "In a pot, brown ground beef over medium heat. Add diced tomatoes, kidney beans, and chili powder. Simmer for 30 minutes, stirring occasionally. Serve hot, garnished with chopped cilantro or cheese.",
-        "Goal": 1,
+        "Goal": 0,
         "UserID": null,
         "ImageUrl": "https://img.chefkoch-cdn.de/rezepte/1578671265353584/bilder/1509269/crop-960x540/chili-con-carne.jpg",
         "Calories": 450,
         "Fats": 25,
-        "Carbs": 30,
+        "Carbohydrates": 30,
         "Protein": 30
     },
     {
@@ -401,7 +401,7 @@
         "CreatedOn": "2024-11-03",
         "Calories": 200,
         "Fats": 8,
-        "Carbs": 15,
+        "Carbohydrates": 15,
         "Protein": 5
     },
     {
@@ -415,7 +415,7 @@
         "CreatedOn": "2024-12-05",
         "Calories": 250,
         "Fats": 10,
-        "Carbs": 35,
+        "Carbohydrates": 35,
         "Protein": 10
     },
     {
@@ -423,13 +423,13 @@
         "Name": "Quinoa Salad",
         "Ingredients": "Quinoa, cherry tomatoes, cucumber, feta cheese",
         "Preparation": "Cook quinoa according to package instructions. In a bowl, combine cooked quinoa, halved cherry tomatoes, diced cucumber, and crumbled feta cheese. Drizzle with olive oil and lemon juice, then toss to combine.",
-        "Goal": 2,
+        "Goal": 1,
         "UserID": null,
         "ImageUrl": "https://cdn.apartmenttherapy.info/image/upload/f_jpg,q_auto:eco,c_fill,g_auto,w_1500,ar_4:3/k%2FPhoto%2FRecipes%2F2019-11-recipe-mediterranean-quinoa-salad%2F2019-10-21_Kitchn89095_Mediteranean-Quinoa-Salad",
         "CreatedOn": "2024-12-05",
         "Calories": 400,
         "Fats": 15,
-        "Carbs": 50,
+        "Carbohydrates": 50,
         "Protein": 12
     },
     {
@@ -437,13 +437,13 @@
         "Name": "Chicken Stir-Fry",
         "Ingredients": "Chicken breast, mixed vegetables, soy sauce, ginger",
         "Preparation": "In a skillet, heat oil over medium-high heat. Add diced chicken breast and cook until browned. Add mixed vegetables and ginger. Stir-fry for 5-7 minutes, then add soy sauce and cook for another 2 minutes. Serve hot.",
-        "Goal": 2,
+        "Goal": 0,
         "UserID": null,
         "ImageUrl": "https://i2.wp.com/www.downshiftology.com/wp-content/uploads/2021/05/Chicken-Stir-Fry-main-1.jpg",
         "CreatedOn": "2024-02-05",
         "Calories": 350,
         "Fats": 10,
-        "Carbs": 20,
+        "Carbohydrates": 20,
         "Protein": 30
     },
     {
@@ -457,7 +457,7 @@
         "CreatedOn": "2024-05-01",
         "Calories": 500,
         "Fats": 15,
-        "Carbs": 70,
+        "Carbohydrates": 70,
         "Protein": 20
     },
     {
@@ -471,7 +471,7 @@
         "CreatedOn": "2024-12-10",
         "Calories": 450,
         "Fats": 25,
-        "Carbs": 10,
+        "Carbohydrates": 10,
         "Protein": 40
     },
     {
@@ -479,13 +479,13 @@
         "Name": "Stuffed Bell Peppers",
         "Ingredients": "Bell peppers, ground turkey, quinoa, cheese",
         "Preparation": "Preheat oven to 375°F (190°C). Cut the tops off bell peppers and remove seeds. In a bowl, mix cooked quinoa, ground turkey, and cheese. Stuff the mixture into the peppers. Place in a baking dish, cover with foil, and bake for 30 minutes. Uncover and bake for an additional 10 minutes.",
-        "Goal": 2,
+        "Goal": 0,
         "UserID": null,
         "ImageUrl": "https://thebeanbites.com/wp-content/uploads/2020/03/Instant-Pot-Stuffed-Peppers-10-720x540.jpg",
         "CreatedOn": "2024-12-03",
         "Calories": 350,
         "Fats": 15,
-        "Carbs": 30,
+        "Carbohydrates": 30,
         "Protein": 25
     }
 ]

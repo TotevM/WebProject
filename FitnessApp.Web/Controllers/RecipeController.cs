@@ -38,6 +38,7 @@ namespace FitnessApp.Web.Controllers
 
             var model = recipesQuery.Select(r => new RecipesIndexView
             {
+                Id = r.Id.ToString(),
                 ImageUrl = r.ImageUrl,
                 Name = r.Name,
                 UserID = r.UserID,
@@ -100,6 +101,74 @@ namespace FitnessApp.Web.Controllers
 
             await context.Recipes.AddAsync(recipe);
             await context.SaveChangesAsync();
+            return RedirectToAction("Index", "Recipe");
+        }
+
+        [HttpGet]
+        public IActionResult Edit(Guid id)
+        {
+            List<Goal> goals = Enum.GetValues(typeof(Goal))
+                .Cast<Goal>()
+                .ToList();
+
+            var recipe = context.Recipes.FirstOrDefault(r => r.Id == id);
+
+            var recipeModel = new RecipeEditViewModel
+            {
+                Id = id,
+                RecipeName = recipe.Name,
+                Goals = goals,
+                Preparation = recipe.Preparation,
+                Ingredients = recipe.Ingredients,
+                ImageUrl = recipe.ImageUrl,
+                Goal = recipe.Goal.ToString(),
+                Calories = (int)recipe.Calories!,
+                Protein = (int)recipe.Protein!,
+                Carbohydrates = (int)recipe.Carbohydrates!,
+                Fats = (int)recipe.Fats!
+            };
+            return View(recipeModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(RecipeEditViewModel model)
+        {
+
+            List<Goal> goals = Enum.GetValues(typeof(Goal))
+                .Cast<Goal>()
+                .ToList();
+
+            model.Goals = goals;
+
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            Recipe? recipe = await context.Recipes.FirstOrDefaultAsync(p => p.Id == model.Id);
+
+            if (recipe == null)
+            {
+                return NotFound();
+            }
+            if (!Goal.TryParse(model.Goal, out Goal goal))
+            {
+                throw new InvalidOperationException("Invalid data!");
+            }
+
+            recipe.Name = model.RecipeName;
+            recipe.Preparation = model.Preparation;
+            recipe.Ingredients = model.Ingredients;
+            recipe.ImageUrl = model.ImageUrl;
+            recipe.Goal = goal;
+            recipe.Calories = (int)model.Calories!;
+            recipe.Protein = (int)model.Protein!;
+            recipe.Carbohydrates = (int)model.Carbohydrates!;
+            recipe.Fats = (int)model.Fats!;
+
+            context.Recipes.Update(recipe);
+            await context.SaveChangesAsync();
+
             return RedirectToAction("Index", "Recipe");
         }
     }

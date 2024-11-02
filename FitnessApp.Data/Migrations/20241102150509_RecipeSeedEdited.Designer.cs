@@ -4,6 +4,7 @@ using FitnessApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FitnessApp.Data.Migrations
 {
     [DbContext(typeof(FitnessDBContext))]
-    partial class FitnessDBContextModelSnapshot : ModelSnapshot
+    [Migration("20241102150509_RecipeSeedEdited")]
+    partial class RecipeSeedEdited
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -523,7 +526,7 @@ namespace FitnessApp.Data.Migrations
                             Carbohydrates = 45,
                             CreatedOn = new DateTime(2024, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Fats = 8,
-                            Goal = 2,
+                            Goal = 0,
                             ImageUrl = "https://www.whollytasteful.com/wp-content/uploads/2022/09/protein-pancakes-with-oats-featured.jpg",
                             Ingredients = "Oats, banana, protein powder, eggs",
                             IsDeleted = false,
@@ -568,7 +571,7 @@ namespace FitnessApp.Data.Migrations
                             Carbohydrates = 50,
                             CreatedOn = new DateTime(2024, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Fats = 28,
-                            Goal = 1,
+                            Goal = 0,
                             ImageUrl = "https://dianasdelishdishes.com/wp-content/uploads/2023/06/C42B7659-56C9-42D0-BF0E-0A34B78BE0A5.jpeg",
                             Ingredients = "Ground beef, sweet potato, olive oil, spinach, garlic, salt, pepper",
                             IsDeleted = false,
@@ -583,7 +586,7 @@ namespace FitnessApp.Data.Migrations
                             Carbohydrates = 40,
                             CreatedOn = new DateTime(2024, 1, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Fats = 15,
-                            Goal = 1,
+                            Goal = 0,
                             ImageUrl = "https://tastesbetterfromscratch.com/wp-content/uploads/2014/03/Chicken-Bacon-Avocado-Wrap-1.jpg",
                             Ingredients = "Grilled chicken breast, whole wheat wrap, avocado, tomato, lettuce, Greek yogurt",
                             IsDeleted = false,
@@ -643,7 +646,7 @@ namespace FitnessApp.Data.Migrations
                             Carbohydrates = 45,
                             CreatedOn = new DateTime(2024, 1, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Fats = 8,
-                            Goal = 2,
+                            Goal = 0,
                             ImageUrl = "https://images.getrecipekit.com/20230919180123-greek-20yogurt-20parfait.png?aspect_ratio=1:1&quality=90&",
                             Ingredients = "Greek yogurt, berries, honey, granola",
                             IsDeleted = false,
@@ -673,7 +676,7 @@ namespace FitnessApp.Data.Migrations
                             Carbohydrates = 5,
                             CreatedOn = new DateTime(2024, 1, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Fats = 15,
-                            Goal = 2,
+                            Goal = 1,
                             ImageUrl = "https://tealnotes.com/wp-content/uploads/2023/05/Featured-Image-46-800x530.png",
                             Ingredients = "Eggs, salt, bell pepper, spinach",
                             IsDeleted = false,
@@ -718,7 +721,7 @@ namespace FitnessApp.Data.Migrations
                             Carbohydrates = 65,
                             CreatedOn = new DateTime(2024, 1, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Fats = 15,
-                            Goal = 2,
+                            Goal = 1,
                             ImageUrl = "https://cdn.loveandlemons.com/wp-content/uploads/2023/05/quinoa-bowl-recipe.jpg",
                             Ingredients = "Quinoa, black beans, corn, avocado, lime",
                             IsDeleted = false,
@@ -748,7 +751,7 @@ namespace FitnessApp.Data.Migrations
                             Carbohydrates = 35,
                             CreatedOn = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Fats = 18,
-                            Goal = 1,
+                            Goal = 0,
                             ImageUrl = "https://mojo.generalmills.com/api/public/content/wD6Zdi1fS0OIerKfD62IBA_webp_base.webp?v=baa249d0&t=191ddcab8d1c415fa10fa00a14351227",
                             Ingredients = "Bell peppers, ground beef, rice, cheese",
                             IsDeleted = false,
@@ -763,7 +766,7 @@ namespace FitnessApp.Data.Migrations
                             Carbohydrates = 5,
                             CreatedOn = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Fats = 20,
-                            Goal = 2,
+                            Goal = 0,
                             ImageUrl = "https://heavenlyhomecooking.com/wp-content/uploads/2021/04/Vegetable-Omelette-Recipe-Featured-1.jpg",
                             Ingredients = "Eggs, bell peppers, cheese, spinach",
                             IsDeleted = false,
@@ -778,7 +781,7 @@ namespace FitnessApp.Data.Migrations
                             Carbohydrates = 8,
                             CreatedOn = new DateTime(2024, 1, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Fats = 22,
-                            Goal = 1,
+                            Goal = 0,
                             ImageUrl = "https://saltpepperskillet.com/wp-content/uploads/oven-baked-salmon-on-sheet-pan-horizontal-1.jpg",
                             Ingredients = "Salmon fillet, lemon, herbs, asparagus",
                             IsDeleted = false,
@@ -793,7 +796,7 @@ namespace FitnessApp.Data.Migrations
                             Carbohydrates = 30,
                             CreatedOn = new DateTime(2024, 1, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Fats = 10,
-                            Goal = 2,
+                            Goal = 0,
                             ImageUrl = "https://cdn.loveandlemons.com/wp-content/uploads/2023/05/chickpea-salad-500x500.jpg",
                             Ingredients = "Chickpeas, cucumber, tomatoes, lemon, olive oil",
                             IsDeleted = false,
@@ -808,7 +811,7 @@ namespace FitnessApp.Data.Migrations
                             Carbohydrates = 32,
                             CreatedOn = new DateTime(2024, 2, 27, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Fats = 8,
-                            Goal = 1,
+                            Goal = 0,
                             ImageUrl = "https://www.kitchensanctuary.com/wp-content/uploads/2021/10/Sweet-Potato-Fries-wideFS-20.webp",
                             Ingredients = "Sweet potatoes, olive oil, salt, pepper",
                             IsDeleted = false,
@@ -823,7 +826,7 @@ namespace FitnessApp.Data.Migrations
                             Carbohydrates = 30,
                             CreatedOn = new DateTime(2024, 4, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Fats = 20,
-                            Goal = 2,
+                            Goal = 0,
                             ImageUrl = "https://www.allrecipes.com/thmb/8NccFzsaq0_OZPDKmf7Yee-aG78=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/AvocadoToastwithEggFranceC4x3-bb87e3bbf1944657b7db35f1383fabdb.jpg",
                             Ingredients = "Bread, avocado, salt, pepper, lemon",
                             IsDeleted = false,
@@ -838,7 +841,7 @@ namespace FitnessApp.Data.Migrations
                             Carbohydrates = 25,
                             CreatedOn = new DateTime(2024, 11, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Fats = 10,
-                            Goal = 2,
+                            Goal = 0,
                             ImageUrl = "https://simple-veganista.com/wp-content/uploads/2017/04/chocolate-chia-pudding-1.jpg",
                             Ingredients = "Chia seeds, almond milk, cocoa powder, honey",
                             IsDeleted = false,
@@ -853,7 +856,7 @@ namespace FitnessApp.Data.Migrations
                             Carbohydrates = 40,
                             CreatedOn = new DateTime(2024, 11, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Fats = 10,
-                            Goal = 2,
+                            Goal = 0,
                             ImageUrl = "https://assets.bonappetit.com/photos/5a05c9df3388d32a6ed54e97/1:1/w_2560%2Cc_limit/curried-lentil-tomato-and-coconut-soup.jpg",
                             Ingredients = "Lentils, coconut milk, curry powder, vegetables",
                             IsDeleted = false,
@@ -868,7 +871,7 @@ namespace FitnessApp.Data.Migrations
                             Carbohydrates = 10,
                             CreatedOn = new DateTime(2024, 11, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Fats = 15,
-                            Goal = 1,
+                            Goal = 0,
                             ImageUrl = "https://www.sweetashoney.co/wp-content/uploads/Zucchini-Noodles-With-Pesto-2-1.jpg",
                             Ingredients = "Zucchini, pesto, cherry tomatoes, olive oil",
                             IsDeleted = false,
@@ -898,7 +901,7 @@ namespace FitnessApp.Data.Migrations
                             Carbohydrates = 30,
                             CreatedOn = new DateTime(2024, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Fats = 12,
-                            Goal = 0,
+                            Goal = 1,
                             ImageUrl = "https://www.nutritiousdeliciousness.com/wp-content/uploads/2024/02/Asian-Shrimp-Tacos1.jpg",
                             Ingredients = "Shrimp, corn tortillas, cabbage, lime",
                             IsDeleted = false,
@@ -913,7 +916,7 @@ namespace FitnessApp.Data.Migrations
                             Carbohydrates = 30,
                             CreatedOn = new DateTime(2024, 11, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Fats = 15,
-                            Goal = 0,
+                            Goal = 1,
                             ImageUrl = "https://onebalancedlife.com/wp-content/uploads/2020/08/Breakfast-Wrap-scaled-720x720.jpg",
                             Ingredients = "Eggs, spinach, whole wheat wrap, cheese",
                             IsDeleted = false,
@@ -928,7 +931,7 @@ namespace FitnessApp.Data.Migrations
                             Carbohydrates = 30,
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Fats = 25,
-                            Goal = 0,
+                            Goal = 1,
                             ImageUrl = "https://img.chefkoch-cdn.de/rezepte/1578671265353584/bilder/1509269/crop-960x540/chili-con-carne.jpg",
                             Ingredients = "Ground beef, kidney beans, tomatoes, chili powder",
                             IsDeleted = false,
@@ -973,7 +976,7 @@ namespace FitnessApp.Data.Migrations
                             Carbohydrates = 50,
                             CreatedOn = new DateTime(2024, 12, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Fats = 15,
-                            Goal = 1,
+                            Goal = 2,
                             ImageUrl = "https://cdn.apartmenttherapy.info/image/upload/f_jpg,q_auto:eco,c_fill,g_auto,w_1500,ar_4:3/k%2FPhoto%2FRecipes%2F2019-11-recipe-mediterranean-quinoa-salad%2F2019-10-21_Kitchn89095_Mediteranean-Quinoa-Salad",
                             Ingredients = "Quinoa, cherry tomatoes, cucumber, feta cheese",
                             IsDeleted = false,
@@ -988,7 +991,7 @@ namespace FitnessApp.Data.Migrations
                             Carbohydrates = 20,
                             CreatedOn = new DateTime(2024, 2, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Fats = 10,
-                            Goal = 0,
+                            Goal = 2,
                             ImageUrl = "https://i2.wp.com/www.downshiftology.com/wp-content/uploads/2021/05/Chicken-Stir-Fry-main-1.jpg",
                             Ingredients = "Chicken breast, mixed vegetables, soy sauce, ginger",
                             IsDeleted = false,
@@ -1033,7 +1036,7 @@ namespace FitnessApp.Data.Migrations
                             Carbohydrates = 30,
                             CreatedOn = new DateTime(2024, 12, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Fats = 15,
-                            Goal = 0,
+                            Goal = 2,
                             ImageUrl = "https://thebeanbites.com/wp-content/uploads/2020/03/Instant-Pot-Stuffed-Peppers-10-720x540.jpg",
                             Ingredients = "Bell peppers, ground turkey, quinoa, cheese",
                             IsDeleted = false,
