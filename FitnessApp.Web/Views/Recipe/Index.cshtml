@@ -15,29 +15,42 @@
 <hr />
 
 <div class="row text-center">
-    @foreach (var recipe in Model)
-    {
-        <div class="col-md-3 mb-4">
-            <div class="card h-100" style="width: 100%;">
-                @if (!string.IsNullOrEmpty(recipe.ImageUrl))
-                {
-                    <img src="@recipe.ImageUrl" class="card-img-top" style="max-height: 150px; object-fit: contain;" alt="@recipe.Name">
-                }
-                else
-                {
-                    <img src="~/images/NoPictureAvailable.png" class="card-img-top" style="max-height: 150px; object-fit: contain;" alt="No Image Available">
-                }
+	@foreach (var recipe in Model)
+	{
+		<div class="col-md-3 mb-4">
+			<div class="card h-100" style="width: 100%;">
+				@if (!string.IsNullOrEmpty(recipe.ImageUrl))
+				{
+					<img src="@recipe.ImageUrl" class="card-img-top" style="max-height: 150px; object-fit: contain;" alt="@recipe.Name">
+				}
+				else
+				{
+					<img src="~/images/NoPictureAvailable.png" class="card-img-top" style="max-height: 150px; object-fit: contain;" alt="No Image Available">
+				}
 
-                <div class="card-body d-flex flex-column">
-                    <h5 class="card-title">@recipe.Name</h5>
-                    <div class="d-flex justify-content-between mt-auto">
-                        @if (recipe.UserID == User!.FindFirstValue(ClaimTypes.NameIdentifier))
-                        {
-	                        <a asp-controller="Recipe" asp-action="Edit" asp-route-id="@recipe.Id" class="btn btn-info me-2 w-50">Modify</a>
-                        }
-                    </div>
-                </div>
-            </div>
-        </div>
-    }
+				<div class="card-body d-flex flex-column">
+					<h5 class="card-title">@recipe.Name</h5>
+                
+					<div class="mt-auto d-flex justify-content-between gap-2">
+						@if (recipe.UserID == User!.FindFirstValue(ClaimTypes.NameIdentifier))
+						{
+							<a asp-controller="Recipe" asp-action="Edit" asp-route-id="@recipe.Id" class="btn btn-info flex-fill">Edit</a>
+
+							<form asp-controller="Recipe" asp-action="Delete" method="post" onsubmit="return confirm('Are you sure you want to delete this recipe?');" style="display:inline;">
+								<input type="hidden" name="id" value="@recipe.Id" />
+								<button type="submit" class="btn btn-danger flex-fill">Delete</button>
+							</form>
+
+						}
+							<form asp-controller="Diet" asp-action="AddToDiet" method="post" style="display:inline;">
+								<input type="hidden" name="recipeId" value="@recipe.Id" />
+								<button type="submit" class="btn btn-success flex-fill">Add to Diet</button>
+							</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	}
+
+
 </div>

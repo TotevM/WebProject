@@ -19,5 +19,10 @@ namespace FitnessApp.Web.Controllers
 		{
 			return View();
 		}
-	}
+
+        public IActionResult AddToDiet()
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

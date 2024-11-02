@@ -171,5 +171,18 @@ namespace FitnessApp.Web.Controllers
 
             return RedirectToAction("Index", "Recipe");
         }
+
+        [HttpPost]
+        public IActionResult Delete(Guid id)
+        {
+            var recipe = context.Recipes.FirstOrDefault(r => r.Id == id);
+
+            recipe!.IsDeleted = true;
+
+            context.Recipes.Update(recipe);
+            context.SaveChanges();
+
+            return RedirectToAction("Index", "Recipe");
+        }
     }
 }
