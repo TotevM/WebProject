@@ -1,4 +1,5 @@
-﻿using FitnessApp.Data.Models;
+﻿using System.Text.Json;
+using FitnessApp.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using static FitnessApp.Common.EntityValidationConstants.DietValidation;
@@ -18,12 +19,22 @@ namespace FitnessApp.Data.EntityConfiguration
 				.IsRequired();
 
 			builder.Property(d => d.UserID)
-				.IsRequired();
+				.IsRequired(false);
 
 			builder.HasMany(d => d.DietsRecipes)
 				.WithOne(df => df.Diet)
 				.HasForeignKey(df => df.DietId)
 				.OnDelete(DeleteBehavior.Cascade);
-		}
-	}
+
+            string path = Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "FitnessApp.Data", "Datasets", "diets.json");
+            string data = File.ReadAllText(path);
+            var diets = JsonSerializer.Deserialize<List<Diet>>(data);
+
+            if (diets != null)
+            {
+                builder
+                    .HasData(diets);
+            }
+        }
+    }
 }

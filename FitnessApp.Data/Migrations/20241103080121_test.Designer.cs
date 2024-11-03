@@ -4,6 +4,7 @@ using FitnessApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FitnessApp.Data.Migrations
 {
     [DbContext(typeof(FitnessDBContext))]
-    partial class FitnessDBContextModelSnapshot : ModelSnapshot
+    [Migration("20241103080121_test")]
+    partial class test
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -161,43 +164,6 @@ namespace FitnessApp.Data.Migrations
                     b.HasIndex("RecipeId");
 
                     b.ToTable("DietsRecipes");
-
-                    b.HasData(
-                        new
-                        {
-                            DietId = new Guid("1a2b3c4d-5e6f-7a8b-9c0d-e1f2a3b4c5d6"),
-                            RecipeId = new Guid("7fcf8f67-0b44-4be5-9f55-3fd8f0bcb4d1")
-                        },
-                        new
-                        {
-                            DietId = new Guid("1a2b3c4d-5e6f-7a8b-9c0d-e1f2a3b4c5d6"),
-                            RecipeId = new Guid("c1d5a8e3-9a7a-4d77-bb38-8aafd82df021")
-                        },
-                        new
-                        {
-                            DietId = new Guid("2b3c4d5e-6f7a-8b9c-0de1-f2a3b4c5d6e7"),
-                            RecipeId = new Guid("e3f7d4b7-94b2-4b3f-889e-8d7e5cdef921")
-                        },
-                        new
-                        {
-                            DietId = new Guid("2b3c4d5e-6f7a-8b9c-0de1-f2a3b4c5d6e7"),
-                            RecipeId = new Guid("f3a7d8d2-1b9d-4c31-995a-6fa4fd0b032a")
-                        },
-                        new
-                        {
-                            DietId = new Guid("3c4d5e6f-7a8b-9c0d-e1f2-3a4b5c6d7e8f"),
-                            RecipeId = new Guid("a6c8d4e0-1c8f-4f1b-b0c2-6a6d9a7a1f2a")
-                        },
-                        new
-                        {
-                            DietId = new Guid("3c4d5e6f-7a8b-9c0d-e1f2-3a4b5c6d7e8f"),
-                            RecipeId = new Guid("a7f2e8d4-8b2e-41e8-90d7-5e2e6b7a2f5e")
-                        },
-                        new
-                        {
-                            DietId = new Guid("3c4d5e6f-7a8b-9c0d-e1f2-3a4b5c6d7e8f"),
-                            RecipeId = new Guid("a823fb5b-9ed5-4d90-9c31-2398dcdb78de")
-                        });
                 });
 
             modelBuilder.Entity("FitnessApp.Data.Models.Exercise", b =>

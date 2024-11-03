@@ -184,5 +184,10 @@ namespace FitnessApp.Web.Controllers
 
             return RedirectToAction("Index", "Recipe");
         }
+
+        public IActionResult AddToDiet()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
