@@ -4,6 +4,7 @@ using FitnessApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FitnessApp.Data.Migrations
 {
     [DbContext(typeof(FitnessDBContext))]
-    partial class FitnessDBContextModelSnapshot : ModelSnapshot
+    [Migration("20241103091745_ProperRecipeSeed2")]
+    partial class ProperRecipeSeed2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -105,7 +108,7 @@ namespace FitnessApp.Data.Migrations
                     b.Property<int>("Calories")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Carbohydrates")
+                    b.Property<int>("Carbohydrates")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedOn")
@@ -116,7 +119,7 @@ namespace FitnessApp.Data.Migrations
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
 
-                    b.Property<int?>("Fats")
+                    b.Property<int>("Fats")
                         .HasColumnType("int");
 
                     b.Property<string>("ImageUrl")
@@ -127,7 +130,7 @@ namespace FitnessApp.Data.Migrations
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
 
-                    b.Property<int?>("Protein")
+                    b.Property<int>("Protein")
                         .HasColumnType("int");
 
                     b.Property<string>("UserID")

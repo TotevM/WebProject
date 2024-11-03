@@ -8,7 +8,7 @@ namespace FitnessApp.Data
     public class FitnessDBContext : IdentityDbContext<ApplicationUser>
     {
         public FitnessDBContext(DbContextOptions<FitnessDBContext> options)
-            : base(options)
+               : base(options)
         {
         }
 
@@ -20,15 +20,32 @@ namespace FitnessApp.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            builder.ApplyConfiguration(new ExerciseConfiguration());
+
             builder.ApplyConfiguration(new RecipeConfiguration());
             builder.ApplyConfiguration(new DietConfiguration());
-            builder.ApplyConfiguration(new WorkoutConfiguration());
-
             builder.ApplyConfiguration(new DietRecipeConfiguration());
-            builder.ApplyConfiguration(new ProgressConfiguration());
+
+            builder.ApplyConfiguration(new ExerciseConfiguration());
+            builder.ApplyConfiguration(new WorkoutConfiguration());
             builder.ApplyConfiguration(new WorkoutExerciseConfiguration());
+
+            builder.ApplyConfiguration(new ProgressConfiguration());
         }
+
+        public async Task SeedDatabaseAsync()
+        {
+            var diets = await Diets.ToListAsync();
+            foreach (var diet in diets)
+            {
+                diet.Calories = diet.DietsRecipes.Sum(df => df.Recipe.Calories);
+                diet.Protein = diet.DietsRecipes.Sum(df => df.Recipe.Protein);
+                diet.Carbohydrates = diet.DietsRecipes.Sum(df => df.Recipe.Carbohydrates);
+                diet.Fats = diet.DietsRecipes.Sum(df => df.Recipe.Fats);
+            }
+
+            await SaveChangesAsync();
+        }
+
         public DbSet<Workout> Workouts { get; set; } = null!;
         public DbSet<Diet> Diets { get; set; } = null!;
         public DbSet<DietRecipe> DietsRecipes { get; set; } = null!;

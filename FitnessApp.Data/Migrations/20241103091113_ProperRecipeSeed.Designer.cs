@@ -4,6 +4,7 @@ using FitnessApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FitnessApp.Data.Migrations
 {
     [DbContext(typeof(FitnessDBContext))]
-    partial class FitnessDBContextModelSnapshot : ModelSnapshot
+    [Migration("20241103091113_ProperRecipeSeed")]
+    partial class ProperRecipeSeed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -102,12 +105,6 @@ namespace FitnessApp.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Calories")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Carbohydrates")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
@@ -116,9 +113,6 @@ namespace FitnessApp.Data.Migrations
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
 
-                    b.Property<int?>("Fats")
-                        .HasColumnType("int");
-
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
@@ -126,9 +120,6 @@ namespace FitnessApp.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
-
-                    b.Property<int?>("Protein")
-                        .HasColumnType("int");
 
                     b.Property<string>("UserID")
                         .HasColumnType("nvarchar(450)");
@@ -143,36 +134,24 @@ namespace FitnessApp.Data.Migrations
                         new
                         {
                             Id = new Guid("1a2b3c4d-5e6f-7a8b-9c0d-e1f2a3b4c5d6"),
-                            Calories = 0,
-                            Carbohydrates = 0,
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "A well-balanced diet for healthy living.",
-                            Fats = 0,
-                            Name = "Balanced Diet",
-                            Protein = 0
+                            Name = "Balanced Diet"
                         },
                         new
                         {
                             Id = new Guid("2b3c4d5e-6f7a-8b9c-0de1-f2a3b4c5d6e7"),
-                            Calories = 0,
-                            Carbohydrates = 0,
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Ideal for muscle growth and recovery.",
-                            Fats = 0,
-                            Name = "High-Protein Diet",
-                            Protein = 0
+                            Name = "High-Protein Diet"
                         },
                         new
                         {
                             Id = new Guid("3c4d5e6f-7a8b-9c0d-e1f2-3a4b5c6d7e8f"),
-                            Calories = 0,
-                            Carbohydrates = 0,
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "A low-carb diet to promote weight loss.",
-                            Fats = 0,
                             ImageUrl = "https://tasteforlife.com/sites/default/files/styles/laptop/public/diet-nutrition/special-diets/low-carb-diets-for-health-benefits/low-carb-diets-for-health-benefits.jpg?itok=saTbKWSP",
-                            Name = "Low-Carb Diet",
-                            Protein = 0
+                            Name = "Low-Carb Diet"
                         });
                 });
 

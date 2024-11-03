@@ -32,8 +32,15 @@ namespace FitnessApp.Data.EntityConfiguration
 
             if (diets != null)
             {
-                builder
-                    .HasData(diets);
+                foreach (var diet in diets)
+                {
+                    diet.Calories = 0;
+                    diet.Protein = 0;
+                    diet.Carbohydrates = 0;
+                    diet.Fats = 0;
+
+                    builder.HasData(diet);
+                }
             }
         }
     }
