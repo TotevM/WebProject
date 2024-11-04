@@ -1,4 +1,6 @@
-﻿using FitnessApp.Data.Models;
+﻿using FitnessApp.Data;
+using FitnessApp.Data.Models;
+using FitnessApp.Web.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,19 +8,34 @@ namespace FitnessApp.Web.Controllers
 {
 	public class DietController : Controller
 	{
-		private readonly ILogger<DietController> logger;
-		private readonly UserManager<ApplicationUser> user;
+        private readonly ILogger<RecipeController> logger;
+        private readonly UserManager<ApplicationUser> user;
+        private readonly FitnessDBContext context;
 
-		public DietController(ILogger<DietController> _logger, UserManager<ApplicationUser> _user)
-		{
-			logger = _logger;
-			user = _user;
-		}
+        public DietController(ILogger<RecipeController> _logger, UserManager<ApplicationUser> _user, FitnessDBContext _context)
+        {
+            logger = _logger;
+            user = _user;
+            context = _context;
+        }
 
-		public IActionResult Index()
-		{
-			return View();
-		}
+        public async Task<IActionResult> Index()
+        {
+            var diets = context.Diets.ToList();
+
+            var dietViewModels = diets.Select(diet => new DietIndexView
+            {
+                Name = diet.Name,
+                Description = diet.Description,
+                ImageUrl = diet.ImageUrl,
+                Calories = diet.Calories,
+                Protein = diet.Protein,
+                Carbohydrates = diet.Carbohydrates,
+                Fats = diet.Fats
+            }).ToList();
+
+            return View(dietViewModels);
+        }
 
         public IActionResult AddToDiet()
         {

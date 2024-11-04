@@ -1,12 +1,46 @@
-﻿@* model 
-<h2>Available Diets</h2>
+﻿@model List<DietIndexView>
 
-<ul>
-	@foreach (var diet in Model)
-	{
-		<li>
-			<h3>@diet.Name</h3>
-			<p>@diet.Description</p>
-		</li>
-	}
-</ul> *@
+<h2>Diet List</h2>
+
+<div class="row">
+    @foreach (var diet in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <!-- Image Section -->
+                @if (!string.IsNullOrEmpty(diet.ImageUrl))
+                {
+                    <img src="@diet.ImageUrl" class="card-img-top" alt="@diet.Name" style="max-height: 200px; object-fit: cover;">
+                }
+                else
+                {
+                    <div class="card-img-top d-flex align-items-center justify-content-center" style="height: 200px; background-color: #f8f9fa;">
+                        <span>No Image Available</span>
+                    </div>
+                }
+
+                <!-- Card Body -->
+                <div class="card-body text-center">
+                    <!-- Diet Name -->
+                    <h5 class="card-title">@diet.Name</h5>
+                </div>
+
+                <!-- Macronutrient Section -->
+                <div class="card-footer">
+                    <p><strong>Calories:</strong> @diet.Calories</p>
+                    <p><strong>Protein:</strong> @diet.Protein?.ToString()g</p>
+                    <p><strong>Carbohydrates:</strong> @diet.Carbohydrates?.ToString()g</p>
+                    <p><strong>Fats:</strong> @diet.Fats?.ToString()g</p>
+
+                    <!-- Button Section -->
+                    <div class="card-footer bg-light mt-2 p-3" style="background-color: #e9ecef;">
+                        <div class="d-flex justify-content-between">
+                            <a href="#" class="btn btn-primary">Add to My Diets</a>
+                            <a href="/Diets/Details/@diet.Name" class="btn btn-secondary">Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
