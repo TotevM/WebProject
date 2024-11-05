@@ -55,12 +55,12 @@
     "UserID": null,
     "CreatedOn": "2024-11-04"
   },
-  {
-    "Id": "932d7750-8a1e-40de-a10e-a3b44592844f",
-    "Name": "DASH Diet",
-    "Description": "Dietary Approaches to Stop Hypertension; focuses on lowering blood pressure.",
-    "ImageUrl": "https://imgs.search.brave.com/W8_zgv8MUFPLIzugGECfKg3eilSWZNWVYu5m_RMcy7U/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9oaXBz/LmhlYXJzdGFwcHMu/Y29tL2htZy1wcm9k/L2ltYWdlcy9mb29k/cy1pdGVtcy1oaWdo/LWluLWhlYWx0aHkt/b21lZ2EtMy1mYXRz/LXJveWFsdHktZnJl/ZS1",
-    "UserID": null,
-    "CreatedOn": "2024-11-04"
-  }
+    {
+        "Id": "932d7750-8a1e-40de-a10e-a3b44592844f",
+        "Name": "DASH Diet",
+        "Description": "Dietary Approaches to Stop Hypertension; focuses on lowering blood pressure.",
+        "ImageUrl": "https://image.cnbcfm.com/api/v1/image/107233399-1682954665721-dash-flexitarian-mediterranean-diet-to-stop-hypert-2022-02-14-13-50-46-utc.jpg?v=1682956537",
+        "UserID": null,
+        "CreatedOn": "2024-11-04"
+    }
 ]

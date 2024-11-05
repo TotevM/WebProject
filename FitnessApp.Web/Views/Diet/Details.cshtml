@@ -1,38 +1,54 @@
-﻿@model List<DietIndexView>
+﻿@model List<DietDetailsView>
 
-<h2>Diet List</h2>
-
-<div class="row">
-    @foreach (var diet in Model)
-    {
-        <div class="col-md-4 mb-4">
-            <div class="card h-100">
-                <!-- Image Section -->
-                @if (!string.IsNullOrEmpty(diet.ImageUrl))
-                {
-                    <img src="@diet.ImageUrl" class="card-img-top" alt="@diet.Name" style="max-height: 200px; object-fit: cover;">
-                }
-                else
-                {
-                    <div class="card-img-top d-flex align-items-center justify-content-center" style="height: 200px; background-color: #f8f9fa;">
-                        <span>No Image Available</span>
+<div class="container my-5">
+    <h2 class="mb-4">Diet List</h2>
+    <div class="row">
+        @if (Model.Count > 0)
+        {
+            @foreach (var diet in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        @if (!string.IsNullOrEmpty(diet.ImageUrl))
+                        {
+                            <img src="@diet.ImageUrl" class="card-img-top" alt="@diet.Name" style="max-height: 200px; object-fit: cover;">
+                        }
+                        else
+                        {
+                            <img src="images/NoPictureAvailable.png" class="card-img-top" alt="@diet.Name" style="max-height: 200px; object-fit: cover;">
+                        }
+                        <div class="card-body text-center">
+                            <h5 class="card-title">@diet.Name</h5>
+                        </div>
+                        <div class="card-footer">
+                            <p><strong>Calories:</strong> @diet.Calories</p>
+                            <p><strong>Protein:</strong> @(diet.Protein?.ToString() ?? "N/A") g</p>
+                            <p><strong>Carbohydrates:</strong> @(diet.Carbohydrates?.ToString() ?? "N/A") g</p>
+                            <p><strong>Fats:</strong> @(diet.Fats?.ToString() ?? "N/A") g</p>
+                            <button class="btn btn-primary" onclick="addRecipe('@diet.Name', '@diet.ImageUrl', @diet.Calories, @(diet.Protein ?? 0), @(diet.Carbohydrates ?? 0), @(diet.Fats ?? 0))">Add Recipe</button>
+                        </div>
                     </div>
-                }
-
-                <!-- Card Body -->
-                <div class="card-body text-center">
-                    <!-- Diet Name -->
-                    <h5 class="card-title">@diet.Name</h5>
                 </div>
-
-                <!-- Macronutrient Section -->
-                <div class="card-footer">
-                    <p><strong>Calories:</strong> @diet.Calories</p>
-                    <p><strong>Protein:</strong> @diet.Protein?.ToString() ?? "N/A" g</p>
-                    <p><strong>Carbohydrates:</strong> @diet.Carbohydrates?.ToString() ?? "N/A" g</p>
-                    <p><strong>Fats:</strong> @diet.Fats?.ToString() ?? "N/A" g</p>
-                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12 text-center">
+                <p>No diets to display.</p>
             </div>
+        }
+    </div>
+
+    <div class="row">
+        <div class="col-12 text-end">
+            <a href="@Url.Action("Index", "Recipe")" class="btn btn-primary">Add New Recipe</a>
         </div>
-    }
+    </div>
 </div>
+
+<script>
+    function addRecipe(name, imageUrl, calories, protein, carbohydrates, fats) {
+        // Implement the logic to add the recipe here
+        console.log(`Adding recipe: Name: ${name}, Image URL: ${imageUrl}, Calories: ${calories}, Protein: ${protein}, Carbohydrates: ${carbohydrates}, Fats: ${fats}`);
+    }
+</script>

@@ -36,7 +36,9 @@
                     <div class="card-footer bg-light mt-2 p-3" style="background-color: #e9ecef;">
                         <div class="d-flex justify-content-between">
                             <span asp-action="Add" method="post" href="#" class="btn btn-primary">Add to My Diets</span>
-                            <a href="/Diets/Details/@diet.Name" class="btn btn-secondary">Details</a>
+                            <a asp-controller="Diet" asp-action="Details" asp-route-id="@diet.Id" class="btn btn-primary btn-sm">
+	                            <i class="bi bi-info-circle"></i> View Details
+                            </a>
                         </div>
                     </div>
                 </div>

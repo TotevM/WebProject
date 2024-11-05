@@ -25,6 +25,7 @@ namespace FitnessApp.Web.Controllers
 
             var dietViewModels = diets.Select(diet => new DietIndexView
             {
+                Id = diet.Id,
                 Name = diet.Name,
                 Description = diet.Description,
                 ImageUrl = diet.ImageUrl,
@@ -32,6 +33,25 @@ namespace FitnessApp.Web.Controllers
                 Protein = diet.Protein,
                 Carbohydrates = diet.Carbohydrates,
                 Fats = diet.Fats
+            }).ToList();
+
+            return View(dietViewModels);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(Guid id)
+        {
+            var recipes = context.Recipes.Where(r => r.DietsRecipes.Any(d => d.DietId == id)).ToList();
+
+            List<DietDetailsView> dietViewModels = recipes.Select(recipe => new DietDetailsView
+            {
+                Id = recipe.Id,
+                Name = recipe.Name,
+                ImageUrl = recipe.ImageUrl,
+                Calories = recipe.Calories,
+                Protein = recipe.Protein,
+                Carbohydrates = recipe.Carbohydrates,
+                Fats = recipe.Fats
             }).ToList();
 
             return View(dietViewModels);
