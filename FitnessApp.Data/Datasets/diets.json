@@ -1,23 +1,66 @@
 ﻿[
-    {
-        "Id": "1a2b3c4d-5e6f-7a8b-9c0d-e1f2a3b4c5d6",
-        "Name": "Balanced Diet",
-        "Description": "A well-balanced diet for healthy living.",
-        "ImageUrl": null,
-        "UserID": null
-    },
-    {
-        "Id": "2b3c4d5e-6f7a-8b9c-0de1-f2a3b4c5d6e7",
-        "Name": "High-Protein Diet",
-        "Description": "Ideal for muscle growth and recovery.",
-        "ImageUrl": null,
-        "UserID": null
-    },
-    {
-        "Id": "3c4d5e6f-7a8b-9c0d-e1f2-3a4b5c6d7e8f",
-        "Name": "Low-Carb Diet",
-        "Description": "A low-carb diet to promote weight loss.",
-        "ImageUrl": "https://tasteforlife.com/sites/default/files/styles/laptop/public/diet-nutrition/special-diets/low-carb-diets-for-health-benefits/low-carb-diets-for-health-benefits.jpg?itok=saTbKWSP",
-        "UserID": null
-    }
+  {
+    "Id": "4003ee86-9566-4dd5-ab03-be63572904a3",
+    "Name": "Balanced Diet",
+    "Description": "A well-balanced diet for healthy living.",
+    "ImageUrl": "https://imgs.search.brave.com/s8CFdPvLm2v8QBJZdmM9JTjyexe9YWX3kQMEu26T0FI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/cHJlbWl1bS1waG90/by93ZWxsLWJhbGFu/Y2VkLXBsYXRlLWZv/b2QtZmVhdHVyaW5n/LWxlYW4tcHJvdGVp/bnMtaGVhbHRoeS1l/YXRpbmctY2hvaWNl/c184OTM1NzEtNjY1/MDIuanBnP3NlbXQ9/YWlzX2h5YnJpZA",
+    "UserID": null,
+    "CreatedOn": "2024-11-04"
+  },
+  {
+    "Id": "b9945d16-9964-4897-acba-2846f8730292",
+    "Name": "High-Protein Diet",
+    "Description": "Ideal for muscle growth and recovery.",
+    "ImageUrl": "https://imgs.search.brave.com/nFLS8O8iqyEsTxAc25VNTBCwWxqg_TGi_X-RsVNVqck/rs:fit:860:0:0:0/g:ce/aHR0cDovL2NvbnRl/bnQuaGVhbHRoLmhh/cnZhcmQuZWR1L3dw/LWNvbnRlbnQvdXBs/b2Fkcy8yMDI0LzAx/LzI4ZThlNDY0LWY1/NWUtNGIzMi05YmFi/LWRjOTkwZDhjYzky/Ny5qcGc",
+    "UserID": null,
+    "CreatedOn": "2024-11-04"
+  },
+  {
+    "Id": "4bf17f5e-3c9e-444c-bc03-11ba09df4844",
+    "Name": "Low-Carb Diet",
+    "Description": "A low-carb diet to promote weight loss.",
+    "ImageUrl": "https://tasteforlife.com/sites/default/files/styles/laptop/public/diet-nutrition/special-diets/low-carb-diets-for-health-benefits/low-carb-diets-for-health-benefits.jpg?itok=saTbKWSP",
+    "UserID": null,
+    "CreatedOn": "2024-11-04"
+  },
+  {
+    "Id": "042a990d-b389-4a3b-8c3e-f9958eecb5ba",
+    "Name": "Mediterranean Diet",
+    "Description": "Rich in fruits, vegetables, whole grains, and healthy fats.",
+    "ImageUrl": "https://imgs.search.brave.com/XMqYsLggsYc1O09i-aEGhJO-TlIABgiyisJeNCe1RzE/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/aGVhcnQub3JnLy0v/bWVkaWEvQUhBL0g0/R00vQXJ0aWNsZS1J/bWFnZXMvTWVkaXRl/cnJhbmVhbl9EaWV0/LmpwZw",
+    "UserID": null,
+    "CreatedOn": "2024-11-04"
+  },
+  {
+    "Id": "d8540959-108c-4a29-b1f2-e475f469b95c",
+    "Name": "Vegan Diet",
+    "Description": "A plant-based diet that excludes all animal products.",
+    "ImageUrl": "https://imgs.search.brave.com/xOEfQ19UaCLOKXzo-5Jbb4nLcKwO9UbBo5wewTvTJXw/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMuaW1tZWRpYXRl/LmNvLnVrL3Byb2R1/Y3Rpb24vdm9sYXRp/bGUvc2l0ZXMvMzAv/MjAyNC8wNi9IZWFs/dGh5LXZlZ2FuNzAw/LWU2YzJiNWUuanBn/P3F1YWxpdHk9OTAm/Zml0PTcwMCwzNTA",
+    "UserID": null,
+    "CreatedOn": "2024-11-04"
+  },
+  {
+    "Id": "e38bbd08-712c-455d-aa59-83ad83b1ccec",
+    "Name": "Paleo Diet",
+    "Description": "Focuses on whole foods similar to what might have been eaten in the Paleolithic era.",
+    "ImageUrl": "https://imgs.search.brave.com/3oOdIC1IaTHXOsjmkwIhQCtX9QNDaBkJUo_hAxv1Xjg/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9hc3Nl/dHMuY2xldmVsYW5k/Y2xpbmljLm9yZy90/cmFuc2Zvcm0vTGFy/Z2VGZWF0dXJlSW1h/Z2UvZWJiZDhjMGYt/OTcwOS00YjFkLWJk/OTktZTNlMzE1MWYw/ZTNhL1BhbGVvLURp/ZXQtMTMwMTU2NTM3/NS03NzB4NTMzLTFf/anBn",
+    "UserID": null,
+    "CreatedOn": "2024-11-04"
+  },
+  {
+    "Id": "c72e4c43-14c9-4646-ba9d-9f632141572d",
+    "Name": "Keto Diet",
+    "Description": "High-fat, low-carb diet that aims to induce ketosis.",
+    "ImageUrl": "https://imgs.search.brave.com/La-R_B0imoy5SP6j0f1AFv1eM1NgGMmWg5yN9IczNEo/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTEz/Mzc5NDIyMS9waG90/by9oZWFsdGh5LWtl/dG8tYnJlYWtmYXN0/LWVnZy1hdm9jYWRv/LWNoZWVzZS1iYWNv/bi5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9eVV6QnJJaUxO/a2NiOHFhVXRldEJO/LVVCQXQ1OGtVWjN6/amlkZ2UtR253OD0",
+    "UserID": null,
+    "CreatedOn": "2024-11-04"
+  },
+  {
+    "Id": "932d7750-8a1e-40de-a10e-a3b44592844f",
+    "Name": "DASH Diet",
+    "Description": "Dietary Approaches to Stop Hypertension; focuses on lowering blood pressure.",
+    "ImageUrl": "https://imgs.search.brave.com/W8_zgv8MUFPLIzugGECfKg3eilSWZNWVYu5m_RMcy7U/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9oaXBz/LmhlYXJzdGFwcHMu/Y29tL2htZy1wcm9k/L2ltYWdlcy9mb29k/cy1pdGVtcy1oaWdo/LWluLWhlYWx0aHkt/b21lZ2EtMy1mYXRz/LXJveWFsdHktZnJl/ZS1",
+    "UserID": null,
+    "CreatedOn": "2024-11-04"
+  }
 ]

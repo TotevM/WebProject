@@ -28,17 +28,9 @@
                 <!-- Macronutrient Section -->
                 <div class="card-footer">
                     <p><strong>Calories:</strong> @diet.Calories</p>
-                    <p><strong>Protein:</strong> @diet.Protein?.ToString()g</p>
-                    <p><strong>Carbohydrates:</strong> @diet.Carbohydrates?.ToString()g</p>
-                    <p><strong>Fats:</strong> @diet.Fats?.ToString()g</p>
-
-                    <!-- Button Section -->
-                    <div class="card-footer bg-light mt-2 p-3" style="background-color: #e9ecef;">
-                        <div class="d-flex justify-content-between">
-                            <span asp-action="Add" method="post" href="#" class="btn btn-primary">Add to My Diets</span>
-                            <a href="/Diets/Details/@diet.Name" class="btn btn-secondary">Details</a>
-                        </div>
-                    </div>
+                    <p><strong>Protein:</strong> @diet.Protein?.ToString() ?? "N/A" g</p>
+                    <p><strong>Carbohydrates:</strong> @diet.Carbohydrates?.ToString() ?? "N/A" g</p>
+                    <p><strong>Fats:</strong> @diet.Fats?.ToString() ?? "N/A" g</p>
                 </div>
             </div>
         </div>

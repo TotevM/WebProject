@@ -4,6 +4,7 @@ using FitnessApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FitnessApp.Data.Migrations
 {
     [DbContext(typeof(FitnessDBContext))]
-    partial class FitnessDBContextModelSnapshot : ModelSnapshot
+    [Migration("20241104164014_MappingtableSeed")]
+    partial class MappingtableSeed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -265,16 +268,6 @@ namespace FitnessApp.Data.Migrations
                         },
                         new
                         {
-                            DietId = new Guid("4003ee86-9566-4dd5-ab03-be63572904a3"),
-                            RecipeId = new Guid("e3f7d4b7-94b2-4b3f-889e-8d7e5cdef921")
-                        },
-                        new
-                        {
-                            DietId = new Guid("4003ee86-9566-4dd5-ab03-be63572904a3"),
-                            RecipeId = new Guid("f3a7d8d2-1b9d-4c31-995a-6fa4fd0b032a")
-                        },
-                        new
-                        {
                             DietId = new Guid("b9945d16-9964-4897-acba-2846f8730292"),
                             RecipeId = new Guid("e3f7d4b7-94b2-4b3f-889e-8d7e5cdef921")
                         },
@@ -282,16 +275,6 @@ namespace FitnessApp.Data.Migrations
                         {
                             DietId = new Guid("b9945d16-9964-4897-acba-2846f8730292"),
                             RecipeId = new Guid("f3a7d8d2-1b9d-4c31-995a-6fa4fd0b032a")
-                        },
-                        new
-                        {
-                            DietId = new Guid("b9945d16-9964-4897-acba-2846f8730292"),
-                            RecipeId = new Guid("a823fb5b-9ed5-4d90-9c31-2398dcdb78de")
-                        },
-                        new
-                        {
-                            DietId = new Guid("b9945d16-9964-4897-acba-2846f8730292"),
-                            RecipeId = new Guid("23d3e7f0-2d8f-4fc3-8a3a-8f9b6a6c2e93")
                         },
                         new
                         {
@@ -307,106 +290,6 @@ namespace FitnessApp.Data.Migrations
                         {
                             DietId = new Guid("4bf17f5e-3c9e-444c-bc03-11ba09df4844"),
                             RecipeId = new Guid("a823fb5b-9ed5-4d90-9c31-2398dcdb78de")
-                        },
-                        new
-                        {
-                            DietId = new Guid("4bf17f5e-3c9e-444c-bc03-11ba09df4844"),
-                            RecipeId = new Guid("b2175cd6-6822-4e93-917f-3e8c70c09fbc")
-                        },
-                        new
-                        {
-                            DietId = new Guid("042a990d-b389-4a3b-8c3e-f9958eecb5ba"),
-                            RecipeId = new Guid("b2175cd6-6822-4e93-917f-3e8c70c09fbc")
-                        },
-                        new
-                        {
-                            DietId = new Guid("042a990d-b389-4a3b-8c3e-f9958eecb5ba"),
-                            RecipeId = new Guid("ab237e7b-08f2-4dcd-b6f9-98a65c96f6ec")
-                        },
-                        new
-                        {
-                            DietId = new Guid("042a990d-b389-4a3b-8c3e-f9958eecb5ba"),
-                            RecipeId = new Guid("e073b44d-417e-4b9e-85d8-5a9536185b68")
-                        },
-                        new
-                        {
-                            DietId = new Guid("d8540959-108c-4a29-b1f2-e475f469b95c"),
-                            RecipeId = new Guid("ce451c31-e002-4e97-9140-dc81837b58a7")
-                        },
-                        new
-                        {
-                            DietId = new Guid("d8540959-108c-4a29-b1f2-e475f469b95c"),
-                            RecipeId = new Guid("b2175cd6-6822-4e93-917f-3e8c70c09fbc")
-                        },
-                        new
-                        {
-                            DietId = new Guid("d8540959-108c-4a29-b1f2-e475f469b95c"),
-                            RecipeId = new Guid("e073b44d-417e-4b9e-85d8-5a9536185b68")
-                        },
-                        new
-                        {
-                            DietId = new Guid("d8540959-108c-4a29-b1f2-e475f469b95c"),
-                            RecipeId = new Guid("eb4ad19e-e048-4630-bb57-2ee9c470de79")
-                        },
-                        new
-                        {
-                            DietId = new Guid("e38bbd08-712c-455d-aa59-83ad83b1ccec"),
-                            RecipeId = new Guid("7fcf8f67-0b44-4be5-9f55-3fd8f0bcb4d1")
-                        },
-                        new
-                        {
-                            DietId = new Guid("e38bbd08-712c-455d-aa59-83ad83b1ccec"),
-                            RecipeId = new Guid("7a88e34d-b5ba-4717-b1c1-5348d8d2a3ef")
-                        },
-                        new
-                        {
-                            DietId = new Guid("e38bbd08-712c-455d-aa59-83ad83b1ccec"),
-                            RecipeId = new Guid("53fa075b-fc37-46bc-b50f-c4d60013ef7a")
-                        },
-                        new
-                        {
-                            DietId = new Guid("e38bbd08-712c-455d-aa59-83ad83b1ccec"),
-                            RecipeId = new Guid("fb3e4329-2c05-49cc-9c19-6ff56464918b")
-                        },
-                        new
-                        {
-                            DietId = new Guid("c72e4c43-14c9-4646-ba9d-9f632141572d"),
-                            RecipeId = new Guid("19bdb4c8-3731-4456-8e8e-5e0d174b3241")
-                        },
-                        new
-                        {
-                            DietId = new Guid("c72e4c43-14c9-4646-ba9d-9f632141572d"),
-                            RecipeId = new Guid("3f9f14b8-bba3-4f57-b407-d4eb33c1f789")
-                        },
-                        new
-                        {
-                            DietId = new Guid("c72e4c43-14c9-4646-ba9d-9f632141572d"),
-                            RecipeId = new Guid("a0e4a4a4-4b43-48b7-9173-f84a3f1d52a1")
-                        },
-                        new
-                        {
-                            DietId = new Guid("c72e4c43-14c9-4646-ba9d-9f632141572d"),
-                            RecipeId = new Guid("71c3c77c-e826-47c5-92d0-88c42d22b867")
-                        },
-                        new
-                        {
-                            DietId = new Guid("932d7750-8a1e-40de-a10e-a3b44592844f"),
-                            RecipeId = new Guid("60e4a005-500e-4973-9d71-1b5c462f7de5")
-                        },
-                        new
-                        {
-                            DietId = new Guid("932d7750-8a1e-40de-a10e-a3b44592844f"),
-                            RecipeId = new Guid("dd638b57-0b70-46a7-8aeb-bf8c8025c222")
-                        },
-                        new
-                        {
-                            DietId = new Guid("932d7750-8a1e-40de-a10e-a3b44592844f"),
-                            RecipeId = new Guid("90f40e3b-b5eb-4899-b365-d4a2f94f1281")
-                        },
-                        new
-                        {
-                            DietId = new Guid("932d7750-8a1e-40de-a10e-a3b44592844f"),
-                            RecipeId = new Guid("af3f84d1-9f18-4c65-bb8c-04d15c9e2294")
                         });
                 });
 
