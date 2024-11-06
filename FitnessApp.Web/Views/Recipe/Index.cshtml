@@ -42,6 +42,7 @@
 							</form>
 
 						}
+						<a asp-controller="Recipe" asp-action="Details" asp-route-id="@recipe.Id" class="btn btn-info flex-fill">Details</a>
 							<form asp-controller="Recipe" asp-action="AddToDiet" method="get" style="display:inline;">
 								<input type="hidden" name="recipeId" value="@recipe.Id" />
 								<button type="submit" class="btn btn-success flex-fill">Add to Diet</button>

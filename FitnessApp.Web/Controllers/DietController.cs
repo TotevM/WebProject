@@ -54,7 +54,7 @@ namespace FitnessApp.Web.Controllers
                 Fats = recipe.Fats
             }).ToList();
 
-            return View(dietViewModels);
+			return View(dietViewModels);
         }
 
         public IActionResult AddToDiet()

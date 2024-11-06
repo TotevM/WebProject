@@ -189,5 +189,68 @@ namespace FitnessApp.Web.Controllers
         {
             throw new NotImplementedException();
         }
-    }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(Guid id)
+        {
+            // Fetch the recipe from the database using the ID
+            var recipe = await context.Recipes
+                .Where(r => r.Id == id)
+                .FirstOrDefaultAsync();
+
+            // If the recipe doesn't exist, return a 404 Not Found response
+            if (recipe == null)
+            {
+                return NotFound();
+            }
+
+            // Map the recipe data to the view model
+            var viewModel = new RecipeDetailsViewModel
+            {
+                Id = recipe.Id,
+                Name = recipe.Name,
+                Calories = recipe.Calories,
+                Protein = recipe.Protein,
+                Carbohydrates = recipe.Carbohydrates,
+                Fats = recipe.Fats,
+                ImageUrl = recipe.ImageUrl,
+                Ingredients = recipe.Ingredients,
+                Preparation = recipe.Preparation
+            };
+
+            // Return the view with the view model
+            return View(viewModel);
+        }
+
+        public IActionResult DetailsInDiet(Guid id)
+        {
+			// Fetch the recipe from the database using the ID
+			var recipe = context.Recipes
+				.Where(r => r.Id == id)
+				.FirstOrDefault();
+
+			// If the recipe doesn't exist, return a 404 Not Found response
+			if (recipe == null)
+			{
+				return NotFound();
+			}
+
+			// Map the recipe data to the view model
+			var viewModel = new RecipeDetailsViewModel
+			{
+				Id = recipe.Id,
+				Name = recipe.Name,
+				Calories = recipe.Calories,
+				Protein = recipe.Protein,
+				Carbohydrates = recipe.Carbohydrates,
+				Fats = recipe.Fats,
+				ImageUrl = recipe.ImageUrl,
+				Ingredients = recipe.Ingredients,
+				Preparation = recipe.Preparation
+			};
+
+			// Return the view with the view model
+			return View(viewModel);
+		}
+	}
 }
