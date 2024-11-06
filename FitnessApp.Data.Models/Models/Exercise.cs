@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using FitnessApp.Data.Models.Enumerations;
-using FitnessApp;
 using static FitnessApp.Common.EntityValidationConstants.ExerciseValidation;
+using FitnessApp.Data.Models.Models.Enumerations;
 
-namespace FitnessApp.Data.Models
+namespace FitnessApp.Data.Models.Models
 {
     public class Exercise
     {

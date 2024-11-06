@@ -1,5 +1,6 @@
 ﻿using FitnessApp.Data;
 using FitnessApp.Data.Models;
+using FitnessApp.Data.Models.Models;
 using FitnessApp.Web.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

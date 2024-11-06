@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace FitnessApp.Data.Models
+namespace FitnessApp.Data.Models.Models
 {
     public class WorkoutExercise
     {

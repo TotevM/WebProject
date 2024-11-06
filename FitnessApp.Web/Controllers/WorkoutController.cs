@@ -1,4 +1,5 @@
 ﻿using FitnessApp.Data.Models;
+using FitnessApp.Data.Models.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,9 +21,9 @@ namespace FitnessApp.Web.Controllers
             return View();
         }
 
-        public IActionResult AddWorkoutForm()
-        {
-            return View();
-        }
+        //public IActionResult AddWorkoutForm()
+        //{
+        //    return View();
+        //}
     }
 }

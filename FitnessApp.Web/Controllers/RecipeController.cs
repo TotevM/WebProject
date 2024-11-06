@@ -2,7 +2,9 @@
 using System.Security.Claims;
 using FitnessApp.Data;
 using FitnessApp.Data.Models;
-using FitnessApp.Data.Models.Enumerations;
+using FitnessApp.Data.Models.Models.Enumerations;
+using FitnessApp.Data.Models.Models;
+using FitnessApp.Data.Models.Models.Enumerations;
 using FitnessApp.Web.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

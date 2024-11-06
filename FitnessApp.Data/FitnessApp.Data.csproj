@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FitnessApp.Common\FitnessApp.Common.csproj" />
+    <ProjectReference Include="..\FitnessApp.Data.Models\FitnessApp.Data.Models.csproj" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="8.0.0" />

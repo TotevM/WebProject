@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using FitnessApp.Data.Models;
+using FitnessApp.Data.Models.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using static FitnessApp.Common.EntityValidationConstants.DietValidation;

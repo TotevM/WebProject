@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using FitnessApp.Data.Models.Enumerations;
+using FitnessApp.Data.Models.Models.Enumerations;
 using static FitnessApp.Common.EntityValidationConstants.RecipeValidation;
 
 namespace FitnessApp.Web.Models
@@ -22,7 +22,7 @@ namespace FitnessApp.Web.Models
         public string Ingredients { get; set; } = null!;
         public string? ImageUrl { get; set; }
 
-        [Required] 
+        [Required]
         public string Goal { get; set; } = null!;
 
         [Range(0, CalsMax)]

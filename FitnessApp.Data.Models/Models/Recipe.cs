@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using FitnessApp.Data.Models.Enumerations;
+using FitnessApp.Data.Models.Models.Enumerations;
 using static FitnessApp.Common.EntityValidationConstants.RecipeValidation;
 
-namespace FitnessApp.Data.Models
+namespace FitnessApp.Data.Models.Models
 {
     public class Recipe
     {

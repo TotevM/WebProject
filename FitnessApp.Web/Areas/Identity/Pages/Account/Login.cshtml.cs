@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using FitnessApp.Data.Models;
+using FitnessApp.Data.Models.Models;
 
 namespace FitnessApp.Web.Areas.Identity.Pages.Account
 {

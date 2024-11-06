@@ -22,9 +22,9 @@
                         </div>
                         <div class="card-footer">
                             <p><strong>Calories:</strong> @diet.Calories</p>
-                            <p><strong>Protein:</strong> @(diet.Protein?.ToString() ?? "N/A") g</p>
-                            <p><strong>Carbohydrates:</strong> @(diet.Carbohydrates?.ToString() ?? "N/A") g</p>
-                            <p><strong>Fats:</strong> @(diet.Fats?.ToString() ?? "N/A") g</p>
+                            <p><strong>Protein:</strong> @(diet.Protein?.ToString())g</p>
+                            <p><strong>Carbohydrates:</strong> @(diet.Carbohydrates?.ToString())g</p>
+                            <p><strong>Fats:</strong> @(diet.Fats?.ToString())g</p>
                             <button class="btn btn-primary" onclick="addRecipe('@diet.Name', '@diet.ImageUrl', @diet.Calories, @(diet.Protein ?? 0), @(diet.Carbohydrates ?? 0), @(diet.Fats ?? 0))">Add Recipe</button>
                         </div>
                     </div>

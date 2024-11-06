@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using FitnessApp.Data.Models.Enumerations;
+using FitnessApp.Data.Models.Models.Enumerations;
 using static FitnessApp.Common.EntityValidationConstants.RecipeValidation;
 
 namespace FitnessApp.Web.Models
@@ -7,7 +7,7 @@ namespace FitnessApp.Web.Models
     public class RecipeEditViewModel
     {
         public Guid Id { get; set; }
-        
+
         [MinLength(RecipeNameMinLength)]
         [MaxLength(RecipeNameMaxLength)]
         [Required]
