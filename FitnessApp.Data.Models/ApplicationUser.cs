@@ -1,7 +1,7 @@
-﻿using FitnessApp.Data.Models.Models.Enumerations;
+﻿using FitnessApp.Common.Enumerations;
 using Microsoft.AspNetCore.Identity;
 
-namespace FitnessApp.Data.Models.Models
+namespace FitnessApp.Data.Models
 {
     public class ApplicationUser : IdentityUser
     {

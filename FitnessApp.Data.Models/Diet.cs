@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using static FitnessApp.Common.EntityValidationConstants.DietValidation;
 
-namespace FitnessApp.Data.Models.Models
+namespace FitnessApp.Data.Models
 {
     public class Diet
     {

@@ -1,12 +1,11 @@
 ﻿using FitnessApp.Data.Models;
-using FitnessApp.Data.Models.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace FitnessApp.Data.EntityConfiguration
 {
-	using Microsoft.EntityFrameworkCore.Metadata.Builders;
+    using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-	public class ProgressConfiguration : IEntityTypeConfiguration<Progress>
+    public class ProgressConfiguration : IEntityTypeConfiguration<Progress>
 	{
 		public void Configure(EntityTypeBuilder<Progress> builder)
 		{

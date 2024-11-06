@@ -2,17 +2,15 @@
 using System.Security.Claims;
 using FitnessApp.Data;
 using FitnessApp.Data.Models;
-using FitnessApp.Data.Models.Models.Enumerations;
-using FitnessApp.Data.Models.Models;
-using FitnessApp.Data.Models.Models.Enumerations;
-using FitnessApp.Web.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using FitnessApp.ViewModels;
+using FitnessApp.Common.Enumerations;
 
 namespace FitnessApp.Web.Controllers
 {
-	public class RecipeController : Controller
+    public class RecipeController : Controller
 	{
 		private readonly ILogger<RecipeController> logger;
 		private readonly UserManager<ApplicationUser> user;

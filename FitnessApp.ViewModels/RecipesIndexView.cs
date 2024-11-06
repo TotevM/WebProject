@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace FitnessApp.Web.Models
+namespace FitnessApp.ViewModels
 {
     public class RecipesIndexView
     {

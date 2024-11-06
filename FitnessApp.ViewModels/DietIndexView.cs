@@ -1,4 +1,4 @@
-﻿namespace FitnessApp.Web.Models
+﻿namespace FitnessApp.ViewModels
 {
     public class DietIndexView
     {

@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitnessApp.Web", "FitnessApp.Web.csproj", "{379B2997-3929-4290-9801-9AD1C96E458D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F922F291-9A72-4B73-9655-49D4B6592F8B} = {F922F291-9A72-4B73-9655-49D4B6592F8B}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitnessApp.Data", "..\FitnessApp.Data\FitnessApp.Data.csproj", "{3DC7AF21-F196-4944-B93B-1A880FE015A5}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -13,6 +16,11 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitnessApp.Common", "..\FitnessApp.Common\FitnessApp.Common.csproj", "{F7CC5FCD-6B98-43F1-8760-0A4757DA11F1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitnessApp.Data.Models", "..\FitnessApp.Data.Models\FitnessApp.Data.Models.csproj", "{45D2A919-8351-4FCB-A208-E2FCA98ED864}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F7CC5FCD-6B98-43F1-8760-0A4757DA11F1} = {F7CC5FCD-6B98-43F1-8760-0A4757DA11F1}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitnessApp.ViewModels", "..\FitnessApp.ViewModels\FitnessApp.ViewModels.csproj", "{F922F291-9A72-4B73-9655-49D4B6592F8B}"
 	ProjectSection(ProjectDependencies) = postProject
 		{F7CC5FCD-6B98-43F1-8760-0A4757DA11F1} = {F7CC5FCD-6B98-43F1-8760-0A4757DA11F1}
 	EndProjectSection
@@ -39,6 +47,10 @@ Global
 		{45D2A919-8351-4FCB-A208-E2FCA98ED864}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45D2A919-8351-4FCB-A208-E2FCA98ED864}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{45D2A919-8351-4FCB-A208-E2FCA98ED864}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F922F291-9A72-4B73-9655-49D4B6592F8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F922F291-9A72-4B73-9655-49D4B6592F8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F922F291-9A72-4B73-9655-49D4B6592F8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F922F291-9A72-4B73-9655-49D4B6592F8B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

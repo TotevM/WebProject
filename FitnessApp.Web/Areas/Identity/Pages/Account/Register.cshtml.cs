@@ -4,7 +4,7 @@
 
 using System.ComponentModel.DataAnnotations;
 using System.Text;
-using FitnessApp.Data.Models.Models;
+using FitnessApp.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;

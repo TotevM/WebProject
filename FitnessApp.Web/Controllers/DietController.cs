@@ -1,14 +1,13 @@
 ﻿using FitnessApp.Data;
 using FitnessApp.Data.Models;
-using FitnessApp.Data.Models.Models;
-using FitnessApp.Web.Models;
+using FitnessApp.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FitnessApp.Web.Controllers
 {
-	public class DietController : Controller
-	{
+    public class DietController : Controller
+    {
         private readonly ILogger<RecipeController> logger;
         private readonly UserManager<ApplicationUser> user;
         private readonly FitnessDBContext context;

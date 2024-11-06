@@ -1,11 +1,10 @@
 ﻿using FitnessApp.Data.Models;
-using FitnessApp.Data.Models.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace FitnessApp.Data.EntityConfiguration
 {
-	public class WorkoutExerciseConfiguration : IEntityTypeConfiguration<WorkoutExercise>
+    public class WorkoutExerciseConfiguration : IEntityTypeConfiguration<WorkoutExercise>
 	{
 		public void Configure(EntityTypeBuilder<WorkoutExercise> builder)
 		{
