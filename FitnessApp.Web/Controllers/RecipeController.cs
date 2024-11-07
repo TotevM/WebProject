@@ -250,13 +250,13 @@ namespace FitnessApp.Web.Controllers
 		}
 
         [HttpGet]
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-	        var recipe = await context.Recipes.FirstOrDefaultAsync(x => x.Id.ToString() == id);
+	        var recipe = await context.Recipes.FirstOrDefaultAsync(x => x.Id == id);
 
 	        var model = new DeleteRecipeView();
 	        {
-		        model.Id = id.ToString();
+		        model.Id = id;
 		        model.Name = recipe.Name;
 		        model.ImageUrl = recipe.ImageUrl;
 	        }
@@ -266,7 +266,7 @@ namespace FitnessApp.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(DeleteRecipeView model)
         {
-	        var recipe = await context.Recipes.FirstOrDefaultAsync(p => p.Id.ToString() == model.Id);
+	        var recipe = await context.Recipes.FirstOrDefaultAsync(p => p.Id == model.Id);
 
 	        if (recipe == null)
 	        {
