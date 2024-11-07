@@ -12,14 +12,14 @@ namespace FitnessApp.Web
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             builder.Services.AddDbContext<FitnessDBContext>(options =>
             options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
             builder.Services.AddDefaultIdentity<ApplicationUser>()
-                .AddEntityFrameworkStores<FitnessDBContext>()  // Ensure this is correct
+                .AddEntityFrameworkStores<FitnessDBContext>()
                 .AddDefaultTokenProviders();
 
 
@@ -33,17 +33,15 @@ namespace FitnessApp.Web
                 try
                 {
                     var context = services.GetRequiredService<FitnessDBContext>();
-                    // Call your seeding method here
-                    context.SeedDatabaseAsync().Wait(); // or use `await` if Main is made async
+                    context.SeedDatabaseAsync().Wait();
                 }
                 catch (Exception ex)
                 {
                     var logger = services.GetRequiredService<ILogger<Program>>();
                     logger.LogError(ex, "An error occurred while seeding the database.");
                 }
-            }
+            }//to study deeper
 
-            // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseMigrationsEndPoint();
@@ -51,7 +49,6 @@ namespace FitnessApp.Web
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 

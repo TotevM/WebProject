@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FitnessApp.Data.Migrations
 {
     [DbContext(typeof(FitnessDBContext))]
-    [Migration("20241102154411_RecipeCorrectSeeding")]
-    partial class RecipeCorrectSeeding
+    [Migration("20241107063325_ApplicationUserAddedImageAndAge")]
+    partial class ApplicationUserAddedImageAndAge
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,6 +40,9 @@ namespace FitnessApp.Data.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -49,6 +52,9 @@ namespace FitnessApp.Data.Migrations
 
                     b.Property<int>("Gender")
                         .HasColumnType("int");
+
+                    b.Property<string>("ImagePath")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -105,6 +111,12 @@ namespace FitnessApp.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("Calories")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Carbohydrates")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
@@ -113,13 +125,21 @@ namespace FitnessApp.Data.Migrations
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
 
+                    b.Property<int?>("Fats")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
 
+                    b.Property<int?>("Protein")
+                        .HasColumnType("int");
+
                     b.Property<string>("UserID")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
@@ -127,6 +147,104 @@ namespace FitnessApp.Data.Migrations
                     b.HasIndex("UserID");
 
                     b.ToTable("Diets");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("4003ee86-9566-4dd5-ab03-be63572904a3"),
+                            Calories = 0,
+                            Carbohydrates = 0,
+                            CreatedOn = new DateTime(2024, 11, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "A well-balanced diet for healthy living.",
+                            Fats = 0,
+                            ImageUrl = "https://imgs.search.brave.com/s8CFdPvLm2v8QBJZdmM9JTjyexe9YWX3kQMEu26T0FI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/cHJlbWl1bS1waG90/by93ZWxsLWJhbGFu/Y2VkLXBsYXRlLWZv/b2QtZmVhdHVyaW5n/LWxlYW4tcHJvdGVp/bnMtaGVhbHRoeS1l/YXRpbmctY2hvaWNl/c184OTM1NzEtNjY1/MDIuanBnP3NlbXQ9/YWlzX2h5YnJpZA",
+                            Name = "Balanced Diet",
+                            Protein = 0
+                        },
+                        new
+                        {
+                            Id = new Guid("b9945d16-9964-4897-acba-2846f8730292"),
+                            Calories = 0,
+                            Carbohydrates = 0,
+                            CreatedOn = new DateTime(2024, 11, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Ideal for muscle growth and recovery.",
+                            Fats = 0,
+                            ImageUrl = "https://imgs.search.brave.com/nFLS8O8iqyEsTxAc25VNTBCwWxqg_TGi_X-RsVNVqck/rs:fit:860:0:0:0/g:ce/aHR0cDovL2NvbnRl/bnQuaGVhbHRoLmhh/cnZhcmQuZWR1L3dw/LWNvbnRlbnQvdXBs/b2Fkcy8yMDI0LzAx/LzI4ZThlNDY0LWY1/NWUtNGIzMi05YmFi/LWRjOTkwZDhjYzky/Ny5qcGc",
+                            Name = "High-Protein Diet",
+                            Protein = 0
+                        },
+                        new
+                        {
+                            Id = new Guid("4bf17f5e-3c9e-444c-bc03-11ba09df4844"),
+                            Calories = 0,
+                            Carbohydrates = 0,
+                            CreatedOn = new DateTime(2024, 11, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "A low-carb diet to promote weight loss.",
+                            Fats = 0,
+                            ImageUrl = "https://tasteforlife.com/sites/default/files/styles/laptop/public/diet-nutrition/special-diets/low-carb-diets-for-health-benefits/low-carb-diets-for-health-benefits.jpg?itok=saTbKWSP",
+                            Name = "Low-Carb Diet",
+                            Protein = 0
+                        },
+                        new
+                        {
+                            Id = new Guid("042a990d-b389-4a3b-8c3e-f9958eecb5ba"),
+                            Calories = 0,
+                            Carbohydrates = 0,
+                            CreatedOn = new DateTime(2024, 11, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Rich in fruits, vegetables, whole grains, and healthy fats.",
+                            Fats = 0,
+                            ImageUrl = "https://imgs.search.brave.com/XMqYsLggsYc1O09i-aEGhJO-TlIABgiyisJeNCe1RzE/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/aGVhcnQub3JnLy0v/bWVkaWEvQUhBL0g0/R00vQXJ0aWNsZS1J/bWFnZXMvTWVkaXRl/cnJhbmVhbl9EaWV0/LmpwZw",
+                            Name = "Mediterranean Diet",
+                            Protein = 0
+                        },
+                        new
+                        {
+                            Id = new Guid("d8540959-108c-4a29-b1f2-e475f469b95c"),
+                            Calories = 0,
+                            Carbohydrates = 0,
+                            CreatedOn = new DateTime(2024, 11, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "A plant-based diet that excludes all animal products.",
+                            Fats = 0,
+                            ImageUrl = "https://imgs.search.brave.com/xOEfQ19UaCLOKXzo-5Jbb4nLcKwO9UbBo5wewTvTJXw/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMuaW1tZWRpYXRl/LmNvLnVrL3Byb2R1/Y3Rpb24vdm9sYXRp/bGUvc2l0ZXMvMzAv/MjAyNC8wNi9IZWFs/dGh5LXZlZ2FuNzAw/LWU2YzJiNWUuanBn/P3F1YWxpdHk9OTAm/Zml0PTcwMCwzNTA",
+                            Name = "Vegan Diet",
+                            Protein = 0
+                        },
+                        new
+                        {
+                            Id = new Guid("e38bbd08-712c-455d-aa59-83ad83b1ccec"),
+                            Calories = 0,
+                            Carbohydrates = 0,
+                            CreatedOn = new DateTime(2024, 11, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Focuses on whole foods similar to what might have been eaten in the Paleolithic era.",
+                            Fats = 0,
+                            ImageUrl = "https://imgs.search.brave.com/3oOdIC1IaTHXOsjmkwIhQCtX9QNDaBkJUo_hAxv1Xjg/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9hc3Nl/dHMuY2xldmVsYW5k/Y2xpbmljLm9yZy90/cmFuc2Zvcm0vTGFy/Z2VGZWF0dXJlSW1h/Z2UvZWJiZDhjMGYt/OTcwOS00YjFkLWJk/OTktZTNlMzE1MWYw/ZTNhL1BhbGVvLURp/ZXQtMTMwMTU2NTM3/NS03NzB4NTMzLTFf/anBn",
+                            Name = "Paleo Diet",
+                            Protein = 0
+                        },
+                        new
+                        {
+                            Id = new Guid("c72e4c43-14c9-4646-ba9d-9f632141572d"),
+                            Calories = 0,
+                            Carbohydrates = 0,
+                            CreatedOn = new DateTime(2024, 11, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "High-fat, low-carb diet that aims to induce ketosis.",
+                            Fats = 0,
+                            ImageUrl = "https://imgs.search.brave.com/La-R_B0imoy5SP6j0f1AFv1eM1NgGMmWg5yN9IczNEo/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTEz/Mzc5NDIyMS9waG90/by9oZWFsdGh5LWtl/dG8tYnJlYWtmYXN0/LWVnZy1hdm9jYWRv/LWNoZWVzZS1iYWNv/bi5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9eVV6QnJJaUxO/a2NiOHFhVXRldEJO/LVVCQXQ1OGtVWjN6/amlkZ2UtR253OD0",
+                            Name = "Keto Diet",
+                            Protein = 0
+                        },
+                        new
+                        {
+                            Id = new Guid("932d7750-8a1e-40de-a10e-a3b44592844f"),
+                            Calories = 0,
+                            Carbohydrates = 0,
+                            CreatedOn = new DateTime(2024, 11, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Dietary Approaches to Stop Hypertension; focuses on lowering blood pressure.",
+                            Fats = 0,
+                            ImageUrl = "https://image.cnbcfm.com/api/v1/image/107233399-1682954665721-dash-flexitarian-mediterranean-diet-to-stop-hypert-2022-02-14-13-50-46-utc.jpg?v=1682956537",
+                            Name = "DASH Diet",
+                            Protein = 0
+                        });
                 });
 
             modelBuilder.Entity("FitnessApp.Data.Models.DietRecipe", b =>
@@ -142,6 +260,248 @@ namespace FitnessApp.Data.Migrations
                     b.HasIndex("RecipeId");
 
                     b.ToTable("DietsRecipes");
+
+                    b.HasData(
+                        new
+                        {
+                            DietId = new Guid("4003ee86-9566-4dd5-ab03-be63572904a3"),
+                            RecipeId = new Guid("3f9f14b8-bba3-4f57-b407-d4eb33c1f789")
+                        },
+                        new
+                        {
+                            DietId = new Guid("4003ee86-9566-4dd5-ab03-be63572904a3"),
+                            RecipeId = new Guid("c1d5a8e3-9a7a-4d77-bb38-8aafd82df021")
+                        },
+                        new
+                        {
+                            DietId = new Guid("4003ee86-9566-4dd5-ab03-be63572904a3"),
+                            RecipeId = new Guid("e3f7d4b7-94b2-4b3f-889e-8d7e5cdef921")
+                        },
+                        new
+                        {
+                            DietId = new Guid("4003ee86-9566-4dd5-ab03-be63572904a3"),
+                            RecipeId = new Guid("7fcf8f67-0b44-4be5-9f55-3fd8f0bcb4d1")
+                        },
+                        new
+                        {
+                            DietId = new Guid("4003ee86-9566-4dd5-ab03-be63572904a3"),
+                            RecipeId = new Guid("fb3e4329-2c05-49cc-9c19-6ff564649118")
+                        },
+                        new
+                        {
+                            DietId = new Guid("4003ee86-9566-4dd5-ab03-be63572904a3"),
+                            RecipeId = new Guid("af3f84d1-9f18-4c65-bb8c-04d15c9e2294")
+                        },
+                        new
+                        {
+                            DietId = new Guid("b9945d16-9964-4897-acba-2846f8730292"),
+                            RecipeId = new Guid("e3f7d4b7-94b2-4b3f-889e-8d7e5cdef921")
+                        },
+                        new
+                        {
+                            DietId = new Guid("b9945d16-9964-4897-acba-2846f8730292"),
+                            RecipeId = new Guid("f3a7d8d2-1b9d-4c31-995a-6fa4fd0b032a")
+                        },
+                        new
+                        {
+                            DietId = new Guid("b9945d16-9964-4897-acba-2846f8730292"),
+                            RecipeId = new Guid("a823fb5b-9ed5-4d90-9c31-2398dcdb78de")
+                        },
+                        new
+                        {
+                            DietId = new Guid("b9945d16-9964-4897-acba-2846f8730292"),
+                            RecipeId = new Guid("23d3e7f0-2d8f-4fc3-8a3a-8f9b6a6c2e93")
+                        },
+                        new
+                        {
+                            DietId = new Guid("b9945d16-9964-4897-acba-2846f8730292"),
+                            RecipeId = new Guid("dd638b57-0b70-46a7-8aeb-bf8c8025c222")
+                        },
+                        new
+                        {
+                            DietId = new Guid("b9945d16-9964-4897-acba-2846f8730292"),
+                            RecipeId = new Guid("a1c1a9cd-25f5-4c19-89f6-32851f0d1152")
+                        },
+                        new
+                        {
+                            DietId = new Guid("4bf17f5e-3c9e-444c-bc03-11ba09df4844"),
+                            RecipeId = new Guid("a6c8d4e0-1c8f-4f1b-b0c2-6a6d9a7a1f2a")
+                        },
+                        new
+                        {
+                            DietId = new Guid("4bf17f5e-3c9e-444c-bc03-11ba09df4844"),
+                            RecipeId = new Guid("a7f2e8d4-8b2e-41e8-90d7-5e2e6b7a2f5e")
+                        },
+                        new
+                        {
+                            DietId = new Guid("4bf17f5e-3c9e-444c-bc03-11ba09df4844"),
+                            RecipeId = new Guid("a823fb5b-9ed5-4d90-9c31-2398dcdb78de")
+                        },
+                        new
+                        {
+                            DietId = new Guid("4bf17f5e-3c9e-444c-bc03-11ba09df4844"),
+                            RecipeId = new Guid("b2175cd6-6822-4e93-917f-3e8c70c09fbc")
+                        },
+                        new
+                        {
+                            DietId = new Guid("4bf17f5e-3c9e-444c-bc03-11ba09df4844"),
+                            RecipeId = new Guid("a1c1a9cd-25f5-4c19-89f6-32851f0d1152")
+                        },
+                        new
+                        {
+                            DietId = new Guid("4bf17f5e-3c9e-444c-bc03-11ba09df4844"),
+                            RecipeId = new Guid("816b8eec-5ff7-408e-a903-55f509b97302")
+                        },
+                        new
+                        {
+                            DietId = new Guid("4bf17f5e-3c9e-444c-bc03-11ba09df4844"),
+                            RecipeId = new Guid("90f40e3b-b5eb-4899-b365-d4a2f94f1281")
+                        },
+                        new
+                        {
+                            DietId = new Guid("042a990d-b389-4a3b-8c3e-f9958eecb5ba"),
+                            RecipeId = new Guid("b2175cd6-6822-4e93-917f-3e8c70c09fbc")
+                        },
+                        new
+                        {
+                            DietId = new Guid("042a990d-b389-4a3b-8c3e-f9958eecb5ba"),
+                            RecipeId = new Guid("ab237e7b-08f2-4dcd-b6f9-98a65c96f6ec")
+                        },
+                        new
+                        {
+                            DietId = new Guid("042a990d-b389-4a3b-8c3e-f9958eecb5ba"),
+                            RecipeId = new Guid("e073b44d-417e-4b9e-85d8-5a9536185b68")
+                        },
+                        new
+                        {
+                            DietId = new Guid("042a990d-b389-4a3b-8c3e-f9958eecb5ba"),
+                            RecipeId = new Guid("19bdb4c8-3731-4456-8e8e-5e0d174b3241")
+                        },
+                        new
+                        {
+                            DietId = new Guid("042a990d-b389-4a3b-8c3e-f9958eecb5ba"),
+                            RecipeId = new Guid("53fa075b-fc37-46bc-b50f-c4d60013ef7a")
+                        },
+                        new
+                        {
+                            DietId = new Guid("d8540959-108c-4a29-b1f2-e475f469b95c"),
+                            RecipeId = new Guid("ce451c31-e002-4e97-9140-dc81837b58a7")
+                        },
+                        new
+                        {
+                            DietId = new Guid("d8540959-108c-4a29-b1f2-e475f469b95c"),
+                            RecipeId = new Guid("b2175cd6-6822-4e93-917f-3e8c70c09fbc")
+                        },
+                        new
+                        {
+                            DietId = new Guid("d8540959-108c-4a29-b1f2-e475f469b95c"),
+                            RecipeId = new Guid("e073b44d-417e-4b9e-85d8-5a9536185b68")
+                        },
+                        new
+                        {
+                            DietId = new Guid("d8540959-108c-4a29-b1f2-e475f469b95c"),
+                            RecipeId = new Guid("eb4ad19e-e048-4630-bb57-2ee9c470de79")
+                        },
+                        new
+                        {
+                            DietId = new Guid("d8540959-108c-4a29-b1f2-e475f469b95c"),
+                            RecipeId = new Guid("fb3e4329-2c05-49cc-9c19-6ff56464918b")
+                        },
+                        new
+                        {
+                            DietId = new Guid("d8540959-108c-4a29-b1f2-e475f469b95c"),
+                            RecipeId = new Guid("ef63dc7f-bb29-4c6c-bcf5-4732ab2f4921")
+                        },
+                        new
+                        {
+                            DietId = new Guid("e38bbd08-712c-455d-aa59-83ad83b1ccec"),
+                            RecipeId = new Guid("7fcf8f67-0b44-4be5-9f55-3fd8f0bcb4d1")
+                        },
+                        new
+                        {
+                            DietId = new Guid("e38bbd08-712c-455d-aa59-83ad83b1ccec"),
+                            RecipeId = new Guid("7a88e34d-b5ba-4717-b1c1-5348d8d2a3ef")
+                        },
+                        new
+                        {
+                            DietId = new Guid("e38bbd08-712c-455d-aa59-83ad83b1ccec"),
+                            RecipeId = new Guid("53fa075b-fc37-46bc-b50f-c4d60013ef7a")
+                        },
+                        new
+                        {
+                            DietId = new Guid("e38bbd08-712c-455d-aa59-83ad83b1ccec"),
+                            RecipeId = new Guid("fb3e4329-2c05-49cc-9c19-6ff56464918b")
+                        },
+                        new
+                        {
+                            DietId = new Guid("e38bbd08-712c-455d-aa59-83ad83b1ccec"),
+                            RecipeId = new Guid("dd638b57-0b70-46a7-8aeb-bf8c8025c222")
+                        },
+                        new
+                        {
+                            DietId = new Guid("e38bbd08-712c-455d-aa59-83ad83b1ccec"),
+                            RecipeId = new Guid("2995c236-5b5d-42f9-89b5-15576256ee66")
+                        },
+                        new
+                        {
+                            DietId = new Guid("c72e4c43-14c9-4646-ba9d-9f632141572d"),
+                            RecipeId = new Guid("19bdb4c8-3731-4456-8e8e-5e0d174b3241")
+                        },
+                        new
+                        {
+                            DietId = new Guid("c72e4c43-14c9-4646-ba9d-9f632141572d"),
+                            RecipeId = new Guid("3f9f14b8-bba3-4f57-b407-d4eb33c1f789")
+                        },
+                        new
+                        {
+                            DietId = new Guid("c72e4c43-14c9-4646-ba9d-9f632141572d"),
+                            RecipeId = new Guid("a0e4a4a4-4b43-48b7-9173-f84a3f1d52a1")
+                        },
+                        new
+                        {
+                            DietId = new Guid("c72e4c43-14c9-4646-ba9d-9f632141572d"),
+                            RecipeId = new Guid("71c3c77c-e826-47c5-92d0-88c42d22b867")
+                        },
+                        new
+                        {
+                            DietId = new Guid("c72e4c43-14c9-4646-ba9d-9f632141572d"),
+                            RecipeId = new Guid("53fa075b-fc37-46bc-b50f-c4d60013ef7a")
+                        },
+                        new
+                        {
+                            DietId = new Guid("c72e4c43-14c9-4646-ba9d-9f632141572d"),
+                            RecipeId = new Guid("dd638b57-0b70-46a7-8aeb-bf8c8025c222")
+                        },
+                        new
+                        {
+                            DietId = new Guid("932d7750-8a1e-40de-a10e-a3b44592844f"),
+                            RecipeId = new Guid("60e4a005-500e-4973-9d71-1b5c462f7de5")
+                        },
+                        new
+                        {
+                            DietId = new Guid("932d7750-8a1e-40de-a10e-a3b44592844f"),
+                            RecipeId = new Guid("dd638b57-0b70-46a7-8aeb-bf8c8025c222")
+                        },
+                        new
+                        {
+                            DietId = new Guid("932d7750-8a1e-40de-a10e-a3b44592844f"),
+                            RecipeId = new Guid("90f40e3b-b5eb-4899-b365-d4a2f94f1281")
+                        },
+                        new
+                        {
+                            DietId = new Guid("932d7750-8a1e-40de-a10e-a3b44592844f"),
+                            RecipeId = new Guid("af3f84d1-9f18-4c65-bb8c-04d15c9e2294")
+                        },
+                        new
+                        {
+                            DietId = new Guid("932d7750-8a1e-40de-a10e-a3b44592844f"),
+                            RecipeId = new Guid("be29b72f-3f75-49d0-bb69-7d1e54aab95a")
+                        },
+                        new
+                        {
+                            DietId = new Guid("932d7750-8a1e-40de-a10e-a3b44592844f"),
+                            RecipeId = new Guid("816b8eec-5ff7-408e-a903-55f509b97302")
+                        });
                 });
 
             modelBuilder.Entity("FitnessApp.Data.Models.Exercise", b =>
@@ -1227,9 +1587,7 @@ namespace FitnessApp.Data.Migrations
                 {
                     b.HasOne("FitnessApp.Data.Models.ApplicationUser", "User")
                         .WithMany()
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserID");
 
                     b.Navigation("User");
                 });
@@ -1245,7 +1603,7 @@ namespace FitnessApp.Data.Migrations
                     b.HasOne("FitnessApp.Data.Models.Recipe", "Recipe")
                         .WithMany("DietsRecipes")
                         .HasForeignKey("RecipeId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Diet");

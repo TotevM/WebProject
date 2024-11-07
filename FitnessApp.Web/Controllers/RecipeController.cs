@@ -26,9 +26,9 @@ namespace FitnessApp.Web.Controllers
         public IActionResult Index(Goal? goal = null)
         {
             var recipesQuery = context.Recipes
-                .Where(d=>!d.IsDeleted)
-                .OrderByDescending(r=>r.CreatedOn)
-                .ThenBy(d=>d.Name)
+                .Where(d => !d.IsDeleted)
+                .OrderByDescending(r => r.CreatedOn)
+                .ThenBy(d => d.Name)
                 .AsQueryable();
 
             if (goal.HasValue)
@@ -172,23 +172,18 @@ namespace FitnessApp.Web.Controllers
             return RedirectToAction("Index", "Recipe");
         }
 
-        [HttpPost]
-        public IActionResult Delete(Guid id)
-        {
-            var recipe = context.Recipes.FirstOrDefault(r => r.Id == id);
+        //[HttpPost]
+        //public IActionResult Delete(Guid id)
+        //{
+        //    var recipe = context.Recipes.FirstOrDefault(r => r.Id == id);
 
-            recipe!.IsDeleted = true;
+        //    recipe!.IsDeleted = true;
 
-            context.Recipes.Update(recipe);
-            context.SaveChanges();
+        //    context.Recipes.Update(recipe);
+        //    context.SaveChanges();
 
-            return RedirectToAction("Index", "Recipe");
-        }
-
-        public IActionResult AddToDiet()
-        {
-            throw new NotImplementedException();
-        }
+        //    return RedirectToAction("Index", "Recipe");
+        //}
 
         [HttpGet]
         public async Task<IActionResult> Details(Guid id)
@@ -215,18 +210,19 @@ namespace FitnessApp.Web.Controllers
                 Fats = recipe.Fats,
                 ImageUrl = recipe.ImageUrl,
                 Ingredients = recipe.Ingredients,
-                Preparation = recipe.Preparation
+                Preparation = recipe.Preparation,
+                UserId = recipe.UserID!
             };
 
             // Return the view with the view model
             return View(viewModel);
         }
 
-        public IActionResult DetailsInDiet(Guid id)
+        public IActionResult DetailsInDiet(string id)
         {
 			// Fetch the recipe from the database using the ID
 			var recipe = context.Recipes
-				.Where(r => r.Id == id)
+				.Where(r => r.Id.ToString() == id)
 				.FirstOrDefault();
 
 			// If the recipe doesn't exist, return a 404 Not Found response
@@ -252,5 +248,42 @@ namespace FitnessApp.Web.Controllers
 			// Return the view with the view model
 			return View(viewModel);
 		}
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(string id)
+        {
+	        var recipe = await context.Recipes.FirstOrDefaultAsync(x => x.Id.ToString() == id);
+
+	        var model = new DeleteRecipeView();
+	        {
+		        model.Id = id.ToString();
+		        model.Name = recipe.Name;
+		        model.ImageUrl = recipe.ImageUrl;
+	        }
+	        return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(DeleteRecipeView model)
+        {
+	        var recipe = await context.Recipes.FirstOrDefaultAsync(p => p.Id.ToString() == model.Id);
+
+	        if (recipe == null)
+	        {
+		        return NotFound();
+	        }
+
+	        recipe.IsDeleted = true;
+
+	        context.Recipes.Update(recipe);
+	        await context.SaveChangesAsync();
+
+	        return RedirectToAction("Index");
+        }
+
+        public IActionResult AddToDiet()
+        {
+	        throw new NotImplementedException();
+        }
 	}
 }

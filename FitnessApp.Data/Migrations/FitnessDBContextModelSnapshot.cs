@@ -37,6 +37,9 @@ namespace FitnessApp.Data.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -46,6 +49,9 @@ namespace FitnessApp.Data.Migrations
 
                     b.Property<int>("Gender")
                         .HasColumnType("int");
+
+                    b.Property<string>("ImagePath")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -137,7 +143,7 @@ namespace FitnessApp.Data.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("Diets");
+                    b.ToTable("Diets", (string)null);
 
                     b.HasData(
                         new
@@ -250,7 +256,7 @@ namespace FitnessApp.Data.Migrations
 
                     b.HasIndex("RecipeId");
 
-                    b.ToTable("DietsRecipes");
+                    b.ToTable("DietsRecipes", (string)null);
 
                     b.HasData(
                         new
@@ -520,7 +526,7 @@ namespace FitnessApp.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Exercises");
+                    b.ToTable("Exercises", (string)null);
 
                     b.HasData(
                         new
@@ -812,7 +818,7 @@ namespace FitnessApp.Data.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("Progresses");
+                    b.ToTable("Progresses", (string)null);
                 });
 
             modelBuilder.Entity("FitnessApp.Data.Models.Recipe", b =>
@@ -867,7 +873,7 @@ namespace FitnessApp.Data.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("Recipes");
+                    b.ToTable("Recipes", (string)null);
 
                     b.HasData(
                         new
@@ -1419,7 +1425,7 @@ namespace FitnessApp.Data.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("Workouts");
+                    b.ToTable("Workouts", (string)null);
                 });
 
             modelBuilder.Entity("FitnessApp.Data.Models.WorkoutExercise", b =>
@@ -1434,7 +1440,7 @@ namespace FitnessApp.Data.Migrations
 
                     b.HasIndex("ExerciseId");
 
-                    b.ToTable("WorkoutsExercises");
+                    b.ToTable("WorkoutsExercises", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

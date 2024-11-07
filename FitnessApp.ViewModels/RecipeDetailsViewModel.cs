@@ -14,6 +14,7 @@
         public string ImageUrl { get; set; }      // URL of the image for the recipe
         public string Ingredients { get; set; }   // Ingredients as a single string
         public string Preparation { get; set; }   // Preparation instructions
-    }
+        public string UserId { get; set; }
+	}
 
 }

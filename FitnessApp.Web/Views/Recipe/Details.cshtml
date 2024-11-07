@@ -1,4 +1,5 @@
-﻿@model RecipeDetailsViewModel
+﻿@using System.Security.Claims
+@model RecipeDetailsViewModel
 
 <div class="container my-5">
 	<h2 class="mb-4">@Model.Name</h2>
@@ -40,6 +41,11 @@
 
 	<div class="row mt-4">
 		<div class="col-12 text-end">
+			@if (User.FindFirstValue(ClaimTypes.NameIdentifier) == Model.UserId)
+			{
+			<a href="@Url.Action("Edit", "Recipe", new { id = Model.Id })" class="btn btn-primary me-2">Edit</a>
+			<a href="@Url.Action("Delete", "Recipe", new { id = Model.Id })" class="btn btn-danger me-2">Delete</a>
+			}
 			<a href="@Url.Action("Index", "Recipe", new { id = Model.Id })" class="btn btn-secondary">Back to Recipe List</a>
 		</div>
 	</div>

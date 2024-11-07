@@ -32,16 +32,6 @@
 					<h5 class="card-title">@recipe.Name</h5>
                 
 					<div class="mt-auto d-flex justify-content-between gap-2">
-						@if (recipe.UserID == User!.FindFirstValue(ClaimTypes.NameIdentifier))
-						{
-							<a asp-controller="Recipe" asp-action="Edit" asp-route-id="@recipe.Id" class="btn btn-info flex-fill">Edit</a>
-
-							<form asp-controller="Recipe" asp-action="Delete" method="post" onsubmit="return confirm('Are you sure you want to delete this recipe?');" style="display:inline;">
-								<input type="hidden" name="id" value="@recipe.Id" />
-								<button type="submit" class="btn btn-danger flex-fill">Delete</button>
-							</form>
-
-						}
 						<a asp-controller="Recipe" asp-action="Details" asp-route-id="@recipe.Id" class="btn btn-info flex-fill">Details</a>
 							<form asp-controller="Recipe" asp-action="AddToDiet" method="get" style="display:inline;">
 								<input type="hidden" name="recipeId" value="@recipe.Id" />
