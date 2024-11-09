@@ -1,0 +1,32 @@
+﻿[
+    {
+        "Id": "a7474e22-a2f1-4f2e-88be-fadc97cc4fd8",
+        "Name": "Upper Body Strength",
+        "CreatedOn": "2024-11-09",
+        "UserID": null
+    },
+    {
+        "Id": "f2095d49-635e-4617-a470-491008eb7621",
+        "Name": "Leg Day Challenge",
+        "CreatedOn": "2024-11-09",
+        "UserID": null
+    },
+    {
+        "Id": "ab8e1eaa-96b1-4a4e-aa92-3a30d5297f49",
+        "Name": "Full Body Circuit",
+        "CreatedOn": "2024-11-09",
+        "UserID": null
+    },
+    {
+        "Id": "c4a9f0d5-44bf-4a0d-833e-a7673d8a7539",
+        "Name": "Push-Pull Split",
+        "CreatedOn": "2024-11-09",
+        "UserID": null
+    },
+    {
+        "Id": "cb33f115-f082-418a-afb4-02762aa8c235",
+        "Name": "Core & Cardio",
+        "CreatedOn": "2024-11-09",
+        "UserID": null
+    }
+]

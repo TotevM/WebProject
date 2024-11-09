@@ -1,4 +1,5 @@
-﻿using FitnessApp.Data.Models;
+﻿using System.Text.Json;
+using FitnessApp.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -19,6 +20,16 @@ namespace FitnessApp.Data.EntityConfiguration
 				   .WithMany(e => e.WorkoutsExercises)
 				   .HasForeignKey(we => we.ExerciseId)
 				   .OnDelete(DeleteBehavior.Cascade);
-		}
+
+            string path = Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "FitnessApp.Data", "Datasets", "workoutExercise.json");
+            string data = File.ReadAllText(path);
+            var workoutsExercises = JsonSerializer.Deserialize<List<WorkoutExercise>>(data);
+
+            if (workoutsExercises != null)
+            {
+                builder
+                    .HasData(workoutsExercises);
+            }
+        }
 	}
 }
