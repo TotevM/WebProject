@@ -16,5 +16,7 @@ namespace FitnessApp.Data.Models
         public DateTime DateOfBirth { get; set; }
 
         public bool IsDeleted { get; set; } = false;
+
+        public virtual ICollection<UserDiet> UserDiets { get; set; } = new HashSet<UserDiet>();
     }
 }

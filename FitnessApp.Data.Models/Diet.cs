@@ -28,5 +28,7 @@ namespace FitnessApp.Data.Models
 
         public virtual ICollection<DietRecipe> DietsRecipes { get; set; } = new HashSet<DietRecipe>();
 
+        public virtual ICollection<UserDiet> UserDiets { get; set; } = new HashSet<UserDiet>();
+
     }
 }

@@ -53,5 +53,6 @@ namespace FitnessApp.Data
         public DbSet<Progress> Progresses { get; set; } = null!;
         public DbSet<Recipe> Recipes { get; set; } = null!;
         public DbSet<WorkoutExercise> WorkoutsExercises { get; set; } = null!;
+        public DbSet<UserDiet> UsersDiets { get; set; } = null!;
     }
 }
