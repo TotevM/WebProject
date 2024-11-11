@@ -11,15 +11,15 @@ using FitnessApp.Common.Enumerations;
 namespace FitnessApp.Web.Controllers
 {
     public class RecipeController : Controller
-	{
-		private readonly ILogger<RecipeController> logger;
-		private readonly UserManager<ApplicationUser> user;
+    {
+        private readonly ILogger<RecipeController> logger;
+        private readonly UserManager<ApplicationUser> user;
         private readonly FitnessDBContext context;
 
         public RecipeController(ILogger<RecipeController> _logger, UserManager<ApplicationUser> _user, FitnessDBContext _context)
-		{
+        {
             logger = _logger;
-			user = _user;
+            user = _user;
             context = _context;
         }
 
@@ -188,21 +188,18 @@ namespace FitnessApp.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(Guid id)
         {
-            // Fetch the recipe from the database using the ID
             var recipe = await context.Recipes
                 .Where(r => r.Id == id)
                 .FirstOrDefaultAsync();
 
-            // If the recipe doesn't exist, return a 404 Not Found response
             if (recipe == null)
             {
                 return NotFound();
             }
 
-            // Map the recipe data to the view model
             var viewModel = new RecipeDetailsViewModel
             {
-                Id = recipe.Id,
+                RecipeId = recipe.Id,
                 Name = recipe.Name,
                 Calories = recipe.Calories,
                 Protein = recipe.Protein,
@@ -214,7 +211,6 @@ namespace FitnessApp.Web.Controllers
                 UserId = recipe.UserID!
             };
 
-            // Return the view with the view model
             return View(viewModel);
         }
 
@@ -222,38 +218,33 @@ namespace FitnessApp.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(Guid id)
         {
-	        var recipe = await context.Recipes.FirstOrDefaultAsync(x => x.Id == id);
+            var recipe = await context.Recipes.FirstOrDefaultAsync(x => x.Id == id);
 
-	        var model = new DeleteRecipeView();
-	        {
-		        model.Id = id;
-		        model.Name = recipe.Name;
-		        model.ImageUrl = recipe.ImageUrl;
-	        }
-	        return View(model);
+            var model = new DeleteRecipeView();
+            {
+                model.Id = id;
+                model.Name = recipe.Name;
+                model.ImageUrl = recipe.ImageUrl;
+            }
+            return View(model);
         }
 
         [HttpPost]
         public async Task<IActionResult> Delete(DeleteRecipeView model)
         {
-	        var recipe = await context.Recipes.FirstOrDefaultAsync(p => p.Id == model.Id);
+            var recipe = await context.Recipes.FirstOrDefaultAsync(p => p.Id == model.Id);
 
-	        if (recipe == null)
-	        {
-		        return NotFound();
-	        }
+            if (recipe == null)
+            {
+                return NotFound();
+            }
 
-	        recipe.IsDeleted = true;
+            recipe.IsDeleted = true;
 
-	        context.Recipes.Update(recipe);
-	        await context.SaveChangesAsync();
+            context.Recipes.Update(recipe);
+            await context.SaveChangesAsync();
 
-	        return RedirectToAction("Index");
+            return RedirectToAction("Index");
         }
-
-        public IActionResult AddToDiet()
-        {
-	        throw new NotImplementedException();
-        }
-	}
+    }
 }

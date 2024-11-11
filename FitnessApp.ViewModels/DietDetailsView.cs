@@ -2,7 +2,8 @@
 {
     public class DietDetailsView
     {
-        public Guid Id { get; set; }
+        public Guid RecipeId { get; set; }
+        public Guid DietId { get; set; }
         public required string Name { get; set; }
         public string? ImageUrl { get; set; }
         public int Calories { get; set; }

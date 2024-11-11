@@ -39,6 +39,7 @@
 	</div>
 
 	<div class="row mt-4">
+		<a href="@Url.Action("RemoveFromDiet", "Diet", new { dietId = Model.DietId, recipeId = Model.RecipeId })" class="btn btn-danger me-2">Remove</a>
 		<div class="col-12 text-end">
 			<button onclick="window.history.back()" class="btn btn-secondary">Go Back</button>
 		</div>

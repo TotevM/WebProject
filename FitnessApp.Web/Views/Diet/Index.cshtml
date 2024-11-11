@@ -3,46 +3,41 @@
 <h2>Diet List</h2>
 
 <div class="row">
-    @foreach (var diet in Model)
-    {
-        <div class="col-md-4 mb-4">
-            <div class="card h-100">
-                <!-- Image Section -->
-                @if (!string.IsNullOrEmpty(diet.ImageUrl))
-                {
-                    <img src="@diet.ImageUrl" class="card-img-top" alt="@diet.Name" style="max-height: 200px; object-fit: cover;">
-                }
-                else
-                {
-                    <div class="card-img-top d-flex align-items-center justify-content-center" style="height: 200px; background-color: #f8f9fa;">
-                        <span>No Image Available</span>
-                    </div>
-                }
+	@foreach (var diet in Model)
+	{
+		<div class="col-md-4 mb-4">
+			<div class="card h-100">
+				@if (!string.IsNullOrEmpty(diet.ImageUrl))
+				{
+					<img src="@diet.ImageUrl" class="card-img-top" alt="@diet.Name" style="max-height: 200px; object-fit: cover;">
+				}
+				else
+				{
+					<div class="card-img-top d-flex align-items-center justify-content-center" style="height: 200px; background-color: #f8f9fa;">
+						<span>No Image Available</span>
+					</div>
+				}
 
-                <!-- Card Body -->
-                <div class="card-body text-center">
-                    <!-- Diet Name -->
-                    <h5 class="card-title">@diet.Name</h5>
-                </div>
+				<div class="card-body text-center">
+					<h5 class="card-title">@diet.Name</h5>
+				</div>
 
-                <!-- Macronutrient Section -->
-                <div class="card-footer">
-                    <p><strong>Calories:</strong> @diet.Calories</p>
-                    <p><strong>Protein:</strong> @diet.Protein?.ToString()g</p>
-                    <p><strong>Carbohydrates:</strong> @diet.Carbohydrates?.ToString()g</p>
-                    <p><strong>Fats:</strong> @diet.Fats?.ToString()g</p>
+				<div class="card-footer">
+					<p><strong>Calories:</strong> @diet.Calories</p>
+					<p><strong>Protein:</strong> @diet.Protein?.ToString()g</p>
+					<p><strong>Carbohydrates:</strong> @diet.Carbohydrates?.ToString()g</p>
+					<p><strong>Fats:</strong> @diet.Fats?.ToString()g</p>
 
-                    <!-- Button Section -->
-                    <div class="card-footer bg-light mt-2 p-3" style="background-color: #e9ecef;">
-                        <div class="d-flex justify-content-between">
-                            <span asp-action="Add" method="post" href="#" class="btn btn-primary">Add to My Diets</span>
-                            <a asp-controller="Diet" asp-action="Details" asp-route-id="@diet.Id" class="btn btn-primary btn-sm">
-	                            <i class="bi bi-info-circle"></i> View Details
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    }
+					<div class="card-footer bg-light mt-2 p-3" style="background-color: #e9ecef;">
+						<div class="d-flex justify-content-between">
+							<span asp-action="Add" method="post" href="#" class="btn btn-primary">Add to My Diets</span>
+							<a asp-controller="Diet" asp-action="Details" asp-route-id="@diet.Id" class="btn btn-primary btn-sm">
+								<i class="bi bi-info-circle"></i> View Details
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	}
 </div>

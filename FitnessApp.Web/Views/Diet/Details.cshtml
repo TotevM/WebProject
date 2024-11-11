@@ -3,34 +3,34 @@
 <div class="container my-5">
     <h2 class="mb-4">Diet List</h2>
     <div class="row mt-4">
-	    <div class="col-12 text-end">
-		    <button onclick="window.history.back()" class="btn btn-secondary">Go Back</button>
-	    </div>
+        <div class="col-12 text-end">
+            <button onclick="window.history.back()" class="btn btn-secondary">Go Back</button>
+        </div>
     </div>
     <div class="row">
         @if (Model.Count > 0)
         {
-            @foreach (var diet in Model)
+            @foreach (var recipe in Model)
             {
                 <div class="col-md-4 mb-4">
                     <div class="card h-100">
-                        @if (!string.IsNullOrEmpty(diet.ImageUrl))
+                        @if (!string.IsNullOrEmpty(recipe.ImageUrl))
                         {
-                            <img src="@diet.ImageUrl" class="card-img-top" alt="@diet.Name" style="max-height: 200px; object-fit: cover;">
+                            <img src="@recipe.ImageUrl" class="card-img-top" alt="@recipe.Name" style="max-height: 200px; object-fit: cover;">
                         }
                         else
                         {
-                            <img src="images/NoPictureAvailable.png" class="card-img-top" alt="@diet.Name" style="max-height: 200px; object-fit: cover;">
+                            <img src="images/NoPictureAvailable.png" class="card-img-top" alt="@recipe.Name" style="max-height: 200px; object-fit: cover;">
                         }
                         <div class="card-body text-center">
-                            <h5 class="card-title">@diet.Name</h5>
+                            <h5 class="card-title">@recipe.Name</h5>
                         </div>
                         <div class="card-footer">
-                            <p><strong>Calories:</strong> @diet.Calories</p>
-                            <p><strong>Protein:</strong> @(diet.Protein?.ToString())g</p>
-                            <p><strong>Carbohydrates:</strong> @(diet.Carbohydrates?.ToString())g</p>
-                            <p><strong>Fats:</strong> @(diet.Fats?.ToString())g</p>
-                            <a href="@Url.Action("DetailsInDiet", "Diet", new { id = diet.Id })" class="btn btn-outline-primary w-100 mt-3">View Details</a>
+                            <p><strong>Calories:</strong> @recipe.Calories</p>
+                            <p><strong>Protein:</strong> @(recipe.Protein?.ToString())g</p>
+                            <p><strong>Carbohydrates:</strong> @(recipe.Carbohydrates?.ToString())g</p>
+                            <p><strong>Fats:</strong> @(recipe.Fats?.ToString())g</p>
+                            <a href="@Url.Action("DetailsInDiet", "Diet", new { recipeId = recipe.RecipeId, dietId=recipe.DietId })" class="btn btn-outline-primary w-100 mt-3">View Details</a>
                         </div>
                     </div>
                 </div>

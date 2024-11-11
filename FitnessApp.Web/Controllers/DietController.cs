@@ -3,6 +3,7 @@ using FitnessApp.Data.Models;
 using FitnessApp.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace FitnessApp.Web.Controllers
 {
@@ -45,7 +46,8 @@ namespace FitnessApp.Web.Controllers
 
             List<DietDetailsView> dietViewModels = recipes.Select(recipe => new DietDetailsView
             {
-                Id = recipe.Id,
+                DietId = id,
+                RecipeId = recipe.Id,
                 Name = recipe.Name,
                 ImageUrl = recipe.ImageUrl,
                 Calories = recipe.Calories,
@@ -54,27 +56,25 @@ namespace FitnessApp.Web.Controllers
                 Fats = recipe.Fats
             }).ToList();
 
-			return View(dietViewModels);
+            return View(dietViewModels);
         }
 
         [HttpGet]
-        public IActionResult DetailsInDiet(string id)
+        public IActionResult DetailsInDiet(Guid recipeId, Guid dietId)
         {
-            // Fetch the recipe from the database using the ID
             var recipe = context.Recipes
-                .Where(r => r.Id.ToString() == id)
+                .Where(r => r.Id == recipeId)
                 .FirstOrDefault();
 
-            // If the recipe doesn't exist, return a 404 Not Found response
             if (recipe == null)
             {
                 return NotFound();
             }
 
-            // Map the recipe data to the view model
             var viewModel = new RecipeDetailsViewModel
             {
-                Id = recipe.Id,
+                DietId = dietId,
+                RecipeId = recipeId,
                 Name = recipe.Name,
                 Calories = recipe.Calories,
                 Protein = recipe.Protein,
@@ -85,13 +85,42 @@ namespace FitnessApp.Web.Controllers
                 Preparation = recipe.Preparation
             };
 
-            // Return the view with the view model
             return View(viewModel);
         }
 
         public IActionResult AddToDiet()
         {
             throw new NotImplementedException();
+        }
+
+        public IActionResult RemoveFromDiet(Guid dietId, Guid recipeId)
+        {
+            var toRemove = context.DietsRecipes
+                .Where(x => x.RecipeId == recipeId && x.DietId == dietId)
+                .FirstOrDefault();
+
+            if (toRemove != null)
+            {
+                context.DietsRecipes.Remove(toRemove);
+
+                // Recalculate diet totals
+                var diet = context.Diets
+                    .Include(d => d.DietsRecipes)
+                    .ThenInclude(dr => dr.Recipe)
+                    .FirstOrDefault(d => d.Id == dietId);
+
+                if (diet != null)
+                {
+                    diet.Calories = diet.DietsRecipes.Sum(df => df.Recipe.Calories);
+                    diet.Protein = diet.DietsRecipes.Sum(df => df.Recipe.Protein);
+                    diet.Carbohydrates = diet.DietsRecipes.Sum(df => df.Recipe.Carbohydrates);
+                    diet.Fats = diet.DietsRecipes.Sum(df => df.Recipe.Fats);
+                }
+
+                context.SaveChanges();
+            }
+
+            return RedirectToAction("Details", new { id = dietId });
         }
     }
 }
