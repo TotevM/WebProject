@@ -100,7 +100,7 @@ namespace FitnessApp.Web.Areas.Identity.Pages.Account
                 var user = await _userManager.FindByEmailAsync(Input.Email);
                 if (user == null)
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid username!");
+                    ModelState.AddModelError(string.Empty, "Invalid Email!");
                     return Page();
                 }
 

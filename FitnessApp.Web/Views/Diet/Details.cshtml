@@ -30,7 +30,7 @@
                             <p><strong>Protein:</strong> @(diet.Protein?.ToString())g</p>
                             <p><strong>Carbohydrates:</strong> @(diet.Carbohydrates?.ToString())g</p>
                             <p><strong>Fats:</strong> @(diet.Fats?.ToString())g</p>
-                            <a href="@Url.Action("DetailsInDiet", "Recipe", new { id = diet.Id })" class="btn btn-outline-primary w-100 mt-3">View Details</a>
+                            <a href="@Url.Action("DetailsInDiet", "Diet", new { id = diet.Id })" class="btn btn-outline-primary w-100 mt-3">View Details</a>
                         </div>
                     </div>
                 </div>
@@ -53,7 +53,6 @@
 
 <script>
     function addRecipe(name, imageUrl, calories, protein, carbohydrates, fats) {
-        // Implement the logic to add the recipe here
         console.log(`Adding recipe: Name: ${name}, Image URL: ${imageUrl}, Calories: ${calories}, Protein: ${protein}, Carbohydrates: ${carbohydrates}, Fats: ${fats}`);
     }
 </script>

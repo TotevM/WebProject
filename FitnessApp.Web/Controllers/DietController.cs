@@ -57,6 +57,38 @@ namespace FitnessApp.Web.Controllers
 			return View(dietViewModels);
         }
 
+        [HttpGet]
+        public IActionResult DetailsInDiet(string id)
+        {
+            // Fetch the recipe from the database using the ID
+            var recipe = context.Recipes
+                .Where(r => r.Id.ToString() == id)
+                .FirstOrDefault();
+
+            // If the recipe doesn't exist, return a 404 Not Found response
+            if (recipe == null)
+            {
+                return NotFound();
+            }
+
+            // Map the recipe data to the view model
+            var viewModel = new RecipeDetailsViewModel
+            {
+                Id = recipe.Id,
+                Name = recipe.Name,
+                Calories = recipe.Calories,
+                Protein = recipe.Protein,
+                Carbohydrates = recipe.Carbohydrates,
+                Fats = recipe.Fats,
+                ImageUrl = recipe.ImageUrl,
+                Ingredients = recipe.Ingredients,
+                Preparation = recipe.Preparation
+            };
+
+            // Return the view with the view model
+            return View(viewModel);
+        }
+
         public IActionResult AddToDiet()
         {
             throw new NotImplementedException();
