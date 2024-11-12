@@ -2,7 +2,7 @@
 using FitnessApp.Common.Enumerations;
 using static FitnessApp.Common.EntityValidationConstants.RecipeValidation;
 
-namespace FitnessApp.ViewModels
+namespace FitnessApp.ViewModels.RecipeModels
 {
     public class AddRecipeView
     {

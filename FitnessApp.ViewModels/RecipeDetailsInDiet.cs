@@ -2,7 +2,7 @@
 {
 	using System;
 
-	public class RecipeDetailsViewModel
+	public class RecipeDetailsInDiet
 	{
 		public Guid RecipeId { get; set; }
 		public Guid DietId { get; set; }
@@ -16,5 +16,4 @@
 		public string Preparation { get; set; }
 		public string UserId { get; set; }
 	}
-
 }

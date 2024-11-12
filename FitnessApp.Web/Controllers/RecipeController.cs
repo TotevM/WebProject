@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FitnessApp.ViewModels;
 using FitnessApp.Common.Enumerations;
+using FitnessApp.ViewModels.RecipeModels;
+
 
 namespace FitnessApp.Web.Controllers
 {
@@ -23,6 +25,7 @@ namespace FitnessApp.Web.Controllers
             context = _context;
         }
 
+        [HttpGet]
         public IActionResult Index(Goal? goal = null)
         {
             var recipesQuery = context.Recipes
@@ -172,19 +175,6 @@ namespace FitnessApp.Web.Controllers
             return RedirectToAction("Index", "Recipe");
         }
 
-        //[HttpPost]
-        //public IActionResult Delete(Guid id)
-        //{
-        //    var recipe = context.Recipes.FirstOrDefault(r => r.Id == id);
-
-        //    recipe!.IsDeleted = true;
-
-        //    context.Recipes.Update(recipe);
-        //    context.SaveChanges();
-
-        //    return RedirectToAction("Index", "Recipe");
-        //}
-
         [HttpGet]
         public async Task<IActionResult> Details(Guid id)
         {
@@ -198,7 +188,7 @@ namespace FitnessApp.Web.Controllers
             }
 
             var viewModel = new RecipeDetailsViewModel
-            {
+			{
                 RecipeId = recipe.Id,
                 Name = recipe.Name,
                 Calories = recipe.Calories,
@@ -213,7 +203,6 @@ namespace FitnessApp.Web.Controllers
 
             return View(viewModel);
         }
-
 
         [HttpGet]
         public async Task<IActionResult> Delete(Guid id)

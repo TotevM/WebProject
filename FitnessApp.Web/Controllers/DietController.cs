@@ -26,7 +26,7 @@ namespace FitnessApp.Web.Controllers
 
             var dietViewModels = diets.Select(diet => new DietIndexView
             {
-                Id = diet.Id,
+                DietId = diet.Id,
                 Name = diet.Name,
                 Description = diet.Description,
                 ImageUrl = diet.ImageUrl,
@@ -71,7 +71,7 @@ namespace FitnessApp.Web.Controllers
                 return NotFound();
             }
 
-            var viewModel = new RecipeDetailsViewModel
+            var viewModel = new RecipeDetailsInDiet
             {
                 DietId = dietId,
                 RecipeId = recipeId,
@@ -103,7 +103,6 @@ namespace FitnessApp.Web.Controllers
             {
                 context.DietsRecipes.Remove(toRemove);
 
-                // Recalculate diet totals
                 var diet = context.Diets
                     .Include(d => d.DietsRecipes)
                     .ThenInclude(dr => dr.Recipe)
