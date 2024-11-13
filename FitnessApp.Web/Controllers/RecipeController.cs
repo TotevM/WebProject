@@ -204,17 +204,65 @@ namespace FitnessApp.Web.Controllers
             return View(viewModel);
         }
 
+        //     [HttpGet]
+        //     public async Task<IActionResult> Delete(Guid id)
+        //     {
+        //Console.WriteLine("Delete method invoked for id: " + id);
+        //var recipe = await context.Recipes.FirstOrDefaultAsync(x => x.Id == id);
+
+        //if (recipe == null)
+        //{
+        //	return NotFound("Recipe not found");
+        //}
+
+        //var model = new DeleteRecipeView();
+        //         {
+        //             model.Id = id;
+        //             model.Name = recipe.Name;
+        //             model.ImageUrl = recipe.ImageUrl;
+        //         }
+        //         return View(model);
+        //     }
+
         [HttpGet]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var recipe = await context.Recipes.FirstOrDefaultAsync(x => x.Id == id);
+            //Console.WriteLine("=== Request Details ===");
+            //Console.WriteLine($"Delete method invoked for id: {id}");
+            //Console.WriteLine($"Request method: {Request.Method}");
+            //Console.WriteLine($"Request path: {Request.Path}");
+            //Console.WriteLine($"Request QueryString: {Request.QueryString}");
+            //Console.WriteLine($"Referrer: {Request.Headers["Referer"]}");
 
-            var model = new DeleteRecipeView();
+            // Log all headers
+            //Console.WriteLine("=== Headers ===");
+            foreach (var header in Request.Headers)
             {
-                model.Id = id;
-                model.Name = recipe.Name;
-                model.ImageUrl = recipe.ImageUrl;
+                Console.WriteLine($"{header.Key}: {header.Value}");
             }
+
+            //if (id == Guid.Empty)
+            //{
+            //    Console.WriteLine("Empty GUID detected, redirecting to Index");
+            //    return RedirectToAction(nameof(Index));
+            //}
+
+            var recipe = await context.Recipes.FirstOrDefaultAsync(x => x.Id == id);
+            if (recipe == null)
+            {
+                //Console.WriteLine($"Recipe not found for id: {id}");
+                //return NotFound("Recipe not found");
+            }
+
+            var model = new DeleteRecipeView
+            {
+                Id = id,
+                Name = recipe.Name,
+                ImageUrl = recipe.ImageUrl
+            };
+
+            //Console.WriteLine($"Model created with Id: {model.Id}, Name: {model.Name}");
+            //Console.WriteLine("About to return view");
             return View(model);
         }
 
@@ -233,7 +281,7 @@ namespace FitnessApp.Web.Controllers
             context.Recipes.Update(recipe);
             await context.SaveChangesAsync();
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Recipe");
         }
     }
 }

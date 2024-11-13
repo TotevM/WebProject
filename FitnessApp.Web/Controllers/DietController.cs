@@ -1,4 +1,5 @@
-﻿using FitnessApp.Data;
+﻿using System.Security.Claims;
+using FitnessApp.Data;
 using FitnessApp.Data.Models;
 using FitnessApp.ViewModels;
 using Microsoft.AspNetCore.Identity;
@@ -21,9 +22,30 @@ namespace FitnessApp.Web.Controllers
 			context = _context;
 		}
 
+		public IActionResult MyDiets()
+		{
+			var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+			var diets = context.Diets
+				.Where(d => d.UserDiets.Any(ud => ud.UserId == userId))
+				.Select(diet => new MyDietsIndexView 
+			{
+					DietId = diet.Id,
+					Name = diet.Name,
+					Description = diet.Description,
+					ImageUrl = diet.ImageUrl,
+					Calories = diet.Calories,
+					Protein = diet.Protein,
+					Carbohydrates = diet.Carbohydrates,
+					Fats = diet.Fats
+				}).ToList();
+
+			return View(diets);
+		}
+
 		public async Task<IActionResult> Index()
 		{
-			var diets = context.Diets.ToList();
+			var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+			var diets = context.Diets.Where(d=>!d.UserDiets.Any(ud=>ud.UserId==userId)).ToList();
 
 			var dietViewModels = diets.Select(diet => new DietIndexView
 			{
@@ -118,9 +140,6 @@ namespace FitnessApp.Web.Controllers
 			return RedirectToAction("Details", new { id = dietId });
 		}
 
-
-
-
 		[HttpGet]
 		public IActionResult AddToDiet(Guid recipeId)
 		{
@@ -196,6 +215,45 @@ namespace FitnessApp.Web.Controllers
 				.ToList();
 
 			return View(model);
+		}
+
+		[HttpPost]
+		public IActionResult AddToMyDiet(Guid dietId)
+		{
+			var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+			var model = new UserDiet
+			{
+				UserId = userId,
+				DietId = dietId,
+			};
+
+			context.UsersDiets.Add(model);
+			context.SaveChanges();
+
+			return RedirectToAction("Index", "Diet");
+		}
+
+		public IActionResult RemoveFromMyDiet(Guid dietId)
+		{
+			throw new NotImplementedException();
+		}
+
+		[HttpPost]
+		public IActionResult RemoveFromMyDiets(Guid dietId) 
+		{
+			var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+			var record = context.UsersDiets.Where(ud => ud.UserId == userId && ud.DietId == dietId).FirstOrDefault();
+
+			if (record==null) 
+			{
+			//To implement
+			}
+
+			context.UsersDiets.Remove(record!);
+			context.SaveChanges();
+
+			return RedirectToAction("MyDiets", "Diet");
 		}
 	}
 }

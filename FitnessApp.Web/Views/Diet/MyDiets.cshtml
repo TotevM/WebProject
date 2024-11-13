@@ -1,4 +1,4 @@
-﻿@model List<DietIndexView>
+﻿@model List<MyDietsIndexView>
 
 <h2>Diet List</h2>
 
@@ -30,9 +30,9 @@
 
 					<div class="card-footer bg-light mt-2 p-3" style="background-color: #e9ecef;">
 						<div class="d-flex justify-content-between">
-							<form asp-action="AddToMyDiet" asp-controller="Diet" method="post">
+							<form asp-action="RemoveFromMyDiets" asp-controller="Diet" method="post">
 								<input type="hidden" name="DietId" value="@diet.DietId" />
-								<button type="submit" class="btn btn-primary">Add to My Diets</button>
+								<button type="submit" class="btn btn-danger">Remove From My Diets</button>
 							</form>
 
 							<a asp-controller="Diet" asp-action="Details" asp-route-id="@diet.DietId" class="btn btn-primary btn-sm">

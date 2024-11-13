@@ -24,6 +24,7 @@ namespace FitnessApp.Data
             builder.ApplyConfiguration(new RecipeConfiguration());
             builder.ApplyConfiguration(new DietConfiguration());
             builder.ApplyConfiguration(new DietRecipeConfiguration());
+            builder.ApplyConfiguration(new UserDietConfiguration());
 
             builder.ApplyConfiguration(new ExerciseConfiguration());
             builder.ApplyConfiguration(new WorkoutConfiguration());

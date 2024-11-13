@@ -40,7 +40,7 @@ namespace FitnessApp.Web
                     var logger = services.GetRequiredService<ILogger<Program>>();
                     logger.LogError(ex, "An error occurred while seeding the database.");
                 }
-            }//to study deeper
+            }
 
             if (app.Environment.IsDevelopment())
             {
