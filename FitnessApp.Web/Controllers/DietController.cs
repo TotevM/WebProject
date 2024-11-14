@@ -45,7 +45,7 @@ namespace FitnessApp.Web.Controllers
 		public async Task<IActionResult> Index()
 		{
 			var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-			var diets = context.Diets.Where(d=>!d.UserDiets.Any(ud=>ud.UserId==userId)).ToList();
+			var diets = context.Diets.Where(d=>!d.UserDiets.Any(ud=>ud.UserId==userId) && d.UserID==null).ToList();
 
 			var dietViewModels = diets.Select(diet => new DietIndexView
 			{
@@ -232,11 +232,6 @@ namespace FitnessApp.Web.Controllers
 			context.SaveChanges();
 
 			return RedirectToAction("Index", "Diet");
-		}
-
-		public IActionResult RemoveFromMyDiet(Guid dietId)
-		{
-			throw new NotImplementedException();
 		}
 
 		[HttpPost]
