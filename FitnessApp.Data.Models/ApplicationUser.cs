@@ -17,6 +17,7 @@ namespace FitnessApp.Data.Models
 
         public bool IsDeleted { get; set; } = false;
 
-        public virtual ICollection<UserDiet> UserDiets { get; set; } = new HashSet<UserDiet>();
+        public virtual ICollection<UserDiet> UsersDiets { get; set; } = new HashSet<UserDiet>();
+        public virtual ICollection<UserWorkout> UsersWorkouts { get; set; } = new HashSet<UserWorkout>();
     }
 }

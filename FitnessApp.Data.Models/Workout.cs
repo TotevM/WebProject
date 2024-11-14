@@ -16,5 +16,6 @@ namespace FitnessApp.Data.Models
         public string? UserID { get; set; }
         public virtual ApplicationUser User { get; set; }
         public virtual ICollection<WorkoutExercise> WorkoutsExercises { get; set; } = new HashSet<WorkoutExercise>();
-    }
+		public virtual ICollection<UserWorkout> UsersWorkouts { get; set; } = new HashSet<UserWorkout>();
+	}
 }

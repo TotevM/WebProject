@@ -29,6 +29,7 @@ namespace FitnessApp.Data
             builder.ApplyConfiguration(new ExerciseConfiguration());
             builder.ApplyConfiguration(new WorkoutConfiguration());
             builder.ApplyConfiguration(new WorkoutExerciseConfiguration());
+            builder.ApplyConfiguration(new UserWorkoutConfiguration());
 
             builder.ApplyConfiguration(new ProgressConfiguration());
         }
@@ -55,5 +56,6 @@ namespace FitnessApp.Data
         public DbSet<Recipe> Recipes { get; set; } = null!;
         public DbSet<WorkoutExercise> WorkoutsExercises { get; set; } = null!;
         public DbSet<UserDiet> UsersDiets { get; set; } = null!;
+        public DbSet<UserWorkout> UsersWorkouts { get; set; } = null!;
     }
 }

@@ -12,9 +12,5 @@ namespace FitnessApp.Data.Models
         public required Guid ExerciseId { get; set; }
         [ForeignKey(nameof(ExerciseId))]
         public virtual Exercise Exercise { get; set; } = null!;
-        [Required]
-        public int Sets { get; set; }
-		[Required]
-		public int Repetitions { get; set; }
     }
 }
