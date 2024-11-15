@@ -3,15 +3,14 @@
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @model List<ExerciseIndexView>
 @{
-	ViewData["Title"] = "Exercise List";
+	ViewData["Title"] = "Restore exercise";
 }
 
 <div class="d-flex justify-content-between align-items-center mb-3" style="margin-top: 20px;">
-	<h2>Available Exercises</h2>
+	<h2>Inactive Exercises</h2>
 	@if (User?.Identity?.IsAuthenticated == true)
 	{
-		<a asp-controller="Exercise" asp-action="Add" class="btn btn-primary"><i class="fas fa-plus"></i>Add Exercise</a>
-		<a asp-controller="Exercise" asp-action="Restore" class="btn btn-primary"><i class="fas fa-plus"></i>Restore Exercises</a>
+		<a asp-controller="Exercise" asp-action="Index" class="btn btn-primary"><i class="fas fa-plus"></i>Return to exercises</a>
 	}
 </div>
 <hr />
@@ -36,7 +35,9 @@
 					<h6 class="card-title">Difficulty: @exercise.Difficulty</h6>
 
 					<div class="mt-auto d-flex justify-content-between gap-2">
-						<a asp-controller="Exercise" asp-action="Delete" asp-route-id="@exercise.Id" class="btn btn-danger flex-fill">Delete Exercise</a>
+						<form asp-controller="Exercise" asp-action="Restore" asp-route-id="@exercise.Id" method="post" class="flex-fill">
+							<button type="submit" class="btn btn-danger w-100">Restore Exercise</button>
+						</form>
 					</div>
 				</div>
 			</div>

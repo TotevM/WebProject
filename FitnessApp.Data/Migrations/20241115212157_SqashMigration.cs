@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FitnessApp.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class SquashMigration : Migration
+    public partial class SqashMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -65,6 +65,7 @@ namespace FitnessApp.Data.Migrations
                     Difficulty = table.Column<int>(type: "int", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     MuscleGroup = table.Column<int>(type: "int", nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -351,7 +352,8 @@ namespace FitnessApp.Data.Migrations
                 columns: table => new
                 {
                     WorkoutId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ExerciseId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    ExerciseId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
                 {
@@ -387,38 +389,38 @@ namespace FitnessApp.Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "Exercises",
-                columns: new[] { "Id", "CreatedOn", "Difficulty", "IsDeleted", "MuscleGroup", "Name" },
+                columns: new[] { "Id", "CreatedOn", "Difficulty", "ImageUrl", "IsDeleted", "MuscleGroup", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("1c6e0b2a-3b6a-4427-8df7-51d8a9f2a9a3"), new DateTime(2003, 2, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, false, 3, "Leg Extension" },
-                    { new Guid("1e5b9a3c-2d8e-4c7d-9d3e-4d8f2c3e1b6f"), new DateTime(2018, 6, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, false, 1, "Decline Bench Press" },
-                    { new Guid("29d3278f-fb37-45a8-a7b6-41e6636e2e02"), new DateTime(2024, 1, 16, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, false, 2, "Pull-Up" },
-                    { new Guid("2a8ed1d9-84d3-4fd4-83e2-2c4391f0b01b"), new DateTime(2024, 1, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, false, 0, "Tricep Extension" },
-                    { new Guid("3e6c1f4b-0e5d-4f8d-8b2b-1a0e37dce9b7"), new DateTime(2003, 2, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, false, 3, "Calf Raise" },
-                    { new Guid("3e9a5c5f-8d7e-4b2c-923b-27c4a6e2a6d7"), new DateTime(2003, 4, 16, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, false, 3, "Step-Ups" },
-                    { new Guid("4e8b7a3b-e5c1-4c73-95ab-27a05dcf2a31"), new DateTime(2024, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, false, 2, "Seated Row" },
-                    { new Guid("69b1df3e-1e34-44f3-8e3b-dca7eb9b2f3f"), new DateTime(2024, 1, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, false, 1, "Dumbbell Fly" },
-                    { new Guid("7e8c1e5b-0e6d-4b8d-8d2f-2a1e3c7dce8d"), new DateTime(2006, 3, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, false, 0, "Overhead Tricep Extension" },
-                    { new Guid("8c3d6a7b-e1f2-4c3b-9d3e-0e3c4f5a1b2d"), new DateTime(2016, 6, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, false, 1, "Close-Grip Bench Press" },
-                    { new Guid("96d3e1b7-7806-4f54-bc58-5d8b9d8a7f1f"), new DateTime(2024, 1, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, false, 0, "Hammer Curl" },
-                    { new Guid("9b8de205-3c91-47f8-a6bc-46a6d2c48238"), new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, false, 2, "T-Bar Row" },
-                    { new Guid("ab4c987e-6444-4c3f-b967-1ec2ffce9bd9"), new DateTime(2024, 1, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, false, 3, "Squat" },
-                    { new Guid("b6a7ecb8-5e4e-4372-8d6d-f63b0c6e639e"), new DateTime(2024, 1, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, false, 1, "Pec Deck" },
-                    { new Guid("b7c4a2b9-dfb2-4b6e-b7f7-58b5d33a0f34"), new DateTime(2024, 1, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, false, 0, "Bicep Curl" },
-                    { new Guid("b9c7e1d7-a9b2-4505-89c9-6cf8d87e2e6d"), new DateTime(2003, 2, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, false, 3, "Lunges" },
-                    { new Guid("bfc4e908-2f9f-4f2f-99bb-a1d462eae20f"), new DateTime(2024, 1, 16, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, false, 1, "Push-Up" },
-                    { new Guid("c9b4f5f1-1e3d-4a93-9d42-bb27a1b4b315"), new DateTime(2023, 12, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, false, 3, "Leg Press" },
-                    { new Guid("cce872f8-19f8-4e7d-bd57-e7f5c66a06b7"), new DateTime(2024, 1, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, false, 1, "Bench Press" },
-                    { new Guid("ccf2748a-492e-496e-bd6b-8df2dc9b8f4a"), new DateTime(2024, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, false, 2, "Bent Over Row" },
-                    { new Guid("d3e0b5f7-a1b5-4207-81b3-e0a5f6e0e8b5"), new DateTime(2003, 3, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, false, 3, "Reverse Lunges" },
-                    { new Guid("d4f5b8b7-5638-4882-9254-07f5f35c09d6"), new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, false, 2, "Lat Pulldown" },
-                    { new Guid("db8d4f5e-3f5f-4bfe-9b53-8171b4c77f8b"), new DateTime(2024, 1, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, false, 2, "Deadlift" },
-                    { new Guid("dbb7b1c4-72e8-4a37-91a7-fb97d4b4f0e3"), new DateTime(2003, 2, 27, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, false, 3, "Bulgarian Split Squat" },
-                    { new Guid("e2b1f3f7-8c1e-4b5f-9f2a-0e3c7d5b0d8d"), new DateTime(2016, 3, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, false, 0, "Skull Crusher" },
-                    { new Guid("f2c3d8a4-b1e8-4d2f-9c3e-4d8f2e3c1b0d"), new DateTime(2016, 6, 16, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, false, 0, "Cable Curl" },
-                    { new Guid("fd3e8bc1-a4a6-4535-91f9-e4e68e0cde90"), new DateTime(2024, 1, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, false, 0, "Concentration Curl" },
-                    { new Guid("fdcd4903-8d91-4091-91de-96b88b0a5f23"), new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, false, 1, "Incline Bench Press" },
-                    { new Guid("ff5e9f1a-8f9f-4a8f-9081-d17b9e6fbe3c"), new DateTime(2024, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, false, 2, "Back Extension" }
+                    { new Guid("1c6e0b2a-3b6a-4427-8df7-51d8a9f2a9a3"), new DateTime(2003, 2, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, "https://physiotutors.com/wp-content/uploads/2022/01/Seated-Leg-Extension-featured.jpg", false, 3, "Leg Extension" },
+                    { new Guid("1e5b9a3c-2d8e-4c7d-9d3e-4d8f2c3e1b6f"), new DateTime(2018, 6, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, "https://i.ytimg.com/vi/oIgci8aNsG0/maxresdefault.jpg", false, 1, "Decline Bench Press" },
+                    { new Guid("29d3278f-fb37-45a8-a7b6-41e6636e2e02"), new DateTime(2024, 1, 16, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, "https://rockrun.com/cdn/shop/articles/859664_1600x.jpg?v=1585560306", false, 2, "Pull-Up" },
+                    { new Guid("2a8ed1d9-84d3-4fd4-83e2-2c4391f0b01b"), new DateTime(2024, 1, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "https://www.trainheroic.com/wp-content/uploads/2023/02/AdobeStock_271990601-TH-jpg.webp", false, 0, "Tricep Extension" },
+                    { new Guid("3e6c1f4b-0e5d-4f8d-8b2b-1a0e37dce9b7"), new DateTime(2003, 2, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "https://www.jefit.com/images/exercises/960_590/4944.jpg", false, 3, "Calf Raise" },
+                    { new Guid("3e9a5c5f-8d7e-4b2c-923b-27c4a6e2a6d7"), new DateTime(2003, 4, 16, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "https://media1.popsugar-assets.com/files/thumbor/wt7_DSw2I9cf_vui75Wo9K_nu_k=/fit-in/792x792/filters:format_auto():quality(70):extract_cover():upscale()/2024/03/13/886/n/1922729/tmp_rwtOqh_ab899a86a9ca6d73_PS23_Fitness_Workout_07_Move_08_Step_Up_v2.gif", false, 3, "Step-Ups" },
+                    { new Guid("4e8b7a3b-e5c1-4c73-95ab-27a05dcf2a31"), new DateTime(2024, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "https://cdn.muscleandstrength.com/sites/default/files/seated-cable-row.jpg", false, 2, "Seated Row" },
+                    { new Guid("69b1df3e-1e34-44f3-8e3b-dca7eb9b2f3f"), new DateTime(2024, 1, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, "https://cdn.muscleandstrength.com/sites/default/files/dumbbell-fly.jpg", false, 1, "Dumbbell Fly" },
+                    { new Guid("7e8c1e5b-0e6d-4b8d-8d2f-2a1e3c7dce8d"), new DateTime(2006, 3, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, "https://cdn.muscleandstrength.com/sites/default/files/seated-overhead-dumbbell-tricep-extension_0.jpg", false, 0, "Overhead Tricep Extension" },
+                    { new Guid("8c3d6a7b-e1f2-4c3b-9d3e-0e3c4f5a1b2d"), new DateTime(2016, 6, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, "https://www.dmoose.com/cdn/shop/articles/1_155d781f-a698-40e7-bdb6-f0de019f9b89.jpg?v=1648738774", false, 1, "Close-Grip Bench Press" },
+                    { new Guid("96d3e1b7-7806-4f54-bc58-5d8b9d8a7f1f"), new DateTime(2024, 1, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "https://hips.hearstapps.com/hmg-prod/images/hammer-curls-1581441441.jpg?crop=0.668xw:1.00xh", false, 0, "Hammer Curl" },
+                    { new Guid("9b8de205-3c91-47f8-a6bc-46a6d2c48238"), new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, "https://cdn.muscleandstrength.com/sites/default/files/t-bar-row.jpg", false, 2, "T-Bar Row" },
+                    { new Guid("ab4c987e-6444-4c3f-b967-1ec2ffce9bd9"), new DateTime(2024, 1, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "https://fitnessvolt.com/wp-content/uploads/2021/09/Female-bodyweight-squat-750x549.jpg", false, 3, "Squat" },
+                    { new Guid("b6a7ecb8-5e4e-4372-8d6d-f63b0c6e639e"), new DateTime(2024, 1, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "https://www.newbodyplan.co.uk/wp-content/uploads/2022/01/pec-deck-chest-machine-flye-pectorals-man-gym-weight-training.jpg", false, 1, "Pec Deck" },
+                    { new Guid("b7c4a2b9-dfb2-4b6e-b7f7-58b5d33a0f34"), new DateTime(2024, 1, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "https://cdn.muscleandstrength.com/sites/default/files/field/feature-image/workout/guns-a-blazing-feature.jpg", false, 0, "Bicep Curl" },
+                    { new Guid("b9c7e1d7-a9b2-4505-89c9-6cf8d87e2e6d"), new DateTime(2003, 2, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "https://images.healthshots.com/healthshots/en/uploads/2024/05/02174153/Lunges.jpg", false, 3, "Lunges" },
+                    { new Guid("bfc4e908-2f9f-4f2f-99bb-a1d462eae20f"), new DateTime(2024, 1, 16, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "https://cdn.mos.cms.futurecdn.net/9ghCpUY6JaLtStkZkeH73T-1200-80.jpg", false, 1, "Push-Up" },
+                    { new Guid("c9b4f5f1-1e3d-4a93-9d42-bb27a1b4b315"), new DateTime(2023, 12, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "https://ironbullstrength.com/cdn/shop/articles/leg_press_knee_pain.webp?v=1695829075", false, 3, "Leg Press" },
+                    { new Guid("cce872f8-19f8-4e7d-bd57-e7f5c66a06b7"), new DateTime(2024, 1, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, "https://www.barbellmedicine.com/wp-content/uploads/2023/10/The-Bench-Press.jpg", false, 1, "Bench Press" },
+                    { new Guid("ccf2748a-492e-496e-bd6b-8df2dc9b8f4a"), new DateTime(2024, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, "https://d1lcvt77zgh63s.cloudfront.net/wp-content/uploads/2023/09/barbell-bent-over-row.jpg", false, 2, "Bent Over Row" },
+                    { new Guid("d3e0b5f7-a1b5-4207-81b3-e0a5f6e0e8b5"), new DateTime(2003, 3, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "https://media.self.com/photos/5c5b6d8f8f8b702d129df281/master/pass/woman-lunging-gym.jpg", false, 3, "Reverse Lunges" },
+                    { new Guid("d4f5b8b7-5638-4882-9254-07f5f35c09d6"), new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "https://cdn.muscleandstrength.com/sites/default/files/lat-pull-down.jpg", false, 2, "Lat Pulldown" },
+                    { new Guid("db8d4f5e-3f5f-4bfe-9b53-8171b4c77f8b"), new DateTime(2024, 1, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, "https://uk.gymreapers.com/cdn/shop/articles/wearing_a_lifting_belt_for_deadlifts.png?v=1675261258&width=1500", false, 2, "Deadlift" },
+                    { new Guid("dbb7b1c4-72e8-4a37-91a7-fb97d4b4f0e3"), new DateTime(2003, 2, 27, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, "https://www.tonal.com/wp-content/uploads/2024/01/Bulgarian-Split-Squat-Hero.jpg", false, 3, "Bulgarian Split Squat" },
+                    { new Guid("e2b1f3f7-8c1e-4b5f-9f2a-0e3c7d5b0d8d"), new DateTime(2016, 3, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, "https://mirafit.co.uk/wp/wp-content/uploads/2023/12/skull-crusher-using-Mirafit-EZ-Curl-Bar-1024x683.jpg", false, 0, "Skull Crusher" },
+                    { new Guid("f2c3d8a4-b1e8-4d2f-9c3e-4d8f2e3c1b0d"), new DateTime(2016, 6, 16, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "https://www.borntough.com/cdn/shop/articles/Best_Biceps_Cable_Curls_Variations_and_Workouts.jpg?v=1655822555", false, 0, "Cable Curl" },
+                    { new Guid("fd3e8bc1-a4a6-4535-91f9-e4e68e0cde90"), new DateTime(2024, 1, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "https://cdn.muscleandstrength.com/sites/default/files/seated-concentration-curl.jpg", false, 0, "Concentration Curl" },
+                    { new Guid("fdcd4903-8d91-4091-91de-96b88b0a5f23"), new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, "https://cdn.muscleandstrength.com/sites/default/files/incline-bench-press.jpg", false, 1, "Incline Bench Press" },
+                    { new Guid("ff5e9f1a-8f9f-4a8f-9081-d17b9e6fbe3c"), new DateTime(2024, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "https://steelsupplements.com/cdn/shop/articles/shutterstock_1705063531_1000x.jpg?v=1642058677", false, 2, "Back Extension" }
                 });
 
             migrationBuilder.InsertData(

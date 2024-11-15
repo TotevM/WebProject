@@ -46,14 +46,61 @@ namespace FitnessApp.Web.Controllers
 				return NotFound();
 			}
 
-			var workoutExercise = context.WorkoutsExercises.Where(we => we.ExerciseId == id).ToList();
+			List<WorkoutExercise> workoutExercise = context.WorkoutsExercises.Where(we => we.ExerciseId == id).ToList();
 
-			context.RemoveRange(workoutExercise);
+			foreach (var we in workoutExercise)
+			{
+				we.IsDeleted = true;
+			}
+
+			context.UpdateRange(workoutExercise);
 			exercise.IsDeleted=true;
 
 			context.SaveChanges();
 
 			return RedirectToAction("Index", "Exercise");
+		}
+
+		[HttpGet]
+		public IActionResult Restore()
+		{
+			var exercises = context.Exercises.Where(e => e.IsDeleted)
+				.OrderByDescending(e => e.CreatedOn)
+				.Select(e => new ExerciseIndexView
+				{
+					Id = e.Id,
+					Name = e.Name,
+					Difficulty = e.Difficulty.ToString(),
+					ImageUrl = e.ImageUrl,
+					MuscleGroup = e.MuscleGroup.ToString()
+				}).ToList();
+
+			return View(exercises);
+		}
+
+		[HttpPost]
+		public IActionResult Restore(Guid id)
+		{
+			var exercise = context.Exercises.Where(ex => ex.Id == id).FirstOrDefault();
+
+			if (exercise == null)
+			{
+				return NotFound();
+			}
+
+			List<WorkoutExercise> workoutExercise = context.WorkoutsExercises.Where(we => we.ExerciseId == id).ToList();
+
+			foreach (var we in workoutExercise)
+			{
+				we.IsDeleted = false;
+			}
+
+			context.UpdateRange(workoutExercise);
+			exercise.IsDeleted = false;
+
+			context.SaveChanges();
+
+			return RedirectToAction("Restore", "Exercise");
 		}
 	}
 }

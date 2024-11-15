@@ -32,7 +32,7 @@ namespace FitnessApp.Web.Controllers
 					Id = w.Id,
 					Name = w.Name,
 					Exercises = context.Exercises
-					.Where(e => e.WorkoutsExercises.Any(x => x.WorkoutId == w.Id))
+					.Where(e => e.WorkoutsExercises.Any(x => x.WorkoutId == w.Id && !x.IsDeleted))
 					.Select(x => new ExercisesInMyWorkoutsView
 					{
 					Id=x.Id,
@@ -45,10 +45,5 @@ namespace FitnessApp.Web.Controllers
 
             return View(workouts);
         }
-
-        //public IActionResult AddWorkoutForm()
-        //{
-        //    return View();
-        //}
     }
 }

@@ -21,7 +21,9 @@ namespace FitnessApp.Data.EntityConfiguration
 				   .HasForeignKey(we => we.ExerciseId)
 				   .OnDelete(DeleteBehavior.Cascade);
 
-            string path = Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "FitnessApp.Data", "Datasets", "workoutExercise.json");
+			builder.Property(uw => uw.IsDeleted).HasDefaultValue(false);
+
+			string path = Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "FitnessApp.Data", "Datasets", "workoutExercise.json");
             string data = File.ReadAllText(path);
             var workoutsExercises = JsonSerializer.Deserialize<List<WorkoutExercise>>(data);
 
