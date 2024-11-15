@@ -27,6 +27,7 @@ namespace FitnessApp.Web.Controllers
 				.OrderByDescending(e => e.CreatedOn)
 				.Select(e => new ExerciseIndexView
 				{
+					Id=e.Id,
 					Name = e.Name,
 					Difficulty = e.Difficulty.ToString(),
 					ImageUrl = e.ImageUrl,
@@ -40,7 +41,7 @@ namespace FitnessApp.Web.Controllers
 		{
 			var exercise=context.Exercises.Where(ex => ex.Id == id).FirstOrDefault();
 
-			if (exercise != null)
+			if (exercise == null)
 			{
 				return NotFound();
 			}
