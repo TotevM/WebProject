@@ -45,5 +45,32 @@ namespace FitnessApp.Web.Controllers
 
             return View(workouts);
         }
-    }
+
+		[HttpGet]
+		public IActionResult AddWorkout()
+		{
+			var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+			var workouts = context.Workouts
+				.Where(w => w.UserID==null && !w.UsersWorkouts.Any(u => u.UserId == userId))
+				.OrderByDescending(u => u.CreatedOn)
+				.Select(w => new MyWorkoutsView
+				{
+					Id = w.Id,
+					Name = w.Name,
+					Exercises = context.Exercises
+					.Where(e => e.WorkoutsExercises.Any(x => x.WorkoutId == w.Id && !x.IsDeleted))
+					.Select(x => new ExercisesInMyWorkoutsView
+					{
+						Id = x.Id,
+						Name = x.Name
+					})
+					.ToList()
+				})
+				.ToList();
+
+
+			return View(workouts);
+		}
+	}
 }

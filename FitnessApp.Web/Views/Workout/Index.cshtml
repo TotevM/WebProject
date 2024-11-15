@@ -9,9 +9,10 @@
     <div class="jumbotron text-center bg-primary text-white p-4 rounded">
         <h1 class="display-4">Get Fit with FitJourney</h1>
         <p class="lead">Your journey to a better you starts here. Explore our workout routines and track your progress.</p>
-        <a href="/Workouts/Create" class="btn btn-light btn-lg">Start a New Workout</a>
+        <a asp-controller="Workout" asp-action="AddWorkout" class="btn btn-light btn-lg">Start a New Workout</a>
     </div>
 </div>
+
 <h1>My Workouts</h1>
 
 @if (!Model.Any())
