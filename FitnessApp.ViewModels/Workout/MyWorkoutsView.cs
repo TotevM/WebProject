@@ -9,7 +9,7 @@ namespace FitnessApp.ViewModels.Workout
 	public class MyWorkoutsView
 	{
 		public Guid Id { get; set; }
-		public string Name { get; set; }
+		public required string Name { get; set; }
 		public IEnumerable<ExercisesInMyWorkoutsView> Exercises { get; set; } = new List<ExercisesInMyWorkoutsView>();
 	}
 }
