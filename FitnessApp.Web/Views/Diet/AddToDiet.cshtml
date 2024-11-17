@@ -1,5 +1,12 @@
 ﻿@model AddRecipeToDietViewModel
 
+@if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+{
+    <div class="alert alert-danger">
+        @ViewBag.ErrorMessage
+    </div>
+}
+
 <form asp-action="AddToDiet" method="post">
     <input type="hidden" asp-for="RecipeId" />
     <div class="form-group">
