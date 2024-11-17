@@ -169,6 +169,30 @@ namespace FitnessApp.Web.Controllers
             recipe.Carbohydrates = (int)model.Carbohydrates!;
             recipe.Fats = (int)model.Fats!;
 
+            var diets = context.Diets.Where(d => d.DietsRecipes.Any(x=>x.RecipeId==model.Id)).ToList();
+
+            foreach (var diet in diets)
+            {
+				if (diet != null)
+				{
+					diet.Calories = diet.DietsRecipes
+						.Where(df => df.Recipe != null)
+						.Sum(df => df.Recipe.Calories);
+
+					diet.Protein = diet.DietsRecipes
+						.Where(df => df.Recipe != null)
+						.Sum(df => df.Recipe.Protein);
+
+					diet.Carbohydrates = diet.DietsRecipes
+						.Where(df => df.Recipe != null)
+						.Sum(df => df.Recipe.Carbohydrates);
+
+					diet.Fats = diet.DietsRecipes
+						.Where(df => df.Recipe != null)
+						.Sum(df => df.Recipe.Fats);
+				}
+			}
+
             context.Recipes.Update(recipe);
             await context.SaveChangesAsync();
 
@@ -227,31 +251,15 @@ namespace FitnessApp.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(Guid id)
         {
-            //Console.WriteLine("=== Request Details ===");
-            //Console.WriteLine($"Delete method invoked for id: {id}");
-            //Console.WriteLine($"Request method: {Request.Method}");
-            //Console.WriteLine($"Request path: {Request.Path}");
-            //Console.WriteLine($"Request QueryString: {Request.QueryString}");
-            //Console.WriteLine($"Referrer: {Request.Headers["Referer"]}");
-
-            // Log all headers
-            //Console.WriteLine("=== Headers ===");
             foreach (var header in Request.Headers)
             {
                 Console.WriteLine($"{header.Key}: {header.Value}");
             }
 
-            //if (id == Guid.Empty)
-            //{
-            //    Console.WriteLine("Empty GUID detected, redirecting to Index");
-            //    return RedirectToAction(nameof(Index));
-            //}
-
             var recipe = await context.Recipes.FirstOrDefaultAsync(x => x.Id == id);
             if (recipe == null)
             {
-                //Console.WriteLine($"Recipe not found for id: {id}");
-                //return NotFound("Recipe not found");
+                return NotFound("Recipe not found");
             }
 
             var model = new DeleteRecipeView
@@ -261,8 +269,6 @@ namespace FitnessApp.Web.Controllers
                 ImageUrl = recipe.ImageUrl
             };
 
-            //Console.WriteLine($"Model created with Id: {model.Id}, Name: {model.Name}");
-            //Console.WriteLine("About to return view");
             return View(model);
         }
 
@@ -270,11 +276,35 @@ namespace FitnessApp.Web.Controllers
         public async Task<IActionResult> Delete(DeleteRecipeView model)
         {
             var recipe = await context.Recipes.FirstOrDefaultAsync(p => p.Id == model.Id);
+            var dietRecipe = context.Diets.Where(d => d.DietsRecipes.Any(x => x.RecipeId == model.Id)).ToList();
+            var toDelete = context.DietsRecipes.Where(x => x.RecipeId == model.Id).ToList();
 
             if (recipe == null)
             {
                 return NotFound();
             }
+
+            context.DietsRecipes.RemoveRange(toDelete);
+            context.SaveChanges();
+
+            foreach (var diet in dietRecipe)
+            {
+					diet.Calories = diet.DietsRecipes
+						.Where(df => df.Recipe != null)
+						.Sum(df => df.Recipe.Calories);
+
+					diet.Protein = diet.DietsRecipes
+						.Where(df => df.Recipe != null)
+						.Sum(df => df.Recipe.Protein);
+
+					diet.Carbohydrates = diet.DietsRecipes
+						.Where(df => df.Recipe != null)
+						.Sum(df => df.Recipe.Carbohydrates);
+
+					diet.Fats = diet.DietsRecipes
+						.Where(df => df.Recipe != null)
+						.Sum(df => df.Recipe.Fats);
+			}
 
             recipe.IsDeleted = true;
 
