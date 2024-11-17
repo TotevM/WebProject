@@ -47,7 +47,7 @@ namespace FitnessApp.Web.Controllers
         }
 
 		[HttpGet]
-		public IActionResult AddWorkout()
+		public IActionResult AddToMyWorkouts()
 		{
 			var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -72,5 +72,23 @@ namespace FitnessApp.Web.Controllers
 
 			return View(workouts);
 		}
-	}
+
+        [HttpPost]
+        public IActionResult AddToMyWorkouts(Guid workoutId)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+			//Check if userworkout already exists
+
+			var entry = new UserWorkout
+			{
+				WorkoutId = workoutId,
+				UserId = userId
+			};
+
+			context.UsersWorkouts.Add(entry);
+			context.SaveChanges();
+
+			return RedirectToAction("Index", "Workout");
+        }
+    }
 }

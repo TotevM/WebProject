@@ -36,8 +36,8 @@
 				<div class="mt-auto d-flex justify-content-between gap-2">
 					<a asp-controller="Workout" asp-action="Details" asp-route-id="@workout.Id" class="btn btn-info flex-fill">Details</a>
 					
-					<form asp-controller="Workout" asp-action="Add" method="get" style="display:inline;">
-						<input type="hidden" name="recipeId" value="@workout.Id" />
+					<form asp-controller="Workout" asp-action="AddToMyWorkouts" method="post" style="display:inline;">
+						<input type="hidden" name="workoutId" value="@workout.Id" />
 						<button type="submit" class="btn btn-success flex-fill">Add to "My Workouts""</button>
 					</form>
 
