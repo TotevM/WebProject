@@ -90,5 +90,21 @@ namespace FitnessApp.Web.Controllers
 
 			return RedirectToAction("Index", "Workout");
         }
+
+        [HttpPost]
+        public IActionResult RemoveFromMyWorkouts(Guid workoutId)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+			//Check if userworkout already exists
+
+			var entry = context.UsersWorkouts.Where(uw => uw.UserId == userId && uw.WorkoutId == workoutId).FirstOrDefault();
+
+            context.UsersWorkouts.Remove(entry);
+            context.SaveChanges();
+
+            return RedirectToAction("Index", "Workout");
+        }
+
+        
     }
 }
