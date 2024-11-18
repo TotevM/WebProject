@@ -7,13 +7,13 @@
     </div>
 }
 
-<form asp-action="AddToDiet" method="post">
+<form asp-action="AddRecipeToDiet" method="post">
     <input type="hidden" asp-for="RecipeId" />
     <div class="form-group">
         <label for="SelectedDietId">Select Diet</label>
         <select asp-for="SelectedDietId" asp-items="Model.Diets" class="form-control"></select>
     </div>
-    <form asp-controller="Diet" asp-action="AddToDiet" method="post" style="display:inline;">
+    <form asp-controller="Diet" asp-action="AddRecipeToDiet" method="post" style="display:inline;">
         <input type="hidden" name="recipeId" value="@Model.RecipeId" />
         <button type="submit" class="btn btn-success flex-fill">Add to Diet</button>
     </form>

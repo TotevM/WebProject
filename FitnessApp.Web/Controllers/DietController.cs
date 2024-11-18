@@ -25,7 +25,7 @@ namespace FitnessApp.Web.Controllers
         public IActionResult MyDiets()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var diets = context.Diets
+            List<MyDietsIndexView> diets = context.Diets
                 .Where(d => d.UserDiets.Any(ud => ud.UserId == userId))
                 .Select(diet => new MyDietsIndexView
                 {
@@ -42,10 +42,10 @@ namespace FitnessApp.Web.Controllers
             return View(diets);
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> DefaultDiets()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var diets = context.Diets.Where(d => !d.UserDiets.Any(ud => ud.UserId == userId) && d.UserID == null).ToList();
+            List<Data.Models.Diet> diets = context.Diets.Where(d => !d.UserDiets.Any(ud => ud.UserId == userId) && d.UserID == null).ToList();
 
             var dietViewModels = diets.Select(diet => new DietIndexView
             {
@@ -63,7 +63,7 @@ namespace FitnessApp.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Details(Guid id)
+        public async Task<IActionResult> DietDetails(Guid id)
         {
             var recipes = context.Recipes.Where(r => r.DietsRecipes.Any(d => d.DietId == id)).ToList();
 
@@ -83,7 +83,7 @@ namespace FitnessApp.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult DetailsInDiet(Guid recipeId, Guid dietId)
+        public IActionResult RecipeDetailsInDiet(Guid recipeId, Guid dietId)
         {
             var recipe = context.Recipes
                 .Where(r => r.Id == recipeId)
@@ -94,7 +94,7 @@ namespace FitnessApp.Web.Controllers
                 return NotFound();
             }
 
-            var viewModel = new RecipeDetailsInDiet
+            RecipeDetailsInDiet viewModel = new RecipeDetailsInDiet
             {
                 DietId = dietId,
                 RecipeId = recipeId,
@@ -111,6 +111,7 @@ namespace FitnessApp.Web.Controllers
             return View(viewModel);
         }
 
+        [HttpPost]
         public IActionResult RemoveFromDiet(Guid dietId, Guid recipeId)
         {
             var toRemove = context.DietsRecipes
@@ -137,11 +138,11 @@ namespace FitnessApp.Web.Controllers
                 context.SaveChanges();
             }
 
-            return RedirectToAction("Details", new { id = dietId });
+            return RedirectToAction("DietDetails", new { id = dietId });
         }
 
         [HttpGet]
-        public IActionResult AddToDiet(Guid recipeId)
+        public IActionResult AddRecipeToDiet(Guid recipeId)
         {
             List<SelectListItem> diets = context.Diets
                 .Select(d => new SelectListItem
@@ -161,7 +162,7 @@ namespace FitnessApp.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddToDiet(AddRecipeToDietViewModel model)
+        public IActionResult AddRecipeToDiet(AddRecipeToDietViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -219,7 +220,7 @@ namespace FitnessApp.Web.Controllers
 
                 context.SaveChanges();
 
-                return RedirectToAction("Details", new { id = model.SelectedDietId });
+                return RedirectToAction("DietDetails", new { id = model.SelectedDietId });
             }
 
             model.Diets = context.Diets
@@ -234,7 +235,7 @@ namespace FitnessApp.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddToMyDiet(Guid dietId)
+        public IActionResult AddToMyDiets(Guid dietId)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -247,7 +248,7 @@ namespace FitnessApp.Web.Controllers
             context.UsersDiets.Add(model);
             context.SaveChanges();
 
-            return RedirectToAction("Index", "Diet");
+            return RedirectToAction("MyDiets", "Diet");
         }
 
         [HttpPost]

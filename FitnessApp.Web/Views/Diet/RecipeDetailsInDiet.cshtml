@@ -40,7 +40,9 @@
 	</div>
 
 	<div class="row mt-4">
-		<a href="@Url.Action("RemoveFromDiet", "Diet", new { dietId = Model.DietId, recipeId = Model.RecipeId })" class="btn btn-danger me-2">Remove</a>
+		<form action="@Url.Action("RemoveFromDiet", "Diet", new { dietId = Model.DietId, recipeId = Model.RecipeId })" method="post" class="d-inline">
+			<button type="submit" class="btn btn-danger me-2">Remove</button>
+		</form>
 		<div class="col-12 text-end">
 			<button onclick="window.history.back()" class="btn btn-secondary">Go Back</button>
 		</div>
