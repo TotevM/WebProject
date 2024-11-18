@@ -1,97 +1,102 @@
 using FitnessApp.Data;
 using FitnessApp.Data.Models;
+using FitnessApp.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace FitnessApp.Web
 {
-    public class Program
-    {
+	public class Program
+	{
 
-        public static void Main(string[] args)
-        {
-            var builder = WebApplication.CreateBuilder(args);
-
-
-            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-            builder.Services.AddDbContext<FitnessDBContext>(options =>
-            options.UseSqlServer(connectionString));
-            builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-
-            builder.Services.AddDefaultIdentity<ApplicationUser>(options => ConfigureIdentityOptions(options))
-                .AddEntityFrameworkStores<FitnessDBContext>()
-                .AddDefaultTokenProviders();
+		public static void Main(string[] args)
+		{
+			var builder = WebApplication.CreateBuilder(args);
 
 
-            builder.Services.AddControllersWithViews();
+			var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+			builder.Services.AddDbContext<FitnessDBContext>(options =>
+			options.UseSqlServer(connectionString));
+			builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            var app = builder.Build();
+			builder.Services.AddDefaultIdentity<ApplicationUser>(options => ConfigureIdentityOptions(options))
+				.AddEntityFrameworkStores<FitnessDBContext>()
+				.AddDefaultTokenProviders();
 
-            using (var scope = app.Services.CreateScope())
-            {
-                var services = scope.ServiceProvider;
-                try
-                {
-                    var context = services.GetRequiredService<FitnessDBContext>();
-                    context.SeedDatabaseAsync().Wait();
-                }
-                catch (Exception ex)
-                {
-                    var logger = services.GetRequiredService<ILogger<Program>>();
-                    logger.LogError(ex, "An error occurred while seeding the database.");
-                }
-            }
+			builder.Services.RegisterRepositories(typeof(ApplicationUser).Assembly);
+			builder.Services.RegisterUserDefinedServices();
 
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseMigrationsEndPoint();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-                app.UseHsts();
-            }
+			builder.Services.AddControllersWithViews();
 
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
+			var app = builder.Build();
 
-            app.UseRouting();
+			using (var scope = app.Services.CreateScope())
+			{
+				var services = scope.ServiceProvider;
+				try
+				{
+					var context = services.GetRequiredService<FitnessDBContext>();
+					context.SeedDatabaseAsync().Wait();
+				}
+				catch (Exception ex)
+				{
+					var logger = services.GetRequiredService<ILogger<Program>>();
+					logger.LogError(ex, "An error occurred while seeding the database.");
+				}
+			}
 
-            app.UseAuthentication();
-            app.UseAuthorization();
+			if (app.Environment.IsDevelopment())
+			{
+				app.UseMigrationsEndPoint();
+			}
+			else
+			{
+				app.UseExceptionHandler("/Home/Error");
+				app.UseHsts();
+			}
 
-            app.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
-            app.MapRazorPages();
+			app.UseHttpsRedirection();
+			app.UseStaticFiles();
 
-            app.Run();
-        }
+			app.UseRouting();
 
-        private static void ConfigureIdentityOptions(IdentityOptions options)
-        {
-            // Password Settings
-            options.Password.RequireDigit = false;
-            options.Password.RequireLowercase = false;
-            options.Password.RequireNonAlphanumeric = false;
-            options.Password.RequireUppercase = false;
-            options.Password.RequiredLength = 6;
-            options.Password.RequiredUniqueChars = 1;
-            options.SignIn.RequireConfirmedAccount = false;
+			app.UseAuthentication();
+			app.UseAuthorization();
 
-            // Lockout settings
-            options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-            options.Lockout.MaxFailedAccessAttempts = 5;
-            options.Lockout.AllowedForNewUsers = true;
+			app.MapControllerRoute(
+				name: "default",
+				pattern: "{controller=Home}/{action=Index}/{id?}");
+			app.MapRazorPages();
 
-            // User settings
-            options.User.AllowedUserNameCharacters =
-                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
-            options.User.RequireUniqueEmail = true;
+			app.ApplyMigrations();
 
-            // SignIn settings
-            options.SignIn.RequireConfirmedEmail = false;
-            options.SignIn.RequireConfirmedPhoneNumber = false;
-        }
-    }
+			app.Run();
+		}
+
+		private static void ConfigureIdentityOptions(IdentityOptions options)
+		{
+			// Password Settings
+			options.Password.RequireDigit = false;
+			options.Password.RequireLowercase = false;
+			options.Password.RequireNonAlphanumeric = false;
+			options.Password.RequireUppercase = false;
+			options.Password.RequiredLength = 6;
+			options.Password.RequiredUniqueChars = 1;
+			options.SignIn.RequireConfirmedAccount = false;
+
+			// Lockout settings
+			options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+			options.Lockout.MaxFailedAccessAttempts = 5;
+			options.Lockout.AllowedForNewUsers = true;
+
+			// User settings
+			options.User.AllowedUserNameCharacters =
+				"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+			options.User.RequireUniqueEmail = true;
+
+			// SignIn settings
+			options.SignIn.RequireConfirmedEmail = false;
+			options.SignIn.RequireConfirmedPhoneNumber = false;
+		}
+	}
 }

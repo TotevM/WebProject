@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FitnessApp.Data.Repository.Contracts
 {
-    public interface IBaseRepository<TType, TId>
+    public interface IRepository<TType, TId>
     {
         TType GetById(TId id);
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FitnessApp.Services.ServiceContracts
 {
-	internal interface IProgressService
+	public interface IProgressService
 	{
 	}
 }
