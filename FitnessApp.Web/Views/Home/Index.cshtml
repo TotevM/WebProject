@@ -1,7 +1,173 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "FitJourney!";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
+<div id="hero">
+    <h1 class="display-3 fw-bold text-dark mb-5 text-center">Welcome to @ViewData["Title"]</h1>
+
+    <div class="container text-center position-relative d-flex flex-column">
+
+        <div class="learn-more d-flex">
+            <div class="info d-flex flex-column">
+                <h2 class="display-4 fw-bold text-dark mt-5">
+                    Unleash your body's full potential
+                </h2>
+                <p class="lead text-muted mt-4">
+                    Ready to make a change? Every great journey begins with a single
+                    step, and today’s the day to take yours.
+                </p>
+
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <div id="start-now" class="cta d-flex justify-content-center mt-4">
+                        <a class="nav-link btn btn-primary btn-lg me-3" asp-controller="Diet" asp-action="MyDiets" class="btn btn-primary">My Diets</a>
+                        <a class="nav-link btn btn-primary btn-lg me-3" asp-controller="Workout" asp-action="Index" class="btn btn-primary">My Workouts</a>
+                    </div>
+                }
+                else
+                {
+                    <div id="start-now" class="cta mt-4">
+                        <a class="nav-link btn btn-primary btn-lg me-3" asp-area="Identity" asp-page="/Account/Login">Start now</a>
+                    </div>
+                }
+
+            </div>
+
+            <div class="image">
+                <img src="~/images/home-page/stretching-girl.png" alt="">
+            </div>
+        </div>
+
+        <div class="start-now d-flex">
+            <div class="image">
+                <img src="~/images/home-page/stretching-man.png" alt="">
+            </div>
+
+            <div class="info d-flex flex-column">
+                <h2 class="display-4 fw-bold text-dark mt-5">
+                    Your success is our mission
+                </h2>
+                <p class="lead text-muted mt-4">
+                    Join us, set your goals, and let's turn potential into
+                    progress.
+                    Your better self is closer than you think!
+                </p>
+
+                <div id="learn-about-us" class="cta mt-4">
+                    <a href="#" class="btn btn-outline-secondary btn-lg">Learn more about us</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>
+
+<div id="team">
+    <div class="container my-5">
+        <div class="text-center mb-5">
+            <h2 class="display-5 fw-bold">Our Team</h2>
+            <p class="lead text-muted">
+                We're a dynamic group of individuals who are passionate about what we do and
+                dedicated to delivering the best results for our clients.
+            </p>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card shadow-sm">
+                    <img src="images/home-page/mike-roberts.png" class="card-img-top" alt="Member 1">
+                    <div class="card-body text-center">
+                        <div class="name">
+                            <h5 class="card-title">Mike Roberts</h5>
+                        </div>
+                        <p class="card-text text-muted">Strength and Conditioning Specialist</p>
+                        <button class="btn btn-outline-primary" data-bs-toggle="collapse"
+                                data-bs-target="#details1">
+                            Learn More
+                        </button>
+                        <div id="details1" class="collapse mt-3">
+                            <p class="text-muted details">Mike Roberts is a fitness professional with over 10 years of experience, specializing in strength training, weight loss, and functional fitness. Certified as a Strength and Conditioning Specialist (CSCS), he creates personalized workout plans tailored to individual goals. Mike has helped athletes improve performance and prevent injuries, working with professional teams. His innovative techniques have been featured in fitness magazines, shaping the success of many clients.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card shadow-sm">
+                    <img src="images/home-page/kiara-johnson.jpg" class="card-img-top" alt="Member 2">
+                    <div class="card-body text-center">
+                        <div class="name">
+                            <h5 class="card-title">Kiara Johnson</h5>
+                        </div>
+
+                        <p class="card-text text-muted">yoga instructor</p>
+
+                        <button class="btn btn-outline-primary" data-bs-toggle="collapse"
+                                data-bs-target="#details2">
+                            Learn More
+                        </button>
+
+                        <div id="details2" class="collapse mt-3">
+                            <p class="text-muted details">Kiara Johnson is a dedicated yoga instructor with a 500-Hour Yoga Teacher Training certification. She creates personalized yoga programs for all levels, focusing on mindfulness, stress management, and recovery. Kiara incorporates breathing techniques and meditation to enhance well-being and has worked with top athletes to improve flexibility, prevent injuries, and aid recovery, promoting holistic health.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card shadow-sm">
+                    <img src="images/home-page/joseph-smith.png" class="card-img-top" alt="Member 3">
+
+                    <div class="card-body text-center">
+                        <div class="name">
+                            <h5 class="card-title">Joseph Smith</h5>
+                        </div>
+
+                        <p class="card-text text-muted">nutritionist</p>
+
+                        <button class="btn btn-outline-primary" data-bs-toggle="collapse"
+                                data-bs-target="#details3">
+                            Learn More
+                        </button>
+                        <div id="details3" class="collapse mt-3">
+                            <p class="text-muted details">Joseph Smith is a certified personal trainer and nutrition coach specializing in endurance sports and athletic performance. He has guided athletes through marathons, triathlons, and obstacle races, emphasizing nutrition and mental resilience. As the author of a bestselling book on sports nutrition, Joseph has helped many optimize their diet for peak performance. His training strategies have been featured in top fitness blogs, earning him recognition as an expert in endurance and nutrition.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="about-us" class="py-5">
+    <div class="container">
+
+        <div class="row align-items-center mb-5">
+
+            <div class="col-lg-6">
+                <div class="position-relative">
+                    <img src="~/images/home-page/about-us.png" alt="About Us" class="img-fluid rounded shadow-lg">
+                </div>
+            </div>
+
+            <div class="col-lg-6 d-flex flex-column gap-3">
+                <h2 class="fw-bold text-primary">A Better You, Every Day</h2>
+                <p class="fs-5 text-muted">
+                    At <span class="fw-bold">FitJourney</span>, our mission is to redefine fitness by offering tools and resources tailored to your unique journey. Whether you're setting your first goal or breaking your personal record, we're here to help every step of the way.
+                </p>
+                <p class="fs-5 text-muted">
+                    Join a community of fitness enthusiasts, create personalized workouts and diets and track your progress to achieve the best version of yourself.
+                </p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/index.css" />
+}
+
+@section Scripts {
+    <script src="~/js/index.js" asp-append-version="true"></script>
+}

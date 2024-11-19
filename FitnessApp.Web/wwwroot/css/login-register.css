@@ -1,4 +1,8 @@
-﻿.full-height-container {
+﻿.pt-1r {
+    padding-top: 1rem !important;
+}
+
+.full-height-container {
     display: flex;
     justify-content: center;
     align-items: center;

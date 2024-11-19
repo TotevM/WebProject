@@ -18,14 +18,14 @@
                     <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
 
                     <div class="form-floating mb-4">
-                        <input asp-for="Input.Email" class="form-control shadow-sm border-1 rounded-2 py-2"
+                        <input asp-for="Input.Email" class="form-control shadow-sm border-1 rounded-2 py-2 pt-1r"
                                autocomplete="username" aria-required="true" placeholder="name@example.com" />
                         <label asp-for="Input.Email" class="form-label">Email address</label>
                         <span asp-validation-for="Input.Email" class="text-danger"></span>
                     </div>
 
                     <div class="form-floating mb-4">
-                        <input asp-for="Input.Password" type="password" class="form-control shadow-sm border-1 rounded-2 py-2"
+                        <input asp-for="Input.Password" type="password" class="form-control shadow-sm border-1 rounded-2 py-2 pt-1r"
                                autocomplete="current-password" aria-required="true" placeholder="Password" />
                         <label asp-for="Input.Password" class="form-label">Password</label>
                         <span asp-validation-for="Input.Password" class="text-danger"></span>
@@ -39,7 +39,7 @@
                     </div>
 
                     <div class="d-grid">
-                        <button id="login-submit" type="submit" class="btn btn-primary fw-semibold py-2">Log in</button>
+                        <button id="login-submit" type="submit" class="btn btn-primary fw-semibold py-2 pt-1">Log in</button>
                     </div>
 
                     <p class="text-center text-muted small mt-4 new-user">
@@ -57,5 +57,5 @@
 }
 
 @section Styles {
-	<link rel="stylesheet" href="~/css/login-register.css" />
+    <link rel="stylesheet" href="~/css/login-register.css" />
 }

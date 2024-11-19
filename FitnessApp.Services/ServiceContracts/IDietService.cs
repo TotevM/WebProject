@@ -12,7 +12,7 @@ namespace FitnessApp.Services.ServiceContracts
         Task RemoveFromDietAsync(Guid dietId, Guid recipeId);
         Task<List<SelectListItem>> AddRecipeToDietAsync(Guid recipeId);
         Task AddRecipeToDietAsync(AddRecipeToDietViewModel model);
-        Task AddToMyDietsAsync(Guid dietId);
-        Task RemoveFromMyDietsAsync(Guid dietId);
+        Task AddToMyDietsAsync(Guid dietId, string userId);
+        Task<bool> RemoveFromMyDietsAsync(Guid dietId, string userId);
     }
 }

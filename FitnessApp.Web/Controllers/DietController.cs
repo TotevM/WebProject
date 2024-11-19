@@ -34,7 +34,7 @@ namespace FitnessApp.Web.Controllers
             var diets = await dietService.MyDietsAsync(userId!);
 
             return View(diets);
-        }
+        }//working
 
         [HttpGet]
         public async Task<IActionResult> DefaultDiets()
@@ -43,7 +43,7 @@ namespace FitnessApp.Web.Controllers
             var dietsViewModel = await dietService.DefaultDietsAsync(userId!);
 
 			return View(dietsViewModel);
-        }
+        }//working
 
         [HttpGet]
         public async Task<IActionResult> DietDetails(Guid dietId)
@@ -51,66 +51,27 @@ namespace FitnessApp.Web.Controllers
 			var dietsViewModel = await dietService.DietDetailsAsync(dietId);
             
 			return View(dietsViewModel);
-        }
+        }//working
 
         [HttpGet]
-        public IActionResult RecipeDetailsInDiet(Guid recipeId, Guid dietId)
+        public async Task<IActionResult> RecipeDetailsInDiet(Guid recipeId, Guid dietId)
         {
-            var recipe = context.Recipes
-                .Where(r => r.Id == recipeId)
-                .FirstOrDefault();
+            var viewModel = await dietService.RecipeDetailsInDietAsync(recipeId, dietId);
 
-            if (recipe == null)
+            if (viewModel==null)
             {
                 return NotFound();
             }
 
-            RecipeDetailsInDiet viewModel = new RecipeDetailsInDiet
-            {
-                DietId = dietId,
-                RecipeId = recipeId,
-                Name = recipe.Name,
-                Calories = recipe.Calories,
-                Protein = recipe.Protein,
-                Carbohydrates = recipe.Carbohydrates,
-                Fats = recipe.Fats,
-                ImageUrl = recipe.ImageUrl,
-                Ingredients = recipe.Ingredients,
-                Preparation = recipe.Preparation
-            };
-
             return View(viewModel);
-        }
+        }//working
 
         [HttpPost]
-        public IActionResult RemoveFromDiet(Guid dietId, Guid recipeId)
+        public async Task<IActionResult> RemoveFromDiet(Guid dietId, Guid recipeId)
         {
-            var toRemove = context.DietsRecipes
-                .Where(x => x.RecipeId == recipeId && x.DietId == dietId)
-                .FirstOrDefault();
-
-            if (toRemove != null)
-            {
-                context.DietsRecipes.Remove(toRemove);
-
-                var diet = context.Diets
-                    .Include(d => d.DietsRecipes)
-                    .ThenInclude(dr => dr.Recipe)
-                    .FirstOrDefault(d => d.Id == dietId);
-
-                if (diet != null)
-                {
-                    diet.Calories = diet.DietsRecipes.Sum(df => df.Recipe.Calories);
-                    diet.Protein = diet.DietsRecipes.Sum(df => df.Recipe.Protein);
-                    diet.Carbohydrates = diet.DietsRecipes.Sum(df => df.Recipe.Carbohydrates);
-                    diet.Fats = diet.DietsRecipes.Sum(df => df.Recipe.Fats);
-                }
-
-                context.SaveChanges();
-            }
-
-            return RedirectToAction("DietDetails", new { dietId = dietId });
-        }
+            await dietService.RemoveFromDietAsync(dietId, recipeId);
+            return RedirectToAction("DietDetails", new { dietId });
+        }//working
 
         [HttpGet]
         public IActionResult AddRecipeToDiet(Guid recipeId)
@@ -206,37 +167,25 @@ namespace FitnessApp.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddToMyDiets(Guid dietId)
+        public async Task<IActionResult> AddToMyDiets(Guid dietId)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            var model = new UserDiet
-            {
-                UserId = userId,
-                DietId = dietId,
-            };
-
-            context.UsersDiets.Add(model);
-            context.SaveChanges();
-
+            await dietService.AddToMyDietsAsync(dietId, userId!);
             return RedirectToAction("MyDiets", "Diet");
-        }
+        }//working
 
         [HttpPost]
-        public IActionResult RemoveFromMyDiets(Guid dietId)
+        public async Task<IActionResult> RemoveFromMyDiets(Guid dietId)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var record = context.UsersDiets.Where(ud => ud.UserId == userId && ud.DietId == dietId).FirstOrDefault();
+            bool succeed = await dietService.RemoveFromMyDietsAsync(dietId, userId!);
 
-            if (record == null)
+            if (!succeed)
             {
-                //To implement
+                return NotFound();
             }
 
-            context.UsersDiets.Remove(record!);
-            context.SaveChanges();
-
             return RedirectToAction("MyDiets", "Diet");
-        }
+        }//working
     }
 }
