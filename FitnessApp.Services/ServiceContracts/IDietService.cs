@@ -1,18 +1,21 @@
-﻿using System.Web.Mvc;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using FitnessApp.ViewModels;
 
 namespace FitnessApp.Services.ServiceContracts
 {
     public interface IDietService
     {
-        Task<List<MyDietsIndexView>> MyDietsAsync(string userId);
-        Task<List<DietIndexView>> DefaultDietsAsync(string userId);
-        Task<List<DietDetailsView>> DietDetailsAsync(Guid dietId);
-        Task<RecipeDetailsInDiet> RecipeDetailsInDietAsync(Guid recipeId, Guid dietId);
-        Task RemoveFromDietAsync(Guid dietId, Guid recipeId);
-        Task<List<SelectListItem>> AddRecipeToDietAsync(Guid recipeId);
-        Task AddRecipeToDietAsync(AddRecipeToDietViewModel model);
-        Task AddToMyDietsAsync(Guid dietId, string userId);
-        Task<bool> RemoveFromMyDietsAsync(Guid dietId, string userId);
+        Task<List<MyDietsIndexView>> MyDietsAsync(string userId);//completed
+        Task<List<DietIndexView>> DefaultDietsAsync(string userId); //completed
+        Task<List<DietDetailsView>> DietDetailsAsync(Guid dietId);//completed
+        Task<RecipeDetailsInDiet> RecipeDetailsInDietAsync(Guid recipeId, Guid dietId);//completed
+        Task RemoveFromDietAsync(Guid dietId, Guid recipeId);//completed
+        Task AddRecipeToDietAsync(Guid recipeId, Guid dietId);
+        Task<AddRecipeToDietViewModel> AddRecipeToDietViewAsync(Guid recipeId);//completed
+        Task AddToMyDietsAsync(Guid dietId, string userId);//completed
+        Task<bool> RemoveFromMyDietsAsync(Guid dietId, string userId);//completed
+        Task<List<SelectListItem>> GetDietsSelectListAsync();//--------------
+        Task<bool> IsRecipeInDietAsync(Guid recipeId, Guid selectedDietId);//-------------
+        Task UpdateDietMacronutrientsAsync(Guid dietId);
     }
 }

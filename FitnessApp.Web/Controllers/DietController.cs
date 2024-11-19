@@ -1,8 +1,8 @@
 ﻿using System.Security.Claims;
 using FitnessApp.Data;
 using FitnessApp.Data.Models;
+using FitnessApp.Services;
 using FitnessApp.Services.ServiceContracts;
-using FitnessApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -16,16 +16,14 @@ namespace FitnessApp.Web.Controllers
     {
         private readonly ILogger<RecipeController> logger;
         private readonly UserManager<ApplicationUser> user;
-        private readonly FitnessDBContext context;
         private readonly IDietService dietService;
 
-        public DietController(ILogger<RecipeController> logger, UserManager<ApplicationUser> user, FitnessDBContext context, IDietService dietService)
+        public DietController(ILogger<RecipeController> logger, UserManager<ApplicationUser> user, IDietService dietService)
         {
             this.logger = logger;
-			this.user = user;
-			this.context = context;
-			this.dietService = dietService;
-		}
+            this.user = user;
+            this.dietService = dietService;
+        }
 
         [HttpGet]
         public async Task<IActionResult> MyDiets()
@@ -42,15 +40,15 @@ namespace FitnessApp.Web.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var dietsViewModel = await dietService.DefaultDietsAsync(userId!);
 
-			return View(dietsViewModel);
+            return View(dietsViewModel);
         }//working
 
         [HttpGet]
         public async Task<IActionResult> DietDetails(Guid dietId)
         {
-			var dietsViewModel = await dietService.DietDetailsAsync(dietId);
-            
-			return View(dietsViewModel);
+            var dietsViewModel = await dietService.DietDetailsAsync(dietId);
+
+            return View(dietsViewModel);
         }//working
 
         [HttpGet]
@@ -58,7 +56,7 @@ namespace FitnessApp.Web.Controllers
         {
             var viewModel = await dietService.RecipeDetailsInDietAsync(recipeId, dietId);
 
-            if (viewModel==null)
+            if (viewModel == null)
             {
                 return NotFound();
             }
@@ -74,96 +72,33 @@ namespace FitnessApp.Web.Controllers
         }//working
 
         [HttpGet]
-        public IActionResult AddRecipeToDiet(Guid recipeId)
+        public async Task<IActionResult> AddRecipeToDiet(Guid recipeId)
         {
-            List<SelectListItem> diets = context.Diets
-                .Select(d => new SelectListItem
-                {
-                    Value = d.Id.ToString(),
-                    Text = d.Name
-                })
-                .ToList();
-
-            var viewModel = new AddRecipeToDietViewModel
-            {
-                RecipeId = recipeId,
-                Diets = diets
-            };
-
+            var viewModel = await dietService.AddRecipeToDietViewAsync(recipeId);
             return View(viewModel);
         }
 
         [HttpPost]
-        public IActionResult AddRecipeToDiet(AddRecipeToDietViewModel model)
+        public async Task<IActionResult> AddRecipeToDiet(AddRecipeToDietViewModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var isPresent = context.DietsRecipes.AsNoTracking().Where(dr => dr.DietId == model.SelectedDietId && dr.RecipeId == model.RecipeId).FirstOrDefault();
-
-                if (isPresent!=null)
-                {
-                    model.Diets = context.Diets
-                            .Select(d => new SelectListItem
-                            {
-                                Value = d.Id.ToString(),
-                                Text = d.Name
-                            })
-                                .ToList();
-
-                    model.RecipeId = model.RecipeId;
-                    ViewBag.ErrorMessage = "This recipe is already added to the selected diet.";
-
-                    return View(model);
-                }
-
-                var dietRecipe = new DietRecipe
-                {
-                    DietId = model.SelectedDietId,
-                    RecipeId = model.RecipeId
-                };
-                ;
-                context.DietsRecipes.Add(dietRecipe);
-
-                context.SaveChanges();
-
-                var diet = context.Diets
-                    .Include(d => d.DietsRecipes)
-                    .ThenInclude(dr => dr.Recipe)
-                    .FirstOrDefault(d => d.Id == model.SelectedDietId);
-
-                if (diet != null)
-                {
-                    diet.Calories = diet.DietsRecipes
-                        .Where(df => df.Recipe != null)
-                        .Sum(df => df.Recipe.Calories);
-
-                    diet.Protein = diet.DietsRecipes
-                        .Where(df => df.Recipe != null)
-                        .Sum(df => df.Recipe.Protein);
-
-                    diet.Carbohydrates = diet.DietsRecipes
-                        .Where(df => df.Recipe != null)
-                        .Sum(df => df.Recipe.Carbohydrates);
-
-                    diet.Fats = diet.DietsRecipes
-                        .Where(df => df.Recipe != null)
-                        .Sum(df => df.Recipe.Fats);
-                }
-
-                context.SaveChanges();
-
-                return RedirectToAction("DietDetails", new { dietId = model.SelectedDietId });
+                model.Diets = await dietService.GetDietsSelectListAsync();
+                return View(model);
             }
 
-            model.Diets = context.Diets
-                .Select(d => new SelectListItem
-                {
-                    Value = d.Id.ToString(),
-                    Text = d.Name
-                })
-                .ToList();
+            var isPresent = await dietService.IsRecipeInDietAsync(model.RecipeId, model.SelectedDietId);
+            if (isPresent)
+            {
+                model.Diets = await dietService.GetDietsSelectListAsync();
+                ViewBag.ErrorMessage = "This recipe is already added to the selected diet.";
+                return View(model);
+            }
 
-            return View(model);
+            await dietService.AddRecipeToDietAsync(model.RecipeId, model.SelectedDietId);
+            await dietService.UpdateDietMacronutrientsAsync(model.SelectedDietId);
+
+            return RedirectToAction("DietDetails", new { dietId = model.SelectedDietId });
         }
 
         [HttpPost]

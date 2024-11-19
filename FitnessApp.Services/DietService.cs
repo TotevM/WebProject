@@ -1,10 +1,9 @@
-﻿using System.Security.Claims;
-using System.Web.Mvc;
-using FitnessApp.Data.Models;
+﻿using FitnessApp.Data.Models;
 using FitnessApp.Data.Repository.Contracts;
 using FitnessApp.Services.ServiceContracts;
 using FitnessApp.ViewModels;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace FitnessApp.Services
@@ -24,15 +23,34 @@ namespace FitnessApp.Services
             this.userDietRepository = userDietRepository;
         }
 
-        public Task<List<SelectListItem>> AddRecipeToDietAsync(Guid recipeId)
+        public async Task AddRecipeToDietAsync(Guid recipeId, Guid dietId)
         {
-            throw new NotImplementedException();
+            var dietRecipe = new DietRecipe
+            {
+                DietId = dietId,
+                RecipeId = recipeId
+            };
+            await dietRecipeRepository.AddAsync(dietRecipe);
         }
 
-        public Task AddRecipeToDietAsync(AddRecipeToDietViewModel model)
+        public async Task<AddRecipeToDietViewModel> AddRecipeToDietViewAsync(Guid recipeId)
         {
-            throw new NotImplementedException();
-        }
+            List<SelectListItem> diets = await dietRepository.GetAllAttached()
+               .Select(d => new SelectListItem
+               {
+                   Value = d.Id.ToString(),
+                   Text = d.Name
+               })
+               .ToListAsync();
+
+            AddRecipeToDietViewModel viewModel = new AddRecipeToDietViewModel
+            {
+                RecipeId = recipeId,
+                Diets = diets
+            };
+
+            return viewModel;
+        }//completed
 
         public async Task AddToMyDietsAsync(Guid dietId, string userId)
         {
@@ -80,6 +98,22 @@ namespace FitnessApp.Services
 
             return recipes;
         }//completed
+
+        public async Task<List<SelectListItem>> GetDietsSelectListAsync()
+        {
+            return await dietRepository.GetAllAttached()
+                    .Select(d => new SelectListItem
+                    {
+                        Value = d.Id.ToString(),
+                        Text = d.Name
+                    }).ToListAsync();
+        }///--------------------------------
+
+        public async Task<bool> IsRecipeInDietAsync(Guid recipeId, Guid selectedDietId)
+        {
+            return await dietRecipeRepository.GetAllAttached().AsNoTracking()
+                        .AnyAsync(dr => dr.DietId == selectedDietId && dr.RecipeId == recipeId);
+        }//---------------------------
 
         public async Task<List<MyDietsIndexView>> MyDietsAsync(string userId)
         {
@@ -163,5 +197,23 @@ namespace FitnessApp.Services
             await userDietRepository.DeleteAsync(record!);
             return true;
         }//completed
+
+        public async Task UpdateDietMacronutrientsAsync(Guid dietId)
+        {
+            var diet = await dietRepository.GetAllAttached()
+                    .Include(d => d.DietsRecipes)
+                    .ThenInclude(dr => dr.Recipe)
+                    .FirstOrDefaultAsync(d => d.Id == dietId);
+
+            if (diet != null)
+            {
+                diet.Calories = diet.DietsRecipes.Where(dr => dr.Recipe != null).Sum(dr => dr.Recipe.Calories);
+                diet.Protein = diet.DietsRecipes.Where(dr => dr.Recipe != null).Sum(dr => dr.Recipe.Protein);
+                diet.Carbohydrates = diet.DietsRecipes.Where(dr => dr.Recipe != null).Sum(dr => dr.Recipe.Carbohydrates);
+                diet.Fats = diet.DietsRecipes.Where(dr => dr.Recipe != null).Sum(dr => dr.Recipe.Fats);
+
+                await dietRepository.UpdateAsync(diet);
+            }
+        }
     }
 }
