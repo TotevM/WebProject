@@ -1,7 +1,9 @@
 ﻿using System.Security.Claims;
 using FitnessApp.Data;
 using FitnessApp.Data.Models;
+using FitnessApp.Services.ServiceContracts;
 using FitnessApp.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -9,77 +11,46 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FitnessApp.Web.Controllers
 {
+    [Authorize]
     public class DietController : Controller
     {
         private readonly ILogger<RecipeController> logger;
         private readonly UserManager<ApplicationUser> user;
         private readonly FitnessDBContext context;
+        private readonly IDietService dietService;
 
-        public DietController(ILogger<RecipeController> _logger, UserManager<ApplicationUser> _user, FitnessDBContext _context)
+        public DietController(ILogger<RecipeController> logger, UserManager<ApplicationUser> user, FitnessDBContext context, IDietService dietService)
         {
-            logger = _logger;
-            user = _user;
-            context = _context;
-        }
+            this.logger = logger;
+			this.user = user;
+			this.context = context;
+			this.dietService = dietService;
+		}
 
-        public IActionResult MyDiets()
+        [HttpGet]
+        public async Task<IActionResult> MyDiets()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            List<MyDietsIndexView> diets = context.Diets
-                .Where(d => d.UserDiets.Any(ud => ud.UserId == userId))
-                .Select(diet => new MyDietsIndexView
-                {
-                    DietId = diet.Id,
-                    Name = diet.Name,
-                    Description = diet.Description,
-                    ImageUrl = diet.ImageUrl,
-                    Calories = diet.Calories,
-                    Protein = diet.Protein,
-                    Carbohydrates = diet.Carbohydrates,
-                    Fats = diet.Fats
-                }).ToList();
+            var diets = await dietService.MyDietsAsync(userId!);
 
             return View(diets);
         }
 
+        [HttpGet]
         public async Task<IActionResult> DefaultDiets()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            List<Data.Models.Diet> diets = context.Diets.Where(d => !d.UserDiets.Any(ud => ud.UserId == userId) && d.UserID == null).ToList();
+            var dietsViewModel = await dietService.DefaultDietsAsync(userId!);
 
-            var dietViewModels = diets.Select(diet => new DietIndexView
-            {
-                DietId = diet.Id,
-                Name = diet.Name,
-                Description = diet.Description,
-                ImageUrl = diet.ImageUrl,
-                Calories = diet.Calories,
-                Protein = diet.Protein,
-                Carbohydrates = diet.Carbohydrates,
-                Fats = diet.Fats
-            }).ToList();
-
-            return View(dietViewModels);
+			return View(dietsViewModel);
         }
 
         [HttpGet]
-        public async Task<IActionResult> DietDetails(Guid id)
+        public async Task<IActionResult> DietDetails(Guid dietId)
         {
-            var recipes = context.Recipes.Where(r => r.DietsRecipes.Any(d => d.DietId == id)).ToList();
-
-            List<DietDetailsView> dietViewModels = recipes.Select(recipe => new DietDetailsView
-            {
-                DietId = id,
-                RecipeId = recipe.Id,
-                Name = recipe.Name,
-                ImageUrl = recipe.ImageUrl,
-                Calories = recipe.Calories,
-                Protein = recipe.Protein,
-                Carbohydrates = recipe.Carbohydrates,
-                Fats = recipe.Fats
-            }).ToList();
-
-            return View(dietViewModels);
+			var dietsViewModel = await dietService.DietDetailsAsync(dietId);
+            
+			return View(dietsViewModel);
         }
 
         [HttpGet]
@@ -138,7 +109,7 @@ namespace FitnessApp.Web.Controllers
                 context.SaveChanges();
             }
 
-            return RedirectToAction("DietDetails", new { id = dietId });
+            return RedirectToAction("DietDetails", new { dietId = dietId });
         }
 
         [HttpGet]

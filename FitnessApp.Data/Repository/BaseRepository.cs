@@ -13,7 +13,7 @@ namespace FitnessApp.Data.Repository
 		public BaseRepository(FitnessDBContext dbContext)
 		{
 			this.dbContext = dbContext;
-			this.dbSet = this.dbContext.Set<TType>();
+			this.dbSet = this.dbContext.Set<TType>();	
 		}
 
 		public TType GetById(TId id)

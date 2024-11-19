@@ -30,7 +30,13 @@
                             <p><strong>Protein:</strong> @(recipe.Protein?.ToString())g</p>
                             <p><strong>Carbohydrates:</strong> @(recipe.Carbohydrates?.ToString())g</p>
                             <p><strong>Fats:</strong> @(recipe.Fats?.ToString())g</p>
-                            <a href="@Url.Action("RecipeDetailsInDiet", "Diet", new { recipeId = recipe.RecipeId, dietId=recipe.DietId })" class="btn btn-outline-primary w-100 mt-3">View Details</a>
+                            <a asp-controller="Diet"
+                               asp-action="RecipeDetailsInDiet"
+                               asp-route-recipeId="@recipe.RecipeId"
+                               asp-route-dietId="@recipe.DietId"
+                               class="btn btn-outline-primary w-100 mt-3">
+                                View Details
+                            </a>
                         </div>
                     </div>
                 </div>

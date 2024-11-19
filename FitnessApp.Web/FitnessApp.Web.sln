@@ -27,6 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitnessApp.ViewModels", "..
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitnessApp.Services", "..\FitnessApp.Services\FitnessApp.Services.csproj", "{3E70BFC1-20F1-46D2-831B-2C6FBF2B2AD4}"
 	ProjectSection(ProjectDependencies) = postProject
+		{3DC7AF21-F196-4944-B93B-1A880FE015A5} = {3DC7AF21-F196-4944-B93B-1A880FE015A5}
 		{F922F291-9A72-4B73-9655-49D4B6592F8B} = {F922F291-9A72-4B73-9655-49D4B6592F8B}
 	EndProjectSection
 EndProject

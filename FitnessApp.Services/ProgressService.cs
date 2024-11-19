@@ -7,7 +7,7 @@ using FitnessApp.Services.ServiceContracts;
 
 namespace FitnessApp.Services
 {
-	public class ProgressService:IProgressService
+	public class ProgressService: BaseService, IProgressService
 	{
 	}
 }

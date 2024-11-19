@@ -7,7 +7,7 @@ using FitnessApp.Services.ServiceContracts;
 
 namespace FitnessApp.Services
 {
-    public class RecipeService:IRecipeService
-    {
+    public class RecipeService: BaseService,IRecipeService
+	{
     }
 }
