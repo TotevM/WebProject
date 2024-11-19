@@ -191,7 +191,7 @@ namespace FitnessApp.Web.Controllers
 
                 context.SaveChanges();
 
-                return RedirectToAction("DietDetails", new { id = model.SelectedDietId });
+                return RedirectToAction("DietDetails", new { dietId = model.SelectedDietId });
             }
 
             model.Diets = context.Diets
