@@ -1,27 +1,23 @@
 ﻿using System.Security.Claims;
-using FitnessApp.Data;
 using FitnessApp.Data.Models;
-using FitnessApp.Services;
 using FitnessApp.Services.ServiceContracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 
 namespace FitnessApp.Web.Controllers
 {
     [Authorize]
     public class DietController : Controller
     {
-        private readonly ILogger<RecipeController> logger;
-        private readonly UserManager<ApplicationUser> user;
+        //private readonly ILogger<RecipeController> logger;
+        //private readonly UserManager<ApplicationUser> user;
         private readonly IDietService dietService;
 
-        public DietController(ILogger<RecipeController> logger, UserManager<ApplicationUser> user, IDietService dietService)
+        public DietController(/*ILogger<RecipeController> logger, UserManager<ApplicationUser> user, */IDietService dietService)
         {
-            this.logger = logger;
-            this.user = user;
+            //this.logger = logger;
+            //this.user = user;
             this.dietService = dietService;
         }
 
@@ -76,7 +72,7 @@ namespace FitnessApp.Web.Controllers
         {
             var viewModel = await dietService.AddRecipeToDietViewAsync(recipeId);
             return View(viewModel);
-        }
+        }//working
 
         [HttpPost]
         public async Task<IActionResult> AddRecipeToDiet(AddRecipeToDietViewModel model)
@@ -99,7 +95,7 @@ namespace FitnessApp.Web.Controllers
             await dietService.UpdateDietMacronutrientsAsync(model.SelectedDietId);
 
             return RedirectToAction("DietDetails", new { dietId = model.SelectedDietId });
-        }
+        }//working
 
         [HttpPost]
         public async Task<IActionResult> AddToMyDiets(Guid dietId)

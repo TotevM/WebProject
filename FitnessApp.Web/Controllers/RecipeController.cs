@@ -1,67 +1,39 @@
-﻿using System.Globalization;
-using System.Security.Claims;
-using FitnessApp.Data;
-using FitnessApp.Data.Models;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using FitnessApp.ViewModels;
+﻿using System.Security.Claims;
 using FitnessApp.Common.Enumerations;
+using FitnessApp.Data.Models;
+using FitnessApp.Services.ServiceContracts;
 using FitnessApp.ViewModels.RecipeModels;
+using Microsoft.AspNetCore.Mvc;
 
 
 namespace FitnessApp.Web.Controllers
 {
     public class RecipeController : Controller
     {
-        private readonly ILogger<RecipeController> logger;
-        private readonly UserManager<ApplicationUser> user;
-        private readonly FitnessDBContext context;
+        //private readonly ILogger<RecipeController> logger;
+        //private readonly UserManager<ApplicationUser> user;
+        //private readonly FitnessDBContext context;
+        private readonly IRecipeService recipeService;
 
-        public RecipeController(ILogger<RecipeController> _logger, UserManager<ApplicationUser> _user, FitnessDBContext _context)
+        public RecipeController(/*ILogger<RecipeController> _logger, UserManager<ApplicationUser> _user, FitnessDBContext _context, */IRecipeService recipeService)
         {
-            logger = _logger;
-            user = _user;
-            context = _context;
+            //this.logger = _logger;
+            //this.user = _user;
+            //this.context = _context;
+            this.recipeService = recipeService;
         }
 
         [HttpGet]
-        public IActionResult Index(Goal? goal = null)
+        public async Task<IActionResult> Index(Goal? goal = null)
         {
-            var recipesQuery = context.Recipes
-                .Where(d => !d.IsDeleted)
-                .OrderByDescending(r => r.CreatedOn)
-                .ThenBy(d => d.Name)
-                .AsQueryable();
-
-            if (goal.HasValue)
-            {
-                recipesQuery = recipesQuery.Where(r => r.Goal == goal.Value);
-            }
-
-            var model = recipesQuery.Select(r => new RecipesIndexView
-            {
-                Id = r.Id.ToString(),
-                ImageUrl = r.ImageUrl,
-                Name = r.Name,
-                UserID = r.UserID,
-            }).ToList();
-
+            var model = await recipeService.DisplayDietsAsync(goal);
             return View(model);
         }
 
         [HttpGet]
         public IActionResult Add()
         {
-            List<Goal> goals = Enum.GetValues(typeof(Goal))
-                .Cast<Goal>()
-                .ToList();
-
-
-            var model = new AddRecipeView()
-            {
-                Goals = goals,
-            };
+            var model = recipeService.AddRecipe();
             return View(model);
         }
 
@@ -70,14 +42,8 @@ namespace FitnessApp.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                List<Goal> goals = Enum.GetValues(typeof(Goal))
-                    .Cast<Goal>()
-                    .ToList();
-
-                model = new AddRecipeView()
-                {
-                    Goals = goals,
-                };
+                var filledGoals = recipeService.AddRecipe();
+                model.Goals = filledGoals.Goals;
                 return View(model);
             }
 
@@ -86,115 +52,44 @@ namespace FitnessApp.Web.Controllers
                 throw new InvalidOperationException("Invalid data!");
             }
 
-            var recipe = new Recipe()
-            {
-                Id = Guid.NewGuid(),
-                Name = model.RecipeName,
-                CreatedOn = DateTime.Now,
-                Preparation = model.Preparation,
-                Ingredients = model.Ingredients,
-                ImageUrl = model.ImageUrl,
-                UserID = User.FindFirstValue(ClaimTypes.NameIdentifier)!,
-                Goal = goal,
-                Calories = (int)model.Calories!,
-                Protein = (int)model.Protein!,
-                Carbohydrates = (int)model.Carbohydrates!,
-                Fats = (int)model.Fats!
-            };
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+            await recipeService.AddRecipeAsync(model, goal, userId);
 
-            await context.Recipes.AddAsync(recipe);
-            await context.SaveChangesAsync();
             return RedirectToAction("Index", "Recipe");
         }
 
         [HttpGet]
-        public IActionResult Edit(Guid id)
+        public async Task<IActionResult> Edit(Guid id)
         {
-            List<Goal> goals = Enum.GetValues(typeof(Goal))
-                .Cast<Goal>()
-                .ToList();
-
-            var recipe = context.Recipes.FirstOrDefault(r => r.Id == id);
-
-            var recipeModel = new RecipeEditViewModel
-            {
-                Id = id,
-                RecipeName = recipe.Name,
-                Goals = goals,
-                Preparation = recipe.Preparation,
-                Ingredients = recipe.Ingredients,
-                ImageUrl = recipe.ImageUrl,
-                Goal = recipe.Goal.ToString(),
-                Calories = (int)recipe.Calories!,
-                Protein = (int)recipe.Protein!,
-                Carbohydrates = (int)recipe.Carbohydrates!,
-                Fats = (int)recipe.Fats!
-            };
+            var recipeModel = await recipeService.EditView(id);
             return View(recipeModel);
         }
 
         [HttpPost]
         public async Task<IActionResult> Edit(RecipeEditViewModel model)
         {
-
-            List<Goal> goals = Enum.GetValues(typeof(Goal))
-                .Cast<Goal>()
-                .ToList();
-
-            model.Goals = goals;
-
             if (!ModelState.IsValid)
             {
+                var filledGoals = recipeService.AddRecipe();
+                model.Goals = filledGoals.Goals;
+
                 return View(model);
             }
 
-            Recipe? recipe = await context.Recipes.FirstOrDefaultAsync(p => p.Id == model.Id);
+            Recipe? recipe = await recipeService.GetRecipeAsync(model.Id);
 
             if (recipe == null)
             {
                 return NotFound();
             }
+
             if (!Goal.TryParse(model.Goal, out Goal goal))
             {
                 throw new InvalidOperationException("Invalid data!");
             }
 
-            recipe.Name = model.RecipeName;
-            recipe.Preparation = model.Preparation;
-            recipe.Ingredients = model.Ingredients;
-            recipe.ImageUrl = model.ImageUrl;
-            recipe.Goal = goal;
-            recipe.Calories = (int)model.Calories!;
-            recipe.Protein = (int)model.Protein!;
-            recipe.Carbohydrates = (int)model.Carbohydrates!;
-            recipe.Fats = (int)model.Fats!;
-
-            var diets = context.Diets.Where(d => d.DietsRecipes.Any(x=>x.RecipeId==model.Id)).ToList();
-
-            foreach (var diet in diets)
-            {
-				if (diet != null)
-				{
-					diet.Calories = diet.DietsRecipes
-						.Where(df => df.Recipe != null)
-						.Sum(df => df.Recipe.Calories);
-
-					diet.Protein = diet.DietsRecipes
-						.Where(df => df.Recipe != null)
-						.Sum(df => df.Recipe.Protein);
-
-					diet.Carbohydrates = diet.DietsRecipes
-						.Where(df => df.Recipe != null)
-						.Sum(df => df.Recipe.Carbohydrates);
-
-					diet.Fats = diet.DietsRecipes
-						.Where(df => df.Recipe != null)
-						.Sum(df => df.Recipe.Fats);
-				}
-			}
-
-            context.Recipes.Update(recipe);
-            await context.SaveChangesAsync();
+            await recipeService.UpdateRecipe(recipe, model, goal);
+            await recipeService.UpdateDietsAsync(model.Id);
 
             return RedirectToAction("Index", "Recipe");
         }
@@ -202,115 +97,44 @@ namespace FitnessApp.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(Guid id)
         {
-            var recipe = await context.Recipes
-                .Where(r => r.Id == id)
-                .FirstOrDefaultAsync();
+            var recipe = await recipeService.GetRecipeAsync(id);
 
             if (recipe == null)
             {
                 return NotFound();
             }
 
-            var viewModel = new RecipeDetailsViewModel
-			{
-                RecipeId = recipe.Id,
-                Name = recipe.Name,
-                Calories = recipe.Calories,
-                Protein = recipe.Protein,
-                Carbohydrates = recipe.Carbohydrates,
-                Fats = recipe.Fats,
-                ImageUrl = recipe.ImageUrl,
-                Ingredients = recipe.Ingredients,
-                Preparation = recipe.Preparation,
-                UserId = recipe.UserID!
-            };
-
+            var viewModel = recipeService.RecipeDetailsView(recipe);
             return View(viewModel);
         }
-
-        //     [HttpGet]
-        //     public async Task<IActionResult> Delete(Guid id)
-        //     {
-        //Console.WriteLine("Delete method invoked for id: " + id);
-        //var recipe = await context.Recipes.FirstOrDefaultAsync(x => x.Id == id);
-
-        //if (recipe == null)
-        //{
-        //	return NotFound("Recipe not found");
-        //}
-
-        //var model = new DeleteRecipeView();
-        //         {
-        //             model.Id = id;
-        //             model.Name = recipe.Name;
-        //             model.ImageUrl = recipe.ImageUrl;
-        //         }
-        //         return View(model);
-        //     }
 
         [HttpGet]
         public async Task<IActionResult> Delete(Guid id)
         {
-            foreach (var header in Request.Headers)
-            {
-                Console.WriteLine($"{header.Key}: {header.Value}");
-            }
+            var recipe = await recipeService.GetRecipeAsync(id);
 
-            var recipe = await context.Recipes.FirstOrDefaultAsync(x => x.Id == id);
             if (recipe == null)
             {
                 return NotFound("Recipe not found");
             }
 
-            var model = new DeleteRecipeView
-            {
-                Id = id,
-                Name = recipe.Name,
-                ImageUrl = recipe.ImageUrl
-            };
-
+            var model = recipeService.DeleteView(recipe);
             return View(model);
         }
 
         [HttpPost]
         public async Task<IActionResult> Delete(DeleteRecipeView model)
         {
-            var recipe = await context.Recipes.FirstOrDefaultAsync(p => p.Id == model.Id);
-            var dietRecipe = context.Diets.Where(d => d.DietsRecipes.Any(x => x.RecipeId == model.Id)).ToList();
-            var toDelete = context.DietsRecipes.Where(x => x.RecipeId == model.Id).ToList();
+            var recipe = await recipeService.GetRecipeAsync(model.Id);
 
             if (recipe == null)
             {
                 return NotFound();
             }
 
-            context.DietsRecipes.RemoveRange(toDelete);
-            context.SaveChanges();
-
-            foreach (var diet in dietRecipe)
-            {
-					diet.Calories = diet.DietsRecipes
-						.Where(df => df.Recipe != null)
-						.Sum(df => df.Recipe.Calories);
-
-					diet.Protein = diet.DietsRecipes
-						.Where(df => df.Recipe != null)
-						.Sum(df => df.Recipe.Protein);
-
-					diet.Carbohydrates = diet.DietsRecipes
-						.Where(df => df.Recipe != null)
-						.Sum(df => df.Recipe.Carbohydrates);
-
-					diet.Fats = diet.DietsRecipes
-						.Where(df => df.Recipe != null)
-						.Sum(df => df.Recipe.Fats);
-			}
-
-            recipe.IsDeleted = true;
-
-            context.Recipes.Update(recipe);
-            await context.SaveChangesAsync();
-
+            await recipeService.SoftDeleteRecipe(recipe!);
+            await recipeService.DeleteDietRecipeRelationAsync(model.Id);
+            await recipeService.UpdateDietsAsync(model.Id);
             return RedirectToAction("Index", "Recipe");
         }
     }
