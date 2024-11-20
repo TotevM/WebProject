@@ -4,103 +4,69 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using FitnessApp.ViewModels;
+using FitnessApp.Services.ServiceContracts;
 
 namespace FitnessApp.Web.Controllers
 {
 	public class ExerciseController : Controller
 	{
-		private readonly ILogger<RecipeController> logger;
-		private readonly UserManager<ApplicationUser> user;
-		private readonly FitnessDBContext context;
+		//private readonly ILogger<RecipeController> logger;
+		//private readonly UserManager<ApplicationUser> user;
+		//private readonly FitnessDBContext context;
+		private readonly IExerciseService exerciseService;
 
-		public ExerciseController(ILogger<RecipeController> _logger, UserManager<ApplicationUser> _user, FitnessDBContext _context)
+		public ExerciseController(/*ILogger<RecipeController> _logger, UserManager<ApplicationUser> _user, FitnessDBContext _context,*/ IExerciseService exerciseService)
 		{
-			logger = _logger;
-			user = _user;
-			context = _context;
-		}
+			//this.logger = _logger;
+   //         this.user = _user;
+   //         this.context = _context;
+            this.exerciseService= exerciseService;
+        }
 
 		[HttpGet]
-		public IActionResult Index()
+		public async Task<IActionResult> Index()
 		{
-			var exercises = context.Exercises.Where(e => !e.IsDeleted)
-				.OrderByDescending(e => e.CreatedOn)
-				.Select(e => new ExerciseIndexView
-				{
-					Id=e.Id,
-					Name = e.Name,
-					Difficulty = e.Difficulty.ToString(),
-					ImageUrl = e.ImageUrl,
-					MuscleGroup = e.MuscleGroup.ToString()
-				}).ToList();
-
+			var exercises = await exerciseService.GetAllExercisesAsync();
 			return View(exercises);
 		}
 
-		public IActionResult Delete(Guid id)
+		public async Task<IActionResult> Delete(Guid id)
 		{
-			var exercise=context.Exercises.Where(ex => ex.Id == id).FirstOrDefault();
+			var exercise= await exerciseService.GetExerciseAsync(id);
 
 			if (exercise == null)
 			{
 				return NotFound();
 			}
 
-			List<WorkoutExercise> workoutExercise = context.WorkoutsExercises.Where(we => we.ExerciseId == id).ToList();
+			await exerciseService.ChangeExerciseWorkoutsStateAsync(id, true);
 
-			foreach (var we in workoutExercise)
-			{
-				we.IsDeleted = true;
-			}
-
-			context.UpdateRange(workoutExercise);
-			exercise.IsDeleted=true;
-
-			context.SaveChanges();
+			await exerciseService.SetExerciseActivityAsync(exercise, true);
 
 			return RedirectToAction("Index", "Exercise");
 		}
 
 		[HttpGet]
-		public IActionResult Restore()
+		public async Task<IActionResult> Restore()
 		{
-			var exercises = context.Exercises.Where(e => e.IsDeleted)
-				.OrderByDescending(e => e.CreatedOn)
-				.Select(e => new ExerciseIndexView
-				{
-					Id = e.Id,
-					Name = e.Name,
-					Difficulty = e.Difficulty.ToString(),
-					ImageUrl = e.ImageUrl,
-					MuscleGroup = e.MuscleGroup.ToString()
-				}).ToList();
-
+			var exercises = await exerciseService.GetInactiveExercisesAsync();
 			return View(exercises);
 		}
 
 		[HttpPost]
-		public IActionResult Restore(Guid id)
+		public async Task<IActionResult> Restore(Guid id)
 		{
-			var exercise = context.Exercises.Where(ex => ex.Id == id).FirstOrDefault();
+            var exercise = await exerciseService.GetExerciseAsync(id);
 
-			if (exercise == null)
+            if (exercise == null)
 			{
 				return NotFound();
 			}
 
-			List<WorkoutExercise> workoutExercise = context.WorkoutsExercises.Where(we => we.ExerciseId == id).ToList();
+            await exerciseService.ChangeExerciseWorkoutsStateAsync(id, false);
+            await exerciseService.SetExerciseActivityAsync(exercise, false);
 
-			foreach (var we in workoutExercise)
-			{
-				we.IsDeleted = false;
-			}
-
-			context.UpdateRange(workoutExercise);
-			exercise.IsDeleted = false;
-
-			context.SaveChanges();
-
-			return RedirectToAction("Restore", "Exercise");
+            return RedirectToAction("Restore", "Exercise");
 		}
 	}
 }

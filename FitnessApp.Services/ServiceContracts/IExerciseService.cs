@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FitnessApp.Data.Models;
+using FitnessApp.ViewModels;
 
 namespace FitnessApp.Services.ServiceContracts
 {
     public interface IExerciseService
     {
+        Task<List<ExerciseIndexView>> GetAllExercisesAsync();
+        Task<List<ExerciseIndexView>> GetInactiveExercisesAsync();
+        Task<Exercise> GetExerciseAsync(Guid id);
+        Task SetExerciseActivityAsync(Exercise exercise, bool isDeleted);
+        Task ChangeExerciseWorkoutsStateAsync(Guid id, bool state);
     }
 }
