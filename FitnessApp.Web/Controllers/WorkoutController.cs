@@ -1,110 +1,68 @@
 ﻿using System.Security.Claims;
 using FitnessApp.Data;
 using FitnessApp.Data.Models;
+using FitnessApp.Services;
+using FitnessApp.Services.ServiceContracts;
 using FitnessApp.ViewModels.Workout;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FitnessApp.Web.Controllers
 {
+	[Authorize]
     public class WorkoutController: Controller
     {
-		private readonly ILogger<RecipeController> logger;
-		private readonly UserManager<ApplicationUser> user;
-		private readonly FitnessDBContext context;
+		private readonly IWorkoutService workoutService;
 
-		public WorkoutController(ILogger<RecipeController> _logger, UserManager<ApplicationUser> _user, FitnessDBContext _context)
+		public WorkoutController(IWorkoutService workoutService)
 		{
-			logger = _logger;
-			user = _user;
-			context = _context;
+			this.workoutService = workoutService;
 		}
 
-		public IActionResult Index()
+		public async Task<IActionResult> Index()
         {
 			var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-			var workouts = context.Workouts
-				.Where(w => w.UsersWorkouts.Any(u => u.UserId == userId))
-				.OrderByDescending(u => u.CreatedOn)
-				.Select(w => new MyWorkoutsView
-				{
-					Id = w.Id,
-					Name = w.Name,
-					Exercises = context.Exercises
-					.Where(e => e.WorkoutsExercises.Any(x => x.WorkoutId == w.Id && !x.IsDeleted))
-					.Select(x => new ExercisesInMyWorkoutsView
-					{
-					Id=x.Id,
-					Name = x.Name
-					})
-					.ToList()
-				})
-				.ToList();
-
+			var workouts = await workoutService.MyWorkouts(userId!);
 
             return View(workouts);
         }
 
 		[HttpGet]
-		public IActionResult AddToMyWorkouts()
+		public async Task<IActionResult> AddToMyWorkouts()
 		{
 			var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var workouts = await workoutService.DefaultWorkouts(userId!);
 
-			var workouts = context.Workouts
-				.Where(w => w.UserID==null && !w.UsersWorkouts.Any(u => u.UserId == userId))
-				.OrderByDescending(u => u.CreatedOn)
-				.Select(w => new MyWorkoutsView
-				{
-					Id = w.Id,
-					Name = w.Name,
-					Exercises = context.Exercises
-					.Where(e => e.WorkoutsExercises.Any(x => x.WorkoutId == w.Id && !x.IsDeleted))
-					.Select(x => new ExercisesInMyWorkoutsView
-					{
-						Id = x.Id,
-						Name = x.Name
-					})
-					.ToList()
-				})
-				.ToList();
-
-
-			return View(workouts);
+            return View(workouts);
 		}
 
         [HttpPost]
-        public IActionResult AddToMyWorkouts(Guid workoutId)
+        public async Task<IActionResult> AddToMyWorkouts(Guid workoutId)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-			//Check if userworkout already exists
+			bool succeeded = await workoutService.AddUserWorkoutAsync(workoutId, userId!);
 
-			var entry = new UserWorkout
+			if (!succeeded)
 			{
-				WorkoutId = workoutId,
-				UserId = userId
-			};
-
-			context.UsersWorkouts.Add(entry);
-			context.SaveChanges();
+				//implement logic to display that the realtion already exists
+			}
 
 			return RedirectToAction("Index", "Workout");
         }
 
         [HttpPost]
-        public IActionResult RemoveFromMyWorkouts(Guid workoutId)
+        public async Task<IActionResult> RemoveFromMyWorkouts(Guid workoutId)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-			//Check if userworkout already exists
+			var succeed = await workoutService.RemoveFromMyWorkoutsAsync(workoutId, userId!);
 
-			var entry = context.UsersWorkouts.Where(uw => uw.UserId == userId && uw.WorkoutId == workoutId).FirstOrDefault();
-
-            context.UsersWorkouts.Remove(entry);
-            context.SaveChanges();
+			if (!succeed)
+			{
+                //implement logic to display that the realtion already exists
+            }
 
             return RedirectToAction("Index", "Workout");
-        }
-
-        
+        } 
     }
 }

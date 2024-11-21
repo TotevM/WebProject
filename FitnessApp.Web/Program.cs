@@ -13,7 +13,8 @@ namespace FitnessApp.Web
 			var builder = WebApplication.CreateBuilder(args);
 
 
-			var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+			var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
+				?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 			builder.Services.AddDbContext<FitnessDBContext>(options =>
 			options.UseSqlServer(connectionString));
 			builder.Services.AddDatabaseDeveloperPageExceptionFilter();
@@ -23,7 +24,7 @@ namespace FitnessApp.Web
 				.AddDefaultTokenProviders();
 
 			builder.Services.RegisterRepositories(typeof(ApplicationUser).Assembly);
-			builder.Services.RegisterUserDefinedServices();
+            builder.Services.RegisterUserDefinedServices();
 
 			builder.Services.AddControllersWithViews();
 
