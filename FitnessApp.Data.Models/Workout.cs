@@ -11,7 +11,6 @@ namespace FitnessApp.Data.Models
         [MinLength(WorkoutNameMinLength)]
         [MaxLength(WorkoutNameMaxLength)]
         public required string Name { get; set; }
-
         public DateTime CreatedOn { get; set; }
         public string? UserID { get; set; }
         public virtual ApplicationUser User { get; set; }

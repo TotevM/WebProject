@@ -1,68 +1,63 @@
 ﻿using System.Security.Claims;
-using FitnessApp.Data;
-using FitnessApp.Data.Models;
-using FitnessApp.Services;
 using FitnessApp.Services.ServiceContracts;
-using FitnessApp.ViewModels.Workout;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FitnessApp.Web.Controllers
 {
-	[Authorize]
-    public class WorkoutController: Controller
+    [Authorize]
+    public class WorkoutController : Controller
     {
-		private readonly IWorkoutService workoutService;
+        private readonly IWorkoutService workoutService;
 
-		public WorkoutController(IWorkoutService workoutService)
-		{
-			this.workoutService = workoutService;
-		}
-
-		public async Task<IActionResult> Index()
+        public WorkoutController(IWorkoutService workoutService)
         {
-			var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-			var workouts = await workoutService.MyWorkouts(userId!);
+            this.workoutService = workoutService;
+        }
+        [HttpGet]
+        public async Task<IActionResult> Index()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var workouts = await workoutService.MyWorkouts(userId!);
 
             return View(workouts);
         }
 
-		[HttpGet]
-		public async Task<IActionResult> AddToMyWorkouts()
-		{
-			var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        [HttpGet]
+        public async Task<IActionResult> AddToMyWorkouts()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var workouts = await workoutService.DefaultWorkouts(userId!);
 
             return View(workouts);
-		}
+        }
 
         [HttpPost]
         public async Task<IActionResult> AddToMyWorkouts(Guid workoutId)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-			bool succeeded = await workoutService.AddUserWorkoutAsync(workoutId, userId!);
+            bool succeeded = await workoutService.AddUserWorkoutAsync(workoutId, userId!);
 
-			if (!succeeded)
-			{
-				//implement logic to display that the realtion already exists
-			}
+            if (!succeeded)
+            {
+                //implement logic to display that the realtion already exists
+            }
 
-			return RedirectToAction("Index", "Workout");
+            return RedirectToAction("Index", "Workout");
         }
 
         [HttpPost]
         public async Task<IActionResult> RemoveFromMyWorkouts(Guid workoutId)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-			var succeed = await workoutService.RemoveFromMyWorkoutsAsync(workoutId, userId!);
+            var succeed = await workoutService.RemoveFromMyWorkoutsAsync(workoutId, userId!);
 
-			if (!succeed)
-			{
+            if (!succeed)
+            {
                 //implement logic to display that the realtion already exists
             }
 
             return RedirectToAction("Index", "Workout");
-        } 
+        }
     }
 }

@@ -20,6 +20,9 @@ namespace FitnessApp.ViewModels.RecipeModels
         [MaxLength(IngredientsNameMaxLength)]
         [Required]
         public string Ingredients { get; set; } = null!;
+
+        [RegularExpression(@"^(https?:\/\/.*\.(jpg|jpeg|png|gif|bmp|webp))$",
+    ErrorMessage = "Enter a valid image URL or leave it blank!")]
         public string? ImageUrl { get; set; }
 
         [Required]

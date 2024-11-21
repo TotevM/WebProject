@@ -22,6 +22,7 @@ html {
 }
 
 body {
+    background-color: #f0f8ff;
     margin-bottom: 60px;
 }
 
@@ -98,4 +99,14 @@ body {
 
 .dropdown-divider {
     border-top: 2px solid #fff;
+}
+
+button#logout {
+    color: #ff0000 !important;
+    border-color: #ff0000 !important;
+}
+
+button#logout:hover {
+    color: #fff !important;
+    background-color: #ff0000 !important;
 }

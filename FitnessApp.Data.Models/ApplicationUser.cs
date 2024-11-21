@@ -12,11 +12,8 @@ namespace FitnessApp.Data.Models
         [MaxLength(UsernameMaxLength)]
         public override string? UserName { get; set; }
         public string? ImagePath { get; set; }
-
         public DateTime DateOfBirth { get; set; }
-
         public bool IsDeleted { get; set; } = false;
-
         public virtual ICollection<UserDiet> UsersDiets { get; set; } = new HashSet<UserDiet>();
         public virtual ICollection<UserWorkout> UsersWorkouts { get; set; } = new HashSet<UserWorkout>();
     }

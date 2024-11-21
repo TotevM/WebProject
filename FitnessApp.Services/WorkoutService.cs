@@ -22,7 +22,8 @@ namespace FitnessApp.Services
         public async Task<bool> AddUserWorkoutAsync(Guid workoutId, string userId)
         {
             var record = await userWorkoutRepository.GetAllAttached().Where(x => x.UserId == userId && x.WorkoutId == workoutId).FirstOrDefaultAsync();
-            if (record == null)
+            
+            if (record != null)
             {
                 return false;
             }

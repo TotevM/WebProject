@@ -3,23 +3,19 @@ using FitnessApp.Common.Enumerations;
 using FitnessApp.Data.Models;
 using FitnessApp.Services.ServiceContracts;
 using FitnessApp.ViewModels.RecipeModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 
 namespace FitnessApp.Web.Controllers
 {
+    [Authorize]
     public class RecipeController : Controller
     {
-        //private readonly ILogger<RecipeController> logger;
-        //private readonly UserManager<ApplicationUser> user;
-        //private readonly FitnessDBContext context;
         private readonly IRecipeService recipeService;
 
-        public RecipeController(/*ILogger<RecipeController> _logger, UserManager<ApplicationUser> _user, FitnessDBContext _context, */IRecipeService recipeService)
+        public RecipeController(IRecipeService recipeService)
         {
-            //this.logger = _logger;
-            //this.user = _user;
-            //this.context = _context;
             this.recipeService = recipeService;
         }
 

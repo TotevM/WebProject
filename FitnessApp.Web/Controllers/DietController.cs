@@ -1,8 +1,6 @@
 ﻿using System.Security.Claims;
-using FitnessApp.Data.Models;
 using FitnessApp.Services.ServiceContracts;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FitnessApp.Web.Controllers
@@ -10,14 +8,10 @@ namespace FitnessApp.Web.Controllers
     [Authorize]
     public class DietController : Controller
     {
-        //private readonly ILogger<RecipeController> logger;
-        //private readonly UserManager<ApplicationUser> user;
         private readonly IDietService dietService;
 
-        public DietController(/*ILogger<RecipeController> logger, UserManager<ApplicationUser> user, */IDietService dietService)
+        public DietController(IDietService dietService)
         {
-            //this.logger = logger;
-            //this.user = user;
             this.dietService = dietService;
         }
 

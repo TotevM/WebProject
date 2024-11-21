@@ -1,9 +1,9 @@
 ﻿/*hero section*/
 #hero {
+    background-color: #f0f8ff !important;
     max-width: 1200px;
     margin: 0 auto;
     position: relative;
-    background-color: white;
     padding-top: 2rem;
     padding-bottom: 4rem;
 }
@@ -92,6 +92,7 @@
 }
 
 #team .card {
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px !important;
     border-radius: 20px;
 }
 
