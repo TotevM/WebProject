@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\profilePictures\**" />
+    <Content Remove="wwwroot\profilePictures\**" />
+    <EmbeddedResource Remove="wwwroot\profilePictures\**" />
+    <None Remove="wwwroot\profilePictures\**" />
+  </ItemGroup>
+
+  <ItemGroup>
 	  <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.11" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.11" />
@@ -26,10 +33,6 @@
     <ProjectReference Include="..\FitnessApp.Data\FitnessApp.Data.csproj" />
     <ProjectReference Include="..\FitnessApp.ViewModels\FitnessApp.ViewModels.csproj" />
 	<ProjectReference Include="..\FitnessApp.Infrastructure\FitnessApp.Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\profilePictures\" />
   </ItemGroup>
 
 </Project>

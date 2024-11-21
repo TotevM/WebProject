@@ -1,5 +1,4 @@
-﻿/*hero section*/
-#hero {
+﻿#hero {
     background-color: #f0f8ff !important;
     max-width: 1200px;
     margin: 0 auto;
@@ -7,8 +6,7 @@
     padding-top: 2rem;
     padding-bottom: 4rem;
 }
-
-#hero .container {
+    #hero .container {
     gap: 40px;
 }
 
