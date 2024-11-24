@@ -10,5 +10,6 @@ namespace FitnessApp.Services.ServiceContracts
         Task<Exercise> GetExerciseAsync(Guid id);
         Task SetExerciseActivityAsync(Exercise exercise, bool isDeleted);
         Task ChangeExerciseWorkoutsStateAsync(Guid id, bool state);
+        Task RestoreAll();
     }
 }

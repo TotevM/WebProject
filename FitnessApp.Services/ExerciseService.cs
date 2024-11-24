@@ -67,6 +67,17 @@ namespace FitnessApp.Services
             return exercises;
         }
 
+        public async Task RestoreAll()
+        {
+            var exercises = await exerciseRepository.GetAllAttached().Where(x => x.IsDeleted).ToListAsync();
+
+            foreach (var exercise in exercises)
+            {
+                exercise.IsDeleted = false;
+                await exerciseRepository.UpdateAsync(exercise);
+            }
+        }
+
         public async Task SetExerciseActivityAsync(Exercise exercise, bool isDeleted)
         {
             exercise.IsDeleted = isDeleted;

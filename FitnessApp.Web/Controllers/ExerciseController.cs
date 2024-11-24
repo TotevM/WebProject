@@ -59,5 +59,13 @@ namespace FitnessApp.Web.Controllers
 
             return RedirectToAction("Restore", "Exercise");
         }
+
+        [HttpPost]
+        public async Task<IActionResult> RestoreAll()
+        {
+            await exerciseService.RestoreAll();
+
+            return RedirectToAction("Index", "Exercise");
+        }
     }
 }
