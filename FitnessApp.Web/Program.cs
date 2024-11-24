@@ -8,7 +8,7 @@ namespace FitnessApp.Web
 {
 	public class Program
 	{
-		public static void Main(string[] args)
+		public static async Task Main(string[] args)
 		{
 			var builder = WebApplication.CreateBuilder(args);
 
@@ -19,16 +19,24 @@ namespace FitnessApp.Web
 			options.UseSqlServer(connectionString));
 			builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-			builder.Services.AddDefaultIdentity<ApplicationUser>(options => ConfigureIdentityOptions(options))
-				.AddEntityFrameworkStores<FitnessDBContext>()
-				.AddDefaultTokenProviders();
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => ConfigureIdentityOptions(options))
+                .AddEntityFrameworkStores<FitnessDBContext>()
+                .AddDefaultTokenProviders();
 
-			builder.Services.RegisterRepositories(typeof(ApplicationUser).Assembly);
+            builder.Services.RegisterRepositories(typeof(ApplicationUser).Assembly);
             builder.Services.RegisterUserDefinedServices();
 
 			builder.Services.AddControllersWithViews();
+            builder.Services.AddRazorPages();
 
-			var app = builder.Build();
+
+            var app = builder.Build();
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var serviceProvider = scope.ServiceProvider;
+                await ServiceProviderExtentions.SeedRolesAndAdminAsync(serviceProvider);
+            }
 
 			using (var scope = app.Services.CreateScope())
 			{

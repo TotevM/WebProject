@@ -6,7 +6,8 @@
 	using FitnessApp.Data.Repository.Contracts;
 	using FitnessApp.Services;
 	using FitnessApp.Services.ServiceContracts;
-	using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.Extensions.DependencyInjection;
 
 	public static class ServiceCollectionExtensions
 	{
@@ -49,8 +50,7 @@
 				}
 			}
 		}
-
-		public static void RegisterUserDefinedServices(this IServiceCollection services)
+        public static void RegisterUserDefinedServices(this IServiceCollection services)
 		{
 			services.AddScoped<IDietService, DietService>();
 			services.AddScoped<IExerciseService, ExerciseService>();

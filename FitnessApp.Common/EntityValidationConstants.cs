@@ -9,6 +9,12 @@
 
             public const int PasswordMinLength = 6;
             public const int PasswordMaxLength = 32;
+
+            public const int FirstNameMinLength = 1;
+            public const int FirstNameMaxLength = 64;
+
+            public const int LastNameMinLength = 1;
+            public const int LastNameMaxLength = 64;
         }
 
         public static class DietValidation
