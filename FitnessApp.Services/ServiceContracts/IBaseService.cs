@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FitnessApp.Services.ServiceContracts
+﻿namespace FitnessApp.Services.ServiceContracts
 {
-	public interface IBaseService
-	{
-		bool IsGuidValid(string? id, ref Guid parsedGuid);
-	}
+    public interface IBaseService
+    {
+        bool IsGuidValid(string? id, ref Guid parsedGuid);
+    }
 }

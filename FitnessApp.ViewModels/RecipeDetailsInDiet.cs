@@ -4,8 +4,8 @@
 
 	public class RecipeDetailsInDiet
 	{
-		public Guid RecipeId { get; set; }
-		public Guid DietId { get; set; }
+		public string RecipeId { get; set; }
+		public string DietId { get; set; }
 		public string Name { get; set; }
 		public int Calories { get; set; }
 		public int Protein { get; set; }

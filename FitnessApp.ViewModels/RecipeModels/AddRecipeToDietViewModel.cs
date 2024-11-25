@@ -2,7 +2,7 @@
 
 public class AddRecipeToDietViewModel
 {
-	public Guid RecipeId { get; set; }
+	public string RecipeId { get; set; }
 	public IEnumerable<SelectListItem>? Diets { get; set; }
-	public Guid SelectedDietId { get; set; }
+	public string SelectedDietId { get; set; }
 }

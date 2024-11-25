@@ -6,10 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace FitnessApp.Web.Controllers
 {
     [Authorize]
-    public class DietController : Controller
+    public class DietController : BaseController
     {
         private readonly IDietService dietService;
-
         public DietController(IDietService dietService)
         {
             this.dietService = dietService;
@@ -19,54 +18,116 @@ namespace FitnessApp.Web.Controllers
         public async Task<IActionResult> MyDiets()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var diets = await dietService.MyDietsAsync(userId!);
+            List<ViewModels.MyDietsIndexView> diets = await dietService.MyDietsAsync(userId!);
 
             return View(diets);
-        }//working
+        }
 
         [HttpGet]
         public async Task<IActionResult> DefaultDiets()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var dietsViewModel = await dietService.DefaultDietsAsync(userId!);
+            List<ViewModels.DietIndexView> dietsViewModel = await dietService.DefaultDietsAsync(userId!);
 
             return View(dietsViewModel);
-        }//working
+        }
 
         [HttpGet]
-        public async Task<IActionResult> DietDetails(Guid dietId)
+        public async Task<IActionResult> DietDetails(string dietId)
         {
-            var dietsViewModel = await dietService.DietDetailsAsync(dietId);
+            Guid dietGuid = Guid.Empty;
+            bool isGuidValid = this.IsGuidValid(dietId.ToString(), ref dietGuid);
+            if (!isGuidValid)
+            {
+                return this.RedirectToAction(nameof(MyDiets));
+            }
+
+            List<ViewModels.DietDetailsView>? dietsViewModel = await dietService.DietDetailsAsync(dietGuid);
+
+            if (dietsViewModel == null)
+            {
+                return RedirectToAction(nameof(MyDiets));
+            }
 
             return View(dietsViewModel);
-        }//working
+        }
 
         [HttpGet]
-        public async Task<IActionResult> RecipeDetailsInDiet(Guid recipeId, Guid dietId)
+        public async Task<IActionResult> RecipeDetailsInDiet(string recipeId, string dietId)
         {
-            var viewModel = await dietService.RecipeDetailsInDietAsync(recipeId, dietId);
+            Guid dietGuid = Guid.Empty;
+            bool isDietGuidValid = this.IsGuidValid(dietId, ref dietGuid);
+            Guid recipeGuid = Guid.Empty;
+            bool isRecipeGuidValid = this.IsGuidValid(recipeId, ref recipeGuid);
+            if (!isDietGuidValid || !isRecipeGuidValid)
+            {
+                return this.RedirectToAction(nameof(MyDiets));
+            }
+
+            ViewModels.RecipeDetailsInDiet viewModel = await dietService.RecipeDetailsInDietAsync(recipeGuid, dietGuid);
 
             if (viewModel == null)
             {
-                return NotFound();
+                return this.RedirectToAction(nameof(MyDiets));
             }
 
             return View(viewModel);
-        }//working
+        }
 
         [HttpPost]
-        public async Task<IActionResult> RemoveFromDiet(Guid dietId, Guid recipeId)
+        public async Task<IActionResult> RemoveFromDiet(string dietId, string recipeId)
         {
-            await dietService.RemoveFromDietAsync(dietId, recipeId);
+            Guid dietGuid = Guid.Empty;
+            bool isDietGuidValid = this.IsGuidValid(dietId, ref dietGuid);
+
+            Guid recipeGuid = Guid.Empty;
+            bool isRecipeGuidValid = this.IsGuidValid(recipeId, ref recipeGuid);
+
+            if (!isDietGuidValid || !isRecipeGuidValid)
+            {
+                return this.RedirectToAction(nameof(MyDiets));
+            }
+
+            var isDefault = await dietService.IsDefaultDiet(dietGuid);
+            var recipeExists = await dietService.RecipeExists(recipeGuid);
+
+            if (isDefault == null || !recipeExists)//if diet doesnt exist
+            {
+                return RedirectToAction("MyDiets", "Diet");
+            }
+
+            var role = User.IsInRole("Admin") || User.IsInRole("Trainer");
+
+            if (isDefault == true && !role)//if user isnt supposed to edit a default diet
+            {
+                return RedirectToAction("MyDiets", "Diet");
+            }
+
+            await dietService.RemoveFromDietAsync(dietGuid, recipeGuid);
             return RedirectToAction("DietDetails", new { dietId });
-        }//working
+        }
 
         [HttpGet]
-        public async Task<IActionResult> AddRecipeToDiet(Guid recipeId)
+        public async Task<IActionResult> AddRecipeToDiet(string recipeId)
         {
-            var viewModel = await dietService.AddRecipeToDietViewAsync(recipeId);
+            Guid recipeGuid = Guid.Empty;
+            bool isRecipeGuidValid = this.IsGuidValid(recipeId, ref recipeGuid);
+
+            if (!isRecipeGuidValid)
+            {
+                return this.RedirectToAction("Index", "Recipe");
+            }
+
+            bool role = User.IsInRole("Admin") || User.IsInRole("Trainer");
+            var viewModel = await dietService.AddRecipeToDietViewAsync(recipeGuid, role);
+
+            if (viewModel == null)
+            {
+                return this.RedirectToAction("Index", "Recipe");
+            }
+
             return View(viewModel);
-        }//working
+        }
 
         [HttpPost]
         public async Task<IActionResult> AddRecipeToDiet(AddRecipeToDietViewModel model)
@@ -76,8 +137,27 @@ namespace FitnessApp.Web.Controllers
                 model.Diets = await dietService.GetDietsSelectListAsync();
                 return View(model);
             }
+            Guid dietGuid = Guid.Empty;
+            bool isDietGuidValid = this.IsGuidValid(model.SelectedDietId, ref dietGuid);
 
-            var isPresent = await dietService.IsRecipeInDietAsync(model.RecipeId, model.SelectedDietId);
+            Guid recipeGuid = Guid.Empty;
+            bool isRecipeGuidValid = this.IsGuidValid(model.RecipeId, ref recipeGuid);
+
+            if (!isDietGuidValid || !isRecipeGuidValid)
+            {
+                return this.RedirectToAction("Index", "Recipe");
+            }
+
+            bool recipeExists = await dietService.RecipeExists(recipeGuid);
+            bool dietExists = await dietService.DietExists(dietGuid);
+
+            if (!recipeExists || !dietExists)
+            {
+                model.Diets = await dietService.GetDietsSelectListAsync();
+                return View(model);
+            }
+
+            var isPresent = await dietService.IsRecipeInDietAsync(recipeGuid, dietGuid);
             if (isPresent)
             {
                 model.Diets = await dietService.GetDietsSelectListAsync();
@@ -85,25 +165,55 @@ namespace FitnessApp.Web.Controllers
                 return View(model);
             }
 
-            await dietService.AddRecipeToDietAsync(model.RecipeId, model.SelectedDietId);
-            await dietService.UpdateDietMacronutrientsAsync(model.SelectedDietId);
+            await dietService.AddRecipeToDietAsync(recipeGuid, dietGuid);
+            await dietService.UpdateDietMacronutrientsAsync(dietGuid);
 
             return RedirectToAction("DietDetails", new { dietId = model.SelectedDietId });
-        }//working
+        }
 
         [HttpPost]
-        public async Task<IActionResult> AddToMyDiets(Guid dietId)
+        public async Task<IActionResult> AddToMyDiets(string dietId)
         {
+            Guid dietGuid = Guid.Empty;
+            bool isDietGuidValid = this.IsGuidValid(dietId, ref dietGuid);
+
+            if (!isDietGuidValid)
+            {
+                return RedirectToAction("Index", "Recipe");
+            }
+
+            bool dietExists = await dietService.DietExists(dietGuid);
+
+            if (!dietExists)
+            {
+                return RedirectToAction("Index", "Recipe");
+            }
+
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            await dietService.AddToMyDietsAsync(dietId, userId!);
+            await dietService.AddToMyDietsAsync(dietGuid, userId!);
             return RedirectToAction("MyDiets", "Diet");
-        }//working
+        }
 
         [HttpPost]
-        public async Task<IActionResult> RemoveFromMyDiets(Guid dietId)
+        public async Task<IActionResult> RemoveFromMyDiets(string dietId)
         {
+            Guid dietGuid = Guid.Empty;
+            bool isDietGuidValid = this.IsGuidValid(dietId, ref dietGuid);
+
+            if (!isDietGuidValid)
+            {
+                return RedirectToAction("MyDiets", "Diet");
+            }
+
+            bool dietExists = await dietService.DietExists(dietGuid);
+
+            if (!dietExists)
+            {
+                return RedirectToAction("MyDiets", "Diet");
+            }
+
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            bool succeed = await dietService.RemoveFromMyDietsAsync(dietId, userId!);
+            bool succeed = await dietService.RemoveFromMyDietsAsync(dietGuid, userId!);
 
             if (!succeed)
             {
@@ -111,6 +221,6 @@ namespace FitnessApp.Web.Controllers
             }
 
             return RedirectToAction("MyDiets", "Diet");
-        }//working
+        }
     }
 }

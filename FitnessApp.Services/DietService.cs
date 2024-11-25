@@ -33,19 +33,41 @@ namespace FitnessApp.Services
             await dietRecipeRepository.AddAsync(dietRecipe);
         }
 
-        public async Task<AddRecipeToDietViewModel> AddRecipeToDietViewAsync(Guid recipeId)
+        public async Task<AddRecipeToDietViewModel?> AddRecipeToDietViewAsync(Guid recipeId, bool role)
         {
-            List<SelectListItem> diets = await dietRepository.GetAllAttached()
+            var recipe = recipeRepository.GetById(recipeId);
+
+            if (recipe == null)
+            {
+                return null;
+            }
+            List<SelectListItem> diets = null!;
+            if (role)
+            {
+              diets = await dietRepository.GetAllAttached()
+    .Where(x => x.UserID == null)
+   .Select(d => new SelectListItem
+   {
+       Value = d.Id.ToString(),
+       Text = d.Name
+   })
+   .ToListAsync();
+            }
+            else
+            {
+        diets = await dietRepository.GetAllAttached()
+                .Where(x => x.UserID != null)
                .Select(d => new SelectListItem
                {
                    Value = d.Id.ToString(),
                    Text = d.Name
                })
                .ToListAsync();
+            }
 
             AddRecipeToDietViewModel viewModel = new AddRecipeToDietViewModel
             {
-                RecipeId = recipeId,
+                RecipeId = recipeId.ToString(),
                 Diets = diets
             };
 
@@ -68,7 +90,7 @@ namespace FitnessApp.Services
                 .Where(d => !d.UserDiets.Any(ud => ud.UserId == userId) && d.UserID == null)
                 .Select(diet => new DietIndexView
                 {
-                    DietId = diet.Id,
+                    DietId = diet.Id.ToString(),
                     Name = diet.Name,
                     Description = diet.Description,
                     ImageUrl = diet.ImageUrl,
@@ -81,13 +103,20 @@ namespace FitnessApp.Services
             return diets;
         }//completed
 
-        public async Task<List<DietDetailsView>> DietDetailsAsync(Guid dietId)
+        public async Task<List<DietDetailsView>?> DietDetailsAsync(Guid dietId)
         {
+            var dietExists = await dietRepository.GetByIdAsync(dietId);
+
+            if (dietExists == null)
+            {
+                return null;
+            }
+
             var recipes = await recipeRepository.GetAllAttached().Where(r => r.DietsRecipes.Any(d => d.DietId == dietId))
                 .Select(recipe => new DietDetailsView
                 {
-                    DietId = dietId,
-                    RecipeId = recipe.Id,
+                    DietId = dietId.ToString(),
+                    RecipeId = recipe.Id.ToString(),
                     Name = recipe.Name,
                     ImageUrl = recipe.ImageUrl,
                     Calories = recipe.Calories,
@@ -95,9 +124,21 @@ namespace FitnessApp.Services
                     Carbohydrates = recipe.Carbohydrates,
                     Fats = recipe.Fats
                 }).ToListAsync();
+            ;
 
             return recipes;
         }//completed
+
+        public async Task<bool> DietExists(Guid dietId)
+        {
+            var diet = await dietRepository.GetByIdAsync(dietId);
+
+            if (diet==null)
+            {
+                return false;
+            }
+            return true;
+        }
 
         public async Task<List<SelectListItem>> GetDietsSelectListAsync()
         {
@@ -107,13 +148,30 @@ namespace FitnessApp.Services
                         Value = d.Id.ToString(),
                         Text = d.Name
                     }).ToListAsync();
-        }///--------------------------------
+        }
+
+        public async Task<bool?> IsDefaultDiet(Guid id)
+        {
+            var diet = await dietRepository.GetByIdAsync(id);
+
+            if (diet == null)
+            {
+                return null;
+            }
+
+            if (diet.UserID == null)
+            {
+                return true;
+            }
+
+            return false;
+        }
 
         public async Task<bool> IsRecipeInDietAsync(Guid recipeId, Guid selectedDietId)
         {
             return await dietRecipeRepository.GetAllAttached().AsNoTracking()
                         .AnyAsync(dr => dr.DietId == selectedDietId && dr.RecipeId == recipeId);
-        }//---------------------------
+        }
 
         public async Task<List<MyDietsIndexView>> MyDietsAsync(string userId)
         {
@@ -121,7 +179,7 @@ namespace FitnessApp.Services
                 .Where(d => d.UserDiets.Any(ud => ud.UserId == userId))
                 .Select(diet => new MyDietsIndexView
                 {
-                    DietId = diet.Id,
+                    DietId = diet.Id.ToString(),
                     Name = diet.Name,
                     Description = diet.Description,
                     ImageUrl = diet.ImageUrl,
@@ -137,16 +195,17 @@ namespace FitnessApp.Services
         public async Task<RecipeDetailsInDiet> RecipeDetailsInDietAsync(Guid recipeId, Guid dietId)
         {
             var recipe = await recipeRepository.GetByIdAsync(recipeId);
+            var diet = await dietRepository.GetByIdAsync(dietId);
 
-            if (recipe == null)
+            if (recipe == null || diet == null)
             {
                 return null!;
             }
 
             RecipeDetailsInDiet viewModel = new RecipeDetailsInDiet
             {
-                DietId = dietId,
-                RecipeId = recipeId,
+                DietId = dietId.ToString(),
+                RecipeId = recipeId.ToString(),
                 Name = recipe.Name,
                 Calories = recipe.Calories,
                 Protein = recipe.Protein,
@@ -159,6 +218,17 @@ namespace FitnessApp.Services
 
             return viewModel;
         }//completed
+
+        public async Task<bool> RecipeExists(Guid recipeId)
+        {
+            var recipe = await recipeRepository.GetByIdAsync(recipeId);
+
+            if (recipe == null)
+            {
+                return false;
+            }
+            return true;
+        }
 
         public async Task RemoveFromDietAsync(Guid dietId, Guid recipeId)
         {
