@@ -78,7 +78,7 @@ namespace FitnessApp.Web.Controllers
                 var filledGoals = recipeService.AddRecipe();
                 model.Goals = filledGoals.Goals;
 
-                return RedirectToAction(nameof(Details), new { id = model });
+                return View(model);
             }
 
             Guid exerciseGuid = Guid.Empty;
@@ -104,7 +104,7 @@ namespace FitnessApp.Web.Controllers
             await recipeService.UpdateRecipe(recipe, model, goal);
             await recipeService.UpdateDietsAsync(exerciseGuid);
 
-            return RedirectToAction("Index", "Recipe");
+            return RedirectToAction(nameof(Details), new { id = model.Id });
         }
 
         [HttpGet]
