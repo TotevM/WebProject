@@ -1,61 +1,69 @@
 ﻿@model AddExerciseViewModel
 @{
-    ViewData["Title"] = ViewData["Title"] ?? "Edit Exercise"; // Fallback to default title
+    ViewData["Title"] = ViewData["Title"] ?? "Edit Exercise";
 }
-<h2>@ViewData["Title"]</h2>
-<form asp-action="Edit" method="post" class="form-horizontal">
-    <input asp-for="Id" type="hidden" /> @* Add hidden field for ID *@
-    <div class="form-group">
-        <label asp-for="ExerciseName" class="control-label">Exercise Name</label>
-        <input asp-for="ExerciseName" class="form-control" placeholder="Enter exercise name" />
-        <span asp-validation-for="ExerciseName" class="text-danger"></span>
+<div id="add-exercise" class="container">
+    <div class="row">
+        <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+            <form asp-action="Edit" method="post" class="p-4 bg-dark-form shadow-custom rounded">
+                <h2 class="mb-4">@ViewData["Title"]</h2>
+                <input asp-for="Id" type="hidden" />
+                <div class="mb-3">
+                    <label asp-for="ExerciseName" class="form-label">Exercise Name</label>
+                    <input asp-for="ExerciseName" class="form-control" aria-required="true" placeholder="Enter exercise name" />
+                    <span asp-validation-for="ExerciseName" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Difficulty" class="form-label">Difficulty</label>
+                    <select asp-for="Difficulty" class="form-control" aria-required="true">
+                        <option value="">Select Difficulty...</option>
+                        @if (Model.Difficulties != null && Model.Difficulties.Any())
+                        {
+                            @foreach (var difficulty in Model.Difficulties)
+                            {
+                                <option value="@difficulty">@difficulty</option>
+                            }
+                        }
+                        else
+                        {
+                            <option value="">No difficulties available</option>
+                        }
+                    </select>
+                    <span asp-validation-for="Difficulty" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="MuscleGroup" class="form-label">Muscle Group</label>
+                    <select asp-for="MuscleGroup" class="form-control" aria-required="true">
+                        <option value="">Select Muscle Group...</option>
+                        @if (Model.MuscleGroups != null && Model.MuscleGroups.Any())
+                        {
+                            @foreach (var muscleGroup in Model.MuscleGroups)
+                            {
+                                <option value="@muscleGroup">@muscleGroup</option>
+                            }
+                        }
+                        else
+                        {
+                            <option value="">No muscle groups available</option>
+                        }
+                    </select>
+                    <span asp-validation-for="MuscleGroup" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="ImageUrl" class="form-label">Image URL</label>
+                    <input asp-for="ImageUrl" class="form-control" aria-required="false" placeholder="Enter the URL of an exercise image (optional)" />
+                    <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                </div>
+                <div class="mt-4">
+                    <input class="btn btn-warning w-100 py-2 fw-bold rounded" type="submit" value="Update Exercise" />
+                </div>
+            </form>
+        </div>
     </div>
-    <div class="form-group">
-        <label asp-for="Difficulty" class="control-label">Difficulty</label>
-        <select asp-for="Difficulty" class="form-control">
-            <option value="">Select Difficulty</option>
-            @if (Model.Difficulties != null && Model.Difficulties.Any())
-            {
-                @foreach (var difficulty in Model.Difficulties)
-                {
-                    <option value="@difficulty">@difficulty</option>
-                }
-            }
-            else
-            {
-                <option value="">No difficulties available</option>
-            }
-        </select>
-        <span asp-validation-for="Difficulty" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="MuscleGroup" class="control-label">Muscle Group</label>
-        <select asp-for="MuscleGroup" class="form-control">
-            <option value="">Select Muscle Group</option>
-            @if (Model.MuscleGroups != null && Model.MuscleGroups.Any())
-            {
-                @foreach (var muscleGroup in Model.MuscleGroups)
-                {
-                    <option value="@muscleGroup">@muscleGroup</option>
-                }
-            }
-            else
-            {
-                <option value="">No muscle groups available</option>
-            }
-        </select>
-        <span asp-validation-for="MuscleGroup" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="ImageUrl" class="control-label">Image URL</label>
-        <input asp-for="ImageUrl" class="form-control" placeholder="Enter the URL of an exercise image (optional)" />
-        <span asp-validation-for="ImageUrl" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <button type="submit" class="btn btn-primary">Update Exercise</button>
-        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
-    </div>
-</form>
+</div>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/exercise.css" />
 }

@@ -5,7 +5,7 @@ namespace FitnessApp.ViewModels
 {
     public class AddExerciseViewModel
     {
-        public string Id { get; set; }
+        public string? Id { get; set; }
         [Required]
         public string ExerciseName { get; set; }
         [Required]

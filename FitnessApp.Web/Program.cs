@@ -1,7 +1,7 @@
 using FitnessApp.Data;
 using FitnessApp.Data.Models;
 using FitnessApp.Infrastructure.Extensions;
-using Microsoft.AspNetCore.Authentication.Cookies;
+using FitnessApp.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,11 +18,14 @@ namespace FitnessApp.Web
                 ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             builder.Services.AddDbContext<FitnessDBContext>(options =>
             options.UseSqlServer(connectionString));
-            builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+            //builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<FitnessDBContext>();
+            //builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => ConfigureIdentityOptions(options))
                 .AddEntityFrameworkStores<FitnessDBContext>()
-                .AddDefaultTokenProviders();
+                .AddDefaultTokenProviders()
+                .AddDefaultUI(); ;
 
             builder.Services.RegisterRepositories(typeof(ApplicationUser).Assembly);
             builder.Services.RegisterUserDefinedServices();

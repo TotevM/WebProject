@@ -99,6 +99,7 @@ namespace FitnessApp.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> AddExercise(AddExerciseViewModel model)
         {
+            ;
             if (!ModelState.IsValid)
             {
                 model = exerciseService.AddExerciseViewModel();
