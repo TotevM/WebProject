@@ -3,48 +3,141 @@
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @model List<ExerciseIndexView>
 @{
-	ViewData["Title"] = "Restore exercise";
+    ViewData["Title"] = "Restore exercise";
 }
 
-<div class="d-flex justify-content-between align-items-center mb-3" style="margin-top: 20px;">
-	<h2>Inactive Exercises</h2>
-	@if (User?.Identity?.IsAuthenticated == true)
-	{
-		<a asp-controller="Exercise" asp-action="Index" class="btn btn-primary"><i class="fas fa-plus"></i>Return to exercises</a>
+<div class="exercise-page-container">
+    <div class="page-header">
+        <h2>Inactive Exercises</h2>
+        @if (User?.Identity?.IsAuthenticated == true)
+        {
+            <div class="action-buttons">
+                <a asp-controller="Exercise" asp-action="Index" class="btn btn-primary btn-add-exercise">
+                    Return to Exercises
+                </a>
+                <form asp-controller="Exercise" asp-action="RestoreAll" method="post" class="restore-all-form">
+                    <button type="submit" class="btn btn-primary btn-restore-all">
+                        Restore All
+                    </button>
+                </form>
+            </div>
+        }
+    </div>
 
-		<form asp-controller="Exercise" asp-action="RestoreAll" method="post">
-			<button type="submit" class="btn btn-primary">Restore All!</button>
-		</form>
-	}
+    <div class="filter-bar">
+        <div class="search-container">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text"
+                   id="exerciseSearch"
+                   class="search-input"
+                   placeholder="Search exercise by name...">
+        </div>
+
+        <div class="filter-groups">
+            <!-- Difficulty Filters -->
+            <div class="filter-group">
+                <span class="filter-group-label">Difficulty:</span>
+                <div class="filter-buttons">
+                    <input type="checkbox" id="filterBeginner" class="filter-checkbox" data-filter="difficulty" value="Beginner">
+                    <label for="filterBeginner" class="filter-chip difficulty-Beginner">
+                        <span class="checkmark"></span>
+                        Beginner
+                    </label>
+
+                    <input type="checkbox" id="filterIntermediate" class="filter-checkbox" data-filter="difficulty" value="Intermediate">
+                    <label for="filterIntermediate" class="filter-chip difficulty-Intermediate">
+                        <span class="checkmark"></span>
+                        Intermediate
+                    </label>
+
+                    <input type="checkbox" id="filterAdvanced" class="filter-checkbox" data-filter="difficulty" value="Advanced">
+                    <label for="filterAdvanced" class="filter-chip difficulty-Advanced">
+                        <span class="checkmark"></span>
+                        Advanced
+                    </label>
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <span class="filter-group-label">Muscle Group:</span>
+                <div class="filter-buttons">
+                    <input type="checkbox" id="filterChest" class="filter-checkbox" data-filter="muscle" value="Chest">
+                    <label for="filterChest" class="filter-chip muscle-Chest">
+                        <span class="checkmark"></span>
+                        Chest
+                    </label>
+
+                    <input type="checkbox" id="filterBack" class="filter-checkbox" data-filter="muscle" value="Back">
+                    <label for="filterBack" class="filter-chip muscle-Back">
+                        <span class="checkmark"></span>
+                        Back
+                    </label>
+
+                    <input type="checkbox" id="filterLegs" class="filter-checkbox" data-filter="muscle" value="Legs">
+                    <label for="filterLegs" class="filter-chip muscle-Legs">
+                        <span class="checkmark"></span>
+                        Legs
+                    </label>
+
+                    <input type="checkbox" id="filterArms" class="filter-checkbox" data-filter="muscle" value="Arms">
+                    <label for="filterArms" class="filter-chip muscle-Arms">
+                        <span class="checkmark"></span>
+                        Arms
+                    </label>
+                </div>
+            </div>
+
+            <button class="clear-filters-btn">
+                Clear Filters
+            </button>
+        </div>
+    </div>
+
+    <div class="exercise-grid">
+        @foreach (var exercise in Model)
+        {
+	        <div class="exercise-item"
+		        data-difficulty="@exercise.Difficulty"
+		        data-muscle="@exercise.MuscleGroup">
+		        <div class="card exercise-card">
+			        <div class="card-img-container">
+				        @if (!string.IsNullOrEmpty(exercise.ImageUrl))
+				        {
+					        <img src="@exercise.ImageUrl" class="card-img-top" alt="@exercise.Name">
+				        }
+				        else
+				        {
+					        <img src="~/images/NoPictureAvailable.png" class="card-img-top" alt="No Image Available">
+				        }
+			        </div>
+			        <div class="card-body">
+				        <h3 class="card-title">@exercise.Name</h3>
+				        <div class="tags">
+					        <span class="tag muscle-@exercise.MuscleGroup">
+						        <i class="fas fa-dumbbell"></i>
+						        @exercise.MuscleGroup
+					        </span>
+					        <span class="tag difficulty-@exercise.Difficulty">
+						        <i class="fas fa-chart-line"></i>
+						        @exercise.Difficulty
+					        </span>
+				        </div>
+                        <form asp-controller="Exercise" asp-action="Restore" asp-route-id="@exercise.Id" method="post">
+                            <button type="submit" class="card-btn delete">
+                                Restore Exercise
+                            </button>
+                        </form>
+			        </div>
+		        </div>
+	        </div>
+        }
+    </div>
 </div>
-<hr />
 
-<div class="row text-center">
-	@foreach (var exercise in Model)
-	{
-		<div class="col-md-3 mb-4">
-			<div class="card h-100" style="width: 100%;">
-				@if (!string.IsNullOrEmpty(exercise.ImageUrl))
-				{
-					<img src="@exercise.ImageUrl" class="card-img-top" style="max-height: 150px; object-fit: contain;" alt="@exercise.Name">
-				}
-				else
-				{
-					<img src="~/images/NoPictureAvailable.png" class="card-img-top" style="max-height: 150px; object-fit: contain;" alt="No Image Available">
-				}
+@section Styles {
+    <link rel="stylesheet" href="~/css/exercise.css" />
+}
 
-				<div class="card-body d-flex flex-column">
-					<h2 class="card-title">@exercise.Name</h2>
-					<h6 class="card-title">Muscle Group: @exercise.MuscleGroup</h6>
-					<h6 class="card-title">Difficulty: @exercise.Difficulty</h6>
-
-					<div class="mt-auto d-flex justify-content-between gap-2">
-						<form asp-controller="Exercise" asp-action="Restore" asp-route-id="@exercise.Id" method="post" class="flex-fill">
-							<button type="submit" class="btn btn-danger w-100">Restore Exercise</button>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-	}
-</div>
+@section Scripts {
+    <script src="~/js/exercise.js" asp-append-version="true"></script>
+}
