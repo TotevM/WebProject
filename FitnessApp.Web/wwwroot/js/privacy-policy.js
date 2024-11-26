@@ -4,11 +4,15 @@
     collapsibles.forEach(button => {
         button.addEventListener('click', function () {
             const section = this.closest('.collapsible-section');
+
+            // Toggle active state
             section.classList.toggle('active');
 
+            // Update aria-expanded attribute
             const isExpanded = section.classList.contains('active');
             this.setAttribute('aria-expanded', isExpanded);
 
+            // Close other sections when this one opens
             if (isExpanded) {
                 collapsibles.forEach(otherButton => {
                     if (otherButton !== this) {
@@ -21,6 +25,7 @@
         });
     });
 
+    // Optionally, open the first section by default
     if (collapsibles.length > 0) {
         const firstSection = collapsibles[0].closest('.collapsible-section');
         firstSection.classList.add('active');
