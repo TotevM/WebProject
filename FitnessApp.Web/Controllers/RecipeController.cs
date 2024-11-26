@@ -78,7 +78,7 @@ namespace FitnessApp.Web.Controllers
                 var filledGoals = recipeService.AddRecipe();
                 model.Goals = filledGoals.Goals;
 
-                return View(model);
+                return RedirectToAction(nameof(Details), new { id = model });
             }
 
             Guid exerciseGuid = Guid.Empty;
