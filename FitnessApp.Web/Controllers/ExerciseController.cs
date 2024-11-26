@@ -22,20 +22,28 @@ namespace FitnessApp.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var exercises = await exerciseService.GetAllExercisesAsync();
+            List<ExerciseIndexView> exercises = await exerciseService.GetAllExercisesAsync();
             return View(exercises);
         }
 
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> Delete(string id)
         {
-            var exercise = await exerciseService.GetExerciseAsync(id);
+            Guid exerciseGuid = Guid.Empty;
+            bool isGuidValid = this.IsGuidValid(id, ref exerciseGuid);
+
+            if (!isGuidValid)
+            {
+                return NotFound();
+            }
+
+            var exercise = await exerciseService.GetExerciseAsync(exerciseGuid);
 
             if (exercise == null)
             {
                 return NotFound();
             }
 
-            await exerciseService.ChangeExerciseWorkoutsStateAsync(id, true);
+            await exerciseService.ChangeExerciseWorkoutsStateAsync(exerciseGuid, true);
 
             await exerciseService.SetExerciseActivityAsync(exercise, true);
 
@@ -50,16 +58,24 @@ namespace FitnessApp.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Restore(Guid id)
+        public async Task<IActionResult> Restore(string id)
         {
-            var exercise = await exerciseService.GetExerciseAsync(id);
+            Guid exerciseGuid = Guid.Empty;
+            bool isGuidValid = this.IsGuidValid(id, ref exerciseGuid);
+
+            if (!isGuidValid)
+            {
+                return NotFound();
+            }
+
+            var exercise = await exerciseService.GetExerciseAsync(exerciseGuid);
 
             if (exercise == null)
             {
                 return NotFound();
             }
 
-            await exerciseService.ChangeExerciseWorkoutsStateAsync(id, false);
+            await exerciseService.ChangeExerciseWorkoutsStateAsync(exerciseGuid, false);
             await exerciseService.SetExerciseActivityAsync(exercise, false);
 
             return RedirectToAction("Restore", "Exercise");
@@ -109,7 +125,7 @@ namespace FitnessApp.Web.Controllers
             bool isGuidValid = this.IsGuidValid(id, ref exerciseGuid);
             if (!isGuidValid)
             {
-                return this.RedirectToAction(nameof(Index));
+                return NotFound();
             }
 
             var exercise = await exerciseService.GetExerciseByIdAsync(exerciseGuid);
@@ -131,7 +147,7 @@ namespace FitnessApp.Web.Controllers
             bool isGuidValid = this.IsGuidValid(model.Id, ref exerciseGuid);
             if (!isGuidValid)
             {
-                return this.RedirectToAction(nameof(Index));
+                return NotFound();
             }
 
             var exercise = await exerciseService.GetExerciseByIdAsync(exerciseGuid);

@@ -69,6 +69,7 @@ namespace FitnessApp.Services
             exercise.Difficulty = difficulty;
             exercise.Name = model.ExerciseName;
             exercise.MuscleGroup = muscleGroup;
+            exercise.ImageUrl = model.ImageUrl;
 
             await exerciseRepository.UpdateAsync(exercise);
         }

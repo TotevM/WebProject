@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace FitnessApp.Web.Controllers
 {
     [Authorize]
-    public class WorkoutController : Controller
+    public class WorkoutController : BaseController
     {
         private readonly IWorkoutService workoutService;
 
@@ -33,28 +33,45 @@ namespace FitnessApp.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddToMyWorkouts(Guid workoutId)
+        public async Task<IActionResult> AddToMyWorkouts(string workoutId)
         {
+            Guid workoutGuid = Guid.Empty;
+            bool isGuidValid = this.IsGuidValid(workoutId, ref workoutGuid);
+
+            if (!isGuidValid)
+            {
+                return NotFound();
+            }
+
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            bool succeeded = await workoutService.AddUserWorkoutAsync(workoutId, userId!);
+            bool succeeded = await workoutService.AddUserWorkoutAsync(workoutGuid, userId!);
 
             if (!succeeded)
             {
-                //implement logic to display that the realtion already exists
+                return BadRequest();
             }
 
             return RedirectToAction("Index", "Workout");
         }
 
         [HttpPost]
-        public async Task<IActionResult> RemoveFromMyWorkouts(Guid workoutId)
+        public async Task<IActionResult> RemoveFromMyWorkouts(string workoutId)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var succeed = await workoutService.RemoveFromMyWorkoutsAsync(workoutId, userId!);
 
-            if (!succeed)
+            Guid workoutGuid = Guid.Empty;
+            bool isGuidValid = this.IsGuidValid(workoutId, ref workoutGuid);
+
+            if (!isGuidValid)
             {
-                //implement logic to display that the realtion already exists
+                return NotFound();
+            }
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var succeeded = await workoutService.RemoveFromMyWorkoutsAsync(workoutGuid, userId!);
+
+            if (!succeeded)
+            {
+                return BadRequest();
             }
 
             return RedirectToAction("Index", "Workout");

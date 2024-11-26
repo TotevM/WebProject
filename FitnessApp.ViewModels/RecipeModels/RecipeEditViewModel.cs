@@ -6,7 +6,7 @@ namespace FitnessApp.ViewModels.RecipeModels
 {
     public class RecipeEditViewModel
     {
-        public Guid Id { get; set; }
+        public string Id { get; set; }
 
         [MinLength(RecipeNameMinLength)]
         [MaxLength(RecipeNameMaxLength)]

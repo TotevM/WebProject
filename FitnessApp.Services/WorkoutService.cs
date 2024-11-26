@@ -45,13 +45,13 @@ namespace FitnessApp.Services
                 .OrderByDescending(u => u.CreatedOn)
                 .Select(w => new MyWorkoutsView
                 {
-                    Id = w.Id,
+                    Id = w.Id.ToString(),
                     Name = w.Name,
                     Exercises = exerciseRepository.GetAllAttached()
                     .Where(e => e.WorkoutsExercises.Any(x => x.WorkoutId == w.Id && !x.IsDeleted))
                     .Select(x => new ExercisesInMyWorkoutsView
                     {
-                        Id = x.Id,
+                        Id = x.Id.ToString(),
                         Name = x.Name
                     })
                     .ToList()
@@ -68,13 +68,13 @@ namespace FitnessApp.Services
                 .OrderByDescending(u => u.CreatedOn)
                 .Select(w => new MyWorkoutsView
                 {
-                    Id = w.Id,
+                    Id = w.Id.ToString(),
                     Name = w.Name,
                     Exercises = exerciseRepository.GetAllAttached()
                     .Where(e => e.WorkoutsExercises.Any(x => x.WorkoutId == w.Id && !x.IsDeleted))
                     .Select(x => new ExercisesInMyWorkoutsView
                     {
-                        Id = x.Id,
+                        Id = x.Id.ToString(),
                         Name = x.Name
                     }).ToList()
                 }).ToListAsync();

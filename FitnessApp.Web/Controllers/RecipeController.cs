@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace FitnessApp.Web.Controllers
 {
     [Authorize]
-    public class RecipeController : Controller
+    public class RecipeController : BaseController
     {
         private readonly IRecipeService recipeService;
 
@@ -55,9 +55,18 @@ namespace FitnessApp.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(Guid id)
+        public async Task<IActionResult> Edit(string id)
         {
-            var recipeModel = await recipeService.EditView(id);
+
+            Guid exerciseGuid = Guid.Empty;
+            bool isGuidValid = this.IsGuidValid(id, ref exerciseGuid);
+
+            if (!isGuidValid)
+            {
+                return NotFound();
+            }
+
+            var recipeModel = await recipeService.EditView(exerciseGuid);
             return View(recipeModel);
         }
 
@@ -72,7 +81,15 @@ namespace FitnessApp.Web.Controllers
                 return View(model);
             }
 
-            Recipe? recipe = await recipeService.GetRecipeAsync(model.Id);
+            Guid exerciseGuid = Guid.Empty;
+            bool isGuidValid = this.IsGuidValid(model.Id, ref exerciseGuid);
+
+            if (!isGuidValid)
+            {
+                return NotFound();
+            }
+
+            Recipe? recipe = await recipeService.GetRecipeAsync(exerciseGuid);
 
             if (recipe == null)
             {
@@ -85,15 +102,23 @@ namespace FitnessApp.Web.Controllers
             }
 
             await recipeService.UpdateRecipe(recipe, model, goal);
-            await recipeService.UpdateDietsAsync(model.Id);
+            await recipeService.UpdateDietsAsync(exerciseGuid);
 
             return RedirectToAction("Index", "Recipe");
         }
 
         [HttpGet]
-        public async Task<IActionResult> Details(Guid id)
+        public async Task<IActionResult> Details(string id)
         {
-            var recipe = await recipeService.GetRecipeAsync(id);
+            Guid exerciseGuid = Guid.Empty;
+            bool isGuidValid = this.IsGuidValid(id, ref exerciseGuid);
+
+            if (!isGuidValid)
+            {
+                return NotFound();
+            }
+
+            var recipe = await recipeService.GetRecipeAsync(exerciseGuid);
 
             if (recipe == null)
             {
@@ -105,9 +130,17 @@ namespace FitnessApp.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> Delete(string id)
         {
-            var recipe = await recipeService.GetRecipeAsync(id);
+            Guid exerciseGuid = Guid.Empty;
+            bool isGuidValid = this.IsGuidValid(id, ref exerciseGuid);
+
+            if (!isGuidValid)
+            {
+                return NotFound();
+            }
+
+            var recipe = await recipeService.GetRecipeAsync(exerciseGuid);
 
             if (recipe == null)
             {
@@ -121,7 +154,15 @@ namespace FitnessApp.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(DeleteRecipeView model)
         {
-            var recipe = await recipeService.GetRecipeAsync(model.Id);
+            Guid exerciseGuid = Guid.Empty;
+            bool isGuidValid = this.IsGuidValid(model.Id, ref exerciseGuid);
+
+            if (!isGuidValid)
+            {
+                return NotFound();
+            }
+
+            var recipe = await recipeService.GetRecipeAsync(exerciseGuid);
 
             if (recipe == null)
             {
@@ -129,8 +170,8 @@ namespace FitnessApp.Web.Controllers
             }
 
             await recipeService.SoftDeleteRecipe(recipe!);
-            await recipeService.DeleteDietRecipeRelationAsync(model.Id);
-            await recipeService.UpdateDietsAsync(model.Id);
+            await recipeService.DeleteDietRecipeRelationAsync(exerciseGuid);
+            await recipeService.UpdateDietsAsync(exerciseGuid);
             return RedirectToAction("Index", "Recipe");
         }
     }

@@ -67,7 +67,7 @@ namespace FitnessApp.Services
         {
             var model = new DeleteRecipeView
             {
-                Id = recipe.Id,
+                Id = recipe.Id.ToString(),
                 Name = recipe.Name,
                 ImageUrl = recipe.ImageUrl
             };
@@ -111,7 +111,7 @@ namespace FitnessApp.Services
 
             var recipeModel = new RecipeEditViewModel
             {
-                Id = id,
+                Id = id.ToString(),
                 RecipeName = recipe!.Name,
                 Goals = goals,
                 Preparation = recipe.Preparation,
@@ -136,7 +136,7 @@ namespace FitnessApp.Services
         {
             var viewModel = new RecipeDetailsViewModel
             {
-                RecipeId = recipe.Id,
+                RecipeId = recipe.Id.ToString(),
                 Name = recipe.Name,
                 Calories = recipe.Calories,
                 Protein = recipe.Protein,
