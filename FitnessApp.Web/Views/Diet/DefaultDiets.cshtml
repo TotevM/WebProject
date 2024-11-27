@@ -1,47 +1,93 @@
 ﻿@model List<DietIndexView>
+@{
+    ViewData["Title"] = "Diet List";
+}
+<div class="recipe-page-container">
+    <!-- Header Section -->
+    <div class="page-header">
+        <h1>Diet Plans</h1>
+        @if (User?.Identity?.IsAuthenticated == true)
+        {
+            <div class="action-buttons">
+                <a asp-controller="Diet" asp-action="Create" class="btn btn-primary btn-add-recipe">
+                    Create New Diet
+                </a>
+            </div>
+        }
+    </div>
 
-<h2>Diet List</h2>
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+        <div class="search-container">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text"
+                   id="dietSearch"
+                   class="search-input"
+                   placeholder="Search diet by name...">
+        </div>
 
-<div class="row">
-	@foreach (var diet in Model)
-	{
-		<div class="col-md-4 mb-4">
-			<div class="card h-100">
-				@if (!string.IsNullOrEmpty(diet.ImageUrl))
-				{
-					<img src="@diet.ImageUrl" class="card-img-top" alt="@diet.Name" style="max-height: 200px; object-fit: cover;">
-				}
-				else
-				{
-					<div class="card-img-top d-flex align-items-center justify-content-center" style="height: 200px; background-color: #f8f9fa;">
-						<span>No Image Available</span>
-					</div>
-				}
+        <div class="calorie-filter-container">
+            <label for="calorieRange">Calories:</label>
+            <input type="range"
+                   id="calorieRange"
+                   min="0"
+                   max="3000"
+                   value="3000"
+                   step="100"
+                   class="calorie-range-input">
+            <span id="calorieValue">Up to 3000</span>
+        </div>
 
-				<div class="card-body text-center">
-					<h5 class="card-title">@diet.Name</h5>
-				</div>
+        <div class="filter-groups">
+            <button class="clear-filters-btn">
+                Clear Filters
+            </button>
+        </div>
+    </div>
 
-				<div class="card-footer">
-					<p><strong>Calories:</strong> @diet.Calories</p>
-					<p><strong>Protein:</strong> @diet.Protein?.ToString()g</p>
-					<p><strong>Carbohydrates:</strong> @diet.Carbohydrates?.ToString()g</p>
-					<p><strong>Fats:</strong> @diet.Fats?.ToString()g</p>
-
-					<div class="card-footer bg-light mt-2 p-3" style="background-color: #e9ecef;">
-						<div class="d-flex justify-content-between">
-							<form asp-action="AddToMyDiets" asp-controller="Diet" method="post">
-								<input type="hidden" name="DietId" value="@diet.DietId" />
-								<button type="submit" class="btn btn-primary">Add to My Diets</button>
-							</form>
-
-							<a asp-controller="Diet" asp-action="DietDetails" asp-route-dietid="@diet.DietId" class="btn btn-primary btn-sm">
-								<i class="bi bi-info-circle"></i> View Details
-							</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	}
+    <div class="recipe-grid" id="dietGrid">
+        @foreach (var diet in Model)
+        {
+            <div class="recipe-item" data-calories="@diet.Calories">
+                <div class="card recipe-card">
+                    <div class="card-img-container">
+                        @if (!string.IsNullOrEmpty(diet.ImageUrl))
+                        {
+                            <img src="@diet.ImageUrl" alt="@diet.Name">
+                        }
+                        else
+                        {
+                            <img src="~/images/NoPictureAvailable.png" alt="No Image Available">
+                        }
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">@diet.Name</h3>
+                        <div class="diet-nutritional-info">
+                            <p><strong>Calories:</strong> @diet.Calories</p>
+                            <p><strong>Protein:</strong> @diet.Protein?.ToString()g</p>
+                            <p><strong>Carbohydrates:</strong> @diet.Carbohydrates?.ToString()g</p>
+                            <p><strong>Fats:</strong> @diet.Fats?.ToString()g</p>
+                        </div>
+                        <div class="card-buttons">
+                            <a asp-controller="Diet" asp-action="DietDetails" asp-route-dietid="@diet.DietId" class="card-btn details">
+                                <i class="bi bi-info-circle"></i> View Details
+                            </a>
+                            <form asp-action="AddToMyDiets" asp-controller="Diet" method="post" class="card-btn-form">
+                                <input type="hidden" name="DietId" value="@diet.DietId" />
+                                <button type="submit" class="card-btn add-to-diet">Add to My Diets</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 </div>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/default-diet.css" />
+}
+
+@section Scripts {
+    <script src="~/js/diet.js" asp-append-version="true"></script>
+}

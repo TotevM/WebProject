@@ -2,85 +2,117 @@
 
 <h2>My Diets</h2>
 
+<div class="filter-bar">
+	<div class="search-container">
+		<i class="fas fa-search search-icon"></i>
+		<input type="text"
+			   id="dietSearch"
+			   class="search-input"
+			   placeholder="Search diet by name...">
+	</div>
+
+	<div class="calorie-filter-container">
+		<label for="calorieRange">Calories:</label>
+		<input type="range"
+			   id="calorieRange"
+			   min="0"
+			   max="3000"
+			   value="3000"
+			   step="100"
+			   class="calorie-range-input">
+		<span id="calorieValue">Up to 3000</span>
+	</div>
+
+	<div class="filter-groups">
+		<button class="clear-filters-btn">
+			Clear Filters
+		</button>
+	</div>
+</div>
+
 <div class="row">
-    @foreach (var diet in Model)
+	@foreach (var diet in Model)
 
-    {
-        <div class="col-md-4 mb-4">
-            <div class="card h-100">
-                @if (!string.IsNullOrEmpty(diet.ImageUrl))
+	{
+		<div class="col-md-4 mb-4">
+			<div class="card h-100">
+				@if (!string.IsNullOrEmpty(diet.ImageUrl))
 
-                {
-                    <img src="@diet.ImageUrl" class="card-img-top" alt="@diet.Name" style="max-height: 200px; object-fit: cover;">
-                }
+				{
+					<img src="@diet.ImageUrl" class="card-img-top" alt="@diet.Name" style="max-height: 200px; object-fit: cover;">
+				}
 
-                else
+				else
 
-                {
-                    <div class="card-img-top d-flex align-items-center justify-content-center" style="height: 200px; background-color: #f8f9fa;">
-                        <span>No Image Available</span>
-                    </div>
-                }
+				{
+					<div class="card-img-top d-flex align-items-center justify-content-center" style="height: 200px; background-color: #f8f9fa;">
+						<span>No Image Available</span>
+					</div>
+				}
 
-                <div class="card-body text-center">
-                    <h5 class="card-title">@diet.Name</h5>
-                </div>
+				<div class="card-body text-center">
+					<h5 class="card-title">@diet.Name</h5>
+				</div>
 
-                <div class="card-footer">
-                    <p><strong>Calories:</strong> @diet.Calories</p>
-                    <p><strong>Protein:</strong> @diet.Protein?.ToString()g</p>
-                    <p><strong>Carbohydrates:</strong> @diet.Carbohydrates?.ToString()g</p>
-                    <p><strong>Fats:</strong> @diet.Fats?.ToString()g</p>
+				<div class="card-footer">
+					<p><strong>Calories:</strong> @diet.Calories</p>
+					<p><strong>Protein:</strong> @diet.Protein?.ToString()g</p>
+					<p><strong>Carbohydrates:</strong> @diet.Carbohydrates?.ToString()g</p>
+					<p><strong>Fats:</strong> @diet.Fats?.ToString()g</p>
 
-                    <div class="card-footer bg-light mt-2 p-3" style="background-color: #e9ecef;">
-                        <div class="d-flex justify-content-between">
-                            <form asp-action="RemoveFromMyDiets" asp-controller="Diet" method="post">
-                                <input type="hidden" name="DietId" value="@diet.DietId" />
-                                <button type="submit" class="btn btn-danger">Remove From My Diets</button>
-                            </form>
+					<div class="card-footer bg-light mt-2 p-3" style="background-color: #e9ecef;">
+						<div class="d-flex justify-content-between">
+							<form asp-action="RemoveFromMyDiets" asp-controller="Diet" method="post">
+								<input type="hidden" name="DietId" value="@diet.DietId" />
+								<button type="submit" class="btn btn-danger">Remove</button>
+							</form>
 
-                            <a asp-controller="Diet" asp-action="DietDetails" asp-route-dietId="@diet.DietId" class="btn btn-primary btn-sm">
-                                View Details
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    }
+							<a asp-controller="Diet" asp-action="DietDetails" asp-route-dietId="@diet.DietId" class="btn btn-primary btn-sm">
+								View Details
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	}
 
-    <div class="col-md-4 mb-4">
-        <div id="add-btn-container" class="card h-100">
-            <button class="add-diet-button" data-bs-toggle="modal" data-bs-target="#addDietModal">
-                <h3 class="mb-1">ADD</h3>
-                <i class="bi bi-plus-lg"></i>
-            </button>
-        </div>
-    </div>
+	<div class="col-md-4 mb-4">
+		<div id="add-btn-container" class="card h-100">
+			<button class="add-diet-button" data-bs-toggle="modal" data-bs-target="#addDietModal">
+				<h3 class="mb-1">ADD</h3>
+				<i class="bi bi-plus-lg"></i>
+			</button>
+		</div>
+	</div>
 </div>
 
 <div class="modal fade" id="addDietModal" tabindex="-1" aria-labelledby="addDietModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header bg-dark text-white">
-                <h5 class="modal-title" id="addDietModalLabel">Choose Diet to Add</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>Please select an option to add a diet:</p>
-                <div class="d-flex justify-content-around">
-                    <a asp-action="DefaultDiets" asp-controller="Diet" class="btn btn-primary">Choose Existing Diet</a>
-                    <a asp-action="CreateDiet" asp-controller="Diet" class="btn btn-success">Create Custom Diet</a>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header bg-dark text-white">
+				<h5 class="modal-title" id="addDietModalLabel">Choose Diet to Add</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<p>Please select an option to add a diet:</p>
+				<div class="d-flex justify-content-around">
+					<a asp-action="DefaultDiets" asp-controller="Diet" class="btn btn-primary">Choose Existing Diet</a>
+					<a asp-action="CreateDiet" asp-controller="Diet" class="btn btn-success">Create Custom Diet</a>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
 </div>
 
 @section Styles {
-    <link rel="stylesheet" href="~/css/diet.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+	<link rel="stylesheet" href="~/css/my-diets.css" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+}
+
+@section Scripts {
+	<script src="~/js/my-diets.js" asp-append-version="true"></script>
 }
