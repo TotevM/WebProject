@@ -40,7 +40,7 @@ namespace FitnessApp.Data
             foreach (var diet in diets)
             {
                 diet.Calories = diet.DietsRecipes.Sum(df => df.Recipe.Calories);
-                diet.Protein = diet.DietsRecipes.Sum(df => df.Recipe.Protein);
+                diet.Proteins = diet.DietsRecipes.Sum(df => df.Recipe.Proteins);
                 diet.Carbohydrates = diet.DietsRecipes.Sum(df => df.Recipe.Carbohydrates);
                 diet.Fats = diet.DietsRecipes.Sum(df => df.Recipe.Fats);
             }

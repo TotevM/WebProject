@@ -35,7 +35,7 @@ namespace FitnessApp.Data.EntityConfiguration
                 foreach (var diet in diets)
                 {
                     diet.Calories = 0;
-                    diet.Protein = 0;
+                    diet.Proteins = 0;
                     diet.Carbohydrates = 0;
                     diet.Fats = 0;
 

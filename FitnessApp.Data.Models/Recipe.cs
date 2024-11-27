@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using FitnessApp.Common.Enumerations;
+using Microsoft.EntityFrameworkCore;
 using static FitnessApp.Common.EntityValidationConstants.RecipeValidation;
 
 
@@ -11,31 +12,52 @@ namespace FitnessApp.Data.Models
         [Key]
         public Guid Id { get; set; }
 
+        [Required]
         [MinLength(RecipeNameMinLength)]
         [MaxLength(RecipeNameMaxLength)]
-        public required string Name { get; set; }
+        [Comment("The name of the recipe")]
+        public string Name { get; set; }
 
+        [Required]
         [MinLength(IngredientsNameMinLength)]
         [MaxLength(IngredientsNameMaxLength)]
-        public required string Ingredients { get; set; }
+        [Comment("The ingredients of the recipe")]
+        public string Ingredients { get; set; }
 
+        [Required]
         [MinLength(PreparationNameMinLength)]
         [MaxLength(PreparationNameMaxLength)]
-        public required string Preparation { get; set; }
+        [Comment("The preparation of the recipe")]
+        public string Preparation { get; set; }
 
+        [Comment("The image URL of the recipe")]
         public string? ImageUrl { get; set; } = null!;
-        public required Goal Goal { get; set; }
 
+        [Required]
+        [Comment("The goal of the recipe")]
+        public Goal Goal { get; set; }
+
+        [Required]
+        [Comment("The time the recipe was created on")]
         public DateTime CreatedOn { get; set; }
 
+        [Required]
         [Range(0, CalsMax)]
-        public required int Calories { get; set; }
+        [Comment("The calories of the recipe")]
+        public int Calories { get; set; }
+        [Required]
         [Range(0, ProteinMax)]
-        public required int Protein { get; set; }
+        [Comment("The proteins of the recipe")]
+        public int Proteins { get; set; }
+        [Required]
         [Range(0, CarbsMax)]
+        [Comment("The carbohydrates of the recipe")]
         public required int Carbohydrates { get; set; }
+        [Required]
         [Range(0, FatsMax)]
-        public required int Fats { get; set; }
+        [Comment("The fats of the recipe")]
+        public int Fats { get; set; }
+        [Comment("The creator of the recipe")]
         public string? UserID { get; set; }
 
         [ForeignKey(nameof(UserID))]

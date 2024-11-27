@@ -46,7 +46,7 @@ namespace FitnessApp.Services
                 UserID = userId,
                 Goal = goal,
                 Calories = (int)model.Calories!,
-                Protein = (int)model.Protein!,
+                Proteins = (int)model.Protein!,
                 Carbohydrates = (int)model.Carbohydrates!,
                 Fats = (int)model.Fats!
             };
@@ -119,7 +119,7 @@ namespace FitnessApp.Services
                 ImageUrl = recipe.ImageUrl,
                 Goal = recipe.Goal.ToString(),
                 Calories = (int)recipe.Calories!,
-                Protein = (int)recipe.Protein!,
+                Protein = (int)recipe.Proteins!,
                 Carbohydrates = (int)recipe.Carbohydrates!,
                 Fats = (int)recipe.Fats!
             };
@@ -139,7 +139,7 @@ namespace FitnessApp.Services
                 RecipeId = recipe.Id.ToString(),
                 Name = recipe.Name,
                 Calories = recipe.Calories,
-                Protein = recipe.Protein,
+                Protein = recipe.Proteins,
                 Carbohydrates = recipe.Carbohydrates,
                 Fats = recipe.Fats,
                 ImageUrl = recipe.ImageUrl!,
@@ -167,9 +167,9 @@ namespace FitnessApp.Services
                         .Where(df => df.Recipe != null)
                         .Sum(df => df.Recipe.Calories);
 
-                    diet.Protein = diet.DietsRecipes
+                    diet.Proteins = diet.DietsRecipes
                         .Where(df => df.Recipe != null)
-                        .Sum(df => df.Recipe.Protein);
+                        .Sum(df => df.Recipe.Proteins);
 
                     diet.Carbohydrates = diet.DietsRecipes
                         .Where(df => df.Recipe != null)
@@ -190,7 +190,7 @@ namespace FitnessApp.Services
             recipe.ImageUrl = model.ImageUrl;
             recipe.Goal = goal;
             recipe.Calories = (int)model.Calories!;
-            recipe.Protein = (int)model.Protein!;
+            recipe.Proteins = (int)model.Protein!;
             recipe.Carbohydrates = (int)model.Carbohydrates!;
             recipe.Fats = (int)model.Fats!;
 

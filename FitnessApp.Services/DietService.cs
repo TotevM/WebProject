@@ -95,7 +95,7 @@ namespace FitnessApp.Services
                     Description = diet.Description,
                     ImageUrl = diet.ImageUrl,
                     Calories = diet.Calories,
-                    Protein = diet.Protein,
+                    Protein = diet.Proteins,
                     Carbohydrates = diet.Carbohydrates,
                     Fats = diet.Fats
                 }).ToListAsync();
@@ -120,7 +120,7 @@ namespace FitnessApp.Services
                     Name = recipe.Name,
                     ImageUrl = recipe.ImageUrl,
                     Calories = recipe.Calories,
-                    Protein = recipe.Protein,
+                    Protein = recipe.Proteins,
                     Carbohydrates = recipe.Carbohydrates,
                     Fats = recipe.Fats
                 }).ToListAsync();
@@ -184,7 +184,7 @@ namespace FitnessApp.Services
                     Description = diet.Description,
                     ImageUrl = diet.ImageUrl,
                     Calories = diet.Calories,
-                    Protein = diet.Protein,
+                    Protein = diet.Proteins,
                     Carbohydrates = diet.Carbohydrates,
                     Fats = diet.Fats
                 }).ToListAsync();
@@ -208,7 +208,7 @@ namespace FitnessApp.Services
                 RecipeId = recipeId.ToString(),
                 Name = recipe.Name,
                 Calories = recipe.Calories,
-                Protein = recipe.Protein,
+                Protein = recipe.Proteins,
                 Carbohydrates = recipe.Carbohydrates,
                 Fats = recipe.Fats,
                 ImageUrl = recipe.ImageUrl!,
@@ -245,7 +245,7 @@ namespace FitnessApp.Services
                 if (diet != null)
                 {
                     diet.Calories = diet.DietsRecipes.Sum(df => df.Recipe.Calories);
-                    diet.Protein = diet.DietsRecipes.Sum(df => df.Recipe.Protein);
+                    diet.Proteins = diet.DietsRecipes.Sum(df => df.Recipe.Proteins);
                     diet.Carbohydrates = diet.DietsRecipes.Sum(df => df.Recipe.Carbohydrates);
                     diet.Fats = diet.DietsRecipes.Sum(df => df.Recipe.Fats);
                 }
@@ -278,7 +278,7 @@ namespace FitnessApp.Services
             if (diet != null)
             {
                 diet.Calories = diet.DietsRecipes.Where(dr => dr.Recipe != null).Sum(dr => dr.Recipe.Calories);
-                diet.Protein = diet.DietsRecipes.Where(dr => dr.Recipe != null).Sum(dr => dr.Recipe.Protein);
+                diet.Proteins = diet.DietsRecipes.Where(dr => dr.Recipe != null).Sum(dr => dr.Recipe.Proteins);
                 diet.Carbohydrates = diet.DietsRecipes.Where(dr => dr.Recipe != null).Sum(dr => dr.Recipe.Carbohydrates);
                 diet.Fats = diet.DietsRecipes.Where(dr => dr.Recipe != null).Sum(dr => dr.Recipe.Fats);
 
