@@ -1,7 +1,5 @@
-﻿using FitnessApp.Data.Models;
-using FitnessApp.ViewModels;
+﻿using FitnessApp.Services.ServiceContracts.FitnessApp.Services.ServiceContracts;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FitnessApp.Web.Controllers
@@ -9,53 +7,27 @@ namespace FitnessApp.Web.Controllers
     [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
-        private readonly UserManager<ApplicationUser> userManager;
-        private readonly RoleManager<IdentityRole> roleManager;
+        private readonly IUserRoleService _userRoleService;
 
-        public AdminController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+        public AdminController(IUserRoleService userRoleService)
         {
-            this.userManager = userManager;
-            this.roleManager = roleManager;
+            _userRoleService = userRoleService;
         }
+
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var users = userManager.Users.ToList();
-
-            var model = new List<UserRoleViewModel>();
-            foreach (var user in users)
-            {
-                var isTrainer = await userManager.IsInRoleAsync(user, "Trainer");
-                model.Add(new UserRoleViewModel
-                {
-                    Id = user.Id,
-                    UserName = user.UserName!,
-                    Email = user.Email!,
-                    IsTrainer = isTrainer
-                });
-            }
-
+            var model = await _userRoleService.GetAllUsersWithRolesAsync();
             return View(model);
         }
 
         [HttpPost]
         public async Task<IActionResult> ToggleTrainerRole(string userId)
         {
-            var user = await userManager.FindByIdAsync(userId);
-            if (user == null)
+            var success = await _userRoleService.ToggleTrainerRoleAsync(userId);
+            if (!success)
             {
                 return NotFound("User not found.");
-            }
-
-            var isTrainer = await userManager.IsInRoleAsync(user, "Trainer");
-
-            if (isTrainer)
-            {
-                await userManager.RemoveFromRoleAsync(user, "Trainer");
-            }
-            else
-            {
-                await userManager.AddToRoleAsync(user, "Trainer");
             }
 
             return RedirectToAction(nameof(Index));

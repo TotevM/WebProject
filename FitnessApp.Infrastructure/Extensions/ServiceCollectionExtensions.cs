@@ -6,6 +6,7 @@
 	using FitnessApp.Data.Repository.Contracts;
 	using FitnessApp.Services;
 	using FitnessApp.Services.ServiceContracts;
+    using FitnessApp.Services.ServiceContracts.FitnessApp.Services.ServiceContracts;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.DependencyInjection;
 
@@ -58,6 +59,7 @@
 			services.AddScoped<IRecipeService, RecipeService>();
 			services.AddScoped<IWorkoutService, WorkoutService>();
 			services.AddScoped<IBaseService, BaseService>();
+			services.AddScoped<IUserRoleService, UserRoleService>();
 		}
 	}
 }
