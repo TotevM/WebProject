@@ -17,6 +17,12 @@ namespace FitnessApp.Data.EntityConfiguration
             builder.Property(e => e.Difficulty)
                 .IsRequired();
 
+            builder.Property(e => e.MuscleGroup)
+                .IsRequired();
+
+            builder.Property(e => e.IsDeleted)
+                .HasDefaultValue(false);
+
             builder.HasMany(e => e.WorkoutsExercises)
                 .WithOne(we => we.Exercise)
                 .HasForeignKey(we => we.ExerciseId)

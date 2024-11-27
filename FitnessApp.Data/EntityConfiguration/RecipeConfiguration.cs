@@ -20,13 +20,22 @@ namespace FitnessApp.Data.EntityConfiguration
             builder.Property(r => r.Preparation)
                    .IsRequired();
 
+            builder.Property(r => r.CreatedOn)
+                  .IsRequired();
+
+            builder.Property(r => r.Goal)
+                   .IsRequired();
+
+            builder.Property(r => r.IsDeleted)
+                  .HasDefaultValue(false); 
+            
             builder.Property(r => r.UserID)
                    .IsRequired(false);
 
             builder.HasMany(d => d.DietsRecipes)
                 .WithOne(df => df.Recipe)
                 .HasForeignKey(df => df.RecipeId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             string path = Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "FitnessApp.Data", "Datasets", "recipes.json");
             string data = File.ReadAllText(path);

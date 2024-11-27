@@ -14,7 +14,10 @@ namespace FitnessApp.Data.EntityConfiguration
 			builder.Property(w => w.Name)
 				   .IsRequired();
 
-			builder.Property(w => w.UserID)
+            builder.Property(w => w.CreatedOn)
+                    .IsRequired();
+
+            builder.Property(w => w.UserID)
 				   .IsRequired(false);
 
 			builder.HasMany(w => w.WorkoutsExercises)

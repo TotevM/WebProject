@@ -10,15 +10,17 @@ namespace FitnessApp.Data.Models
         [Key]
         public Guid Id { get; set; }
 
+        [Required]
         [MinLength(DietNameMinLength)]
         [MaxLength(DietNameMaxLength)]
         [Comment("Name of the diet")]
-        public required string Name { get; set; }
+        public string Name { get; set; }
 
+        [Required]
         [MinLength(DescriptionMinLength)]
         [MaxLength(DescriptionMaxLength)]
         [Comment("Description of the diet")]
-        public required string Description { get; set; } = null!;
+        public string Description { get; set; } = null!;
 
         [Comment("The creator of the diet")]
         public string? UserID { get; set; }

@@ -26,7 +26,7 @@ namespace FitnessApp.Data.Models
 
         [Required]
         [Comment("The muscle group the exercise targets")]
-        public required MuscleGroup MuscleGroup { get; set; }
+        public MuscleGroup MuscleGroup { get; set; }
 
         [Comment("The image URL of the exercise")]
         public string? ImageUrl { get; set; }
