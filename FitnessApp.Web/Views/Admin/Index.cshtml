@@ -1,0 +1,45 @@
+﻿@model List<FitnessApp.ViewModels.UserRoleViewModel>
+
+@{
+    ViewData["Title"] = "Manage Users";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>User Name</th>
+            <th>Email</th>
+            <th>Is Trainer</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.UserName</td>
+                <td>@user.Email</td>
+                <td>
+                    @if (user.IsTrainer)
+                    {
+                        <span class="badge bg-success">Yes</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">No</span>
+                    }
+                </td>
+                <td>
+                    <form asp-action="ToggleTrainerRole" method="post" style="display:inline;">
+                        <input type="hidden" name="userId" value="@user.Id" />
+                        <button type="submit" class="btn @(!user.IsTrainer ? "btn-primary" : "btn-danger")">
+                            @(!user.IsTrainer ? "Make Trainer" : "Remove Trainer")
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
