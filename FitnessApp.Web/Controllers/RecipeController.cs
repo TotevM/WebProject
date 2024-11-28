@@ -22,7 +22,7 @@ namespace FitnessApp.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(Goal? goal = null)
         {
-            var model = await recipeService.DisplayDietsAsync(goal);
+            var model = await recipeService.DisplayRecipesAsync(goal);
             return View(model);
         }
 

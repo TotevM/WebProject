@@ -6,7 +6,7 @@ namespace FitnessApp.Services.ServiceContracts
 {
     public interface IRecipeService
     {
-        Task<List<RecipesIndexView>> DisplayDietsAsync(Goal? goal = null);
+        Task<List<RecipesIndexView>> DisplayRecipesAsync(Goal? goal = null);
         AddRecipeView AddRecipe();
         Task AddRecipeAsync(AddRecipeView model, Goal goal, string userId);
         Task<Recipe?> GetRecipeAsync(Guid id);

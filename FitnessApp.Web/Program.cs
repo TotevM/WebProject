@@ -1,7 +1,6 @@
 using FitnessApp.Data;
 using FitnessApp.Data.Models;
 using FitnessApp.Infrastructure.Extensions;
-using FitnessApp.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,11 +18,9 @@ namespace FitnessApp.Web
             builder.Services.AddDbContext<FitnessDBContext>(options =>
             options.UseSqlServer(connectionString));
 
-            //builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<FitnessDBContext>();
-            //builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => ConfigureIdentityOptions(options))
                 .AddEntityFrameworkStores<FitnessDBContext>()
+                .AddUserManager<CustomUserManager>()
                 .AddDefaultTokenProviders()
                 .AddDefaultUI(); ;
 

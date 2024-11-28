@@ -1,4 +1,5 @@
-﻿using FitnessApp.Data.EntityConfiguration;
+﻿using System.Reflection.Emit;
+using FitnessApp.Data.EntityConfiguration;
 using FitnessApp.Data.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -34,6 +35,9 @@ namespace FitnessApp.Data
             builder.ApplyConfiguration(new ProgressConfiguration());
 
             builder.ApplyConfiguration(new ApplicationUserConfiguration());
+
+            //Allows only non-deleted users to communicate with the DB
+            builder.Entity<ApplicationUser>().HasQueryFilter(u => !u.IsDeleted);
         }
 
         public async Task SeedDatabaseAsync()

@@ -74,7 +74,7 @@ namespace FitnessApp.Services
 
             return model;
         }
-        public async Task<List<RecipesIndexView>> DisplayDietsAsync(Goal? goal = null)
+        public async Task<List<RecipesIndexView>> DisplayRecipesAsync(Goal? goal = null)
         {
             var recipesQuery = recipeRepository.GetAllAttached()
                         .Where(d => !d.IsDeleted)

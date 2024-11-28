@@ -58,7 +58,7 @@
             services.AddScoped<IRecipeService, RecipeService>();
             services.AddScoped<IWorkoutService, WorkoutService>();
             services.AddScoped<IBaseService, BaseService>();
-            services.AddScoped<IUserRoleService, UserRoleService>();
+            services.AddScoped<IManagerService, ManagerService>();
         }
     }
 }
