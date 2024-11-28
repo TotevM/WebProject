@@ -18,7 +18,8 @@ namespace FitnessApp.Web
             builder.Services.AddDbContext<FitnessDBContext>(options =>
             options.UseSqlServer(connectionString));
 
-            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => ConfigureIdentityOptions(options))
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>((options =>
+                         IdentityOptionsConfigurator.Configure(options)))
                 .AddEntityFrameworkStores<FitnessDBContext>()
                 .AddUserManager<CustomUserManager>()
                 .AddDefaultTokenProviders()
@@ -42,7 +43,7 @@ namespace FitnessApp.Web
             using (var scope = app.Services.CreateScope())
             {
                 var serviceProvider = scope.ServiceProvider;
-                await ServiceProviderExtentions.SeedRolesAndAdminAsync(serviceProvider);
+                await ServiceProviderExtensions.SeedRolesAndAdminAsync(serviceProvider);
             }
 
             using (var scope = app.Services.CreateScope())
@@ -86,32 +87,6 @@ namespace FitnessApp.Web
             app.ApplyMigrations();
 
             app.Run();
-        }
-
-        private static void ConfigureIdentityOptions(IdentityOptions options)
-        {
-            // Password Settings
-            options.Password.RequireDigit = false;
-            options.Password.RequireLowercase = false;
-            options.Password.RequireNonAlphanumeric = false;
-            options.Password.RequireUppercase = false;
-            options.Password.RequiredLength = 6;
-            options.Password.RequiredUniqueChars = 1;
-            options.SignIn.RequireConfirmedAccount = false;
-
-            // Lockout settings
-            options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-            options.Lockout.MaxFailedAccessAttempts = 5;
-            options.Lockout.AllowedForNewUsers = true;
-
-            // User settings
-            options.User.AllowedUserNameCharacters =
-                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
-            options.User.RequireUniqueEmail = true;
-
-            // SignIn settings
-            options.SignIn.RequireConfirmedEmail = false;
-            options.SignIn.RequireConfirmedPhoneNumber = false;
         }
     }
 }

@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace FitnessApp.Infrastructure.Extensions
 {
-    public class ServiceProviderExtentions
+    public class ServiceProviderExtensions
     {
         public static async Task SeedRolesAndAdminAsync(IServiceProvider serviceProvider)
         {
