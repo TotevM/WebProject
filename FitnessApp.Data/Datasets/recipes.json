@@ -11,7 +11,7 @@
         "Calories": 350,
         "Fats": 8,
         "Carbohydrates": 45,
-        "Protein": 25
+        "Proteins": 25
     },
     {
         "Id": "7fcf8f67-0b44-4be5-9f55-3fd8f0bcb4d1",
@@ -25,7 +25,7 @@
         "Calories": 450,
         "Fats": 10,
         "Carbohydrates": 55,
-        "Protein": 35
+        "Proteins": 35
     },
     {
         "Id": "c1d5a8e3-9a7a-4d77-bb38-8aafd82df021",
@@ -39,7 +39,7 @@
         "Calories": 600,
         "Fats": 20,
         "Carbohydrates": 75,
-        "Protein": 30
+        "Proteins": 30
     },
     {
         "Id": "e3f7d4b7-94b2-4b3f-889e-8d7e5cdef921",
@@ -53,7 +53,7 @@
         "Calories": 650,
         "Fats": 28,
         "Carbohydrates": 50,
-        "Protein": 40
+        "Proteins": 40
     },
     {
         "Id": "f3a7d8d2-1b9d-4c31-995a-6fa4fd0b032a",
@@ -67,7 +67,7 @@
         "Calories": 480,
         "Fats": 15,
         "Carbohydrates": 40,
-        "Protein": 30
+        "Proteins": 30
     },
     {
         "Id": "a6c8d4e0-1c8f-4f1b-b0c2-6a6d9a7a1f2a",
@@ -81,7 +81,7 @@
         "Calories": 300,
         "Fats": 10,
         "Carbohydrates": 20,
-        "Protein": 25
+        "Proteins": 25
     },
     {
         "Id": "a7f2e8d4-8b2e-41e8-90d7-5e2e6b7a2f5e",
@@ -95,7 +95,7 @@
         "Calories": 150,
         "Fats": 5,
         "Carbohydrates": 3,
-        "Protein": 20
+        "Proteins": 20
     },
     {
         "Id": "a823fb5b-9ed5-4d90-9c31-2398dcdb78de",
@@ -109,7 +109,7 @@
         "Calories": 500,
         "Fats": 20,
         "Carbohydrates": 30,
-        "Protein": 40
+        "Proteins": 40
     },
     {
         "Id": "b2175cd6-6822-4e93-917f-3e8c70c09fbc",
@@ -123,7 +123,7 @@
         "Calories": 300,
         "Fats": 8,
         "Carbohydrates": 45,
-        "Protein": 15
+        "Proteins": 15
     },
     {
         "Id": "ce451c31-e002-4e97-9140-dc81837b58a7",
@@ -137,7 +137,7 @@
         "Calories": 250,
         "Fats": 4,
         "Carbohydrates": 30,
-        "Protein": 20
+        "Proteins": 20
     },
     {
         "Id": "37df0c76-9487-4d99-9b18-f5c30c4ffcb3",
@@ -151,7 +151,7 @@
         "Calories": 200,
         "Fats": 15,
         "Carbohydrates": 5,
-        "Protein": 12
+        "Proteins": 12
     },
     {
         "Id": "ab237e7b-08f2-4dcd-b6f9-98a65c96f6ec",
@@ -165,7 +165,7 @@
         "Calories": 300,
         "Fats": 12,
         "Carbohydrates": 10,
-        "Protein": 28
+        "Proteins": 28
     },
     {
         "Id": "ef63dc7f-bb29-4c6c-bcf5-4732ab2f4921",
@@ -179,7 +179,7 @@
         "Calories": 350,
         "Fats": 15,
         "Carbohydrates": 12,
-        "Protein": 35
+        "Proteins": 35
     },
     {
         "Id": "e073b44d-417e-4b9e-85d8-5a9536185b68",
@@ -193,7 +193,7 @@
         "Calories": 450,
         "Fats": 15,
         "Carbohydrates": 65,
-        "Protein": 15
+        "Proteins": 15
     },
     {
         "Id": "8e22c1d5-0c6e-47c7-bc25-559518fe4f24",
@@ -207,7 +207,7 @@
         "Calories": 200,
         "Fats": 10,
         "Carbohydrates": 5,
-        "Protein": 25
+        "Proteins": 25
     },
     {
         "Id": "c670818c-d46f-440b-9332-0f0d01937887",
@@ -221,7 +221,7 @@
         "Calories": 400,
         "Fats": 18,
         "Carbohydrates": 35,
-        "Protein": 25
+        "Proteins": 25
     },
     {
         "Id": "7a88e34d-b5ba-4717-b1c1-5348d8d2a3ef",
@@ -235,7 +235,7 @@
         "Calories": 300,
         "Fats": 20,
         "Carbohydrates": 5,
-        "Protein": 18
+        "Proteins": 18
     },
     {
         "Id": "53fa075b-fc37-46bc-b50f-c4d60013ef7a",
@@ -249,7 +249,7 @@
         "Calories": 400,
         "Fats": 22,
         "Carbohydrates": 8,
-        "Protein": 40
+        "Proteins": 40
     },
     {
         "Id": "eb4ad19e-e048-4630-bb57-2ee9c470de79",
@@ -263,7 +263,7 @@
         "Calories": 250,
         "Fats": 10,
         "Carbohydrates": 30,
-        "Protein": 12
+        "Proteins": 12
     },
     {
         "Id": "fb3e4329-2c05-49cc-9c19-6ff56464918b",
@@ -277,7 +277,7 @@
         "Calories": 200,
         "Fats": 8,
         "Carbohydrates": 32,
-        "Protein": 3
+        "Proteins": 3
     },
     {
         "Id": "19bdb4c8-3731-4456-8e8e-5e0d174b3241",
@@ -291,7 +291,7 @@
         "Calories": 350,
         "Fats": 20,
         "Carbohydrates": 30,
-        "Protein": 10
+        "Proteins": 10
     },
     {
         "Id": "fb3e4329-2c05-49cc-9c19-6ff564649118",
@@ -305,7 +305,7 @@
         "Calories": 200,
         "Fats": 10,
         "Carbohydrates": 25,
-        "Protein": 5
+        "Proteins": 5
     },
     {
         "Id": "29b2d59e-5ac9-46cd-bbb3-4b235e5bff0f",
@@ -319,7 +319,7 @@
         "Calories": 300,
         "Fats": 10,
         "Carbohydrates": 40,
-        "Protein": 15
+        "Proteins": 15
     },
     {
         "Id": "3f9f14b8-bba3-4f57-b407-d4eb33c1f789",
@@ -333,7 +333,7 @@
         "Calories": 200,
         "Fats": 15,
         "Carbohydrates": 10,
-        "Protein": 5
+        "Proteins": 5
     },
     {
         "Id": "a0e4a4a4-4b43-48b7-9173-f84a3f1d52a1",
@@ -347,7 +347,7 @@
         "Calories": 400,
         "Fats": 18,
         "Carbohydrates": 52,
-        "Protein": 12
+        "Proteins": 12
     },
     {
         "Id": "71c3c77c-e826-47c5-92d0-88c42d22b867",
@@ -361,7 +361,7 @@
         "Calories": 300,
         "Fats": 12,
         "Carbohydrates": 30,
-        "Protein": 25
+        "Proteins": 25
     },
     {
         "Id": "60e4a005-500e-4973-9d71-1b5c462f7de5",
@@ -375,7 +375,7 @@
         "Calories": 350,
         "Fats": 15,
         "Carbohydrates": 30,
-        "Protein": 25
+        "Proteins": 25
     },
     {
         "Id": "dd638b57-0b70-46a7-8aeb-bf8c8025c222",
@@ -388,7 +388,7 @@
         "Calories": 450,
         "Fats": 25,
         "Carbohydrates": 30,
-        "Protein": 30
+        "Proteins": 30
     },
     {
         "Id": "90f40e3b-b5eb-4899-b365-d4a2f94f1281",
@@ -402,7 +402,7 @@
         "Calories": 200,
         "Fats": 8,
         "Carbohydrates": 15,
-        "Protein": 5
+        "Proteins": 5
     },
     {
         "Id": "af3f84d1-9f18-4c65-bb8c-04d15c9e2294",
@@ -416,7 +416,7 @@
         "Calories": 250,
         "Fats": 10,
         "Carbohydrates": 35,
-        "Protein": 10
+        "Proteins": 10
     },
     {
         "Id": "be29b72f-3f75-49d0-bb69-7d1e54aab95a",
@@ -430,7 +430,7 @@
         "Calories": 400,
         "Fats": 15,
         "Carbohydrates": 50,
-        "Protein": 12
+        "Proteins": 12
     },
     {
         "Id": "a1c1a9cd-25f5-4c19-89f6-32851f0d1152",
@@ -444,7 +444,7 @@
         "Calories": 350,
         "Fats": 10,
         "Carbohydrates": 20,
-        "Protein": 30
+        "Proteins": 30
     },
     {
         "Id": "d2155f29-4a5a-4e71-a1ef-cb493b45bc4d",
@@ -458,7 +458,7 @@
         "Calories": 500,
         "Fats": 15,
         "Carbohydrates": 70,
-        "Protein": 20
+        "Proteins": 20
     },
     {
         "Id": "816b8eec-5ff7-408e-a903-55f509b97302",
@@ -472,7 +472,7 @@
         "Calories": 450,
         "Fats": 25,
         "Carbohydrates": 10,
-        "Protein": 40
+        "Proteins": 40
     },
     {
         "Id": "2995c236-5b5d-42f9-89b5-15576256ee66",
@@ -486,7 +486,7 @@
         "Calories": 350,
         "Fats": 15,
         "Carbohydrates": 30,
-        "Protein": 25
+        "Proteins": 25
     }
 
 ]

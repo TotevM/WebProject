@@ -31,7 +31,7 @@ namespace FitnessApp.Data.Models
         [Comment("The image URL of the exercise")]
         public string? ImageUrl { get; set; }
 
-        [Comment("Is the exercise active or deleted")]
+        [Comment("Is the exercise deleted or not")]
         public bool IsDeleted { get; set; } = false;
         public virtual ICollection<WorkoutExercise> WorkoutsExercises { get; set; } = new HashSet<WorkoutExercise>();
     }

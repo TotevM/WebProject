@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FitnessApp.Data.Migrations
 {
     [DbContext(typeof(FitnessDBContext))]
-    [Migration("20241124171136_FirstLastNames")]
-    partial class FirstLastNames
+    [Migration("20241128210131_UpdatedComments")]
+    partial class UpdatedComments
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,9 +40,6 @@ namespace FitnessApp.Data.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("DateOfBirth")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -50,16 +47,11 @@ namespace FitnessApp.Data.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("FirstName")
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
                     b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("LastName")
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false)
+                        .HasComment("Is the account deleted or not");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -91,8 +83,10 @@ namespace FitnessApp.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("UserName")
+                        .IsRequired()
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("nvarchar(256)")
+                        .HasComment("Username of the user");
 
                     b.HasKey("Id");
 
@@ -114,35 +108,44 @@ namespace FitnessApp.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Calories")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("The calories of the diet");
 
                     b.Property<int?>("Carbohydrates")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("The carbohydrates of the diet");
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasComment("The time the diet was created on");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(300)
-                        .HasColumnType("nvarchar(300)");
+                        .HasColumnType("nvarchar(300)")
+                        .HasComment("Description of the diet");
 
                     b.Property<int?>("Fats")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("The fats of the diet");
 
                     b.Property<string>("ImageUrl")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasComment("The image URL of the diet");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
+                        .HasColumnType("nvarchar(32)")
+                        .HasComment("Name of the diet");
 
-                    b.Property<int?>("Protein")
-                        .HasColumnType("int");
+                    b.Property<int?>("Proteins")
+                        .HasColumnType("int")
+                        .HasComment("The proteins of the diet");
 
                     b.Property<string>("UserID")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(450)")
+                        .HasComment("The creator of the diet");
 
                     b.HasKey("Id");
 
@@ -161,7 +164,7 @@ namespace FitnessApp.Data.Migrations
                             Fats = 0,
                             ImageUrl = "https://imgs.search.brave.com/s8CFdPvLm2v8QBJZdmM9JTjyexe9YWX3kQMEu26T0FI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/cHJlbWl1bS1waG90/by93ZWxsLWJhbGFu/Y2VkLXBsYXRlLWZv/b2QtZmVhdHVyaW5n/LWxlYW4tcHJvdGVp/bnMtaGVhbHRoeS1l/YXRpbmctY2hvaWNl/c184OTM1NzEtNjY1/MDIuanBnP3NlbXQ9/YWlzX2h5YnJpZA",
                             Name = "Balanced Diet",
-                            Protein = 0
+                            Proteins = 0
                         },
                         new
                         {
@@ -173,7 +176,7 @@ namespace FitnessApp.Data.Migrations
                             Fats = 0,
                             ImageUrl = "https://imgs.search.brave.com/nFLS8O8iqyEsTxAc25VNTBCwWxqg_TGi_X-RsVNVqck/rs:fit:860:0:0:0/g:ce/aHR0cDovL2NvbnRl/bnQuaGVhbHRoLmhh/cnZhcmQuZWR1L3dw/LWNvbnRlbnQvdXBs/b2Fkcy8yMDI0LzAx/LzI4ZThlNDY0LWY1/NWUtNGIzMi05YmFi/LWRjOTkwZDhjYzky/Ny5qcGc",
                             Name = "High-Protein Diet",
-                            Protein = 0
+                            Proteins = 0
                         },
                         new
                         {
@@ -185,7 +188,7 @@ namespace FitnessApp.Data.Migrations
                             Fats = 0,
                             ImageUrl = "https://tasteforlife.com/sites/default/files/styles/laptop/public/diet-nutrition/special-diets/low-carb-diets-for-health-benefits/low-carb-diets-for-health-benefits.jpg?itok=saTbKWSP",
                             Name = "Low-Carb Diet",
-                            Protein = 0
+                            Proteins = 0
                         },
                         new
                         {
@@ -197,7 +200,7 @@ namespace FitnessApp.Data.Migrations
                             Fats = 0,
                             ImageUrl = "https://imgs.search.brave.com/XMqYsLggsYc1O09i-aEGhJO-TlIABgiyisJeNCe1RzE/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/aGVhcnQub3JnLy0v/bWVkaWEvQUhBL0g0/R00vQXJ0aWNsZS1J/bWFnZXMvTWVkaXRl/cnJhbmVhbl9EaWV0/LmpwZw",
                             Name = "Mediterranean Diet",
-                            Protein = 0
+                            Proteins = 0
                         },
                         new
                         {
@@ -209,7 +212,7 @@ namespace FitnessApp.Data.Migrations
                             Fats = 0,
                             ImageUrl = "https://imgs.search.brave.com/xOEfQ19UaCLOKXzo-5Jbb4nLcKwO9UbBo5wewTvTJXw/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMuaW1tZWRpYXRl/LmNvLnVrL3Byb2R1/Y3Rpb24vdm9sYXRp/bGUvc2l0ZXMvMzAv/MjAyNC8wNi9IZWFs/dGh5LXZlZ2FuNzAw/LWU2YzJiNWUuanBn/P3F1YWxpdHk9OTAm/Zml0PTcwMCwzNTA",
                             Name = "Vegan Diet",
-                            Protein = 0
+                            Proteins = 0
                         },
                         new
                         {
@@ -221,7 +224,7 @@ namespace FitnessApp.Data.Migrations
                             Fats = 0,
                             ImageUrl = "https://imgs.search.brave.com/3oOdIC1IaTHXOsjmkwIhQCtX9QNDaBkJUo_hAxv1Xjg/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9hc3Nl/dHMuY2xldmVsYW5k/Y2xpbmljLm9yZy90/cmFuc2Zvcm0vTGFy/Z2VGZWF0dXJlSW1h/Z2UvZWJiZDhjMGYt/OTcwOS00YjFkLWJk/OTktZTNlMzE1MWYw/ZTNhL1BhbGVvLURp/ZXQtMTMwMTU2NTM3/NS03NzB4NTMzLTFf/anBn",
                             Name = "Paleo Diet",
-                            Protein = 0
+                            Proteins = 0
                         },
                         new
                         {
@@ -233,7 +236,7 @@ namespace FitnessApp.Data.Migrations
                             Fats = 0,
                             ImageUrl = "https://imgs.search.brave.com/La-R_B0imoy5SP6j0f1AFv1eM1NgGMmWg5yN9IczNEo/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTEz/Mzc5NDIyMS9waG90/by9oZWFsdGh5LWtl/dG8tYnJlYWtmYXN0/LWVnZy1hdm9jYWRv/LWNoZWVzZS1iYWNv/bi5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9eVV6QnJJaUxO/a2NiOHFhVXRldEJO/LVVCQXQ1OGtVWjN6/amlkZ2UtR253OD0",
                             Name = "Keto Diet",
-                            Protein = 0
+                            Proteins = 0
                         },
                         new
                         {
@@ -245,17 +248,19 @@ namespace FitnessApp.Data.Migrations
                             Fats = 0,
                             ImageUrl = "https://image.cnbcfm.com/api/v1/image/107233399-1682954665721-dash-flexitarian-mediterranean-diet-to-stop-hypert-2022-02-14-13-50-46-utc.jpg?v=1682956537",
                             Name = "DASH Diet",
-                            Protein = 0
+                            Proteins = 0
                         });
                 });
 
             modelBuilder.Entity("FitnessApp.Data.Models.DietRecipe", b =>
                 {
                     b.Property<Guid>("DietId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasComment("The Id of the diet");
 
                     b.Property<Guid>("RecipeId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasComment("The Id of the recipe");
 
                     b.HasKey("DietId", "RecipeId");
 
@@ -513,24 +518,32 @@ namespace FitnessApp.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasComment("The time the exercise was created on");
 
                     b.Property<int>("Difficulty")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("The difficulty of the exercise");
 
                     b.Property<string>("ImageUrl")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasComment("The image URL of the exercise");
 
                     b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false)
+                        .HasComment("Is the exercise deleted or not");
 
                     b.Property<int>("MuscleGroup")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("The muscle group the exercise targets");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
+                        .HasColumnType("nvarchar(32)")
+                        .HasComment("The name of the exercise");
 
                     b.HasKey("Id");
 
@@ -581,7 +594,7 @@ namespace FitnessApp.Data.Migrations
                         {
                             Id = new Guid("db8d4f5e-3f5f-4bfe-9b53-8171b4c77f8b"),
                             CreatedOn = new DateTime(2024, 1, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Difficulty = 3,
+                            Difficulty = 2,
                             ImageUrl = "https://uk.gymreapers.com/cdn/shop/articles/wearing_a_lifting_belt_for_deadlifts.png?v=1675261258&width=1500",
                             IsDeleted = false,
                             MuscleGroup = 2,
@@ -838,18 +851,22 @@ namespace FitnessApp.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasComment("The time the progress was entered");
 
                     b.Property<int>("Height")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("The height entered");
 
                     b.Property<string>("UserID")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(450)")
+                        .HasComment("The user who entered the progress data");
 
                     b.Property<decimal>("Weight")
                         .HasPrecision(5, 2)
-                        .HasColumnType("decimal(5,2)");
+                        .HasColumnType("decimal(5,2)")
+                        .HasComment("The weight entered");
 
                     b.HasKey("Id");
 
@@ -865,46 +882,59 @@ namespace FitnessApp.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Calories")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("The calories of the recipe");
 
                     b.Property<int>("Carbohydrates")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("The carbohydrates of the recipe");
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasComment("The time the recipe was created on");
 
                     b.Property<int>("Fats")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("The fats of the recipe");
 
                     b.Property<int>("Goal")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("The goal of the recipe");
 
                     b.Property<string>("ImageUrl")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasComment("The image URL of the recipe");
 
                     b.Property<string>("Ingredients")
                         .IsRequired()
                         .HasMaxLength(512)
-                        .HasColumnType("nvarchar(512)");
+                        .HasColumnType("nvarchar(512)")
+                        .HasComment("The ingredients of the recipe");
 
                     b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
+                        .HasColumnType("nvarchar(64)")
+                        .HasComment("The name of the recipe");
 
                     b.Property<string>("Preparation")
                         .IsRequired()
                         .HasMaxLength(1024)
-                        .HasColumnType("nvarchar(1024)");
+                        .HasColumnType("nvarchar(1024)")
+                        .HasComment("The preparation of the recipe");
 
-                    b.Property<int>("Protein")
-                        .HasColumnType("int");
+                    b.Property<int>("Proteins")
+                        .HasColumnType("int")
+                        .HasComment("The proteins of the recipe");
 
                     b.Property<string>("UserID")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(450)")
+                        .HasComment("The creator of the recipe");
 
                     b.HasKey("Id");
 
@@ -926,7 +956,7 @@ namespace FitnessApp.Data.Migrations
                             IsDeleted = false,
                             Name = "Protein Pancakes",
                             Preparation = "In a blender, combine the oats, banana, protein powder, and eggs. Blend until the mixture is smooth and free of lumps. Heat a non-stick pan over medium heat and lightly coat it with cooking spray. Pour a small amount of the batter onto the pan and cook for 2-3 minutes until bubbles appear on the surface. Flip the pancake and cook for an additional 2 minutes on the other side. Serve warm, topped with fresh berries or a drizzle of honey for added flavor.",
-                            Protein = 25
+                            Proteins = 25
                         },
                         new
                         {
@@ -941,7 +971,7 @@ namespace FitnessApp.Data.Migrations
                             IsDeleted = false,
                             Name = "Chicken and Rice",
                             Preparation = "Start by seasoning the chicken breast with salt, pepper, and your favorite spices. Heat a grill pan over medium heat and cook the chicken for about 5-6 minutes on each side, or until fully cooked. Meanwhile, bring a pot of water to a boil and add the brown rice, cooking for about 30-35 minutes until tender. Steam the broccoli for 5-7 minutes, until it is bright green and slightly tender. Serve the grilled chicken over the rice with a side of steamed broccoli. Optionally, drizzle with a little olive oil or lemon juice.",
-                            Protein = 35
+                            Proteins = 35
                         },
                         new
                         {
@@ -956,7 +986,7 @@ namespace FitnessApp.Data.Migrations
                             IsDeleted = false,
                             Name = "Mass-Gain Smoothie",
                             Preparation = "1. Pour 1 cup of milk into a blender. Add a peeled banana, 2 tablespoons of peanut butter, 1 scoop of protein powder, 1/4 cup of oats, and 1 tablespoon of honey. 2. Blend all ingredients on high until the mixture is smooth and creamy, ensuring no chunks remain. 3. Taste and adjust sweetness with more honey if needed. 4. Pour into a large glass and serve chilled. Enjoy immediately for the best texture and flavor.",
-                            Protein = 30
+                            Proteins = 30
                         },
                         new
                         {
@@ -971,7 +1001,7 @@ namespace FitnessApp.Data.Migrations
                             IsDeleted = false,
                             Name = "Beef and Sweet Potato Power Bowl",
                             Preparation = "1. Preheat the oven to 400°F (200°C). 2. Peel and cube the sweet potato, then toss with 1 tablespoon of olive oil, salt, and pepper. 3. Spread the cubes on a baking sheet and roast for 20-25 minutes, turning halfway, until tender and golden. 4. While the sweet potato cooks, heat a skillet over medium heat and add 1 tablespoon of olive oil. 5. Add 1 minced garlic clove, cooking until fragrant. Add the ground beef, seasoning with salt and pepper, and cook until browned, breaking it apart as it cooks. 6. Remove the beef from the heat and set aside. 7. In the same pan, lightly sauté a handful of spinach until wilted. 8. In a bowl, layer the roasted sweet potatoes, beef, and spinach, adding more seasoning if desired. Serve warm.",
-                            Protein = 40
+                            Proteins = 40
                         },
                         new
                         {
@@ -986,7 +1016,7 @@ namespace FitnessApp.Data.Migrations
                             IsDeleted = false,
                             Name = "Chicken Avocado Wrap",
                             Preparation = "1. Slice the grilled chicken breast into thin strips. 2. Warm the whole wheat wrap in a dry skillet over medium heat for 1-2 minutes on each side. 3. While the wrap warms, peel and mash 1/2 avocado in a bowl until smooth. 4. Spread a thin layer of Greek yogurt onto the center of the warm wrap. 5. Add the sliced chicken, mashed avocado, tomato slices, and a handful of lettuce. 6. Season with salt and pepper to taste. 7. Fold the bottom of the wrap up, then roll tightly from one side to the other. 8. Cut in half and enjoy immediately.",
-                            Protein = 30
+                            Proteins = 30
                         },
                         new
                         {
@@ -1001,7 +1031,7 @@ namespace FitnessApp.Data.Migrations
                             IsDeleted = false,
                             Name = "Zucchini Noodles with Grilled Shrimp",
                             Preparation = "1. Use a spiralizer to turn 2 zucchinis into noodles. Set aside. 2. Season the shrimp with salt, pepper, and a minced garlic clove. 3. Heat 1 tablespoon of olive oil in a skillet over medium heat, then add the shrimp. Cook for 2-3 minutes per side until pink and opaque. Remove from the skillet and set aside. 4. In the same skillet, add more garlic and sauté until fragrant. 5. Add the zucchini noodles and cherry tomatoes, cooking for 2-3 minutes until slightly softened. 6. Return the shrimp to the skillet, toss with the noodles, and garnish with chopped parsley. Serve warm.",
-                            Protein = 25
+                            Proteins = 25
                         },
                         new
                         {
@@ -1016,7 +1046,7 @@ namespace FitnessApp.Data.Migrations
                             IsDeleted = false,
                             Name = "Egg White Omelet with Spinach",
                             Preparation = "1. Whisk together 4 egg whites with a pinch of salt and pepper. 2. Heat 1 teaspoon of olive oil in a non-stick skillet over medium heat. 3. Add a handful of spinach and diced bell pepper to the skillet, cooking until the spinach wilts. 4. Pour the egg whites over the vegetables and cook for 2-3 minutes until the bottom sets. 5. Carefully fold the omelet in half and cook for another minute. 6. Slide the omelet onto a plate and serve immediately.",
-                            Protein = 20
+                            Proteins = 20
                         },
                         new
                         {
@@ -1031,7 +1061,7 @@ namespace FitnessApp.Data.Migrations
                             IsDeleted = false,
                             Name = "Beef Stir-Fry",
                             Preparation = "Slice the beef thinly across the grain and season it with a pinch of salt and pepper. Heat a tablespoon of oil in a large skillet over medium-high heat. Add the beef and cook for 3-4 minutes until browned. Remove the beef and set aside. In the same skillet, add the sliced bell peppers and onions, cooking for about 5 minutes until tender. Add the beef back to the skillet along with soy sauce and a touch of honey or brown sugar for sweetness. Stir everything together and cook for another 2 minutes. Serve hot over rice or noodles.",
-                            Protein = 40
+                            Proteins = 40
                         },
                         new
                         {
@@ -1046,7 +1076,7 @@ namespace FitnessApp.Data.Migrations
                             IsDeleted = false,
                             Name = "Greek Yogurt Parfait",
                             Preparation = "In a glass or bowl, start by adding a layer of Greek yogurt at the bottom. Next, add a layer of fresh berries like strawberries, blueberries, or raspberries. Drizzle a teaspoon of honey over the berries to add a touch of sweetness. Add a layer of granola for crunch. Repeat the layers until the glass or bowl is filled, finishing with a few berries and a final drizzle of honey on top. Serve immediately for a refreshing and protein-packed breakfast or snack.",
-                            Protein = 15
+                            Proteins = 15
                         },
                         new
                         {
@@ -1061,7 +1091,7 @@ namespace FitnessApp.Data.Migrations
                             IsDeleted = false,
                             Name = "Protein Smoothie",
                             Preparation = "In a blender, add one scoop of protein powder, a cup of almond milk, a ripe banana, and a handful of fresh spinach leaves. Blend on high until the mixture is completely smooth and no chunks remain. Taste the smoothie and add a bit of honey if you want extra sweetness. For a colder smoothie, you can add a few ice cubes or use a frozen banana. Pour into a glass and enjoy immediately for a nutritious breakfast or post-workout snack.",
-                            Protein = 20
+                            Proteins = 20
                         },
                         new
                         {
@@ -1076,7 +1106,7 @@ namespace FitnessApp.Data.Migrations
                             IsDeleted = false,
                             Name = "Scrambled Eggs with Veggies",
                             Preparation = "Crack the eggs into a bowl, add a pinch of salt, and whisk until smooth. Heat a small amount of olive oil in a non-stick skillet over medium heat. Add diced bell pepper and cook for 2-3 minutes until softened. Add the spinach and cook until wilted, about 1 minute. Pour the eggs into the pan and gently stir with a spatula, folding the eggs over themselves until just set. Remove from heat while the eggs are still slightly soft. Serve hot, garnished with fresh herbs if desired.",
-                            Protein = 12
+                            Proteins = 12
                         },
                         new
                         {
@@ -1091,7 +1121,7 @@ namespace FitnessApp.Data.Migrations
                             IsDeleted = false,
                             Name = "Turkey Lettuce Wraps",
                             Preparation = "In a skillet over medium heat, cook the ground turkey until browned, breaking it up with a spoon as it cooks. Season with salt, pepper, and a dash of cumin if desired. Wash and dry large lettuce leaves, which will serve as the wraps. Once the turkey is cooked through, spoon it into each lettuce leaf and top with diced tomatoes and sliced avocado. Serve immediately for a low-carb, high-protein meal.",
-                            Protein = 28
+                            Proteins = 28
                         },
                         new
                         {
@@ -1106,7 +1136,7 @@ namespace FitnessApp.Data.Migrations
                             IsDeleted = false,
                             Name = "Grilled Chicken Salad",
                             Preparation = "Season the chicken breast with salt, pepper, and a bit of garlic powder. Heat a grill pan over medium heat and cook the chicken breast for 6-7 minutes on each side, until fully cooked. Let the chicken cool slightly, then slice it thinly. In a large bowl, combine chopped lettuce, cucumber, and tomatoes. Drizzle with olive oil and toss to coat. Top with sliced chicken and serve with a light vinaigrette or dressing of your choice.",
-                            Protein = 35
+                            Proteins = 35
                         },
                         new
                         {
@@ -1121,7 +1151,7 @@ namespace FitnessApp.Data.Migrations
                             IsDeleted = false,
                             Name = "Quinoa Bowl",
                             Preparation = "Cook quinoa according to package instructions. In a large bowl, combine cooked quinoa, rinsed black beans, corn, and diced avocado. Squeeze fresh lime juice over the top and toss gently to combine. Season with salt and pepper to taste. For added flavor, you can also add chopped cilantro or diced jalapeño. Serve chilled or at room temperature as a nutritious and filling meal.",
-                            Protein = 15
+                            Proteins = 15
                         },
                         new
                         {
@@ -1136,7 +1166,7 @@ namespace FitnessApp.Data.Migrations
                             IsDeleted = false,
                             Name = "Tuna Salad",
                             Preparation = "In a medium-sized bowl, mix drained canned tuna with a tablespoon of mayo and finely diced celery until well combined. Season the mixture with salt and pepper to taste, adjusting the seasoning as needed. For an added layer of flavor, you might sprinkle in a dash of lemon juice. Once mixed, place a generous scoop of the tuna mixture onto a bed of fresh lettuce leaves on a plate. For extra texture and freshness, you can add diced tomatoes, cucumbers, or even a sprinkle of chopped green onions for a bit of zing. Serve the salad cold, either as a quick, satisfying lunch or a refreshing snack. This salad also pairs well with whole-grain crackers or a slice of toasted bread on the side.",
-                            Protein = 25
+                            Proteins = 25
                         },
                         new
                         {
@@ -1151,7 +1181,7 @@ namespace FitnessApp.Data.Migrations
                             IsDeleted = false,
                             Name = "Stuffed Peppers",
                             Preparation = "Preheat the oven to 375°F (190°C). Slice the tops off the bell peppers and remove the seeds. In a skillet, brown the ground beef over medium heat. Mix in cooked rice and season with salt, pepper, and Italian herbs. Stuff the mixture into each bell pepper and place them in a baking dish. Top with shredded cheese and bake for about 25-30 minutes until the peppers are tender and the cheese is bubbly.",
-                            Protein = 25
+                            Proteins = 25
                         },
                         new
                         {
@@ -1166,7 +1196,7 @@ namespace FitnessApp.Data.Migrations
                             IsDeleted = false,
                             Name = "Veggie Omelette",
                             Preparation = "Whisk the eggs in a bowl and season with salt and pepper. Heat a non-stick skillet over medium heat and add a little oil. Pour in the eggs and let them cook for about 1-2 minutes until the edges start to set. Add diced bell peppers and cheese on one half of the omelette. Carefully fold the other half over the filling and cook for another minute until the cheese melts and the eggs are fully cooked. Serve hot with a side of toast or fresh fruit.",
-                            Protein = 18
+                            Proteins = 18
                         },
                         new
                         {
@@ -1181,7 +1211,7 @@ namespace FitnessApp.Data.Migrations
                             IsDeleted = false,
                             Name = "Baked Salmon",
                             Preparation = "Preheat the oven to 400°F (200°C). Place the salmon fillet on a baking sheet lined with parchment paper. Squeeze fresh lemon juice over the top and sprinkle with herbs like dill or parsley. Arrange asparagus around the salmon and drizzle with olive oil. Bake for about 15-20 minutes until the salmon is cooked through and flakes easily with a fork. Serve warm with a side of your choice.",
-                            Protein = 40
+                            Proteins = 40
                         },
                         new
                         {
@@ -1196,7 +1226,7 @@ namespace FitnessApp.Data.Migrations
                             IsDeleted = false,
                             Name = "Chickpea Salad",
                             Preparation = "In a large mixing bowl, combine drained chickpeas, diced cucumber, and chopped tomatoes, making sure the ingredients are evenly distributed. Drizzle the mixture with freshly squeezed lemon juice and a generous splash of olive oil, adjusting both to your taste. Season with salt and pepper, then toss everything thoroughly until well mixed. For the best flavor, allow the salad to marinate in the fridge for at least 30 minutes, letting the chickpeas absorb the lemon and olive oil. This salad can be served immediately, but chilling enhances the flavors, making it a refreshing side dish or light meal.",
-                            Protein = 12
+                            Proteins = 12
                         },
                         new
                         {
@@ -1211,7 +1241,7 @@ namespace FitnessApp.Data.Migrations
                             IsDeleted = false,
                             Name = "Sweet Potato Fries",
                             Preparation = "Preheat the oven to 425°F (220°C). Cut the sweet potatoes into thin strips, aiming for even sizes to ensure uniform cooking. Place the cut sweet potatoes in a large bowl, drizzle with olive oil, and season generously with salt and pepper. Toss well, making sure each piece is coated. Spread the sweet potato strips on a baking sheet lined with parchment paper in a single layer to allow proper air circulation for crispiness. Bake for 20-25 minutes, flipping halfway through to ensure even browning. For extra crunch, you can bake a few minutes longer. Serve hot, perfect as a side dish or snack.",
-                            Protein = 3
+                            Proteins = 3
                         },
                         new
                         {
@@ -1226,7 +1256,7 @@ namespace FitnessApp.Data.Migrations
                             IsDeleted = false,
                             Name = "Avocado Toast",
                             Preparation = "Toast the bread to your desired level of crispiness in a toaster or oven. Meanwhile, in a bowl, mash the avocado until smooth, seasoning it with a pinch of salt, freshly ground black pepper, and a squeeze of lemon juice for a bit of tanginess. Once the bread is toasted, generously spread the mashed avocado over each slice. For added texture and flavor, you can layer optional toppings such as sliced tomatoes, thinly sliced radishes, or a poached egg on top. Serve immediately to enjoy the fresh flavors.",
-                            Protein = 10
+                            Proteins = 10
                         },
                         new
                         {
@@ -1241,7 +1271,7 @@ namespace FitnessApp.Data.Migrations
                             IsDeleted = false,
                             Name = "Chocolate Chia Pudding",
                             Preparation = "In a bowl, mix chia seeds and cocoa powder with almond milk, stirring thoroughly to ensure there are no clumps. Sweeten with honey to taste, adjusting as desired. Cover the bowl and refrigerate for at least 4 hours, preferably overnight, to allow the chia seeds to absorb the liquid and form a pudding-like consistency. Before serving, stir once more to ensure even texture, then top with fresh fruit, nuts, or shredded coconut for added flavor and crunch. Serve chilled for a refreshing, nutritious dessert.",
-                            Protein = 5
+                            Proteins = 5
                         },
                         new
                         {
@@ -1256,7 +1286,7 @@ namespace FitnessApp.Data.Migrations
                             IsDeleted = false,
                             Name = "Coconut Curry Lentil Soup",
                             Preparation = "In a large pot, heat a drizzle of oil over medium heat, then add your choice of chopped vegetables (such as onions, carrots, and bell peppers). Sauté until the vegetables are softened and fragrant. Stir in the lentils, making sure they are well mixed with the vegetables. Pour in the coconut milk, curry powder, and enough water or vegetable broth to cover the ingredients, then bring the mixture to a gentle boil. Once boiling, reduce the heat to a simmer and cook for 20-25 minutes, stirring occasionally, until the lentils are tender and the soup has thickened. Season with salt and pepper to taste, and garnish with fresh cilantro or lime juice before serving for extra flavor.",
-                            Protein = 15
+                            Proteins = 15
                         },
                         new
                         {
@@ -1271,7 +1301,7 @@ namespace FitnessApp.Data.Migrations
                             IsDeleted = false,
                             Name = "Zucchini Noodles with Pesto",
                             Preparation = "Using a spiralizer or a julienne peeler, prepare the zucchini noodles and set them aside. Heat a drizzle of olive oil in a large skillet over medium heat, then add the zucchini noodles. Sauté them for about 2-3 minutes, stirring gently to ensure even cooking, until they are slightly softened but still retain a bit of crunch. Add the pesto sauce and toss to coat the noodles thoroughly. Next, add halved cherry tomatoes and cook for an additional 2 minutes, allowing the tomatoes to warm through. Serve immediately, optionally garnishing with grated Parmesan or fresh basil for added flavor.",
-                            Protein = 5
+                            Proteins = 5
                         },
                         new
                         {
@@ -1286,7 +1316,7 @@ namespace FitnessApp.Data.Migrations
                             IsDeleted = false,
                             Name = "Spaghetti Aglio e Olio",
                             Preparation = "Cook the spaghetti according to the package instructions, making sure it is al dente. While the spaghetti cooks, heat a generous amount of olive oil in a large skillet over medium heat. Add thinly sliced garlic and sauté gently, stirring frequently to avoid burning, until the garlic is golden brown and fragrant. Stir in the red pepper flakes to infuse the oil with a bit of heat. Drain the cooked spaghetti and add it directly to the skillet. Toss everything together until the spaghetti is evenly coated in the garlic-infused oil. Serve immediately, garnished with fresh parsley and grated Parmesan, if desired.",
-                            Protein = 12
+                            Proteins = 12
                         },
                         new
                         {
@@ -1301,7 +1331,7 @@ namespace FitnessApp.Data.Migrations
                             IsDeleted = false,
                             Name = "Shrimp Tacos",
                             Preparation = "Begin by seasoning the shrimp with a pinch of salt and pepper, ensuring they are evenly coated. In a skillet over medium heat, add a small amount of oil and cook the shrimp until they are opaque and pink, about 2-3 minutes per side. In a separate pan, warm the corn tortillas until they are pliable and lightly toasted. To assemble the tacos, place a few shrimp on each tortilla, add a generous handful of shredded cabbage for crunch, and finish with a squeeze of fresh lime juice. Serve immediately, optionally topping with sliced avocado, salsa, or chopped cilantro for additional flavor.",
-                            Protein = 25
+                            Proteins = 25
                         },
                         new
                         {
@@ -1316,7 +1346,7 @@ namespace FitnessApp.Data.Migrations
                             IsDeleted = false,
                             Name = "Egg and Spinach Breakfast Wrap",
                             Preparation = "Begin by whisking the eggs in a bowl until the yolks and whites are fully blended. In a skillet, heat a little oil or butter over medium heat, then add the spinach. Cook, stirring occasionally, until the spinach is wilted and softened, about 2-3 minutes. Pour the beaten eggs into the skillet with the spinach, and cook gently, stirring occasionally to scramble, until the eggs are fully cooked but still soft. Once the egg and spinach mixture is ready, remove from heat. Place a whole wheat wrap on a flat surface, and spoon the egg and spinach mixture onto the center. Sprinkle with cheese of your choice, such as cheddar or feta. Carefully fold the sides of the wrap over the filling and roll it tightly to form a wrap. Serve warm, perfect for a nutritious breakfast on the go.",
-                            Protein = 25
+                            Proteins = 25
                         },
                         new
                         {
@@ -1331,7 +1361,7 @@ namespace FitnessApp.Data.Migrations
                             IsDeleted = false,
                             Name = "Chili Con Carne",
                             Preparation = "In a large pot, heat a bit of oil over medium heat and add the ground beef. Cook, stirring frequently to break up any large pieces, until the beef is browned and no longer pink. Once browned, add diced tomatoes, kidney beans (drained and rinsed if canned), and chili powder. Stir everything together and bring to a simmer. Lower the heat and let it cook for about 30 minutes, stirring occasionally to prevent sticking. Adjust seasonings to taste, adding salt, pepper, or more chili powder for heat. Serve hot, garnished with chopped cilantro, shredded cheese, or a dollop of sour cream for extra flavor.",
-                            Protein = 30
+                            Proteins = 30
                         },
                         new
                         {
@@ -1346,7 +1376,7 @@ namespace FitnessApp.Data.Migrations
                             IsDeleted = false,
                             Name = "Cauliflower Fried Rice",
                             Preparation = "Begin by grating or processing the cauliflower until it resembles rice-sized pieces. In a large skillet, heat a bit of oil over medium heat, then add the peas and diced carrots. Sauté the vegetables for several minutes until they are tender. Add the cauliflower 'rice' and pour in a splash of soy sauce. Stir well to coat all of the cauliflower evenly with the sauce. Continue to cook, stirring frequently, for 5-7 minutes or until the cauliflower is tender but not mushy. Adjust seasoning if needed and serve hot as a side or main dish.",
-                            Protein = 5
+                            Proteins = 5
                         },
                         new
                         {
@@ -1361,7 +1391,7 @@ namespace FitnessApp.Data.Migrations
                             IsDeleted = false,
                             Name = "Black Bean Tacos",
                             Preparation = "In a mixing bowl, mash the black beans lightly with a fork or potato masher, then season with a squeeze of fresh lime juice and a pinch of salt and pepper. Warm the corn tortillas in a dry skillet over medium heat for a few minutes on each side until soft and pliable. To assemble the tacos, spread a spoonful of the black bean mixture onto each tortilla, top with diced avocado, and add a generous spoonful of salsa. Serve immediately, garnished with lime wedges for squeezing over the tacos for added flavor.",
-                            Protein = 10
+                            Proteins = 10
                         },
                         new
                         {
@@ -1376,7 +1406,7 @@ namespace FitnessApp.Data.Migrations
                             IsDeleted = false,
                             Name = "Quinoa Salad",
                             Preparation = "Cook the quinoa according to the package instructions, then let it cool to room temperature. In a large bowl, combine the cooked quinoa with halved cherry tomatoes, diced cucumber, and crumbled feta cheese. Drizzle with olive oil and a squeeze of fresh lemon juice, and season with salt and pepper to taste. Toss everything together gently to ensure the ingredients are evenly mixed. Serve chilled or at room temperature, optionally garnished with fresh herbs like parsley or mint for added freshness.",
-                            Protein = 12
+                            Proteins = 12
                         },
                         new
                         {
@@ -1391,7 +1421,7 @@ namespace FitnessApp.Data.Migrations
                             IsDeleted = false,
                             Name = "Chicken Stir-Fry",
                             Preparation = "In a large skillet or wok, heat a bit of oil over medium-high heat. Add diced chicken breast and cook, stirring frequently, until the pieces are golden brown and cooked through. Next, add mixed vegetables (such as bell peppers, broccoli, and snap peas) along with a sprinkle of freshly grated ginger. Stir-fry the mixture for 5-7 minutes, stirring constantly, until the vegetables are tender-crisp. Add a splash of soy sauce and toss to coat everything evenly, cooking for another 2 minutes. Serve hot over rice or noodles for a complete meal.",
-                            Protein = 30
+                            Proteins = 30
                         },
                         new
                         {
@@ -1406,7 +1436,7 @@ namespace FitnessApp.Data.Migrations
                             IsDeleted = false,
                             Name = "Mediterranean Chickpea Bowl",
                             Preparation = "Begin by cooking the brown rice according to the package instructions, then let it cool slightly. In a large bowl, combine the cooked rice with chickpeas (drained and rinsed if canned) and diced cucumber. Drizzle with a generous amount of tahini, and season with salt and pepper to taste. Squeeze fresh lemon juice over the bowl and garnish with freshly chopped parsley for added flavor. Serve immediately or refrigerate for a chilled version of this Mediterranean-inspired dish.",
-                            Protein = 20
+                            Proteins = 20
                         },
                         new
                         {
@@ -1421,7 +1451,7 @@ namespace FitnessApp.Data.Migrations
                             IsDeleted = false,
                             Name = "Baked Salmon with Asparagus",
                             Preparation = "Preheat the oven to 400°F (200°C). Arrange the salmon fillets and trimmed asparagus spears on a baking sheet lined with parchment paper. Drizzle with olive oil and squeeze fresh lemon juice over the salmon and asparagus. Sprinkle with salt and pepper to taste. Place the baking sheet in the oven and bake for 15-20 minutes, or until the salmon is cooked through and flakes easily with a fork, and the asparagus is tender-crisp. Serve hot with additional lemon wedges if desired.",
-                            Protein = 40
+                            Proteins = 40
                         },
                         new
                         {
@@ -1436,17 +1466,19 @@ namespace FitnessApp.Data.Migrations
                             IsDeleted = false,
                             Name = "Stuffed Bell Peppers",
                             Preparation = "Preheat the oven to 375°F (190°C). Prepare the bell peppers by cutting off the tops and removing the seeds and membranes. In a mixing bowl, combine cooked quinoa, browned ground turkey, and shredded cheese. Season the mixture with salt and pepper to taste. Stuff each bell pepper with the quinoa and turkey mixture, packing it tightly. Arrange the stuffed peppers upright in a baking dish, cover the dish with foil, and bake for 30 minutes. Remove the foil and bake for an additional 10 minutes until the peppers are tender and the cheese is melted and golden. Serve hot.",
-                            Protein = 25
+                            Proteins = 25
                         });
                 });
 
             modelBuilder.Entity("FitnessApp.Data.Models.UserDiet", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(450)")
+                        .HasComment("The Id of the diet creator");
 
                     b.Property<Guid>("DietId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasComment("The Id of the diet");
 
                     b.HasKey("UserId", "DietId");
 
@@ -1458,20 +1490,24 @@ namespace FitnessApp.Data.Migrations
             modelBuilder.Entity("FitnessApp.Data.Models.UserWorkout", b =>
                 {
                     b.Property<Guid>("WorkoutId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasComment("The Id of the workout");
 
                     b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(450)")
+                        .HasComment("The Id of the user");
 
                     b.Property<int>("Repetitions")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasDefaultValue(10);
+                        .HasDefaultValue(10)
+                        .HasComment("Number of repetitions");
 
                     b.Property<int>("Sets")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasDefaultValue(4);
+                        .HasDefaultValue(4)
+                        .HasComment("Number of sets");
 
                     b.HasKey("WorkoutId", "UserId");
 
@@ -1487,15 +1523,18 @@ namespace FitnessApp.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasComment("The time the workout was created on");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
+                        .HasColumnType("nvarchar(32)")
+                        .HasComment("Name of the workout");
 
                     b.Property<string>("UserID")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(450)")
+                        .HasComment("The creator of the workout");
 
                     b.HasKey("Id");
 
@@ -1539,15 +1578,18 @@ namespace FitnessApp.Data.Migrations
             modelBuilder.Entity("FitnessApp.Data.Models.WorkoutExercise", b =>
                 {
                     b.Property<Guid>("WorkoutId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasComment("The Id of the workout");
 
                     b.Property<Guid>("ExerciseId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasComment("The Id of the exercise");
 
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false);
+                        .HasDefaultValue(false)
+                        .HasComment("Does exercise-workout relationship exist");
 
                     b.HasKey("WorkoutId", "ExerciseId");
 
@@ -1764,12 +1806,10 @@ namespace FitnessApp.Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderKey")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -1806,12 +1846,10 @@ namespace FitnessApp.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");

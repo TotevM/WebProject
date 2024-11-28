@@ -38,6 +38,17 @@ namespace FitnessApp.WebApi
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddCors(cfg =>
+            {
+                cfg.AddPolicy("AllowAll", policyBld =>
+                {
+                    policyBld
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowAnyOrigin();
+                });
+            });
+
             // Register repositories and services
             builder.Services.RegisterRepositories(typeof(ApplicationUser).Assembly);
             builder.Services.RegisterUserDefinedServices();
@@ -60,6 +71,7 @@ namespace FitnessApp.WebApi
             app.UseHttpsRedirection();
             app.UseAuthentication(); // Add this before Authorization
             app.UseAuthorization();
+            app.UseCors("AllowAll");
             app.MapControllers();
 
             app.Run();

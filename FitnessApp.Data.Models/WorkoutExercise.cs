@@ -16,7 +16,7 @@ namespace FitnessApp.Data.Models
         [ForeignKey(nameof(ExerciseId))]
 
         [Required]
-        [Comment("Is exercise-workout relationship is active")]
+        [Comment("Does exercise-workout relationship exist")]
         public bool IsDeleted { get; set; }
 		public virtual Exercise Exercise { get; set; } = null!;
     }

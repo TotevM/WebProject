@@ -32,6 +32,8 @@ namespace FitnessApp.Data
             builder.ApplyConfiguration(new UserWorkoutConfiguration());
 
             builder.ApplyConfiguration(new ProgressConfiguration());
+
+            builder.ApplyConfiguration(new ApplicationUserConfiguration());
         }
 
         public async Task SeedDatabaseAsync()

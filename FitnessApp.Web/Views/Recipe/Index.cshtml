@@ -3,75 +3,120 @@
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @model List<RecipesIndexView>
 @{
-    ViewData["Title"] = "Recipes List";
+	ViewData["Title"] = "Recipes List";
 }
 
 <div class="recipe-page-container">
-    <!-- Header Section -->
-    <div class="page-header">
-        <h1>Available Recipes</h1>
-        @if (User?.Identity?.IsAuthenticated == true)
-        {
-            <div class="action-buttons">
-                <a asp-controller="Recipe" asp-action="Add" class="btn btn-primary btn-add-recipe">
-                    Write a Recipe
-                </a>
-            </div>
-        }
-    </div>
+	<input type="hidden" id="loggedUserId" value="@User.FindFirstValue(ClaimTypes.NameIdentifier)" />
+	<!-- Header Section -->
+	<div class="page-header">
+		<h1>Available Recipes</h1>
+		@if (User?.Identity?.IsAuthenticated == true)
+		{
+			<div class="action-buttons">
+				<a asp-controller="Recipe" asp-action="Add" class="btn btn-primary btn-add-recipe">
+					Write a Recipe
+				</a>
+			</div>
+		}
+	</div>
 
-    <!-- Filter Bar -->
-    <div class="filter-bar">
-        <div class="search-container">
-            <i class="fas fa-search search-icon"></i>
-            <input type="text"
-                   id="recipeSearch"
-                   class="search-input"
-                   placeholder="Search recipe by name...">
-        </div>
+	<!-- Filter Bar -->
+	<div class="filter-bar">
+		<div class="search-container">
+			<i class="fas fa-search search-icon"></i>
+			<input type="text"
+			       id="recipeSearch"
+			       class="search-input"
+			       placeholder="Search recipe by name...">
+		</div>
 
-        <div class="filter-groups">
-            <button class="clear-filters-btn">
-                Clear Filters
-            </button>
-        </div>
-    </div>
+		<div class="filter-groups">
+			<button class="clear-filters-btn">
+				Clear Filters
+			</button>
+		</div>
+	</div>
 
-    <div class="recipe-grid" id="recipeGrid">
-        @foreach (var recipe in Model)
-        {
-            <div class="recipe-item">
-                <div class="card recipe-card">
-                    <div class="card-img-container">
-                        @if (!string.IsNullOrEmpty(recipe.ImageUrl))
-                        {
-                            <img src="@recipe.ImageUrl" class="card-img-top" alt="@recipe.Name">
-                        }
-                        else
-                        {
-                            <img src="~/images/NoPictureAvailable.png" class="card-img-top" alt="No Image Available">
-                        }
-                    </div>
-                    <div class="card-body">
-                        <h3 class="card-title">@recipe.Name</h3>
-                        <div class="card-buttons">
-                            <a asp-controller="Recipe" asp-action="Details" asp-route-id="@recipe.Id" class="card-btn details">Details</a>
-                            <form asp-controller="Diet" asp-action="AddRecipeToDiet" method="get" class="card-btn-form">
-                                <input type="hidden" name="recipeId" value="@recipe.Id" />
-                                <button type="submit" class="card-btn add-to-diet">Add to Diet</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        }
-    </div>
+	<div class="recipe-grid" id="recipeGrid">
+		@foreach (var recipe in Model)
+		{
+			<div class="recipe-item">
+				<div class="card recipe-card">
+					<div class="card-img-container">
+						@if (!string.IsNullOrEmpty(recipe.ImageUrl))
+						{
+							<img src="@recipe.ImageUrl" class="card-img-top" alt="@recipe.Name">
+						}
+						else
+						{
+							<img src="~/images/NoPictureAvailable.png" class="card-img-top" alt="No Image Available">
+						}
+					</div>
+					<div class="card-body">
+						<h3 class="card-title">@recipe.Name</h3>
+
+						<div class="card-buttons">
+							<button type="button" class="card-btn details" data-recipe-id="@recipe.Id" data-bs-toggle="modal" data-bs-target="#recipeModal">
+								Details
+							</button>
+							<form asp-controller="Diet" asp-action="AddRecipeToDiet" method="get" class="card-btn-form">
+								<input type="hidden" name="recipeId" value="@recipe.Id"/>
+								<button type="submit" class="card-btn add-to-diet">Add to Diet</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		}
+	</div>
+
+	<div class="modal fade" id="recipeModal" tabindex="-1" aria-labelledby="recipeModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="recipeModalLabel"></h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-md-6">
+							<img id="recipeImage" src="#" alt="" class="img-fluid mb-4" style="max-height: 400px; object-fit: cover;">
+						</div>
+						<div class="col-md-6">
+							<h4>Nutritional Information</h4>
+							<p><strong>Calories:</strong> <span id="recipeCalories"></span></p>
+							<p><strong>Protein:</strong> <span id="recipeProtein"></span> g</p>
+							<p><strong>Carbohydrates:</strong> <span id="recipeCarbohydrates"></span> g</p>
+							<p><strong>Fats:</strong> <span id="recipeFats"></span> g</p>
+						</div>
+					</div>
+					<div class="row mt-4">
+						<div class="col-12">
+							<h4>Ingredients</h4>
+							<p id="recipeIngredients"></p>
+						</div>
+					</div>
+					<div class="row mt-4">
+						<div class="col-12">
+							<h4>Preparation</h4>
+							<p id="recipePreparation"></p>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer"></div>
+			</div>
+		</div>
+	</div>
+
 </div>
 
 @section Styles {
-    <link rel="stylesheet" href="~/css/recipe.css" />
+	<link rel="stylesheet" href="~/css/recipe.css" />
 }
 
 @section Scripts {
-    <script src="~/js/recipe.js" asp-append-version="true"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/js/recipe.js" asp-append-version="true"></script>
 }
