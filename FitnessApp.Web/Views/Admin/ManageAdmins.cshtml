@@ -1,0 +1,49 @@
+﻿@model IEnumerable<ManageAdminsViewModel>
+
+<div class="container">
+    <h2>Manage Administrators</h2>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+    }
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Current Roles</th>
+                <th>Admin Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.UserName</td>
+                    <td>@user.Email</td>
+                    <td>
+                        @string.Join(", ", user.CurrentRoles)
+                    </td>
+                    <td>
+                        @(user.IsAdmin ? "Yes" : "No")
+                    </td>
+                    <td>
+                        <form asp-action="ToggleAdmin" method="post">
+                            <input type="hidden" name="userId" value="@user.Id" />
+                            <button type="submit" class="btn @(user.IsAdmin ? "btn-danger" : "btn-success")">
+                                @(user.IsAdmin ? "Remove Admin" : "Make Admin")
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

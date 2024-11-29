@@ -6,12 +6,12 @@ namespace FitnessApp.Services.ServiceContracts
     {
         public interface IManagerService
         {
-            Task<List<UserRoleViewModel>> GetAllUsersWithRolesAsync();
+            Task<IEnumerable<ManageUsersModel>> GetAllUsersWithRolesAsync();
             Task<bool> ToggleTrainerRoleAsync(string userId);
-            public Task SoftDeleteUserAsync(string userId);
-
-            Task<IEnumerable<ManageUsersModel>> GetAllUsersAsync();
             Task<bool> ToggleUserDeletionAsync(string userId);
+
+            Task<IEnumerable<ManageAdminsViewModel>> GetAllUsersWithAdminStatusAsync();
+            Task<bool> ToggleAdminRoleAsync(string userId);
         }
     }
 }

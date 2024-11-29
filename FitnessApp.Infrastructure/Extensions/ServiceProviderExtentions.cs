@@ -11,7 +11,7 @@ namespace FitnessApp.Infrastructure.Extensions
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
-            string[] roles = { "Admin", "Trainer"};
+            string[] roles = { "User", "Admin", "Trainer"}; 
 
             foreach (var role in roles)
             {

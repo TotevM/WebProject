@@ -15,9 +15,34 @@ namespace FitnessApp.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ManageRoles()
+        public async Task<IActionResult> ManageAdmins()
         {
-            var model = await adminService.GetAllUsersWithRolesAsync();
+            var users = await adminService.GetAllUsersWithAdminStatusAsync();
+            return View(users);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ToggleAdmin(string userId)
+        {
+            var result = await adminService.ToggleAdminRoleAsync(userId);
+
+            if (result)
+            {
+                TempData["SuccessMessage"] = "Admin status updated successfully.";
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Failed to update admin status.";
+            }
+
+            return RedirectToAction(nameof(ManageAdmins));
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> ManageUsers()
+        {
+            var model = await adminService.GetAllUsersWithRolesAsync(); // Fetch users along with roles
             return View(model);
         }
 
@@ -30,14 +55,7 @@ namespace FitnessApp.Web.Controllers
                 return NotFound("User not found.");
             }
 
-            return RedirectToAction(nameof(ManageRoles));
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> ManageUsers()
-        {
-            var model = await adminService.GetAllUsersAsync();
-            return View(model);
+            return RedirectToAction(nameof(ManageUsers));
         }
 
         // Toggle User Deletion Status

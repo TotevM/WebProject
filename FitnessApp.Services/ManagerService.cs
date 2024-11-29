@@ -15,24 +15,81 @@ namespace FitnessApp.Services
             this.userManager = userManager;
         }
 
-        public async Task<List<UserRoleViewModel>> GetAllUsersWithRolesAsync()
+        public async Task<IEnumerable<ManageAdminsViewModel>> GetAllUsersWithAdminStatusAsync()
         {
-            var users = userManager.Users.ToList();
+            var users = await userManager.Users.ToListAsync();
+            var models = new List<ManageAdminsViewModel>();
 
-            var model = new List<UserRoleViewModel>();
             foreach (var user in users)
             {
-                var isTrainer = await userManager.IsInRoleAsync(user, "Trainer");
-                model.Add(new UserRoleViewModel
+                var roles = await userManager.GetRolesAsync(user);
+                models.Add(new ManageAdminsViewModel
                 {
                     Id = user.Id,
                     UserName = user.UserName!,
                     Email = user.Email!,
-                    IsTrainer = isTrainer
+                    IsAdmin = roles.Contains("Admin"),
+                    CurrentRoles = roles.ToList()
+                });
+            }
+            return models;
+        }
+
+        public async Task<bool> ToggleAdminRoleAsync(string userId)
+        {
+            var user = await userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return false;
+            }
+
+            // Get current roles
+            var currentRoles = await userManager.GetRolesAsync(user);
+            var isCurrentlyAdmin = currentRoles.Contains("Admin");
+
+            if (isCurrentlyAdmin)
+            {
+                // Remove admin role, add user role if no other roles
+                await userManager.RemoveFromRoleAsync(user, "Admin");
+
+                // If user has no roles after removing admin, add User role
+                var remainingRoles = await userManager.GetRolesAsync(user);
+                if (remainingRoles.Count == 0)
+                {
+                    await userManager.AddToRoleAsync(user, "User");
+                }
+            }
+            else
+            {
+                // Remove all existing roles
+                await userManager.RemoveFromRolesAsync(user, currentRoles);
+
+                // Add admin role
+                await userManager.AddToRoleAsync(user, "Admin");
+            }
+
+            return true;
+        }
+
+        public async Task<IEnumerable<ManageUsersModel>> GetAllUsersWithRolesAsync()
+        {
+            var users = await userManager.Users.IgnoreQueryFilters().ToListAsync();
+            var models = new List<ManageUsersModel>();
+
+            foreach (var user in users)
+            {
+                var roles = await userManager.GetRolesAsync(user);
+                models.Add(new ManageUsersModel
+                {
+                    Id = user.Id,
+                    UserName = user.UserName!,
+                    Email = user.Email!,
+                    IsDeleted = user.IsDeleted,
+                    Roles = roles.ToList()
                 });
             }
 
-            return model;
+            return models;
         }
 
         public async Task<bool> ToggleTrainerRoleAsync(string userId)
@@ -44,42 +101,26 @@ namespace FitnessApp.Services
             }
 
             var isTrainer = await userManager.IsInRoleAsync(user, "Trainer");
+            var isUser = await userManager.IsInRoleAsync(user, "User");
 
             if (isTrainer)
             {
                 await userManager.RemoveFromRoleAsync(user, "Trainer");
+                if (!isUser)
+                {
+                    await userManager.AddToRoleAsync(user, "User");
+                }
             }
             else
             {
                 await userManager.AddToRoleAsync(user, "Trainer");
+                if (isUser)
+                {
+                    await userManager.RemoveFromRoleAsync(user, "User");
+                }
             }
 
             return true;
-        }
-
-        public async Task SoftDeleteUserAsync(string userId)
-        {
-            var user = await userManager.FindByIdAsync(userId);
-            if (user != null)
-            {
-                user.IsDeleted = true;
-                await userManager.UpdateAsync(user);
-            }
-        }
-
-        public async Task<IEnumerable<ManageUsersModel>> GetAllUsersAsync()
-        {
-            var users = await userManager.Users.IgnoreQueryFilters()
-                .Select(u => new ManageUsersModel
-                {
-                    Id = u.Id,
-                    UserName = u.UserName!,
-                    Email = u.Email!,
-                    IsDeleted = u.IsDeleted
-                })
-                .ToListAsync();
-
-            return users;
         }
 
         public async Task<bool> ToggleUserDeletionAsync(string userId)

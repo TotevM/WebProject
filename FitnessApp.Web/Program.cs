@@ -23,7 +23,7 @@ namespace FitnessApp.Web
                 .AddEntityFrameworkStores<FitnessDBContext>()
                 .AddUserManager<CustomUserManager>()
                 .AddDefaultTokenProviders()
-                .AddDefaultUI(); ;
+                .AddDefaultUI();
 
             builder.Services.RegisterRepositories(typeof(ApplicationUser).Assembly);
             builder.Services.RegisterUserDefinedServices();
@@ -73,6 +73,9 @@ namespace FitnessApp.Web
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            app.UseExceptionHandler("/Errors/500");
+            app.UseStatusCodePagesWithReExecute("/Errors/{0}");//display errors
 
             app.UseRouting();
 

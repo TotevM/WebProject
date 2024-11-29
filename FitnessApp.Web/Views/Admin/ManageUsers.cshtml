@@ -11,6 +11,7 @@
             <th>User Name</th>
             <th>Email</th>
             <th>Status</th>
+            <th>Role</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -31,10 +32,29 @@
                     }
                 </td>
                 <td>
-                    <form asp-action="ToggleDelete" method="post">
+                    @if (user.Roles.Contains("Trainer"))
+                    {
+                        <span class="badge bg-primary">Trainer</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">User</span>
+                    }
+                </td>
+                <td>
+                    <!-- Toggle User Deletion Status -->
+                    <form asp-action="ToggleDelete" method="post" style="display:inline;">
                         <input type="hidden" name="userId" value="@user.Id" />
                         <button class="btn btn-sm @("btn-" + (user.IsDeleted ? "success" : "danger"))">
                             @(user.IsDeleted ? "Restore" : "Delete")
+                        </button>
+                    </form>
+
+                    <!-- Toggle Trainer Role -->
+                    <form asp-action="ToggleTrainerRole" method="post" style="display:inline;">
+                        <input type="hidden" name="userId" value="@user.Id" />
+                        <button class="btn btn-sm @("btn-" + (user.Roles.Contains("Trainer") ? "warning" : "primary"))">
+                            @(user.Roles.Contains("Trainer") ? "Remove Trainer" : "Make Trainer")
                         </button>
                     </form>
                 </td>

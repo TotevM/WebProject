@@ -105,6 +105,18 @@ namespace FitnessApp.Web.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User created a new account with password.");
 
+                    //Assign the "User" role to the newly registered user
+                    var roleAssignResult = await _userManager.AddToRoleAsync(user, "User");
+
+                    if (!roleAssignResult.Succeeded)
+                    {
+                        foreach (var error in roleAssignResult.Errors)
+                        {
+                            ModelState.AddModelError(string.Empty, error.Description);
+                        }
+                        return Page();
+                    }
+
                     var userId = await _userManager.GetUserIdAsync(user);
 
                     await _signInManager.SignInAsync(user, isPersistent: false);

@@ -1,5 +1,4 @@
-﻿using System.Reflection.Emit;
-using FitnessApp.Data.EntityConfiguration;
+﻿using FitnessApp.Data.EntityConfiguration;
 using FitnessApp.Data.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
