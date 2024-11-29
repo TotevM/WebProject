@@ -8,14 +8,14 @@ namespace FitnessApp.Services.ServiceContracts
     {
         Task<List<ExerciseIndexView>> GetAllExercisesAsync();
         Task<List<ExerciseIndexView>> GetInactiveExercisesAsync();
-        Task<Exercise> GetExerciseAsync(Guid id);
+        Task<Exercise?> GetExerciseAsync(Guid id);
         Task SetExerciseActivityAsync(Exercise exercise, bool isDeleted);
         Task ChangeExerciseWorkoutsStateAsync(Guid id, bool state);
         Task RestoreAll();
         AddExerciseViewModel AddExerciseViewModel();
         Task AddExercise(AddExerciseViewModel model, Difficulty difficulty, MuscleGroup muscleGroup);
 
-        Task<Exercise> GetExerciseByIdAsync(Guid exerciseGuid);
+        Task<Exercise?> GetExerciseByIdAsync(Guid exerciseGuid);
 
         AddExerciseViewModel MapToEditView(Exercise exercise);
 

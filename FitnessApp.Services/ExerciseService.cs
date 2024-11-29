@@ -20,7 +20,7 @@ namespace FitnessApp.Services
 
         public async Task AddExercise(AddExerciseViewModel model, Difficulty difficulty, MuscleGroup muscleGroup)
         {
-            Exercise exercise = new Exercise
+            Exercise exercise = new()
             {
                 CreatedOn = DateTime.Now,
                 Difficulty = difficulty,
@@ -90,13 +90,13 @@ namespace FitnessApp.Services
             return exercises;
         }
 
-        public async Task<Exercise> GetExerciseAsync(Guid id)
+        public async Task<Exercise?> GetExerciseAsync(Guid id)
         {
             var exercise = await exerciseRepository.GetByIdAsync(id);
             return exercise;
         }
 
-        public async Task<Exercise> GetExerciseByIdAsync(Guid exerciseGuid)
+        public async Task<Exercise?> GetExerciseByIdAsync(Guid exerciseGuid)
         {
             return await exerciseRepository.GetByIdAsync(exerciseGuid);
         }

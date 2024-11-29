@@ -13,7 +13,7 @@ namespace FitnessApp.Data.Models
         public virtual Workout Workout { get; set; } = null!;
 
         [Comment("The Id of the user")]
-        public string UserId { get; set; }
+        public string UserId { get; set; } = null!;
 
         [ForeignKey(nameof(UserId))]
         public virtual ApplicationUser User { get; set; } = null!;

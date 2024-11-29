@@ -1,5 +1,6 @@
 ﻿using System.Security.Claims;
 using FitnessApp.Services.ServiceContracts;
+using FitnessApp.ViewModels.RecipeModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

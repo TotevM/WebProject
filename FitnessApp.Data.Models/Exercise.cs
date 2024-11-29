@@ -15,7 +15,7 @@ namespace FitnessApp.Data.Models
         [MinLength(ExerciseNameMinLength)]
         [MaxLength(ExerciseNameMaxLength)]
         [Comment("The name of the exercise")]
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
         [Required]
         [Comment("The difficulty of the exercise")]
         public Difficulty Difficulty { get; set; }

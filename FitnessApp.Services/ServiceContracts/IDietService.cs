@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using FitnessApp.ViewModels;
 using FitnessApp.Data.Models;
+using FitnessApp.ViewModels.RecipeModels;
 
 namespace FitnessApp.Services.ServiceContracts
 {

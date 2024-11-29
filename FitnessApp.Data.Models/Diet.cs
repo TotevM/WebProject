@@ -14,7 +14,7 @@ namespace FitnessApp.Data.Models
         [MinLength(DietNameMinLength)]
         [MaxLength(DietNameMaxLength)]
         [Comment("Name of the diet")]
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
 
         [Required]
         [MinLength(DescriptionMinLength)]
@@ -24,7 +24,7 @@ namespace FitnessApp.Data.Models
 
         [Comment("The creator of the diet")]
         public string? UserID { get; set; }
-        public virtual ApplicationUser User { get; set; }
+        public virtual ApplicationUser? User { get; set; }
 
         [Required]
         [Comment("The time the diet was created on")]

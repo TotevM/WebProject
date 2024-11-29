@@ -7,11 +7,11 @@ namespace FitnessApp.ViewModels
     {
         public string? Id { get; set; }
         [Required]
-        public string ExerciseName { get; set; }
+        public string ExerciseName { get; set; } = null!;
         [Required]
-        public string Difficulty { get; set; }
+        public string Difficulty { get; set; } = null!;
         [Required]
-        public string MuscleGroup { get; set; }
+        public string MuscleGroup { get; set; } = null!;
 
         [RegularExpression(@"^(https?:\/\/.*\.(jpg|jpeg|png|gif|bmp|webp))$",
 ErrorMessage = "Enter a valid image URL or leave it blank!")]

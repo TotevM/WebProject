@@ -22,7 +22,7 @@ namespace FitnessApp.Data.Models
         public int Height { get; set; }
         [Required]
         [Comment("The user who entered the progress data")]
-        public string UserID { get; set; }
-        public virtual ApplicationUser User { get; set; }
+        public string UserID { get; set; } = null!;
+        public virtual ApplicationUser User { get; set; } = null!;
     }
 }

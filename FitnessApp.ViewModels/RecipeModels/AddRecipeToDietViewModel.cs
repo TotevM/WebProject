@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 
-public class AddRecipeToDietViewModel
+namespace FitnessApp.ViewModels.RecipeModels
 {
-	public string RecipeId { get; set; }
-	public IEnumerable<SelectListItem>? Diets { get; set; }
-	public string SelectedDietId { get; set; }
+    public class AddRecipeToDietViewModel
+    {
+        public string RecipeId { get; set; } = null!;
+        public IEnumerable<SelectListItem>? Diets { get; set; }
+        public string SelectedDietId { get; set; } = null!;
+    }
 }

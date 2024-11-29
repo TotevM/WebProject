@@ -73,8 +73,8 @@ namespace FitnessApp.Services
                 .Select(u => new ManageUsersModel
                 {
                     Id = u.Id,
-                    UserName = u.UserName,
-                    Email = u.Email,
+                    UserName = u.UserName!,
+                    Email = u.Email!,
                     IsDeleted = u.IsDeleted
                 })
                 .ToListAsync();

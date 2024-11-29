@@ -12,7 +12,7 @@ namespace FitnessApp.Data.Models
         public virtual Diet Diet { get; set; } = null!;
 
         [Comment("The Id of the diet creator")]
-        public string UserId { get; set; }
+        public string UserId { get; set; } = null!;
 
         [ForeignKey(nameof(UserId))]
         public virtual ApplicationUser User { get; set; } = null!;

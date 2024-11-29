@@ -2,6 +2,7 @@
 using FitnessApp.Data.Repository.Contracts;
 using FitnessApp.Services.ServiceContracts;
 using FitnessApp.ViewModels;
+using FitnessApp.ViewModels.RecipeModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;

@@ -16,19 +16,19 @@ namespace FitnessApp.Data.Models
         [MinLength(RecipeNameMinLength)]
         [MaxLength(RecipeNameMaxLength)]
         [Comment("The name of the recipe")]
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
 
         [Required]
         [MinLength(IngredientsNameMinLength)]
         [MaxLength(IngredientsNameMaxLength)]
         [Comment("The ingredients of the recipe")]
-        public string Ingredients { get; set; }
+        public string Ingredients { get; set; } = null!;
 
         [Required]
         [MinLength(PreparationNameMinLength)]
         [MaxLength(PreparationNameMaxLength)]
         [Comment("The preparation of the recipe")]
-        public string Preparation { get; set; }
+        public string Preparation { get; set; } = null!;
 
         [Comment("The image URL of the recipe")]
         public string? ImageUrl { get; set; } = null!;
@@ -61,7 +61,7 @@ namespace FitnessApp.Data.Models
         public string? UserID { get; set; }
 
         [ForeignKey(nameof(UserID))]
-        public virtual ApplicationUser User { get; set; }
+        public virtual ApplicationUser? User { get; set; }
         public bool IsDeleted { get; set; } = false;
         public virtual ICollection<DietRecipe> DietsRecipes { get; set; } = new HashSet<DietRecipe>();
     }

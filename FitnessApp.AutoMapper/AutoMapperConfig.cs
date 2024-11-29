@@ -4,8 +4,6 @@ namespace FitnessApp.AutoMapper
 {
     using System.Reflection;
 
-    using AutoMapper;
-
     public class AutoMapperConfig
     {
         private static bool initialized;
@@ -91,15 +89,15 @@ namespace FitnessApp.AutoMapper
                              where typeof(IHaveCustomMappings).GetTypeInfo().IsAssignableFrom(t) &&
                                    !t.GetTypeInfo().IsAbstract &&
                                    !t.GetTypeInfo().IsInterface
-                             select (IHaveCustomMappings)Activator.CreateInstance(t);
+                             select (IHaveCustomMappings)Activator.CreateInstance(t)!;
 
             return customMaps;
         }
 
         private class TypesMap
         {
-            public Type Source { get; set; }
-            public Type Destination { get; set; }
+            public Type Source { get; set; } = null!;
+            public Type Destination { get; set; } = null!;
         }
     }
 }

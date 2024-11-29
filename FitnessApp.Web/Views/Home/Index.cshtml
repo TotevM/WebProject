@@ -17,7 +17,7 @@
                     step, and today’s the day to take yours.
                 </p>
 
-                @if (User.Identity.IsAuthenticated)
+                @if (User!.Identity!.IsAuthenticated)
                 {
                     <div id="start-now" class="cta d-flex justify-content-center mt-4">
                         <a class="nav-link btn btn-primary btn-lg me-3" asp-controller="Diet" asp-action="MyDiets" class="btn btn-primary">My Diets</a>

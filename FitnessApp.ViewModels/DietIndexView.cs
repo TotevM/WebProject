@@ -2,7 +2,7 @@
 {
     public class DietIndexView
     {
-        public string DietId { get; set; }
+        public string DietId { get; set; } = null!;
         public required string Name { get; set; }
         public required string Description { get; set; } = null!;
         public string? ImageUrl { get; set; }

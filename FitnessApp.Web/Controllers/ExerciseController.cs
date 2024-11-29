@@ -162,7 +162,7 @@ namespace FitnessApp.Web.Controllers
                 throw new InvalidOperationException("Invalid data!");
             }
 
-            await exerciseService.EditExercise(exercise, model, difficulty,muscleGroup);
+            await exerciseService.EditExercise(exercise!, model, difficulty,muscleGroup);
 
             return RedirectToAction(nameof(Index));
         }
