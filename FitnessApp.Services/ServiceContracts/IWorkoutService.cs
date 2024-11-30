@@ -1,4 +1,5 @@
-﻿using FitnessApp.ViewModels.Workout;
+﻿using FitnessApp.ViewModels;
+using FitnessApp.ViewModels.Workout;
 
 namespace FitnessApp.Services.ServiceContracts
 {
@@ -8,5 +9,7 @@ namespace FitnessApp.Services.ServiceContracts
         Task<List<MyWorkoutsView>> DefaultWorkouts(string userId);
         Task<bool> AddUserWorkoutAsync(Guid workoutId, string userId);
         Task<bool> RemoveFromMyWorkoutsAsync(Guid workoutId, string userId);
+        Task<List<ExerciseViewModel>> GetAllExercisesModelAsync();
+        Task<bool> WorkoutExists(Guid exerciseGuid);
     }
 }

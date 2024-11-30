@@ -2,12 +2,9 @@
     const recipeGrid = document.querySelector('.recipe-grid');
     const searchInput = document.getElementById('recipeSearch');
     const clearFiltersBtn = document.querySelector('.clear-filters-btn');
-    const detailsButtons = document.querySelectorAll('.card-btn.details');
-    const addToDietButtons = document.querySelectorAll('.card-btn.add-to-diet');
 
     // Modal Elements
     const recipeModal = document.getElementById('recipeModal');
-    const addToDietModal = new bootstrap.Modal(document.getElementById('addToDietModal'));
     const modalElements = {
         title: document.getElementById('recipeModalLabel'),
         image: document.getElementById('recipeImage'),
@@ -22,7 +19,6 @@
 
     // Add to Diet Modal Elements
     const dietSelect = document.getElementById('dietSelect');
-    const addToDietForm = document.getElementById('addToDietForm');
     const modalRecipeId = document.getElementById('modalRecipeId');
 
     const loggedUserId = document.getElementById('loggedUserId')?.value;
@@ -66,53 +62,63 @@
         });
     }
 
-    // Event: View recipe details
-    detailsButtons.forEach(button => {
-        button.addEventListener('click', async () => {
-            const recipeId = button.getAttribute('data-recipe-id');
-            try {
-                const response = await fetch(`https://localhost:7136/api/RecipesApi/${recipeId}`);
-                if (!response.ok) throw new Error('Failed to fetch recipe details');
-                const recipe = await response.json();
+    // Event: Prepare recipe details for modal
+    recipeModal.addEventListener('show.bs.modal', async (event) => {
+        const button = event.relatedTarget;
+        const recipeId = button.getAttribute('data-recipe-id');
 
-                // Populate modal
-                modalElements.title.textContent = recipe.Name;
-                modalElements.image.src = recipe.ImageUrl || '/images/NoPictureAvailable.png';
-                modalElements.image.alt = recipe.Name;
-                modalElements.calories.textContent = recipe.Calories || 'N/A';
-                modalElements.protein.textContent = recipe.Protein || 'N/A';
-                modalElements.carbs.textContent = recipe.Carbohydrates || 'N/A';
-                modalElements.fats.textContent = recipe.Fats || 'N/A';
-                modalElements.ingredients.textContent = recipe.Ingredients || 'No ingredients listed.';
-                modalElements.preparation.textContent = recipe.Preparation || 'No preparation instructions available.';
+        try {
+            const response = await fetch(`https://localhost:7136/api/RecipesApi/${recipeId}`);
+            if (!response.ok) throw new Error('Failed to fetch recipe details');
+            const recipe = await response.json();
 
-                // Add footer buttons if applicable
-                modalElements.footer.innerHTML = loggedUserId === recipe.UserId
-                    ? `<a href="/Recipe/Edit/${recipe.RecipeId}" class="btn btn-primary me-2">Edit</a>
-                       <a href="/Recipe/Delete/${recipe.RecipeId}" class="btn btn-danger">Delete</a>`
-                    : '';
+            // Populate modal
+            modalElements.title.textContent = recipe.Name;
+            modalElements.image.src = recipe.ImageUrl || '/images/NoPictureAvailable.png';
+            modalElements.image.alt = recipe.Name;
+            modalElements.calories.textContent = recipe.Calories || 'N/A';
+            modalElements.protein.textContent = recipe.Protein || 'N/A';
+            modalElements.carbs.textContent = recipe.Carbohydrates || 'N/A';
+            modalElements.fats.textContent = recipe.Fats || 'N/A';
+            modalElements.ingredients.textContent = recipe.Ingredients || 'No ingredients listed.';
+            modalElements.preparation.textContent = recipe.Preparation || 'No preparation instructions available.';
 
-                recipeModal.classList.add('show');
-            } catch (error) {
-                console.error('Error fetching recipe details:', error);
-                modalElements.title.textContent = 'Error Loading Recipe';
-                modalElements.image.src = '/images/error-image.png';
-                modalElements.ingredients.textContent = 'Unable to load recipe details.';
-                modalElements.footer.innerHTML = '';
-            }
-        });
+            // Add footer buttons if applicable
+            modalElements.footer.innerHTML = loggedUserId === recipe.UserId
+                ? `<a href="/Recipe/Edit/${recipe.RecipeId}" class="btn btn-primary me-2">Edit</a>
+                   <a href="/Recipe/Delete/${recipe.RecipeId}" class="btn btn-danger">Delete</a>`
+                : '';
+        } catch (error) {
+            console.error('Error fetching recipe details:', error);
+            modalElements.title.textContent = 'Error Loading Recipe';
+            modalElements.image.src = '/images/error-image.png';
+            modalElements.ingredients.textContent = 'Unable to load recipe details.';
+            modalElements.footer.innerHTML = '';
+        }
     });
 
-    addToDietButtons.forEach(button => {
-        button.addEventListener('click', async (event) => {
-            event.preventDefault();
+    // Event: Prepare Add to Diet modal
+    const addToDietModal = document.getElementById('addToDietModal');
+    addToDietModal.addEventListener('show.bs.modal', async (event) => {
+        const button = event.relatedTarget;
+        const recipeId = button.getAttribute('data-recipe-id');
+        modalRecipeId.value = recipeId; // Populate hidden field with recipe ID
 
-            const recipeId = button.getAttribute('data-recipe-id');
-            modalRecipeId.value = recipeId; // Populate hidden field with recipe ID
+        await populateDietsDropdown(); // Ensure dropdown is populated
+    });
+});
 
-            await populateDietsDropdown(); // Ensure dropdown is populated
+document.addEventListener('DOMContentLoaded', () => {
+    // Select all dropdown toggle elements
+    const dropdownTriggers = document.querySelectorAll('.dropdown-toggle');
 
-            addToDietModal.show(); // Show the modal
+    // Initialize a Bootstrap dropdown instance for each trigger
+    dropdownTriggers.forEach(trigger => {
+        const dropdownInstance = new bootstrap.Dropdown(trigger);
+
+        // Optional: Add a click event to toggle the dropdown manually (if needed)
+        trigger.addEventListener('click', () => {
+            dropdownInstance.toggle();
         });
     });
 });

@@ -142,7 +142,7 @@ namespace FitnessApp.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(AddExerciseViewModel model) 
+        public async Task<IActionResult> Edit(AddExerciseViewModel model)
         {
             Guid exerciseGuid = Guid.Empty;
             bool isGuidValid = this.IsGuidValid(model.Id, ref exerciseGuid);
@@ -162,7 +162,7 @@ namespace FitnessApp.Web.Controllers
                 throw new InvalidOperationException("Invalid data!");
             }
 
-            await exerciseService.EditExercise(exercise!, model, difficulty,muscleGroup);
+            await exerciseService.EditExercise(exercise!, model, difficulty, muscleGroup);
 
             return RedirectToAction(nameof(Index));
         }

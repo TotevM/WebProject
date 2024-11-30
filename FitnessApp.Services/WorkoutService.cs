@@ -1,6 +1,7 @@
 ﻿using FitnessApp.Data.Models;
 using FitnessApp.Data.Repository.Contracts;
 using FitnessApp.Services.ServiceContracts;
+using FitnessApp.ViewModels;
 using FitnessApp.ViewModels.Workout;
 using Microsoft.EntityFrameworkCore;
 
@@ -36,6 +37,21 @@ namespace FitnessApp.Services
 
             await userWorkoutRepository.AddAsync(entry);
             return true;
+        }
+
+        public async Task<List<ExerciseViewModel>> GetAllExercisesModelAsync()
+        {
+            var availableExercises = await exerciseRepository.GetAllAttached()
+                .Select(e => new ExerciseViewModel
+                {
+                    Id = e.Id.ToString(),
+                    Name = e.Name,
+                    MuscleGroup = e.MuscleGroup.ToString(),
+                    Difficulty = e.Difficulty.ToString()
+                })
+                .ToListAsync();
+
+            return availableExercises!;
         }
 
         public async Task<List<MyWorkoutsView>> DefaultWorkouts(string userId)
@@ -96,6 +112,16 @@ namespace FitnessApp.Services
             }
 
             await userWorkoutRepository.DeleteAsync(record);
+            return true;
+        }
+
+        public async Task<bool> WorkoutExists(Guid exerciseGuid)
+        {
+            var exercise=await workoutRepository.GetByIdAsync(exerciseGuid);
+            if (exercise==null)
+            {
+                return false;
+            }
             return true;
         }
     }
