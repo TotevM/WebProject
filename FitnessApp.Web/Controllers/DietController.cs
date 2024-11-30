@@ -161,9 +161,8 @@ namespace FitnessApp.Web.Controllers
             var isPresent = await dietService.IsRecipeInDietAsync(recipeGuid, dietGuid);
             if (isPresent)
             {
-                model.Diets = await dietService.GetDietsSelectListAsync();
-                ViewBag.ErrorMessage = "This recipe is already added to the selected diet.";
-                return View(model);
+                TempData["ErrorMessage"] = "This recipe is already added to the selected diet.";
+                return RedirectToAction("Index", "Recipe");
             }
 
             await dietService.AddRecipeToDietAsync(recipeGuid, dietGuid);

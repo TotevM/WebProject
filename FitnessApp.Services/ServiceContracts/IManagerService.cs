@@ -9,7 +9,6 @@ namespace FitnessApp.Services.ServiceContracts
             Task<IEnumerable<ManageUsersModel>> GetAllUsersWithRolesAsync();
             Task<bool> ToggleTrainerRoleAsync(string userId);
             Task<bool> ToggleUserDeletionAsync(string userId);
-
             Task<IEnumerable<ManageAdminsViewModel>> GetAllUsersWithAdminStatusAsync();
             Task<bool> ToggleAdminRoleAsync(string userId);
         }

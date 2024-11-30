@@ -20,7 +20,6 @@ namespace FitnessApp.Web.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "User")]
         public async Task<IActionResult> Index(Goal? goal = null)
         {
             var model = await recipeService.DisplayRecipesAsync(goal);

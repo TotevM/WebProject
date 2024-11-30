@@ -12,22 +12,14 @@ namespace FitnessApp.WebApi
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add DbContext
             builder.Services.AddDbContext<FitnessDBContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-            // Add Identity
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
-            {
-                // Configure Identity options if needed
-                options.Password.RequireDigit = true;
-                options.Password.RequiredLength = 8;
-                // Add other password or user configuration as needed
-            })
-            .AddEntityFrameworkStores<FitnessDBContext>()
-            .AddDefaultTokenProviders();
+                   IdentityOptionsConfigurator.Configure(options))
+               .AddEntityFrameworkStores<FitnessDBContext>()
+               .AddDefaultTokenProviders();
 
-            // Add services
             builder.Services.AddControllers()
                 .AddJsonOptions(options =>
                 {
@@ -49,13 +41,11 @@ namespace FitnessApp.WebApi
                 });
             });
 
-            // Register repositories and services
             builder.Services.RegisterRepositories(typeof(ApplicationUser).Assembly);
             builder.Services.RegisterUserDefinedServices();
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline
             if (app.Environment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -69,8 +59,10 @@ namespace FitnessApp.WebApi
             }
 
             app.UseHttpsRedirection();
-            app.UseAuthentication(); // Add this before Authorization
+
+            app.UseAuthentication();
             app.UseAuthorization();
+
             app.UseCors("AllowAll");
             app.MapControllers();
 

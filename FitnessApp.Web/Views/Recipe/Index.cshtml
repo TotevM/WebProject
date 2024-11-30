@@ -7,7 +7,14 @@
 }
 
 <div class="recipe-page-container">
-	<input type="hidden" id="loggedUserId" value="@User.FindFirstValue(ClaimTypes.NameIdentifier)" />
+	@if (TempData["ErrorMessage"] != null)
+	{
+		<div class="alert alert-danger">
+			@TempData["ErrorMessage"]
+		</div>
+	}
+
+	<input type="hidden" id="loggedUserId" value="@User.FindFirstValue(ClaimTypes.NameIdentifier)"/>
 	<!-- Header Section -->
 	<div class="page-header">
 		<h1>Available Recipes</h1>
@@ -60,10 +67,9 @@
 							<button type="button" class="card-btn details" data-recipe-id="@recipe.Id" data-bs-toggle="modal" data-bs-target="#recipeModal">
 								Details
 							</button>
-							<form asp-controller="Diet" asp-action="AddRecipeToDiet" method="get" class="card-btn-form">
-								<input type="hidden" name="recipeId" value="@recipe.Id"/>
-								<button type="submit" class="card-btn add-to-diet">Add to Diet</button>
-							</form>
+							<button type="button" class="card-btn add-to-diet" data-recipe-id="@recipe.Id">
+								Add to Diet
+							</button>
 						</div>
 					</div>
 				</div>
@@ -108,6 +114,32 @@
 			</div>
 		</div>
 	</div>
+
+	<div class="modal fade" id="addToDietModal" tabindex="-1" aria-labelledby="addToDietModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="addToDietModalLabel">Add Recipe to Diet</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+
+
+					<form asp-controller="Diet" asp-action="AddRecipeToDiet" method="post" style="display: inline;">
+						<input type="hidden" id="modalRecipeId" name="RecipeId"/>
+						<div class="form-group">
+							<label for="dietSelect">Select Diet</label>
+							<select id="dietSelect" name="SelectedDietId" class="form-control" required>
+								<option value="" disabled selected>Loading diets...</option>
+							</select>
+						</div>
+						<button type="submit" class="btn btn-success mt-3">Add to Diet</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
 
 </div>
 

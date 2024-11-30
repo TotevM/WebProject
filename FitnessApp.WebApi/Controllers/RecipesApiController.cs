@@ -1,3 +1,4 @@
+using FitnessApp.Data.Models;
 using FitnessApp.Services.ServiceContracts;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,6 +11,18 @@ public class RecipesApiController : ControllerBase
     public RecipesApiController(IRecipeService recipeService)
     {
         this.recipeService = recipeService;
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAllRecipes()
+    {
+        var viewModel = await recipeService.DisplayRecipesAsync();
+        if (viewModel == null)
+        {
+            return NotFound("No recipes found.");
+        }
+
+        return Ok(viewModel);
     }
 
     [HttpGet("{id}")]

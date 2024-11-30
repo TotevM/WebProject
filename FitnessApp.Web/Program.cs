@@ -18,8 +18,8 @@ namespace FitnessApp.Web
             builder.Services.AddDbContext<FitnessDBContext>(options =>
             options.UseSqlServer(connectionString));
 
-            builder.Services.AddIdentity<ApplicationUser, IdentityRole>((options =>
-                         IdentityOptionsConfigurator.Configure(options)))
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+                         IdentityOptionsConfigurator.Configure(options))
                 .AddEntityFrameworkStores<FitnessDBContext>()
                 .AddUserManager<CustomUserManager>()
                 .AddDefaultTokenProviders()
