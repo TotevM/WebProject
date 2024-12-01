@@ -55,7 +55,7 @@ namespace FitnessApp.Web.Controllers
 
             if (!succeeded)
             {
-                return BadRequest();
+                return NotFound();
             }
 
             return RedirectToAction("Index", "Workout");
@@ -78,7 +78,7 @@ namespace FitnessApp.Web.Controllers
 
             if (!succeeded)
             {
-                return BadRequest();
+                return NotFound();
             }
 
             return RedirectToAction("Index", "Workout");
@@ -113,7 +113,7 @@ namespace FitnessApp.Web.Controllers
                         return NotFound();
                     }
 
-                    bool exists = await workoutService.WorkoutExists(exerciseGuid);
+                    bool exists = await workoutService.ExerciseExist(exerciseGuid);
                     if (!exists)
                     {
                         return NotFound();

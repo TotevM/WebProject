@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace FitnessApp.Web.Controllers
 {
     [Authorize(Roles = "Admin")]
-    public class AdminController : Controller
+    public class AdminController : BaseController
     {
         private readonly IManagerService adminService;
 
@@ -58,7 +58,6 @@ namespace FitnessApp.Web.Controllers
             return RedirectToAction(nameof(ManageUsers));
         }
 
-        // Toggle User Deletion Status
         [HttpPost]
         public async Task<IActionResult> ToggleDelete(string userId)
         {

@@ -10,6 +10,6 @@ namespace FitnessApp.Services.ServiceContracts
         Task<bool> AddUserWorkoutAsync(Guid workoutId, string userId);
         Task<bool> RemoveFromMyWorkoutsAsync(Guid workoutId, string userId);
         Task<List<ExerciseViewModel>> GetAllExercisesModelAsync();
-        Task<bool> WorkoutExists(Guid exerciseGuid);
+        Task<bool> ExerciseExist(Guid exerciseGuid);
     }
 }

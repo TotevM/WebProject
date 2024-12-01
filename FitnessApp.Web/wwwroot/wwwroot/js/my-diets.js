@@ -1,5 +1,5 @@
 ﻿document.addEventListener('DOMContentLoaded', function () {
-    const dietGrid = document.querySelector('.recipe-grid');
+    const dietGrid = document.querySelector('.row');
     const clearFiltersBtn = document.querySelector('.clear-filters-btn');
     const searchInput = document.getElementById('dietSearch');
     const calorieRange = document.getElementById('calorieRange');
@@ -7,22 +7,16 @@
 
     function filterDiets() {
         if (!dietGrid) return;
-
         const searchTerm = searchInput.value.toLowerCase().trim();
         const maxCalories = parseInt(calorieRange.value);
-        const dietItems = dietGrid.querySelectorAll('.recipe-item');
-
+        const dietItems = dietGrid.querySelectorAll('.col-md-4:not(#add-btn-container)');
         dietItems.forEach(diet => {
             const name = diet.querySelector('.card-title').textContent.toLowerCase();
-            const calories = parseInt(diet.getAttribute('data-calories'));
-
+            const calories = parseInt(diet.querySelector('.card-footer p:first-child').textContent.split(': ')[1]);
             const matchesSearch = searchTerm === '' || name.includes(searchTerm);
             const matchesCalories = calories <= maxCalories;
-
             diet.style.display = (matchesSearch && matchesCalories) ? '' : 'none';
         });
-
-        // Update calorie display
         calorieValue.textContent = `Up to ${maxCalories}`;
     }
 
@@ -34,7 +28,6 @@
             calorieValue.textContent = `Up to ${calorieRange.max}`;
             filterDiets();
         });
-
         searchInput.addEventListener('input', filterDiets);
         calorieRange.addEventListener('input', filterDiets);
     }

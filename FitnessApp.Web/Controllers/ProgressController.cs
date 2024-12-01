@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace FitnessApp.Web.Controllers
 {
     [Authorize]
-    public class ProgressController : Controller
+    public class ProgressController : BaseController
     {
         private readonly ILogger<ProgressController> logger;
         private readonly UserManager<ApplicationUser> user;

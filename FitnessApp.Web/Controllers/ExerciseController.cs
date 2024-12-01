@@ -1,11 +1,8 @@
 ﻿using FitnessApp.Common.Enumerations;
-using FitnessApp.Data.Models;
-using FitnessApp.Services;
 using FitnessApp.Services.ServiceContracts;
 using FitnessApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Mono.TextTemplating;
 
 namespace FitnessApp.Web.Controllers
 {

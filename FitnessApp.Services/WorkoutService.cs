@@ -115,9 +115,9 @@ namespace FitnessApp.Services
             return true;
         }
 
-        public async Task<bool> WorkoutExists(Guid exerciseGuid)
+        public async Task<bool> ExerciseExist(Guid exerciseGuid)
         {
-            var exercise=await workoutRepository.GetByIdAsync(exerciseGuid);
+            var exercise=await exerciseRepository.GetByIdAsync(exerciseGuid);
             if (exercise==null)
             {
                 return false;

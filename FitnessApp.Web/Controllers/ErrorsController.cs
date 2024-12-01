@@ -2,7 +2,7 @@
 
 namespace FitnessApp.Web.Controllers
 {
-    public class ErrorsController : Controller
+    public class ErrorsController : BaseController
     {
         [Route("Errors/404")]
         public IActionResult Error404()

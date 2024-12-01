@@ -1,40 +1,14 @@
-﻿@model WorkoutCreationViewModel
-
-<div class="container">
-    <h1>Create Workout</h1>
-
-    <form asp-action="Create" method="post">
-        <div class="form-group">
-            <label asp-for="WorkoutName">Workout Name</label>
-            <input asp-for="WorkoutName" class="form-control" />
-            <span asp-validation-for="WorkoutName" class="text-danger"></span>
-        </div>
-
-        <div class="form-group">
-            <label>Available Exercises</label>
-            <div class="exercise-list">
-                @foreach (var exercise in ViewBag.AvailableExercises)
-                {
-                    <div class="exercise-item">
-                        <input type="checkbox"
-                               name="SelectedExerciseIds"
-                               value="@exercise.Id"
-                               id="exercise-@exercise.Id" />
-                        <label for="exercise-@exercise.Id">
-                            @exercise.Name - @exercise.MuscleGroup (@exercise.Difficulty)
-                        </label>
-                    </div>
-                }
-            </div>
-            <span asp-validation-for="SelectedExerciseIds" class="text-danger"></span>
-        </div>
-
-        <div asp-validation-summary="All" class="text-danger"></div>
-
-        <button type="submit" class="btn btn-primary">Create Workout</button>
-    </form>
+﻿<div class="react-container">
+	<div id="root"></div>
 </div>
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+
+
+@section Styles {
+	<link rel="stylesheet" href="~/css/workout.css" />
+	<link rel="stylesheet" href="~/react-build/assets/index-BmTbazre.css" />
 }
+
+@section Scripts {
+	<script src="~/react-build/assets/index-CKUmpMaC.js" asp-append-version="true"></script>
+} 

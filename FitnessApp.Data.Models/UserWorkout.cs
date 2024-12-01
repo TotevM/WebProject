@@ -18,11 +18,11 @@ namespace FitnessApp.Data.Models
         [ForeignKey(nameof(UserId))]
         public virtual ApplicationUser User { get; set; } = null!;
 
-        [Required]
-        [Comment("Number of sets")]
-        public int Sets { get; set; }
-        [Required]
-        [Comment("Number of repetitions")]
-        public int Repetitions { get; set; }
+        //[Required]
+        //[Comment("Number of sets")]
+        //public int Sets { get; set; }
+        //[Required]
+        //[Comment("Number of repetitions")]
+        //public int Repetitions { get; set; }
     }
 }

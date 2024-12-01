@@ -32,11 +32,8 @@ namespace FitnessApp.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true, comment: "Username of the user"),
-                    FirstName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true, comment: "First Name of the user"),
-                    LastName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true, comment: "Last Name of the user"),
-                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "Date of birth of the user"),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, comment: "Is the account active"),
+                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false, comment: "Username of the user"),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false, comment: "Is the account deleted or not"),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -66,7 +63,7 @@ namespace FitnessApp.Data.Migrations
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "The time the exercise was created on"),
                     MuscleGroup = table.Column<int>(type: "int", nullable: false, comment: "The muscle group the exercise targets"),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true, comment: "The image URL of the exercise"),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false, comment: "Is the exercise active or deleted")
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false, comment: "Is the exercise deleted or not")
                 },
                 constraints: table =>
                 {
@@ -326,9 +323,7 @@ namespace FitnessApp.Data.Migrations
                 columns: table => new
                 {
                     WorkoutId = table.Column<Guid>(type: "uniqueidentifier", nullable: false, comment: "The Id of the workout"),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false, comment: "The Id of the user"),
-                    Sets = table.Column<int>(type: "int", nullable: false, defaultValue: 4, comment: "Number of sets"),
-                    Repetitions = table.Column<int>(type: "int", nullable: false, defaultValue: 10, comment: "Number of repetitions")
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false, comment: "The Id of the user")
                 },
                 constraints: table =>
                 {
@@ -353,7 +348,9 @@ namespace FitnessApp.Data.Migrations
                 {
                     WorkoutId = table.Column<Guid>(type: "uniqueidentifier", nullable: false, comment: "The Id of the workout"),
                     ExerciseId = table.Column<Guid>(type: "uniqueidentifier", nullable: false, comment: "The Id of the exercise"),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false, comment: "Is exercise-workout relationship is active")
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false, comment: "Does exercise-workout relationship exist"),
+                    Sets = table.Column<int>(type: "int", nullable: false, defaultValue: 4, comment: "Number of sets"),
+                    Repetitions = table.Column<int>(type: "int", nullable: false, defaultValue: 10, comment: "Number of repetitions")
                 },
                 constraints: table =>
                 {

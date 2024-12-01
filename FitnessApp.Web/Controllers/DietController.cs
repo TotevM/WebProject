@@ -92,14 +92,14 @@ namespace FitnessApp.Web.Controllers
             var isDefault = await dietService.IsDefaultDiet(dietGuid);
             var recipeExists = await dietService.RecipeExists(recipeGuid);
 
-            if (isDefault == null || !recipeExists)//if diet doesnt exist
+            if (isDefault == null || !recipeExists)
             {
                 return RedirectToAction("MyDiets", "Diet");
             }
 
             var role = User.IsInRole("Admin") || User.IsInRole("Trainer");
 
-            if (isDefault == true && !role)//if user isnt supposed to edit a default diet
+            if (isDefault == true && !role)
             {
                 return RedirectToAction("MyDiets", "Diet");
             }

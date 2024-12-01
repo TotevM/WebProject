@@ -37,10 +37,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitnessApp.AutoMapper", "..
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitnessApp.Infrastructure", "..\FitnessApp.Infrastructure\FitnessApp.Infrastructure.csproj", "{C146996F-4647-4825-8F2B-EBB86F041595}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitnessApp.WebApi", "..\FitnessApp.WebApi\FitnessApp.WebApi.csproj", "{74B54CD7-B9B9-4D88-82E4-DEA5FED2881B}"
-	ProjectSection(ProjectDependencies) = postProject
-		{3DC7AF21-F196-4944-B93B-1A880FE015A5} = {3DC7AF21-F196-4944-B93B-1A880FE015A5}
-	EndProjectSection
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitnessApp.WebApi", "..\FitnessApp.WebApi\FitnessApp.WebApi.csproj", "{9A576E40-5D56-4ED6-A5FE-2ED2E7A80792}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -84,10 +81,10 @@ Global
 		{C146996F-4647-4825-8F2B-EBB86F041595}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C146996F-4647-4825-8F2B-EBB86F041595}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C146996F-4647-4825-8F2B-EBB86F041595}.Release|Any CPU.Build.0 = Release|Any CPU
-		{74B54CD7-B9B9-4D88-82E4-DEA5FED2881B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{74B54CD7-B9B9-4D88-82E4-DEA5FED2881B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{74B54CD7-B9B9-4D88-82E4-DEA5FED2881B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{74B54CD7-B9B9-4D88-82E4-DEA5FED2881B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A576E40-5D56-4ED6-A5FE-2ED2E7A80792}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A576E40-5D56-4ED6-A5FE-2ED2E7A80792}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A576E40-5D56-4ED6-A5FE-2ED2E7A80792}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A576E40-5D56-4ED6-A5FE-2ED2E7A80792}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
