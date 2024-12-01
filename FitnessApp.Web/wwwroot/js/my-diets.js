@@ -7,18 +7,24 @@
 
     function filterDiets() {
         if (!dietGrid) return;
+
         const searchTerm = searchInput.value.toLowerCase().trim();
         const maxCalories = parseInt(calorieRange.value);
-        const dietItems = dietGrid.querySelectorAll('.col-md-4:not(#add-btn-container)');
+        const dietItems = dietGrid.querySelectorAll('.diet-card');
+
         dietItems.forEach(diet => {
             const name = diet.querySelector('.card-title').textContent.toLowerCase();
-            const calories = parseInt(diet.querySelector('.card-footer p:first-child').textContent.split(': ')[1]);
+            const calories = parseInt(diet.getAttribute('data-calories')) || 0;
+
             const matchesSearch = searchTerm === '' || name.includes(searchTerm);
             const matchesCalories = calories <= maxCalories;
+
             diet.style.display = (matchesSearch && matchesCalories) ? '' : 'none';
         });
+
         calorieValue.textContent = `Up to ${maxCalories}`;
     }
+
 
     // Event listeners
     if (clearFiltersBtn && searchInput && calorieRange) {

@@ -1,6 +1,8 @@
 ﻿/*my diets*/
 :root {
     --card-height: 514px;
+    --img-max-h: 280px;
+    --card-text-p: 1rem;
     --primary-color: #007bff;
     --primary-color-dark: #0056b3;
     --secondary-color: #6c757d;
@@ -21,16 +23,63 @@
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
-.card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
+    .card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
 
 .card-img-top {
-    max-height: 200px;
+    max-height: var(--img-max-h);
     object-fit: cover;
     transition: transform 0.3s ease;
 }
+
+.card-body {
+    align-items: center;
+    vertical-align: middle;
+}
+
+.card-title {
+    font-size: 1.5rem;
+}
+
+.card-body * {
+    margin-bottom: 0 !important;
+}
+
+.macros {
+    justify-content: space-around;
+}
+
+.cals {
+    font-size: 1.4rem;
+}
+
+.card-footer {
+    flex: 1 1 40%;
+    padding-bottom: 0 !important;
+}
+
+.action-buttons {
+    padding-top: 1.5rem !important;
+}
+
+.separator {
+    height: 50px;
+}
+
+.macro-info {
+    flex-basis: 33%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    padding: 0 1rem;
+    border-right: 1px solid rgba(0, 0, 0, .125);
+}
+
+    .macro-info:last-of-type {
+        border: none;
+    }
 
 .placeholder {
     height: 200px;
@@ -163,17 +212,22 @@
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
+.card-button {
+    font-size: 1.2rem;
+    padding: 0.75rem 1.5rem;
+}
+
 .btn-danger {
     color: #fff;
     background-color: #dc3545;
     border-color: #dc3545;
 }
 
-.btn-danger:hover {
-    color: #fff;
-    background-color: #c82333;
-    border-color: #bd2130;
-}
+    .btn-danger:hover {
+        color: #fff;
+        background-color: #c82333;
+        border-color: #bd2130;
+    }
 
 .btn-primary {
     color: #fff;
@@ -181,8 +235,8 @@
     border-color: #007bff;
 }
 
-.btn-primary:hover {
-    color: #fff;
-    background-color: #0069d9;
-    border-color: #0062cc;
-}
+    .btn-primary:hover {
+        color: #fff;
+        background-color: #0069d9;
+        border-color: #0062cc;
+    }

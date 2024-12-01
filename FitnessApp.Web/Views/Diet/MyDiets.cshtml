@@ -34,12 +34,12 @@
 	@foreach (var diet in Model)
 
 	{
-		<div class="col-md-4 mb-4">
+		<div class="col-md-4 mb-4 diet-card" data-calories="@diet.Calories">
 			<div class="card h-100">
 				@if (!string.IsNullOrEmpty(diet.ImageUrl))
 
 				{
-					<img src="@diet.ImageUrl" class="card-img-top" alt="@diet.Name" style="max-height: 200px; object-fit: cover;">
+					<img src="@diet.ImageUrl" class="card-img-top" alt="@diet.Name">
 				}
 
 				else
@@ -50,24 +50,26 @@
 					</div>
 				}
 
-				<div class="card-body text-center">
+				<div class="card-body text-center d-flex justify-content-around">
 					<h5 class="card-title">@diet.Name</h5>
+					<p class="cals"><strong>@diet.Calories</strong> cals</p>
 				</div>
 
-				<div class="card-footer">
-					<p><strong>Calories:</strong> @diet.Calories</p>
-					<p><strong>Protein:</strong> @diet.Protein?.ToString()g</p>
-					<p><strong>Carbohydrates:</strong> @diet.Carbohydrates?.ToString()g</p>
-					<p><strong>Fats:</strong> @diet.Fats?.ToString()g</p>
+				<div class="card-footer p-3 pt-2">
+					<div class="macros d-flex">
+						<div class="macro-info"><strong>Protein:</strong> @diet.Protein?.ToString()g</div>
+						<div class="macro-info"><strong>Carbohydrates:</strong> @diet.Carbohydrates?.ToString()g</div>
+						<div class="macro-info"><strong>Fats:</strong> @diet.Fats?.ToString()g</div>
+					</div>
 
-					<div class="card-footer bg-light mt-2 p-3" style="background-color: #e9ecef;">
+					<div class="action-buttons card-footer bg-light mt-2 pt-2" style="background-color: #e9ecef;">
 						<div class="d-flex justify-content-between">
 							<form asp-action="RemoveFromMyDiets" asp-controller="Diet" method="post">
 								<input type="hidden" name="DietId" value="@diet.DietId" />
-								<button type="submit" class="btn btn-danger">Remove</button>
+								<button type="submit" class="card-button btn btn-danger">Remove</button>
 							</form>
 
-							<a asp-controller="Diet" asp-action="DietDetails" asp-route-dietId="@diet.DietId" class="btn btn-primary btn-sm">
+							<a asp-controller="Diet" asp-action="DietDetails" asp-route-dietId="@diet.DietId" class="card-button btn btn-primary btn-sm">
 								View Details
 							</a>
 						</div>
