@@ -56,13 +56,8 @@
 									<li><a class="dropdown-item" asp-controller="Recipe" asp-action="Index" asp-route-goal="Health">Healthy</a></li>
 								</ul>
 							</li>
-							<li class="nav-item dropdown">
-								<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Admin Panel</a>
-								<ul class="dropdown-menu">
-									<li><a class="dropdown-item" asp-controller="Admin" asp-action="ManageAdmins">Manage Admins</a></li>
-									<li><div class="dropdown-divider"></div></li>
-									<li><a class="dropdown-item" asp-controller="Admin" asp-action="ManageUsers">Manage Users</a></li>
-								</ul>
+							<li class="nav-item">
+								<a class="nav-link" asp-area=@AdminRole asp-controller="Home" asp-action="Index">Admin Panel</a>
 							</li>
 						}
 					</ul>
