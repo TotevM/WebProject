@@ -1,6 +1,7 @@
 ﻿using FitnessApp.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
+using static FitnessApp.Common.ApplicationConstants;
 
 namespace FitnessApp.Infrastructure.Extensions
 {
@@ -11,7 +12,7 @@ namespace FitnessApp.Infrastructure.Extensions
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
-            string[] roles = { "User", "Admin", "Trainer"}; 
+            string[] roles = { UserRole, AdminRole, TrainerRole}; 
 
             foreach (var role in roles)
             {
@@ -21,8 +22,8 @@ namespace FitnessApp.Infrastructure.Extensions
                 }
             }
 
-            var adminEmail = "admin@example.com";
-            var adminPassword = "Admin@123";
+            var adminEmail = AdminEmail;
+            var adminPassword = AdminPassword;
 
             var adminUser = await userManager.FindByEmailAsync(adminEmail);
             if (adminUser == null)
@@ -36,7 +37,7 @@ namespace FitnessApp.Infrastructure.Extensions
                 var result = await userManager.CreateAsync(newAdmin, adminPassword);
                 if (result.Succeeded)
                 {
-                    await userManager.AddToRoleAsync(newAdmin, "Admin");
+                    await userManager.AddToRoleAsync(newAdmin, AdminRole);
                 }
             }
         }

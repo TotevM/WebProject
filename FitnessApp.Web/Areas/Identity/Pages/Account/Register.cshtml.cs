@@ -9,6 +9,7 @@ namespace FitnessApp.Web.Areas.Identity.Pages.Account
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
+    using static FitnessApp.Common.ApplicationConstants;
 
     public class RegisterModel : PageModel
     {
@@ -106,7 +107,7 @@ namespace FitnessApp.Web.Areas.Identity.Pages.Account
                     _logger.LogInformation("User created a new account with password.");
 
                     //Assign the "User" role to the newly registered user
-                    var roleAssignResult = await _userManager.AddToRoleAsync(user, "User");
+                    var roleAssignResult = await _userManager.AddToRoleAsync(user, UserRole);
 
                     if (!roleAssignResult.Succeeded)
                     {

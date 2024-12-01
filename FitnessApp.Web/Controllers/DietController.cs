@@ -3,6 +3,7 @@ using FitnessApp.Services.ServiceContracts;
 using FitnessApp.ViewModels.RecipeModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using static FitnessApp.Common.ApplicationConstants;
 
 namespace FitnessApp.Web.Controllers
 {
@@ -97,7 +98,7 @@ namespace FitnessApp.Web.Controllers
                 return RedirectToAction("MyDiets", "Diet");
             }
 
-            var role = User.IsInRole("Admin") || User.IsInRole("Trainer");
+            var role = User.IsInRole(AdminRole) || User.IsInRole(TrainerRole);
 
             if (isDefault == true && !role)
             {
@@ -119,7 +120,7 @@ namespace FitnessApp.Web.Controllers
                 return this.RedirectToAction("Index", "Recipe");
             }
 
-            bool role = User.IsInRole("Admin") || User.IsInRole("Trainer");
+            bool role = User.IsInRole(AdminRole) || User.IsInRole(TrainerRole);
             var viewModel = await dietService.AddRecipeToDietViewAsync(recipeGuid, role);
 
             if (viewModel == null)

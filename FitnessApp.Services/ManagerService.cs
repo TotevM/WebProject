@@ -3,6 +3,7 @@ using FitnessApp.Services.ServiceContracts.FitnessApp.Services.ServiceContracts;
 using FitnessApp.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using static FitnessApp.Common.ApplicationConstants;
 
 namespace FitnessApp.Services
 {
@@ -28,7 +29,7 @@ namespace FitnessApp.Services
                     Id = user.Id,
                     UserName = user.UserName!,
                     Email = user.Email!,
-                    IsAdmin = roles.Contains("Admin"),
+                    IsAdmin = roles.Contains(AdminRole),
                     CurrentRoles = roles.ToList()
                 });
             }
@@ -45,18 +46,18 @@ namespace FitnessApp.Services
 
             // Get current roles
             var currentRoles = await userManager.GetRolesAsync(user);
-            var isCurrentlyAdmin = currentRoles.Contains("Admin");
+            var isCurrentlyAdmin = currentRoles.Contains(AdminRole);
 
             if (isCurrentlyAdmin)
             {
                 // Remove admin role, add user role if no other roles
-                await userManager.RemoveFromRoleAsync(user, "Admin");
+                await userManager.RemoveFromRoleAsync(user, AdminRole);
 
                 // If user has no roles after removing admin, add User role
                 var remainingRoles = await userManager.GetRolesAsync(user);
                 if (remainingRoles.Count == 0)
                 {
-                    await userManager.AddToRoleAsync(user, "User");
+                    await userManager.AddToRoleAsync(user, UserRole);
                 }
             }
             else
@@ -65,7 +66,7 @@ namespace FitnessApp.Services
                 await userManager.RemoveFromRolesAsync(user, currentRoles);
 
                 // Add admin role
-                await userManager.AddToRoleAsync(user, "Admin");
+                await userManager.AddToRoleAsync(user, AdminRole);
             }
 
             return true;
@@ -100,23 +101,23 @@ namespace FitnessApp.Services
                 return false;
             }
 
-            var isTrainer = await userManager.IsInRoleAsync(user, "Trainer");
-            var isUser = await userManager.IsInRoleAsync(user, "User");
+            var isTrainer = await userManager.IsInRoleAsync(user, TrainerRole);
+            var isUser = await userManager.IsInRoleAsync(user, UserRole);
 
             if (isTrainer)
             {
-                await userManager.RemoveFromRoleAsync(user, "Trainer");
+                await userManager.RemoveFromRoleAsync(user, TrainerRole);
                 if (!isUser)
                 {
-                    await userManager.AddToRoleAsync(user, "User");
+                    await userManager.AddToRoleAsync(user, UserRole);
                 }
             }
             else
             {
-                await userManager.AddToRoleAsync(user, "Trainer");
+                await userManager.AddToRoleAsync(user, TrainerRole);
                 if (isUser)
                 {
-                    await userManager.RemoveFromRoleAsync(user, "User");
+                    await userManager.RemoveFromRoleAsync(user, UserRole);
                 }
             }
 

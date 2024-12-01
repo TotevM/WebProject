@@ -1,10 +1,11 @@
 ﻿using FitnessApp.Services.ServiceContracts.FitnessApp.Services.ServiceContracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using static FitnessApp.Common.ApplicationConstants;
 
 namespace FitnessApp.Web.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = AdminRole)]
     public class AdminController : BaseController
     {
         private readonly IManagerService adminService;

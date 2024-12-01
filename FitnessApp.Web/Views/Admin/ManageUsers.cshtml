@@ -1,4 +1,5 @@
-﻿@model IEnumerable<ManageUsersModel>
+﻿@using static FitnessApp.Common.ApplicationConstants;
+@model IEnumerable<ManageUsersModel>
 @{
     ViewData["Title"] = "Manage Users Accounts";
 }
@@ -32,7 +33,7 @@
                     }
                 </td>
                 <td>
-                    @if (user.Roles.Contains("Trainer"))
+                    @if (user.Roles.Contains(TrainerRole))
                     {
                         <span class="badge bg-primary">Trainer</span>
                     }
@@ -53,8 +54,8 @@
                     <!-- Toggle Trainer Role -->
                     <form asp-action="ToggleTrainerRole" method="post" style="display:inline;">
                         <input type="hidden" name="userId" value="@user.Id" />
-                        <button class="btn btn-sm @("btn-" + (user.Roles.Contains("Trainer") ? "warning" : "primary"))">
-                            @(user.Roles.Contains("Trainer") ? "Remove Trainer" : "Make Trainer")
+                        <button class="btn btn-sm @("btn-" + (user.Roles.Contains(TrainerRole) ? "warning" : "primary"))">
+                            @(user.Roles.Contains(TrainerRole) ? "Remove Trainer" : "Make Trainer")
                         </button>
                     </form>
                 </td>
