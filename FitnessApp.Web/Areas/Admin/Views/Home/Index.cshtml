@@ -1,0 +1,30 @@
+﻿@using static FitnessApp.Common.ApplicationConstants;
+@{
+    ViewData["Title"] = "Admin Management";
+}
+
+<div class="container">
+    <h1>Admin Management</h1>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Manage Admins</h5>
+                    <p class="card-text">View and modify administrator accounts</p>
+                    <a @* asp-area=@AdminRole *@ asp-controller="Admin" asp-action="ManageAdmins" class="btn btn-primary">Manage Admins</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Manage Users</h5>
+                    <p class="card-text">View and modify user accounts</p>
+                    <a @* asp-area=@AdminRole *@ asp-controller="Admin" asp-action="ManageUsers" class="btn btn-secondary">Manage Users</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
