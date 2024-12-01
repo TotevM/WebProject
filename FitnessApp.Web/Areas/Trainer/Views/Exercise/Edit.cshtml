@@ -1,12 +1,14 @@
-﻿@model AddExerciseViewModel
+﻿@using FitnessApp.ViewModels
+@model AddExerciseViewModel
 @{
-    ViewData["Title"] = ViewData["Title"] ?? "Add Exercise";
+    ViewData["Title"] = ViewData["Title"] ?? "Edit Exercise";
 }
 <div id="add-exercise" class="container">
     <div class="row">
         <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
-            <form asp-action="AddExercise" method="post" class="p-4 bg-dark-form shadow-custom rounded">
+            <form asp-action="Edit" method="post" class="p-4 bg-dark-form shadow-custom rounded">
                 <h2 class="mb-4">@ViewData["Title"]</h2>
+                <input asp-for="Id" type="hidden" />
                 <div class="mb-3">
                     <label asp-for="ExerciseName" class="form-label">Exercise Name</label>
                     <input asp-for="ExerciseName" class="form-control" aria-required="true" placeholder="Enter exercise name" />
@@ -54,7 +56,7 @@
                     <span asp-validation-for="ImageUrl" class="text-danger"></span>
                 </div>
                 <div class="mt-4">
-                    <input class="btn btn-warning w-100 py-2 fw-bold rounded" type="submit" value="Add Exercise" />
+                    <input class="btn btn-warning w-100 py-2 fw-bold rounded" type="submit" value="Update Exercise" />
                 </div>
             </form>
         </div>

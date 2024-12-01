@@ -36,10 +36,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Trainer\Controllers\" />
-    <Folder Include="Areas\Trainer\Data\" />
-    <Folder Include="Areas\Trainer\Models\" />
-    <Folder Include="Areas\Trainer\Views\" />
     <Folder Include="Views\Admin\" />
   </ItemGroup>
 

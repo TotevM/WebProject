@@ -33,7 +33,7 @@
 						@if (User!.Identity!.IsAuthenticated)
 						{
 							<li class="nav-item">
-								<a class="nav-link" asp-area="" asp-controller="Workout" asp-action="Index">Workouts</a>
+								<a class="nav-link" asp-area="" asp-controller="Workout" asp-action="Index">My Workouts</a>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link" asp-area="" asp-controller="Exercise" asp-action="Index">Exercises</a>
@@ -58,6 +58,9 @@
 							</li>
 							<li class="nav-item">
 								<a class="nav-link" asp-area=@AdminRole asp-controller="Home" asp-action="Index">Admin Panel</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" asp-area=@TrainerRole asp-controller="Home" asp-action="Index">Trainer Panel</a>
 							</li>
 						}
 					</ul>

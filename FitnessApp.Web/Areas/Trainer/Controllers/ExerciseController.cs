@@ -1,12 +1,15 @@
 ﻿using FitnessApp.Common.Enumerations;
 using FitnessApp.Services.ServiceContracts;
 using FitnessApp.ViewModels;
+using FitnessApp.Web.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using static FitnessApp.Common.ApplicationConstants;
 
-namespace FitnessApp.Web.Controllers
+namespace FitnessApp.Web.Areas.Trainer.Controllers
 {
-    [Authorize(Roles = "Trainer, Admin")]
+    [Authorize(Roles = TrainerRole)]
+    [Area(TrainerRole)]
     public class ExerciseController : BaseController
     {
         private readonly IExerciseService exerciseService;
@@ -26,7 +29,7 @@ namespace FitnessApp.Web.Controllers
         public async Task<IActionResult> Delete(string id)
         {
             Guid exerciseGuid = Guid.Empty;
-            bool isGuidValid = this.IsGuidValid(id, ref exerciseGuid);
+            bool isGuidValid = IsGuidValid(id, ref exerciseGuid);
 
             if (!isGuidValid)
             {
@@ -58,7 +61,7 @@ namespace FitnessApp.Web.Controllers
         public async Task<IActionResult> Restore(string id)
         {
             Guid exerciseGuid = Guid.Empty;
-            bool isGuidValid = this.IsGuidValid(id, ref exerciseGuid);
+            bool isGuidValid = IsGuidValid(id, ref exerciseGuid);
 
             if (!isGuidValid)
             {
@@ -103,11 +106,11 @@ namespace FitnessApp.Web.Controllers
                 return View(model);
             }
 
-            if (!Goal.TryParse(model.Difficulty, out Difficulty difficulty))
+            if (!Enum.TryParse(model.Difficulty, out Difficulty difficulty))
             {
                 throw new InvalidOperationException("Invalid data!");
             }
-            if (!Goal.TryParse(model.MuscleGroup, out MuscleGroup muscleGroup))
+            if (!Enum.TryParse(model.MuscleGroup, out MuscleGroup muscleGroup))
             {
                 throw new InvalidOperationException("Invalid data!");
             }
@@ -120,7 +123,7 @@ namespace FitnessApp.Web.Controllers
         public async Task<IActionResult> Edit(string id)
         {
             Guid exerciseGuid = Guid.Empty;
-            bool isGuidValid = this.IsGuidValid(id, ref exerciseGuid);
+            bool isGuidValid = IsGuidValid(id, ref exerciseGuid);
             if (!isGuidValid)
             {
                 return NotFound();
@@ -142,7 +145,7 @@ namespace FitnessApp.Web.Controllers
         public async Task<IActionResult> Edit(AddExerciseViewModel model)
         {
             Guid exerciseGuid = Guid.Empty;
-            bool isGuidValid = this.IsGuidValid(model.Id, ref exerciseGuid);
+            bool isGuidValid = IsGuidValid(model.Id, ref exerciseGuid);
             if (!isGuidValid)
             {
                 return NotFound();
@@ -150,11 +153,11 @@ namespace FitnessApp.Web.Controllers
 
             var exercise = await exerciseService.GetExerciseByIdAsync(exerciseGuid);
 
-            if (!Goal.TryParse(model.Difficulty, out Difficulty difficulty))
+            if (!Enum.TryParse(model.Difficulty, out Difficulty difficulty))
             {
                 throw new InvalidOperationException("Invalid data!");
             }
-            if (!Goal.TryParse(model.MuscleGroup, out MuscleGroup muscleGroup))
+            if (!Enum.TryParse(model.MuscleGroup, out MuscleGroup muscleGroup))
             {
                 throw new InvalidOperationException("Invalid data!");
             }

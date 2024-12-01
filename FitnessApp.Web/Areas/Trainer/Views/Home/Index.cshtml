@@ -1,0 +1,20 @@
+﻿@{
+    ViewData["Title"] = "Trainer Dashboard";
+}
+
+<h1>Trainer Dashboard</h1>
+
+<div class="btn-group" role="group" aria-label="Trainer Navigation">
+    <a class="btn btn-primary" asp-area="Trainer" asp-controller="Home" asp-action="Index">
+        Diets
+    </a>
+
+
+    <a class="btn btn-primary" asp-area="Trainer" asp-controller="Exercise" asp-action="Index">
+        Exercises
+    </a>
+
+    <a class="btn btn-primary" asp-area="Trainer" asp-controller="Workout" asp-action="DefaultWorkouts">
+        Workouts
+    </a>
+</div>
