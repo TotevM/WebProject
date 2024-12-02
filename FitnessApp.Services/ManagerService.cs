@@ -44,16 +44,13 @@ namespace FitnessApp.Services
                 return false;
             }
 
-            // Get current roles
             var currentRoles = await userManager.GetRolesAsync(user);
             var isCurrentlyAdmin = currentRoles.Contains(AdminRole);
 
             if (isCurrentlyAdmin)
             {
-                // Remove admin role, add user role if no other roles
                 await userManager.RemoveFromRoleAsync(user, AdminRole);
 
-                // If user has no roles after removing admin, add User role
                 var remainingRoles = await userManager.GetRolesAsync(user);
                 if (remainingRoles.Count == 0)
                 {
@@ -62,10 +59,11 @@ namespace FitnessApp.Services
             }
             else
             {
-                // Remove all existing roles
-                await userManager.RemoveFromRolesAsync(user, currentRoles);
+                if (currentRoles.Contains(UserRole))
+                {
+                    await userManager.RemoveFromRoleAsync(user, UserRole);
+                }
 
-                // Add admin role
                 await userManager.AddToRoleAsync(user, AdminRole);
             }
 
@@ -114,11 +112,12 @@ namespace FitnessApp.Services
             }
             else
             {
-                await userManager.AddToRoleAsync(user, TrainerRole);
                 if (isUser)
                 {
                     await userManager.RemoveFromRoleAsync(user, UserRole);
                 }
+
+                await userManager.AddToRoleAsync(user, TrainerRole);
             }
 
             return true;
