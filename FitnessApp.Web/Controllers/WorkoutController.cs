@@ -12,12 +12,10 @@ namespace FitnessApp.Web.Controllers
     public class WorkoutController : BaseController
     {
         private readonly IWorkoutService workoutService;
-        private readonly FitnessDBContext context;
 
-        public WorkoutController(IWorkoutService workoutService, FitnessDBContext context)
+        public WorkoutController(IWorkoutService workoutService)
         {
             this.workoutService = workoutService;
-            this.context = context;
         }
         [HttpGet]
         public async Task<IActionResult> Index()
@@ -90,51 +88,5 @@ namespace FitnessApp.Web.Controllers
             ViewBag.AvailableExercises = availableExercises!;
             return View();
         }
-
-        //[HttpPost]
-        //public async Task<IActionResult> Create(WorkoutCreationViewModel workoutViewModel)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        var workout = new Workout
-        //        {
-        //            Id = Guid.NewGuid(),
-        //            Name = workoutViewModel.WorkoutName,
-        //            //UserID = User.FindFirstValue(ClaimTypes.NameIdentifier)
-        //        };
-
-        //        foreach (var exerciseId in workoutViewModel.SelectedExerciseIds)
-        //        {
-        //            Guid exerciseGuid = Guid.Empty;
-        //            bool success = Guid.TryParse(exerciseId, out exerciseGuid);
-        //            if (!success)
-        //            {
-        //                return NotFound();
-        //            }
-
-        //            bool exists = await workoutService.ExerciseExist(exerciseGuid);
-        //            if (!exists)
-        //            {
-        //                return NotFound();
-        //            }
-
-        //            workout.WorkoutsExercises.Add(new WorkoutExercise
-        //            {
-        //                ExerciseId = exerciseGuid,
-        //                WorkoutId = workout.Id
-        //            });
-        //        }
-
-        //        context.Workouts.Add(workout);
-        //        await context.SaveChangesAsync();
-        //        ;
-        //        return RedirectToAction("Index");
-        //    }
-
-        //    var availableExercises = await workoutService.GetAllExercisesModelAsync();
-
-        //    ViewBag.AvailableExercises = availableExercises!;
-        //    return View(workoutViewModel);
-        //}
     }
 }

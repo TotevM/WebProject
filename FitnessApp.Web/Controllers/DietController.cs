@@ -95,13 +95,16 @@ namespace FitnessApp.Web.Controllers
 
             if (isDefault == null || !recipeExists)
             {
+                //sth is wrong display msg
                 return RedirectToAction("MyDiets", "Diet");
             }
 
-            var role = User.IsInRole(AdminRole) || User.IsInRole(TrainerRole);
+            var role = User.IsInRole(TrainerRole);
 
             if (isDefault == true && !role)
             {
+                //msg display cant change the recipes default diet
+                /*await dietService.RemoveFromDietAsync(dietGuid, recipeGuid);*///To remove after implementing add custom diet
                 return RedirectToAction("MyDiets", "Diet");
             }
 

@@ -7,6 +7,10 @@
 
 <div class="d-flex justify-content-between align-items-center mb-3" style="margin-top: 20px;">
 	<h2>@ViewData["Title"]</h2>
+	@if (User?.Identity?.IsAuthenticated == true @* && User.IsInRole(TrainerRole) *@)
+	{
+		<a asp-area="Trainer" asp-controller="Workout" asp-action="Create" class="btn btn-primary"><i class="fas fa-plus"></i>Create a Workout</a>
+	}
 </div>
 <hr />
 
@@ -32,7 +36,7 @@
 				</ul>
 				<div class="mt-auto d-flex justify-content-between gap-2">
 					<a asp-controller="Workout" asp-action="Details" asp-route-id="@workout.Id" class="btn btn-info flex-fill">Details</a>
-					
+
 					<form asp-controller="Workout" asp-action="AddToMyWorkouts" method="post" style="display:inline;">
 						<input type="hidden" name="workoutId" value="@workout.Id" />
 						<button type="submit" class="btn btn-success flex-fill">Add to "My Workouts"</button>

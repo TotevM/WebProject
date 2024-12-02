@@ -38,19 +38,16 @@
 							<li class="nav-item">
 								<a class="nav-link" asp-area="" asp-controller="Diet" asp-action="MyDiets">My Diets</a>
 							</li>
-							<li class="nav-item">
-								<a class="nav-link" asp-area="" asp-controller="Diet" asp-action="DefaultDiets">Diets</a>
-							</li>
 							<li class="nav-item dropdown">
 								<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Recipes</a>
 								<ul class="dropdown-menu">
-									<li><a class="dropdown-item" asp-controller="Recipe" asp-action="Index">All Recipes</a></li>
+									<li><a class="dropdown-item" asp-area=""  asp-controller="Recipe" asp-action="Index">All Recipes</a></li>
 									<li><div class="dropdown-divider"></div></li>
-									<li><a class="dropdown-item" asp-controller="Recipe" asp-action="Index" asp-route-goal="WeightLoss">Weight Loss</a></li>
+									<li><a class="dropdown-item" asp-area=""  asp-controller="Recipe" asp-action="Index" asp-route-goal="WeightLoss">Weight Loss</a></li>
 									<li><div class="dropdown-divider"></div></li>
-									<li><a class="dropdown-item" asp-controller="Recipe" asp-action="Index" asp-route-goal="MassGain">Mass Gain</a></li>
+									<li><a class="dropdown-item" asp-area="" asp-controller="Recipe" asp-action="Index" asp-route-goal="MassGain">Mass Gain</a></li>
 									<li><div class="dropdown-divider"></div></li>
-									<li><a class="dropdown-item" asp-controller="Recipe" asp-action="Index" asp-route-goal="Health">Healthy</a></li>
+									<li><a class="dropdown-item" asp-area="" asp-controller="Recipe" asp-action="Index" asp-route-goal="Health">Healthy</a></li>
 								</ul>
 							</li>
 							@if (User.IsInRole(AdminRole))

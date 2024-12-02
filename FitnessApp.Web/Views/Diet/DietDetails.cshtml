@@ -37,6 +37,9 @@
                                class="btn btn-outline-primary w-100 mt-3">
                                 View Details
                             </a>
+                            <form action="@Url.Action("RemoveFromDiet", "Diet", new { dietId = recipe.DietId, recipeId = recipe.RecipeId })" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-danger me-2">Remove</button>
+                            </form>
                         </div>
                     </div>
                 </div>

@@ -4,6 +4,7 @@ using System.Security.Claims;
 using FitnessApp.Data;
 using FitnessApp.Data.Models;
 using FitnessApp.ViewModels;
+using FitnessApp.ViewModels.ApiDTOs;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -23,15 +24,10 @@ public class WorkoutsApiController : ControllerBase
     {
         if (!ModelState.IsValid)
         {
-            return BadRequest(ModelState); // Return validation errors if model is invalid
+            return BadRequest(ModelState);
         }
 
-        var workout = new Workout
-        {
-            Id = Guid.NewGuid(),
-            Name = workoutDto.WorkoutName,
-            UserID = workoutDto.UserId
-        };
+        var workout = await workoutService.CreateAndReturnWorkout(workoutDto);
 
         foreach (var exerciseId in workoutDto.SelectedExerciseIds)
         {
@@ -40,29 +36,19 @@ public class WorkoutsApiController : ControllerBase
                 return NotFound($"Invalid exercise ID: {exerciseId}");
             }
 
-            //TODO: Check if exercise is deleted == false
             bool exists = await workoutService.ExerciseExist(exerciseGuid);
             if (!exists)
             {
                 return NotFound($"Exercise with ID {exerciseGuid} does not exist.");
             }
 
-            workout.WorkoutsExercises.Add(new WorkoutExercise
-            {
-                ExerciseId = exerciseGuid,
-                WorkoutId = workout.Id
-            });
+            await workoutService.AddWorkoutsExercisesToWorkout(workout, exerciseGuid);
         }
 
-        var userWorkout = new UserWorkout
+        if (workoutDto.UserId != null)
         {
-            UserId = workoutDto.UserId,
-            WorkoutId = workout.Id
-        };
-
-        context.Workouts.Add(workout);
-        await context.UsersWorkouts.AddAsync(userWorkout);
-        await context.SaveChangesAsync();
+            await workoutService.AddUserWorkoutAsync(workout.Id, workoutDto.UserId);
+        }
 
         return CreatedAtAction(
             nameof(CreateWorkout),
@@ -74,13 +60,4 @@ public class WorkoutsApiController : ControllerBase
                 ExerciseIds = workout.WorkoutsExercises.Select(we => we.ExerciseId.ToString()).ToList()
             });
     }
-
-}
-
-//Quick solution - to fix: return CreatedAtAction(... , value: without DTO)
-public class WorkoutDto
-{
-    public string Id { get; set; }
-    public string Name { get; set; }
-    public List<string> ExerciseIds { get; set; } = new();
 }

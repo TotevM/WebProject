@@ -139,6 +139,7 @@ namespace FitnessApp.Services
 
             foreach (var exercise in exercises)
             {
+                await this.ChangeExerciseWorkoutsStateAsync(exercise.Id, false);
                 exercise.IsDeleted = false;
                 await exerciseRepository.UpdateAsync(exercise);
             }

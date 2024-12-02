@@ -6,5 +6,6 @@
         public string Name { get; set; } = null!;
         public string MuscleGroup { get; set; } = null!;
         public string Difficulty { get; set; } = null!;
+        public bool IsDeleted { get; set; } = false;
     }
 }
