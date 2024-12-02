@@ -30,7 +30,7 @@ public class WorkoutsApiController : ControllerBase
         {
             Id = Guid.NewGuid(),
             Name = workoutDto.WorkoutName,
-            UserID = User.FindFirstValue(ClaimTypes.NameIdentifier)
+            UserID = workoutDto.UserId
         };
 
         foreach (var exerciseId in workoutDto.SelectedExerciseIds)
@@ -54,9 +54,16 @@ public class WorkoutsApiController : ControllerBase
             });
         }
 
+        var userWorkout = new UserWorkout
+        {
+            UserId = workoutDto.UserId,
+            WorkoutId = workout.Id
+        };
+
         context.Workouts.Add(workout);
+        await context.UsersWorkouts.AddAsync(userWorkout);
         await context.SaveChangesAsync();
-        
+
         return CreatedAtAction(
             nameof(CreateWorkout),
             new { id = workout.Id },

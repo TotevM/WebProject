@@ -5,6 +5,8 @@ namespace FitnessApp.ViewModels
 {
     public class WorkoutCreationViewModel
     {
+        public string? UserId { get; set; }
+
         [Required(ErrorMessage = "Workout Name is required")]
         [MinLength(WorkoutNameMinLength, ErrorMessage = "Workout Name is too short")]
         [MaxLength(WorkoutNameMaxLength, ErrorMessage = "Workout Name is too long")]
