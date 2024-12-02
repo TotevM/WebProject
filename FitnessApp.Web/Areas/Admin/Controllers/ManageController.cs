@@ -45,7 +45,7 @@ namespace FitnessApp.Web.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> ManageTrainers()
         {
-            var model = await adminService.GetAllUsersWithRolesAsync(); // Fetch users along with roles
+            var model = await adminService.GetAllUsersWithRolesAsync();
             return View(model);
         }
 
@@ -53,9 +53,14 @@ namespace FitnessApp.Web.Areas.Admin.Controllers
         public async Task<IActionResult> ToggleTrainerRole(string userId)
         {
             var success = await adminService.ToggleTrainerRoleAsync(userId);
-            if (!success)
+
+            if (success)
             {
-                return NotFound("User not found.");
+                TempData["SuccessMessage"] = "Trainer status updated successfully.";
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Failed to update trainer status.";
             }
 
             return RedirectToAction(nameof(ManageTrainers));
@@ -65,9 +70,14 @@ namespace FitnessApp.Web.Areas.Admin.Controllers
         public async Task<IActionResult> ToggleDelete(string userId)
         {
             var success = await adminService.ToggleUserDeletionAsync(userId);
-            if (!success)
+
+            if (success)
             {
-                return NotFound("User not found.");
+                TempData["SuccessMessage"] = "User status updated successfully.";
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Failed to update user status.";
             }
 
             return RedirectToAction(nameof(ManageTrainers));

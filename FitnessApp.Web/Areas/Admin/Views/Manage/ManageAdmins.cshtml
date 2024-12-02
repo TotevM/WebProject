@@ -2,49 +2,82 @@
 @model IEnumerable<ManageAdminsViewModel>
 
 <div class="container">
-    <h2>Manage Administrators</h2>
+	<h2>Manage Administrators</h2>
 
-    @if (TempData["SuccessMessage"] != null)
-    {
-        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
-    }
-    @if (TempData["ErrorMessage"] != null)
-    {
-        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
-    }
+	@if (TempData["SuccessMessage"] != null)
+	{
+		<div class="alert alert-success d-flex justify-content-between">
+			@TempData["SuccessMessage"]
+			<button class="close-btn">x</button>
+		</div>
+	}
+	@if (TempData["ErrorMessage"] != null)
+	{
+		<div class="alert alert-danger d-flex justify-content-between">
+			@TempData["ErrorMessage"]
+			<button class="close-btn">x</button>
+		</div>
+	}
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Current Roles</th>
-                <th>Admin Status</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var user in Model)
-            {
-                <tr>
-                    <td>@user.UserName</td>
-                    <td>@user.Email</td>
-                    <td>
-                        @string.Join(", ", user.CurrentRoles)
-                    </td>
-                    <td>
-                        @(user.IsAdmin ? "Yes" : "No")
-                    </td>
-                    <td>
-                        <form asp-action="ToggleAdmin" method="post">
-                            <input type="hidden" name="userId" value="@user.Id" />
-                            <button type="submit" class="btn @(user.IsAdmin ? "btn-danger" : "btn-success")">
-                                @(user.IsAdmin ? "Remove Admin" : "Make Admin")
-                            </button>
-                        </form>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+	<div class="filter-bar">
+		<div class="search-container">
+			<i class="fas fa-search search-icon"></i>
+			<input type="text"
+				   id="userSearch"
+				   class="search-input"
+				   placeholder="Search by username...">
+		</div>
+
+		<div class="filter-groups">
+			<button class="admin-filter-btn btn btn-info">
+				Show Admins Only
+			</button>
+			<button class="clear-filters-btn btn btn-secondary">
+				Clear Filters
+			</button>
+		</div>
+	</div>
+
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>Username</th>
+				<th>Email</th>
+				<th>Current Roles</th>
+				<th>Admin Status</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var user in Model)
+			{
+				<tr>
+					<td>@user.UserName</td>
+					<td>@user.Email</td>
+					<td>
+						@string.Join(", ", user.CurrentRoles)
+					</td>
+					<td>
+						@(user.IsAdmin ? "Yes" : "No")
+					</td>
+					<td>
+						<form asp-action="ToggleAdmin" method="post">
+							<input type="hidden" name="userId" value="@user.Id" />
+							<button id="actionBtn" type="submit" class="btn @(user.IsAdmin ? "btn-danger" : "btn-success")">
+								@(user.IsAdmin ? "Remove Admin" : "Make Admin")
+							</button>
+						</form>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
 </div>
+
+@section Styles {
+	<link rel="stylesheet" href="~/css/manage-admins.css" />
+}
+
+@section Scripts {
+	<script src="~/js/manage-admins.js" asp-append-version="true"></script>
+}

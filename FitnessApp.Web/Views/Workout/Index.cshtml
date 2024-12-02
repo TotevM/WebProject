@@ -9,7 +9,7 @@
     <div class="jumbotron text-center bg-primary text-white p-4 rounded">
         <h1 class="display-4">Get Fit with FitJourney</h1>
         <p class="lead">Your journey to a better you starts here. Explore our workout routines and track your progress.</p>
-        <a asp-controller="Workout" asp-action="AddToMyWorkouts" class="btn btn-light btn-lg">Start a New Workout</a>
+        <a asp-controller="Workout" asp-action="AddToMyWorkouts" class="btn btn-light btn-lg" data-bs-toggle="modal" data-bs-target="#startWorkoutModal">Start a New Workout</a>
     </div>
 </div>
 
@@ -50,3 +50,24 @@ else
         }
     </ul>
 }
+
+<div class="modal fade" id="startWorkoutModal" tabindex="-1" aria-labelledby="startWorkoutModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-dark text-white">
+                <h5 class="modal-title" id="startWorkoutModalLabel">Choose Workout</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Please select an option to add a workout:</p>
+                <div class="d-flex justify-content-around">
+                    <a asp-action="AddToMyWorkouts" asp-controller="Workout" class="btn btn-primary">Choose Existing Workout</a>
+                    <a asp-action="Create" asp-controller="Workout" class="btn btn-success">Create Custom Workout</a>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
