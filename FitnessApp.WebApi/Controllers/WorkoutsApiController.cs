@@ -29,7 +29,8 @@ public class WorkoutsApiController : ControllerBase
         var workout = new Workout
         {
             Id = Guid.NewGuid(),
-            Name = workoutDto.WorkoutName
+            Name = workoutDto.WorkoutName,
+            UserID = User.FindFirstValue(ClaimTypes.NameIdentifier)
         };
 
         foreach (var exerciseId in workoutDto.SelectedExerciseIds)
@@ -55,15 +56,15 @@ public class WorkoutsApiController : ControllerBase
 
         context.Workouts.Add(workout);
         await context.SaveChangesAsync();
-
+        
         return CreatedAtAction(
             nameof(CreateWorkout),
             new { id = workout.Id },
             new WorkoutDto
             {
-                Id = workout.Id,
+                Id = workout.Id.ToString(),
                 Name = workout.Name,
-                ExerciseIds = workout.WorkoutsExercises.Select(we => we.ExerciseId).ToList()
+                ExerciseIds = workout.WorkoutsExercises.Select(we => we.ExerciseId.ToString()).ToList()
             });
     }
 
@@ -72,7 +73,7 @@ public class WorkoutsApiController : ControllerBase
 //Quick solution - to fix: return CreatedAtAction(... , value: without DTO)
 public class WorkoutDto
 {
-    public Guid Id { get; set; }
+    public string Id { get; set; }
     public string Name { get; set; }
-    public List<Guid> ExerciseIds { get; set; } = new();
+    public List<string> ExerciseIds { get; set; } = new();
 }

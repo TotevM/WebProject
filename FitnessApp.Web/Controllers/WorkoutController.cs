@@ -1,12 +1,10 @@
 ﻿using System.Security.Claims;
 using FitnessApp.Data;
 using FitnessApp.Data.Models;
-using FitnessApp.Services;
 using FitnessApp.Services.ServiceContracts;
 using FitnessApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace FitnessApp.Web.Controllers
 {
@@ -93,49 +91,50 @@ namespace FitnessApp.Web.Controllers
             return View();
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Create(WorkoutCreationViewModel workoutViewModel)
-        {
-            if (ModelState.IsValid)
-            {
-                var workout = new Workout
-                {
-                    Id = Guid.NewGuid(),
-                    Name = workoutViewModel.WorkoutName
-                };
+        //[HttpPost]
+        //public async Task<IActionResult> Create(WorkoutCreationViewModel workoutViewModel)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        var workout = new Workout
+        //        {
+        //            Id = Guid.NewGuid(),
+        //            Name = workoutViewModel.WorkoutName,
+        //            //UserID = User.FindFirstValue(ClaimTypes.NameIdentifier)
+        //        };
 
-                foreach (var exerciseId in workoutViewModel.SelectedExerciseIds)
-                {
-                    Guid exerciseGuid=Guid.Empty;
-                    bool success = Guid.TryParse(exerciseId, out exerciseGuid);
-                    if (!success)
-                    {
-                        return NotFound();
-                    }
+        //        foreach (var exerciseId in workoutViewModel.SelectedExerciseIds)
+        //        {
+        //            Guid exerciseGuid = Guid.Empty;
+        //            bool success = Guid.TryParse(exerciseId, out exerciseGuid);
+        //            if (!success)
+        //            {
+        //                return NotFound();
+        //            }
 
-                    bool exists = await workoutService.ExerciseExist(exerciseGuid);
-                    if (!exists)
-                    {
-                        return NotFound();
-                    }
+        //            bool exists = await workoutService.ExerciseExist(exerciseGuid);
+        //            if (!exists)
+        //            {
+        //                return NotFound();
+        //            }
 
-                    workout.WorkoutsExercises.Add(new WorkoutExercise
-                    {
-                        ExerciseId = exerciseGuid,
-                        WorkoutId=workout.Id
-                    });
-                }
+        //            workout.WorkoutsExercises.Add(new WorkoutExercise
+        //            {
+        //                ExerciseId = exerciseGuid,
+        //                WorkoutId = workout.Id
+        //            });
+        //        }
 
-                context.Workouts.Add(workout);
-                await context.SaveChangesAsync();
+        //        context.Workouts.Add(workout);
+        //        await context.SaveChangesAsync();
+        //        ;
+        //        return RedirectToAction("Index");
+        //    }
 
-                return RedirectToAction("Index");
-            }
+        //    var availableExercises = await workoutService.GetAllExercisesModelAsync();
 
-            var availableExercises = await workoutService.GetAllExercisesModelAsync();
-
-            ViewBag.AvailableExercises = availableExercises!;
-            return View(workoutViewModel);
-        }
+        //    ViewBag.AvailableExercises = availableExercises!;
+        //    return View(workoutViewModel);
+        //}
     }
 }
