@@ -1,18 +1,22 @@
-﻿@using static FitnessApp.Common.ApplicationConstants;
-@{
-    ViewData["Title"] = "Admin Management";
-}
-
-<div class="container">
-    <h1>Admin Management</h1>
+﻿<div class="container">
+    <h1>Admin Management Portal</h1>
+    <p class="mb-4">
+        Welcome to the Admin Management Portal, your central hub for overseeing and maintaining the user base of the application.
+        This portal provides powerful tools for managing both administrators and trainers, ensuring a streamlined and efficient workflow
+        to meet your organization's needs. Whether you’re assigning roles or updating user information,
+        everything you need is just a few clicks away.
+    </p>
 
     <div class="row">
         <div class="col-md-6">
             <div class="card mb-4">
                 <div class="card-body">
                     <h5 class="card-title">Manage Admins</h5>
-                    <p class="card-text">View and modify administrator accounts</p>
-                    <a asp-area=@AdminRole asp-controller="Manage" asp-action="ManageAdmins" class="btn btn-primary">Manage Admins</a>
+                    <p class="card-text">
+                        Access and control administrator accounts to maintain the integrity and security of the system. Add, remove, or update
+                        administrator roles and permissions as needed. Ensure your team of admins has the appropriate access levels to effectively manage the platform.
+                    </p>
+                    <a asp-area="@AdminRole" asp-controller="Manage" asp-action="ManageAdmins" class="btn btn-primary">Manage Admins</a>
                 </div>
             </div>
         </div>
@@ -20,9 +24,12 @@
         <div class="col-md-6">
             <div class="card mb-4">
                 <div class="card-body">
-                    <h5 class="card-title">Manage Users</h5>
-                    <p class="card-text">View and modify user accounts</p>
-                    <a asp-area=@AdminRole asp-controller="Manage" asp-action="ManageUsers" class="btn btn-secondary">Manage Users</a>
+                    <h5 class="card-title">Manage Trainers</h5>
+                    <p class="card-text">
+                        Oversee and manage trainer accounts to ensure users have access to the best resources and expertise. Promote, demote, or update roles
+                        for trainers, and monitor their activity to keep the platform running smoothly and efficiently.
+                    </p>
+                    <a asp-area="@AdminRole" asp-controller="Manage" asp-action="ManageTrainers" class="btn btn-secondary">Manage Trainers</a>
                 </div>
             </div>
         </div>

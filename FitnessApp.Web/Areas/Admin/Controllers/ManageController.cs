@@ -43,7 +43,7 @@ namespace FitnessApp.Web.Areas.Admin.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> ManageUsers()
+        public async Task<IActionResult> ManageTrainers()
         {
             var model = await adminService.GetAllUsersWithRolesAsync(); // Fetch users along with roles
             return View(model);
@@ -58,7 +58,7 @@ namespace FitnessApp.Web.Areas.Admin.Controllers
                 return NotFound("User not found.");
             }
 
-            return RedirectToAction(nameof(ManageUsers));
+            return RedirectToAction(nameof(ManageTrainers));
         }
 
         [HttpPost]
@@ -70,7 +70,7 @@ namespace FitnessApp.Web.Areas.Admin.Controllers
                 return NotFound("User not found.");
             }
 
-            return RedirectToAction(nameof(ManageUsers));
+            return RedirectToAction(nameof(ManageTrainers));
         }
     }
 }

@@ -2,19 +2,49 @@
     ViewData["Title"] = "Trainer Dashboard";
 }
 
-<h1>Trainer Dashboard</h1>
+<div class="container">
+    <h1>Trainer Dashboard</h1>
+    <p class="mb-4">
+        Welcome to the Trainer Dashboard, your central platform for managing workouts, diets, and exercises. As a trainer,
+        you can create and customize default plans tailored to your clients' needs, monitor progress, and ensure they achieve their fitness goals.
+        Use the tools below to efficiently manage all aspects of your training programs.
+    </p>
 
-<div class="btn-group" role="group" aria-label="Trainer Navigation">
-    <a class="btn btn-primary" asp-area="Trainer" asp-controller="Home" asp-action="Index">
-        Diets
-    </a>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Manage Diets</h5>
+                    <p class="card-text">
+                        Create, update, or remove default diet plans for your clients. Ensure they have access to the best nutrition plans to support their fitness goals.
+                    </p>
+                    <a asp-area="Trainer" asp-controller="Diet" asp-action="Index" class="btn btn-success">Manage Diets</a>
+                </div>
+            </div>
+        </div>
 
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Manage Workouts</h5>
+                    <p class="card-text">
+                        Design and oversee default workout routines. Provide clients with structured and effective plans to maximize their training efforts.
+                    </p>
+                    <a asp-area="Trainer" asp-controller="Workout" asp-action="Index" class="btn btn-primary">Manage Workouts</a>
+                </div>
+            </div>
+        </div>
 
-    <a class="btn btn-primary" asp-area="Trainer" asp-controller="Exercise" asp-action="Index">
-        Exercises
-    </a>
-
-    <a class="btn btn-primary" asp-area="Trainer" asp-controller="Workout" asp-action="DefaultWorkouts">
-        Workouts
-    </a>
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Manage Exercises</h5>
+                    <p class="card-text">
+                        Add, modify, or remove exercises. Build a diverse library of exercises to create engaging and effective training sessions.
+                    </p>
+                    <a asp-area="Trainer" asp-controller="Exercise" asp-action="Index" class="btn btn-warning">Manage Exercises</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
