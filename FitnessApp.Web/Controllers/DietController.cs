@@ -226,5 +226,15 @@ namespace FitnessApp.Web.Controllers
 
             return RedirectToAction("MyDiets", "Diet");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Create()
+        {
+            var availableRecipes = await dietService.GetAllRecipeModelAsync();
+
+            ViewBag.AvailableRecipes = availableRecipes;
+
+            return View();
+        }
     }
 }

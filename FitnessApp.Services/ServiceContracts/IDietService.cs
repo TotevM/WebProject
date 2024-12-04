@@ -22,5 +22,9 @@ namespace FitnessApp.Services.ServiceContracts
         Task<bool?> IsDefaultDiet(Guid id);
         Task<bool> RecipeExists(Guid recipeId);
         Task<bool> DietExists(Guid dietId);
+        Task<List<RecipeViewModel>> GetAllRecipeModelAsync();
+        Task<Diet> CreateAndReturnDiet(DietCreationViewModel dietDto);
+        Task AddDietsRecipesToDiet(Diet diet, Guid recipeGuid);
+        Task<bool> AddUserDietAsync(Guid dietGuid, string userId);
     }
 }

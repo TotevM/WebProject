@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { Plus, } from 'lucide-react';
+
 import ExerciseListModal from './ExerciseListModal';
 import SelectedExerciseList from './SelectedRecipeList';
 
@@ -6,6 +8,7 @@ const WorkoutForm = ({ userId }) => {
     const [workoutName, setWorkoutName] = useState('');
     const [selectedExercises, setSelectedExercises] = useState([]);
     const [showExerciseList, setShowExerciseList] = useState(false);
+    const [exerciseSearchTerm, setExerciseSearchTerm] = useState('');
     const [exerciseList, setExerciseList] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -56,19 +59,23 @@ const WorkoutForm = ({ userId }) => {
             });
 
             if (!response.ok) throw new Error('Failed to create workout');
-            alert('Workout Created Successfully!');
+
             setWorkoutName('');
             setSelectedExercises([]);
+
+            // Redirect to the previous page using history.back()
+            window.history.back();
         } catch (error) {
             console.error(error);
             alert('Error creating workout. Please try again.');
         }
     };
 
-
     const availableExercises = exerciseList.filter((exercise) =>
         !exercise.IsDeleted &&
-        !selectedExercises.some((selected) => selected.Id === exercise.Id)
+        !selectedExercises.some((selected) => selected.Id === exercise.Id) &&
+        (exercise.Name.toLowerCase().includes(exerciseSearchTerm.toLowerCase()) ||
+            exercise.MuscleGroup.toLowerCase().includes(exerciseSearchTerm.toLowerCase()))
     );
 
     return (
@@ -99,6 +106,7 @@ const WorkoutForm = ({ userId }) => {
                             onClick={() => setShowExerciseList(true)}
                             className="flex items-center bg-blue-500 text-white px-3 py-1 rounded-lg hover:bg-blue-600"
                         >
+                            <Plus className="w-4 h-4 mr-2" />
                             Add Exercise
                         </button>
                     </div>
@@ -124,6 +132,8 @@ const WorkoutForm = ({ userId }) => {
                     loading={loading}
                     onAddExercise={handleAddExercise}
                     onClose={() => setShowExerciseList(false)}
+                    searchTerm={exerciseSearchTerm}
+                    setSearchTerm={setExerciseSearchTerm}
                 />
             )}
         </div>

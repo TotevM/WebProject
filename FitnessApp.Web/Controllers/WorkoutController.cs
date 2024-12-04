@@ -83,7 +83,7 @@ namespace FitnessApp.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            var availableExercises = await workoutService.GetAllExercisesModelAsync();
+            List<ExerciseViewModel> availableExercises = await workoutService.GetAllExercisesModelAsync();
 
             ViewBag.AvailableExercises = availableExercises!;
             return View();
