@@ -110,3 +110,19 @@ tr {
         color: white;
         transition: all 0.3s ease;
     }
+
+    .user-filter-btn:focus,
+    .trainer-filter-btn:focus {
+        background-color: var(--primary-color) !important;
+        border-color: var(--primary-color) !important;
+        color: white;
+        box-shadow: none; /* Optional: Removes any additional box shadow */
+    }
+
+button.change-status {
+    width: 80px;
+}
+
+button.change-role {
+    width: 140px;
+}

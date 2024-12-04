@@ -14,7 +14,7 @@
                     <h5 class="card-title">Manage Admins</h5>
                     <p class="card-text">
                         Access and control administrator accounts to maintain the integrity and security of the system. Add, remove, or update
-                        administrator roles and permissions as needed. Ensure your team of admins has the appropriate access levels to effectively manage the platform.
+                        administrator roles and permissions as needed. Ensure your team of admins has appropriate access levels to effectively manage the platform.
                     </p>
                     <a asp-area="@AdminRole" asp-controller="Manage" asp-action="ManageAdmins" class="btn btn-primary">Manage Admins</a>
                 </div>
@@ -35,3 +35,7 @@
         </div>
     </div>
 </div>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/admin-home.css" />
+}
