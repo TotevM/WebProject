@@ -32,6 +32,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitnessApp.Services", "..\F
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitnessApp.Tests", "..\FitnessApp.Tests\FitnessApp.Tests.csproj", "{96735F6B-6DAF-4C8F-B0F0-A08B5437E02C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3E70BFC1-20F1-46D2-831B-2C6FBF2B2AD4} = {3E70BFC1-20F1-46D2-831B-2C6FBF2B2AD4}
+		{F7CC5FCD-6B98-43F1-8760-0A4757DA11F1} = {F7CC5FCD-6B98-43F1-8760-0A4757DA11F1}
+		{F922F291-9A72-4B73-9655-49D4B6592F8B} = {F922F291-9A72-4B73-9655-49D4B6592F8B}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitnessApp.AutoMapper", "..\FitnessApp.AutoMapper\FitnessApp.AutoMapper.csproj", "{B5D8E3EC-329D-4752-9142-AB2C9B6161A3}"
 EndProject

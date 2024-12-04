@@ -24,7 +24,9 @@ namespace FitnessApp.Services
 
         public async Task<bool> AddUserWorkoutAsync(Guid workoutId, string userId)
         {
-            var record = await userWorkoutRepository.GetAllAttached().Where(x => x.UserId == userId && x.WorkoutId == workoutId).FirstOrDefaultAsync();
+            var record = await userWorkoutRepository.FirstOrDefaultAsync(x => x.UserId == userId && x.WorkoutId == workoutId)
+                
+                /*.GetAllAttached().Where(x => x.UserId == userId && x.WorkoutId == workoutId).FirstOrDefaultAsync()*/;
             
             if (record != null)
             {
@@ -125,10 +127,9 @@ namespace FitnessApp.Services
         public async Task<bool> RemoveFromMyWorkoutsAsync(Guid workoutId, string userId)
         {
             //Check if userworkout already exists
-
-            var record = await userWorkoutRepository.GetAllAttached()
-                .Where(uw => uw.UserId == userId && uw.WorkoutId == workoutId)
-                .FirstOrDefaultAsync();
+            //tbd
+            var record = await userWorkoutRepository
+                .FirstOrDefaultAsync(uw => uw.UserId == userId && uw.WorkoutId == workoutId);
 
             if (record == null)
             {

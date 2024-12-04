@@ -17,8 +17,5 @@ namespace FitnessApp.Services.ServiceContracts
         RecipeDetailsViewModel RecipeDetailsView(Recipe recipe);
         Task SoftDeleteRecipe(Recipe recipe);
         Task DeleteDietRecipeRelationAsync(Guid id);
-
-        //bool IsGuidValid(string? id, ref Guid parsedGuid);
-
     }
 }

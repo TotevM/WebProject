@@ -45,25 +45,25 @@ namespace FitnessApp.Services
             List<SelectListItem> diets = null!;
             if (role)
             {
-              diets = await dietRepository.GetAllAttached()
-    .Where(x => x.UserID == null)
-   .Select(d => new SelectListItem
-   {
-       Value = d.Id.ToString(),
-       Text = d.Name
-   })
-   .ToListAsync();
+                diets = await dietRepository.GetAllAttached()
+      .Where(x => x.UserID == null)
+     .Select(d => new SelectListItem
+     {
+         Value = d.Id.ToString(),
+         Text = d.Name
+     })
+     .ToListAsync();
             }
             else
             {
-        diets = await dietRepository.GetAllAttached()
-                .Where(x => x.UserID != null)
-               .Select(d => new SelectListItem
-               {
-                   Value = d.Id.ToString(),
-                   Text = d.Name
-               })
-               .ToListAsync();
+                diets = await dietRepository.GetAllAttached()
+                        .Where(x => x.UserID != null)
+                       .Select(d => new SelectListItem
+                       {
+                           Value = d.Id.ToString(),
+                           Text = d.Name
+                       })
+                       .ToListAsync();
             }
 
             AddRecipeToDietViewModel viewModel = new AddRecipeToDietViewModel
@@ -134,7 +134,7 @@ namespace FitnessApp.Services
         {
             var diet = await dietRepository.GetByIdAsync(dietId);
 
-            if (diet==null)
+            if (diet == null)
             {
                 return false;
             }
@@ -233,9 +233,11 @@ namespace FitnessApp.Services
 
         public async Task RemoveFromDietAsync(Guid dietId, Guid recipeId)
         {
-            var toRemove = dietRecipeRepository.GetAllAttached()
-                .Where(x => x.RecipeId == recipeId && x.DietId == dietId)
-            .FirstOrDefault();
+            var toRemove =
+                await dietRecipeRepository.FirstOrDefaultAsync(x => x.RecipeId == recipeId && x.DietId == dietId);
+            //    .GetAllAttached()
+            //    .Where(x => x.RecipeId == recipeId && x.DietId == dietId)
+            //.FirstOrDefault();
 
             if (toRemove != null)
             {
@@ -256,25 +258,28 @@ namespace FitnessApp.Services
 
         public async Task<bool> RemoveFromMyDietsAsync(Guid dietId, string userId)
         {
-            var record = userDietRepository.GetAllAttached()
-                .Where(ud => ud.UserId == userId && ud.DietId == dietId)
-                .FirstOrDefault();
+            var record = await userDietRepository.FirstOrDefaultAsync(ud => ud.UserId == userId && ud.DietId == dietId);
+                //GetAllAttached()
+                //.Where(ud => ud.UserId == userId && ud.DietId == dietId)
+                //.FirstOrDefault();
 
             if (record == null)
             {
                 return false!;
             }
 
-            await userDietRepository.DeleteAsync(record!);
+            await userDietRepository.DeleteAsync(record);
             return true;
         }//completed
 
         public async Task UpdateDietMacronutrientsAsync(Guid dietId)
         {
-            var diet = await dietRepository.GetAllAttached()
-                    .Include(d => d.DietsRecipes)
-                    .ThenInclude(dr => dr.Recipe)
-                    .FirstOrDefaultAsync(d => d.Id == dietId);
+            //var diet = await dietRepository.GetAllAttached()
+            //        .Include(d => d.DietsRecipes)
+            //        .ThenInclude(dr => dr.Recipe)
+            //        .FirstOrDefaultAsync(d => d.Id == dietId);
+
+            var diet = await dietRepository.GetByIdAsync(dietId);
 
             if (diet != null)
             {
