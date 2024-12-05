@@ -38,5 +38,7 @@ namespace FitnessApp.Data.Repository.Contracts
         bool Update(TType item);
 
         Task<bool> UpdateAsync(TType item);
+
+        Task RemoveRangeAsync(IEnumerable<TType> entities);
     }
 }

@@ -73,7 +73,8 @@ namespace FitnessApp.Services
                     .Select(x => new ExercisesInMyWorkoutsView
                     {
                         Id = x.Id.ToString(),
-                        Name = x.Name
+                        Name = x.Name,
+                        ImageUrl = x.ImageUrl
                     })
                     .ToList()
                 })
@@ -96,7 +97,8 @@ namespace FitnessApp.Services
                     .Select(x => new ExercisesInMyWorkoutsView
                     {
                         Id = x.Id.ToString(),
-                        Name = x.Name
+                        Name = x.Name,
+                        ImageUrl=x.ImageUrl
                     }).ToList()
                 }).ToListAsync();
 
@@ -170,6 +172,40 @@ namespace FitnessApp.Services
                 ExerciseId = exerciseGuid,
                 WorkoutId = workout.Id
             });
+        }
+
+        public async Task<Workout?> GetWorkoutAsync(Guid workoutGuid)
+        {
+            var model = await workoutRepository.GetByIdAsync(workoutGuid);
+
+            return model;
+        }
+
+        public async Task RemoveFromDefaultWorkoutsAsync(Guid workoutGuid)
+        {
+            var usersWorkouts = await userWorkoutRepository.GetAllAttached().Where(x => x.WorkoutId == workoutGuid).ToListAsync();
+            await userWorkoutRepository.RemoveRangeAsync(usersWorkouts);
+
+            var workoutsExercises = await workoutExerciseRepository.GetAllAttached().Where(x => x.WorkoutId == workoutGuid).ToListAsync();
+            await workoutExerciseRepository.RemoveRangeAsync(workoutsExercises);
+
+            var workout = await workoutRepository.FirstOrDefaultAsync(x => x.Id == workoutGuid);
+            if (workout != null)
+            {
+                await workoutRepository.DeleteAsync(workout);
+            }
+        }
+
+        public async Task<bool> RemoveExerciseFromWorkout(Guid exerciseId, Guid workoutId)
+        {
+            var entry = await workoutExerciseRepository.FirstOrDefaultAsync(x => x.WorkoutId == workoutId && x.ExerciseId == exerciseId);
+
+            if (entry == null)
+            {
+                return false;
+            }
+            await workoutExerciseRepository.DeleteAsync(entry);
+            return true;
         }
     }
 }

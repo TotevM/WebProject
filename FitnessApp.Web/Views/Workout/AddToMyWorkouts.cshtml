@@ -2,44 +2,103 @@
 @using static FitnessApp.Common.ApplicationConstants;
 @model IEnumerable<MyWorkoutsView>
 @{
-	ViewData["Title"] = "Add Workout";
+    ViewData["Title"] = "Add Workout";
 }
 
-<div class="d-flex justify-content-between align-items-center mb-3" style="margin-top: 20px;">
-	<h2>@ViewData["Title"]</h2>
-</div>
-<hr />
+<div class="container-fluid px-4">
+    <div class="row mb-3 align-items-center">
+        <div class="col-md-12">
+            <h2 class="mb-0">@ViewData["Title"]</h2>
+        </div>
+    </div>
 
-<div class="row text-center">
-	@foreach (var workout in Model)
-	{
-		<li class="list-group-item">
-			<h2>@workout.Name</h2>
+    <hr />
 
-			@if (!workout.Exercises.Any())
-			{
-				<p>No exercises in this workout.</p>
-			}
-			else
-			{
-				<ul class="list-unstyled">
-					@foreach (var exercise in workout.Exercises)
-					{
-						<li>
-							<strong>Exercise Name:</strong> @exercise.Name
-						</li>
-					}
-				</ul>
-				<div class="mt-auto d-flex justify-content-between gap-2">
-					<a asp-controller="Workout" asp-action="Details" asp-route-id="@workout.Id" class="btn btn-info flex-fill">Details</a>
-					
-					<form asp-controller="Workout" asp-action="AddToMyWorkouts" method="post" style="display:inline;">
-						<input type="hidden" name="workoutId" value="@workout.Id" />
-						<button type="submit" class="btn btn-success flex-fill">Add to "My Workouts"</button>
-					</form>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        @foreach (var workout in Model)
+        {
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">@workout.Name</h5>
+                    </div>
+                    <div class="card-body">
+                        @if (!workout.Exercises.Any())
+                        {
+                            <p class="text-muted">No exercises in this workout.</p>
+                        }
+                        else
+                        {
+                            <div class="row g-2">
+                                @foreach (var (exercise, index) in workout.Exercises.Select((ex, i) => (ex, i)))
+                                {
+                                    <div class="col-12">
+                                        <div class="d-flex align-items-center">
+                                            <button type="button"
+                                                    class="btn btn-outline-primary flex-grow-1 me-2"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#exerciseModal-@workout.Id-@index">
+                                                @exercise.Name
+                                            </button>
+                                            <form asp-controller="Exercise" asp-action="Delete" method="post" class="d-inline">
+                                                <input type="hidden" name="exerciseId" value="@exercise.Id" />
+                                                <input type="hidden" name="workoutId" value="@workout.Id" />
+                                                <button type="submit" class="btn btn-danger btn-sm">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
+                                        </div>
 
-				</div>
-			}
-		</li>
-	}
+                                        <!-- Modal (unchanged from previous version) -->
+                                        <div class="modal fade"
+                                             id="exerciseModal-@workout.Id-@index"
+                                             tabindex="-1"
+                                             aria-labelledby="exerciseModalLabel-@workout.Id-@index"
+                                             aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exerciseModalLabel-@workout.Id-@index">
+                                                            @exercise.Name
+                                                        </h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body text-center">
+                                                        @if (!string.IsNullOrEmpty(exercise.ImageUrl))
+                                                        {
+                                                            <img src="@exercise.ImageUrl"
+                                                                 alt="@exercise.Name"
+                                                                 class="img-fluid rounded mb-3"
+                                                                 style="max-height: 300px; object-fit: cover;">
+                                                        }
+                                                        else
+                                                        {
+                                                            <p class="text-muted fst-italic">No image available</p>
+                                                        }
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        }
+                    </div>
+                    <div class="card-footer">
+                        <div class="d-flex justify-content-between">
+                            <a asp-controller="Workout" asp-action="Details" asp-route-id="@workout.Id" class="btn btn-info btn-sm flex-fill me-1">Details</a>
+
+                            <form asp-controller="Workout" asp-action="AddToMyWorkouts" method="post" class="flex-fill">
+                                <input type="hidden" name="workoutId" value="@workout.Id" />
+                                <button type="submit" class="btn btn-success btn-sm w-100">Add to "My Workouts"</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 </div>

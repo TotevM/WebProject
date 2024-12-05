@@ -19,9 +19,6 @@ namespace FitnessApp.Data.EntityConfiguration
                 .WithMany(u => u.UsersWorkouts)
                 .HasForeignKey(uw => uw.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
-
-            //builder.Property(uw => uw.Sets).HasDefaultValue(4);
-            //builder.Property(uw => uw.Repetitions).HasDefaultValue(10);
         }
     }
 }

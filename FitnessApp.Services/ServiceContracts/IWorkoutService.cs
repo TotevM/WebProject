@@ -14,6 +14,9 @@ namespace FitnessApp.Services.ServiceContracts
         Task<bool> ExerciseExist(Guid exerciseGuid);
         Task<Workout> CreateAndReturnWorkout(WorkoutCreationViewModel workoutDto);
         Task AddWorkoutsExercisesToWorkout(Workout workout, Guid exerciseGuid);
-        public Task<List<MyWorkoutsView>> DefaultWorkoutsForTrainers(string userId);
+        Task<List<MyWorkoutsView>> DefaultWorkoutsForTrainers(string userId);
+        Task<Workout?> GetWorkoutAsync(Guid workoutGuid);
+        Task RemoveFromDefaultWorkoutsAsync(Guid workoutGuid);
+        Task<bool> RemoveExerciseFromWorkout(Guid exerciseId, Guid workoutId);
     }
 }

@@ -134,5 +134,11 @@ namespace FitnessApp.Data.Repository
                 return false;
             }
         }
+
+        public async Task RemoveRangeAsync(IEnumerable<TType> entities)
+        {
+            this.dbSet.RemoveRange(entities);
+            await this.dbContext.SaveChangesAsync();
+        }
     }
 }

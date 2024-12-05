@@ -36,5 +36,54 @@ namespace FitnessApp.Web.Areas.Trainer.Controllers
             ViewBag.AvailableExercises = availableExercises!;
             return View();
         }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteWorkout(string workoutId)
+        {
+
+            Guid workoutGuid = Guid.Empty;
+            bool isGuidValid = IsGuidValid(workoutId, ref workoutGuid);
+
+            if (!isGuidValid)
+            {
+                return NotFound();
+            }
+
+            var workout = await workoutService.GetWorkoutAsync(workoutGuid);
+
+            if (workout == null)
+            {
+                return NotFound();
+            }
+
+            await workoutService.RemoveFromDefaultWorkoutsAsync(workoutGuid);
+
+            return RedirectToAction(nameof(ManageDefaultWorkouts));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteExercise(string exerciseId, string workoutId)
+        {
+            Guid exerciseGuid = Guid.Empty;
+            bool isExerciseGuidValid = IsGuidValid(exerciseId, ref exerciseGuid);
+
+            Guid workoutGuid = Guid.Empty;
+            bool isWorkoutGuidValid = IsGuidValid(workoutId, ref workoutGuid);
+
+            if (!isExerciseGuidValid || !isWorkoutGuidValid)
+            {
+                return NotFound();
+            }
+
+            bool success = await workoutService.RemoveExerciseFromWorkout(exerciseGuid, workoutGuid);
+
+            if (!success)
+            {
+                return NotFound();
+            }
+
+            return RedirectToAction(nameof(ManageDefaultWorkouts));
+        }
+
     }
 }
