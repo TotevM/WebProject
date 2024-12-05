@@ -13,10 +13,10 @@ public class RecipesApiController : ControllerBase
         this.recipeService = recipeService;
     }
 
-    [HttpGet]
-    public async Task<IActionResult> GetAllRecipes()
+    [HttpGet("GetRecipes")]
+    public async Task<IActionResult> GetRecipes()
     {
-        var viewModel = await recipeService.DisplayRecipesAsync();
+        var viewModel = await recipeService.GetAllRecipeModelAsync();
         if (viewModel == null)
         {
             return NotFound("No recipes found.");

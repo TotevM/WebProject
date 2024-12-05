@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Plus, } from 'lucide-react';
 
 import ExerciseListModal from './ExerciseListModal';
-import SelectedExerciseList from './SelectedRecipeList';
+import SelectedExerciseList from './SelectedExerciseList';
 
 const WorkoutForm = ({ userId }) => {
     const [workoutName, setWorkoutName] = useState('');

@@ -182,7 +182,7 @@ namespace FitnessApp.Services
                 await dietRepository.UpdateAsync(diet!);
             }
         }
-        public async Task UpdateRecipe(Recipe recipe,RecipeEditViewModel model, Goal goal)
+        public async Task UpdateRecipe(Recipe recipe, RecipeEditViewModel model, Goal goal)
         {
             recipe.Name = model.RecipeName;
             recipe.Preparation = model.Preparation;
@@ -195,6 +195,23 @@ namespace FitnessApp.Services
             recipe.Fats = (int)model.Fats!;
 
             await recipeRepository.UpdateAsync(recipe);
+        }
+
+        public async Task<List<RecipeViewModel>> GetAllRecipeModelAsync()
+        {
+            var availableRecipes = await recipeRepository.GetAllAttached()
+                .Select(r => new RecipeViewModel
+                {
+                    Id = r.Id.ToString(),
+                    RecipeName = r.Name,
+                    Goal = r.Goal.ToString(),
+                    Calories = r.Calories,
+                    Protein = r.Proteins,
+                    Carbohydrates = r.Carbohydrates,
+                    Fats = r.Fats
+                }).ToListAsync();
+
+            return availableRecipes;
         }
     }
 }

@@ -40,13 +40,6 @@
                                                     data-bs-target="#exerciseModal-@workout.Id-@index">
                                                 @exercise.Name
                                             </button>
-                                            <form asp-controller="Exercise" asp-action="Delete" method="post" class="d-inline">
-                                                <input type="hidden" name="exerciseId" value="@exercise.Id" />
-                                                <input type="hidden" name="workoutId" value="@workout.Id" />
-                                                <button type="submit" class="btn btn-danger btn-sm">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </form>
                                         </div>
 
                                         <!-- Modal (unchanged from previous version) -->
@@ -89,8 +82,6 @@
                     </div>
                     <div class="card-footer">
                         <div class="d-flex justify-content-between">
-                            <a asp-controller="Workout" asp-action="Details" asp-route-id="@workout.Id" class="btn btn-info btn-sm flex-fill me-1">Details</a>
-
                             <form asp-controller="Workout" asp-action="AddToMyWorkouts" method="post" class="flex-fill">
                                 <input type="hidden" name="workoutId" value="@workout.Id" />
                                 <button type="submit" class="btn btn-success btn-sm w-100">Add to "My Workouts"</button>

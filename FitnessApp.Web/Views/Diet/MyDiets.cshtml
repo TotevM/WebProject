@@ -37,17 +37,12 @@
 		<div class="col-md-4 mb-4 diet-card" data-calories="@diet.Calories">
 			<div class="card h-100">
 				@if (!string.IsNullOrEmpty(diet.ImageUrl))
-
 				{
 					<img src="@diet.ImageUrl" class="card-img-top" alt="@diet.Name">
 				}
-
 				else
-
 				{
-					<div class="card-img-top d-flex align-items-center justify-content-center" style="height: 200px; background-color: #f8f9fa;">
-						<span>No Image Available</span>
-					</div>
+					<img src="~/images/NoPictureAvailable.png" class="card-img-top" alt="No Image Available">
 				}
 
 				<div class="card-body text-center d-flex justify-content-around">

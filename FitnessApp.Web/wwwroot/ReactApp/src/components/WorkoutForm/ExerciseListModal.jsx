@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import { Search } from 'lucide-react';
+
+import FilterBar from '../FilterBar/FilterBar';
 
 const ExerciseListModal = ({ exercises, loading, onAddExercise, onClose, searchTerm, setSearchTerm }) => {
 
@@ -37,16 +38,10 @@ const ExerciseListModal = ({ exercises, loading, onAddExercise, onClose, searchT
                     </button>
                 </h2>
 
-                <div className="flex items-center mb-4">
-                    <Search className="w-4 h-4 text-gray-600 mr-2" />
-                    <input
-                        type="text"
-                        placeholder="Search exercises..."
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                </div>
+                <FilterBar
+                    searchTerm={searchTerm}
+                    setSearchTerm={setSearchTerm}
+                />
 
                 {loading ? (
                     <p>Loading...</p>
