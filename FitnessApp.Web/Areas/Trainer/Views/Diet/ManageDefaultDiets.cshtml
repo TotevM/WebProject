@@ -1,5 +1,87 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model List<DietIndexView>
 @{
+    ViewData["Title"] = "Diet List";
+}
+<div class="recipe-page-container">
+    <!-- Header Section -->
+    <div class="page-header">
+        <h1>Diet Plans</h1>
+
+            <div class="action-buttons">
+                <a asp-controller="Diet" asp-action="Create" class="btn btn-primary btn-add-recipe">
+                    Create New Diet
+                </a>
+            </div>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+        <div class="search-container">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text"
+                   id="dietSearch"
+                   class="search-input"
+                   placeholder="Search diet by name...">
+        </div>
+
+        <div class="calorie-filter-container">
+            <label for="calorieRange">Calories:</label>
+            <input type="range"
+                   id="calorieRange"
+                   min="0"
+                   max="3000"
+                   value="3000"
+                   step="100"
+                   class="calorie-range-input">
+            <span id="calorieValue">Up to 3000</span>
+        </div>
+
+        <div class="filter-groups">
+            <button class="clear-filters-btn">
+                Clear Filters
+            </button>
+        </div>
+    </div>
+
+    <div class="recipe-grid" id="dietGrid">
+        @foreach (var diet in Model)
+        {
+            <div class="recipe-item" data-calories="@diet.Calories">
+                <div class="card recipe-card">
+                    <div class="card-img-container">
+                        @if (!string.IsNullOrEmpty(diet.ImageUrl))
+                        {
+                            <img src="@diet.ImageUrl" alt="@diet.Name">
+                        }
+                        else
+                        {
+                            <img src="~/images/NoPictureAvailable.png" alt="No Image Available">
+                        }
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">@diet.Name</h3>
+                        <div class="diet-nutritional-info">
+                            <p><strong>Calories:</strong> @diet.Calories</p>
+                            <p><strong>Protein:</strong> @diet.Protein?.ToString()g</p>
+                            <p><strong>Carbohydrates:</strong> @diet.Carbohydrates?.ToString()g</p>
+                            <p><strong>Fats:</strong> @diet.Fats?.ToString()g</p>
+                        </div>
+                        <div class="card-buttons">
+                            <a asp-area="Trainer" asp-controller="Diet" asp-action="DietDetails" asp-route-dietid="@diet.DietId" class="card-btn details">
+                                <i class="bi bi-info-circle"></i> View Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/default-diet.css" />
+}
+
+@section Scripts {
+    <script src="~/js/diet.js" asp-append-version="true"></script>
 }

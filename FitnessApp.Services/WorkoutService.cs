@@ -3,6 +3,7 @@ using FitnessApp.Data.Repository.Contracts;
 using FitnessApp.Services.ServiceContracts;
 using FitnessApp.ViewModels;
 using FitnessApp.ViewModels.Workout;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace FitnessApp.Services
@@ -205,6 +206,41 @@ namespace FitnessApp.Services
                 return false;
             }
             await workoutExerciseRepository.DeleteAsync(entry);
+            return true;
+        }
+
+        public async Task<List<SelectListItem>> GetExercisesSelectListAsync()
+        {
+            return await exerciseRepository.GetAllAttached()
+                .Select(e => new SelectListItem
+                {
+                    Value = e.Id.ToString(),
+                    Text = e.Name
+                }).ToListAsync();
+        }
+
+        public async Task<bool> WorkoutExist(Guid workoutGuid)
+        {
+            var workout = await workoutRepository.FirstOrDefaultAsync(x => x.Id == workoutGuid);
+
+            if (workout == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public async Task<bool> IsExerciseInWorkoutAsync(Guid workoutId, Guid selectedExerciseId)
+        {
+            var model = await workoutExerciseRepository.FirstOrDefaultAsync(x =>
+                x.WorkoutId == workoutId && x.ExerciseId == selectedExerciseId);
+
+            if (model == null)
+            {
+                return false;
+            }
+
             return true;
         }
     }

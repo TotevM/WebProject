@@ -1,5 +1,6 @@
 ﻿using System.Security.Claims;
 using FitnessApp.Services.ServiceContracts;
+using FitnessApp.ViewModels;
 using FitnessApp.Web.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -85,5 +86,49 @@ namespace FitnessApp.Web.Areas.Trainer.Controllers
             return RedirectToAction(nameof(ManageDefaultWorkouts));
         }
 
+        [HttpPost]
+        public async Task<IActionResult> AddExerciseToWorkout(AddExerciseToWorkoutViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                //model.Exercises = await workoutService.GetExercisesSelectListAsync();
+                return RedirectToAction(nameof(ManageDefaultWorkouts));
+            }
+            Guid workoutGuid = Guid.Empty;
+            bool isWorkoutGuidValid = this.IsGuidValid(model.WorkoutId, ref workoutGuid);
+
+            Guid exerciseGuid = Guid.Empty;
+            bool isExerciseGuidValid = this.IsGuidValid(model.SelectedExerciseId, ref exerciseGuid);
+
+            //TODO: Change redirection
+            if (!isWorkoutGuidValid || !isExerciseGuidValid)
+            {
+                return RedirectToAction(nameof(ManageDefaultWorkouts));
+            }
+
+            bool recipeExists = await workoutService.ExerciseExist(exerciseGuid);
+            bool dietExists = await workoutService.WorkoutExist(workoutGuid);
+
+            if (!recipeExists || !dietExists)
+            {
+                //model.Exercises = await workoutService.GetExercisesSelectListAsync();
+                //return View(model);
+                return RedirectToAction(nameof(ManageDefaultWorkouts));
+            }
+
+            var isPresent = await workoutService.IsExerciseInWorkoutAsync(workoutGuid, exerciseGuid);
+            if (isPresent)
+            {
+                TempData["ErrorMessage"] = "This exercise is already in this workout.";
+                return RedirectToAction(nameof(ManageDefaultWorkouts));
+                //TODO: change redirection
+            }
+
+            var workout = await workoutService.GetWorkoutAsync(workoutGuid);
+
+            await workoutService.AddWorkoutsExercisesToWorkout(workout!, exerciseGuid);
+
+            return RedirectToAction(nameof(ManageDefaultWorkouts));
+        }
     }
 }

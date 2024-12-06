@@ -1,6 +1,7 @@
 ﻿using System.Security.Claims;
 using FitnessApp.Services;
 using FitnessApp.Services.ServiceContracts;
+using FitnessApp.Web.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using static FitnessApp.Common.ApplicationConstants;
@@ -9,11 +10,11 @@ namespace FitnessApp.Web.Areas.Trainer.Controllers
 {
     [Authorize(Roles = TrainerRole)]
     [Area(TrainerRole)]
-    public class DietController : Controller
+    public class DietController : BaseController
     {
         private readonly IDietService dietService;
 
-        public DietController(DietService dietService)
+        public DietController(IDietService dietService)
         {
             this.dietService = dietService;
         }
@@ -22,8 +23,7 @@ namespace FitnessApp.Web.Areas.Trainer.Controllers
         [HttpGet]
         public async Task<IActionResult> ManageDefaultDiets()
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            List<ViewModels.DietIndexView> dietsViewModel = await dietService.DefaultDietsAsync(userId!);
+            List<ViewModels.DietIndexView> dietsViewModel = await dietService.DefaultDietsForTrainersAsync();
 
             return View(dietsViewModel);
         }

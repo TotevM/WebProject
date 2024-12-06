@@ -122,7 +122,8 @@ namespace FitnessApp.Services
                     Calories = recipe.Calories,
                     Protein = recipe.Proteins,
                     Carbohydrates = recipe.Carbohydrates,
-                    Fats = recipe.Fats
+                    Fats = recipe.Fats,
+                    UserId = dietExists.UserID
                 }).ToListAsync();
             ;
 
@@ -202,6 +203,25 @@ namespace FitnessApp.Services
             return true;
         }
 
+        public async Task<List<DietIndexView>> DefaultDietsForTrainersAsync()
+        {
+
+                var diets = await dietRepository.GetAllAttached()
+                    .Where(d => d.UserID == null)
+                    .Select(diet => new DietIndexView
+                    {
+                        DietId = diet.Id.ToString(),
+                        Name = diet.Name,
+                        ImageUrl = diet.ImageUrl,
+                        Calories = diet.Calories,
+                        Protein = diet.Proteins,
+                        Carbohydrates = diet.Carbohydrates,
+                        Fats = diet.Fats
+                    }).ToListAsync();
+
+                return diets;
+        }
+
         public async Task<List<SelectListItem>> GetDietsSelectListAsync()
         {
             return await dietRepository.GetAllAttached()
@@ -231,8 +251,15 @@ namespace FitnessApp.Services
 
         public async Task<bool> IsRecipeInDietAsync(Guid recipeId, Guid selectedDietId)
         {
-            return await dietRecipeRepository.GetAllAttached().AsNoTracking()
-                        .AnyAsync(dr => dr.DietId == selectedDietId && dr.RecipeId == recipeId);
+            var model = await dietRecipeRepository.FirstOrDefaultAsync(dr =>
+                dr.DietId == selectedDietId && dr.RecipeId == recipeId);
+
+            if (model==null)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         public async Task<List<MyDietsIndexView>> MyDietsAsync(string userId)

@@ -26,5 +26,6 @@ namespace FitnessApp.Services.ServiceContracts
         Task<Diet> CreateAndReturnDiet(DietCreationViewModel dietDto);
         Task AddDietsRecipesToDiet(Diet diet, Guid recipeGuid);
         Task<bool> AddUserDietAsync(Guid dietGuid, string userId);
+        Task<List<DietIndexView>> DefaultDietsForTrainersAsync();
     }
 }

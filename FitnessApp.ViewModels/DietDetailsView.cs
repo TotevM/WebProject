@@ -10,5 +10,7 @@
         public int? Protein { get; set; }
         public int? Carbohydrates { get; set; }
         public int? Fats { get; set; }
+
+        public string? UserId { get; set; }
     }
 }

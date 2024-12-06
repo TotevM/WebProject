@@ -1,4 +1,5 @@
-﻿@model List<DietDetailsView>
+﻿@using System.Security.Claims
+@model List<DietDetailsView>
 
 <div class="container my-5">
     <h2 class="mb-4">Recipes List</h2>
@@ -33,9 +34,12 @@
                             <button type="button" class="card-btn details" data-recipe-id="@recipe.RecipeId" data-bs-toggle="modal" data-bs-target="#recipeModal">
                                 View Details
                             </button>
+                            @if (recipe.UserId == User.FindFirstValue(ClaimTypes.NameIdentifier))
+                            {
                             <form action="@Url.Action("RemoveFromDiet", "Diet", new { dietId = recipe.DietId, recipeId = recipe.RecipeId })" method="post" class="d-inline">
                                 <button type="submit" class="card-btn warning">Remove</button>
                             </form>
+                            }
                         </div>
                     </div>
                 </div>
