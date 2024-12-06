@@ -19,9 +19,6 @@ namespace FitnessApp.Data.EntityConfiguration
 				.HasColumnType("decimal(5,2)")
 				.HasPrecision(5, 2);
 
-			builder.Property(p => p.Height)
-				.IsRequired();
-
 			builder.Property(p => p.UserID)
 				.IsRequired();
 		}

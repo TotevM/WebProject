@@ -7,7 +7,7 @@ namespace FitnessApp.Data.Models
     public class Progress
     {
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         [Required]
         [Comment("The time the progress was entered")]
         public DateTime Date { get; set; }
@@ -16,10 +16,7 @@ namespace FitnessApp.Data.Models
         [Range(WeightMin, WeightMax)]
         [Comment("The weight entered")]
         public decimal Weight { get; set; }
-        [Required]
-        [Range(HeightMin, HeightMax)]
-        [Comment("The height entered")]
-        public int Height { get; set; }
+
         [Required]
         [Comment("The user who entered the progress data")]
         public string UserID { get; set; } = null!;

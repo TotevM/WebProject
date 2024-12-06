@@ -827,19 +827,13 @@ namespace FitnessApp.Data.Migrations
 
             modelBuilder.Entity("FitnessApp.Data.Models.Progress", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2")
                         .HasComment("The time the progress was entered");
-
-                    b.Property<int>("Height")
-                        .HasColumnType("int")
-                        .HasComment("The height entered");
 
                     b.Property<string>("UserID")
                         .IsRequired()

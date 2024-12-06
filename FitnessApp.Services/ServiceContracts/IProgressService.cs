@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FitnessApp.ViewModels;
 
 namespace FitnessApp.Services.ServiceContracts
 {
-	public interface IProgressService
-	{
-	}
+    public interface IProgressService
+    {
+        Task<List<ProgressModel>> GetProgressByUserId(string userId);
+        Task RegisterProgress(ProgressModel model, string userId);
+    }
 }
