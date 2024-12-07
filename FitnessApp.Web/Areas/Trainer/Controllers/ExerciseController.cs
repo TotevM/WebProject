@@ -22,7 +22,7 @@ namespace FitnessApp.Web.Areas.Trainer.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            List<ExerciseIndexView> exercises = await exerciseService.GetAllExercisesAsync();
+            List<ExerciseIndexView> exercises = await exerciseService.GetAllExercisesAsync(false);
             return View(exercises);
         }
 
@@ -53,7 +53,7 @@ namespace FitnessApp.Web.Areas.Trainer.Controllers
         [HttpGet]
         public async Task<IActionResult> Restore()
         {
-            var exercises = await exerciseService.GetInactiveExercisesAsync();
+            var exercises = await exerciseService.GetAllExercisesAsync(true);
             return View(exercises);
         }
 

@@ -43,6 +43,96 @@ namespace FitnessApp.Tests
         }
 
         [Test]
+        public async Task RemoveFromMyDietsAsync_RecordExists_ShouldDeleteAndReturnTrue()
+        {
+            var dietId = Guid.NewGuid();
+            var userId = "test-user-id";
+            var userDiet = new UserDiet
+            {
+                UserId = userId,
+                DietId = dietId
+            };
+
+            _userDietRepositoryMock
+                .Setup(x => x.FirstOrDefaultAsync(It.Is<Expression<Func<UserDiet, bool>>>(
+                    f => f.Compile()(userDiet))))
+                .ReturnsAsync(userDiet);
+
+            _userDietRepositoryMock
+                .Setup(x => x.DeleteAsync(userDiet))
+                .ReturnsAsync(true);
+
+            var result = await _dietService.RemoveFromMyDietsAsync(dietId, userId);
+
+            Assert.That(result, Is.True);
+            _userDietRepositoryMock.Verify(
+                x => x.FirstOrDefaultAsync(It.IsAny<Expression<Func<UserDiet, bool>>>()),
+                Times.Once);
+            _userDietRepositoryMock.Verify(
+                x => x.DeleteAsync(It.Is<UserDiet>(ud => ud.UserId == userId && ud.DietId == dietId)),
+                Times.Once);
+        }
+
+        [Test]
+        public async Task IsRecipeInDietAsync_RecipeInDiet_ShouldReturnTrue()
+        {
+            var recipeId = Guid.NewGuid();
+            var dietId = Guid.NewGuid();
+            var dietRecipe = new DietRecipe
+            {
+                DietId = dietId,
+                RecipeId = recipeId
+            };
+
+            _dietRecipeRepositoryMock
+                .Setup(x => x.FirstOrDefaultAsync(It.Is<Expression<Func<DietRecipe, bool>>>(
+                    f => f.Compile()(dietRecipe))))
+                .ReturnsAsync(dietRecipe);
+
+            var result = await _dietService.IsRecipeInDietAsync(recipeId, dietId);
+
+            Assert.That(result, Is.True);
+            _dietRecipeRepositoryMock.Verify(
+                x => x.FirstOrDefaultAsync(It.IsAny<Expression<Func<DietRecipe, bool>>>()),
+                Times.Once);
+        }
+
+        [Test]
+        public async Task IsRecipeInDietAsync_RecipeNotInDiet_ShouldReturnFalse()
+        {
+            var recipeId = Guid.NewGuid();
+            var dietId = Guid.NewGuid();
+
+            _dietRecipeRepositoryMock
+                .Setup(x => x.FirstOrDefaultAsync(It.IsAny<Expression<Func<DietRecipe, bool>>>()))
+                .ReturnsAsync((DietRecipe)null);
+
+            var result = await _dietService.IsRecipeInDietAsync(recipeId, dietId);
+
+            Assert.That(result, Is.False);
+            _dietRecipeRepositoryMock.Verify(
+                x => x.FirstOrDefaultAsync(It.IsAny<Expression<Func<DietRecipe, bool>>>()),
+                Times.Once);
+        }
+
+        [Test]
+        public async Task DietDetailsAsync_DietNotFound_ShouldReturnNull()
+        {
+            var dietId = Guid.NewGuid();
+
+            _dietRepositoryMock
+                .Setup(x => x.GetByIdAsync(dietId))
+                .ReturnsAsync((Diet)null);
+
+            var result = await _dietService.DietDetailsAsync(dietId);
+
+            Assert.That(result, Is.Null);
+            _recipeRepositoryMock.Verify(
+                x => x.GetAllAttached(),
+                Times.Never);
+        }
+
+        [Test]
         public async Task AddDietsRecipesToDiet_ShouldAddDietRecipe()
         {
             var diet = new Diet

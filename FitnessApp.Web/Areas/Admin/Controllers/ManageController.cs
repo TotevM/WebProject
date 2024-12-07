@@ -1,4 +1,4 @@
-﻿using FitnessApp.Services.ServiceContracts.FitnessApp.Services.ServiceContracts;
+﻿using FitnessApp.Services.ServiceContracts;
 using FitnessApp.Web.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

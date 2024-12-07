@@ -1,8 +1,11 @@
 ﻿using FitnessApp.Data.Models;
 using FitnessApp.Services;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Moq;
 using NUnit.Framework;
+using System.Threading.Tasks;
+using static FitnessApp.Common.ApplicationConstants;
 
 namespace FitnessApp.Tests
 {
@@ -20,6 +23,114 @@ namespace FitnessApp.Tests
                 Mock.Of<IUserStore<ApplicationUser>>(),
                 null, null, null, null, null, null, null, null);
             _managerService = new ManagerService(_mockUserManager.Object);
+        }
+
+        [Test]
+        public async Task ToggleUserDeleteAsync_UserNotFound_ReturnsFalse()
+        {
+            var testUserId = Guid.NewGuid().ToString();
+
+            _mockUserManager.Setup(x => x.FindByIdAsync(It.IsAny<string>())).ReturnsAsync((ApplicationUser)null);
+
+            var result = await _managerService.ToggleUserDeletionAsync(testUserId);
+
+            Assert.IsFalse(result);
+
+            _mockUserManager.Verify(x => x.UpdateAsync(It.IsAny<ApplicationUser>()), Times.Never);
+        }
+
+        [Test]
+        public async Task ToggleAdminRoleAsync_UserNotFound_ReturnsFalse()
+        {
+            var testUserId = Guid.NewGuid().ToString();
+
+            _mockUserManager.Setup(x => x.FindByIdAsync(It.IsAny<string>())).ReturnsAsync((ApplicationUser)null);
+
+            var result = await _managerService.ToggleAdminRoleAsync(testUserId);
+
+            Assert.IsFalse(result);
+
+            _mockUserManager.Verify(x => x.GetRolesAsync(It.IsAny<ApplicationUser>()), Times.Never);
+            _mockUserManager.Verify(x => x.RemoveFromRoleAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>()), Times.Never);
+            _mockUserManager.Verify(x => x.AddToRoleAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>()), Times.Never);
+        }
+
+        [Test]
+        public async Task ToggleUserDeletionAsync_UserNotFound_ReturnsFalse()
+        {
+            var testUserId = Guid.NewGuid().ToString();
+            _mockUserManager.Setup(x => x.FindByIdAsync(It.IsAny<string>())).ReturnsAsync((ApplicationUser)null);
+
+            var result = await _managerService.ToggleUserDeletionAsync(testUserId);
+
+            Assert.IsFalse(result);
+
+            _mockUserManager.Verify(x => x.UpdateAsync(It.IsAny<ApplicationUser>()), Times.Never);
+        }
+
+        [Test]
+        public async Task ToggleAdminRoleAsync_UserIsAdmin_ShouldRemoveAdminRole()
+        {
+            var userId = "test-user-id";
+            var user = new ApplicationUser { Id = userId };
+
+            _mockUserManager
+                .Setup(x => x.FindByIdAsync(userId))
+                .ReturnsAsync(user);
+
+            _mockUserManager
+                .Setup(x => x.GetRolesAsync(user))
+                .ReturnsAsync(new List<string> { AdminRole, UserRole });
+
+            _mockUserManager
+                .Setup(x => x.RemoveFromRoleAsync(user, AdminRole))
+                .ReturnsAsync(IdentityResult.Success);
+
+            var result = await _managerService.ToggleAdminRoleAsync(userId);
+
+            Assert.That(result, Is.True);
+
+            _mockUserManager.Verify(x => x.FindByIdAsync(userId), Times.Once);
+            _mockUserManager.Verify(x => x.GetRolesAsync(user), Times.Exactly(2));
+            _mockUserManager.Verify(x => x.RemoveFromRoleAsync(user, AdminRole), Times.Once);
+            _mockUserManager.Verify(x => x.AddToRoleAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>()), Times.Never);
+        }
+
+        [Test]
+        public async Task ToggleTrainerRoleAsync_UserIsTrainer_ShouldRemoveTrainerRoleAndAddUserRoleIfNeeded()
+        {
+            var userId = "test-user-id";
+            var user = new ApplicationUser { Id = userId };
+
+            _mockUserManager
+                .Setup(x => x.FindByIdAsync(userId))
+                .ReturnsAsync(user);
+
+            _mockUserManager
+                .Setup(x => x.IsInRoleAsync(user, It.Is<string>(r => r == TrainerRole)))
+                .ReturnsAsync(true);
+
+            _mockUserManager
+                .Setup(x => x.IsInRoleAsync(user, It.Is<string>(r => r == UserRole)))
+                .ReturnsAsync(false);
+
+            _mockUserManager
+                .Setup(x => x.RemoveFromRoleAsync(user, TrainerRole))
+                .ReturnsAsync(IdentityResult.Success);
+
+            _mockUserManager
+                .Setup(x => x.AddToRoleAsync(user, UserRole))
+                .ReturnsAsync(IdentityResult.Success);
+
+            var result = await _managerService.ToggleTrainerRoleAsync(userId);
+
+            Assert.That(result, Is.True);
+
+            _mockUserManager.Verify(x => x.FindByIdAsync(userId), Times.Once);
+            _mockUserManager.Verify(x => x.IsInRoleAsync(user, TrainerRole), Times.Once);
+            _mockUserManager.Verify(x => x.IsInRoleAsync(user, UserRole), Times.Once);
+            _mockUserManager.Verify(x => x.RemoveFromRoleAsync(user, TrainerRole), Times.Once);
+            _mockUserManager.Verify(x => x.AddToRoleAsync(user, UserRole), Times.Once);
         }
 
         [Test]

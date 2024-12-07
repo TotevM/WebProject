@@ -25,9 +25,8 @@ namespace FitnessApp.Services
 
         public async Task<bool> AddUserWorkoutAsync(Guid workoutId, string userId)
         {
-            var record = await userWorkoutRepository.FirstOrDefaultAsync(x => x.UserId == userId && x.WorkoutId == workoutId)
-                
-                /*.GetAllAttached().Where(x => x.UserId == userId && x.WorkoutId == workoutId).FirstOrDefaultAsync()*/;
+            var record =
+                await userWorkoutRepository.FirstOrDefaultAsync(x => x.UserId == userId && x.WorkoutId == workoutId);
             
             if (record != null)
             {
@@ -60,38 +59,14 @@ namespace FitnessApp.Services
             return availableExercises!;
         }
 
-        //public async Task<List<MyWorkoutsView>> DefaultWorkoutsForTrainers(string userId)
-        //{
-        //    var workouts = await workoutRepository.GetAllAttached()
-        //        .Where(w => w.UserID == null)
-        //        .OrderByDescending(u => u.CreatedOn)
-        //        .Select(w => new MyWorkoutsView
-        //        {
-        //            Id = w.Id.ToString(),
-        //            Name = w.Name,
-        //            Exercises = exerciseRepository.GetAllAttached()
-        //            .Where(e => e.WorkoutsExercises.Any(x => x.WorkoutId == w.Id && !x.IsDeleted))
-        //            .Select(x => new ExercisesInMyWorkoutsView
-        //            {
-        //                Id = x.Id.ToString(),
-        //                Name = x.Name,
-        //                ImageUrl = x.ImageUrl
-        //            })
-        //            .ToList()
-        //        })
-        //        .ToListAsync();
-
-        //    return workouts;
-        //}
-
-        public async Task<List<MyWorkoutsView>> DefaultWorkouts(string userId = null)
+        public async Task<List<MyWorkoutsView>> DefaultWorkouts(string? userId = null)
         {
             var query = workoutRepository.GetAllAttached()
                 .Where(w => w.UserID == null);
 
             if (!string.IsNullOrEmpty(userId))
             {
-                query = query.Where(w => !w.UsersWorkouts.Any(u => u.UserId == userId));
+                query = query.Where(w => !w.UsersWorkouts.Any(u => u.UserId == userId)!);
             }
 
             var workouts = await query
@@ -138,8 +113,6 @@ namespace FitnessApp.Services
 
         public async Task<bool> RemoveFromMyWorkoutsAsync(Guid workoutId, string userId)
         {
-            //Check if userworkout already exists
-            //tbd
             var record = await userWorkoutRepository
                 .FirstOrDefaultAsync(uw => uw.UserId == userId && uw.WorkoutId == workoutId);
 
@@ -193,12 +166,6 @@ namespace FitnessApp.Services
 
         public async Task RemoveFromDefaultWorkoutsAsync(Guid workoutGuid)
         {
-            var usersWorkouts = await userWorkoutRepository.GetAllAttached().Where(x => x.WorkoutId == workoutGuid).ToListAsync();
-            await userWorkoutRepository.RemoveRangeAsync(usersWorkouts);
-
-            var workoutsExercises = await workoutExerciseRepository.GetAllAttached().Where(x => x.WorkoutId == workoutGuid).ToListAsync();
-            await workoutExerciseRepository.RemoveRangeAsync(workoutsExercises);
-
             var workout = await workoutRepository.FirstOrDefaultAsync(x => x.Id == workoutGuid);
             if (workout != null)
             {
@@ -216,16 +183,6 @@ namespace FitnessApp.Services
             }
             await workoutExerciseRepository.DeleteAsync(entry);
             return true;
-        }
-
-        public async Task<List<SelectListItem>> GetExercisesSelectListAsync()
-        {
-            return await exerciseRepository.GetAllAttached()
-                .Select(e => new SelectListItem
-                {
-                    Value = e.Id.ToString(),
-                    Text = e.Name
-                }).ToListAsync();
         }
 
         public async Task<bool> WorkoutExist(Guid workoutGuid)

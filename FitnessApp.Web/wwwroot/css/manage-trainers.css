@@ -7,9 +7,15 @@
     --success-color-dark: #1e7e34;
     --danger-color: #dc3545;
     --danger-color-dark: #c82333;
+    --warning-color: #ffc107;
+    --warning-color-dark: #e0a800;
 }
 
 /* Reuse existing styles from manage-admins.css */
+button {
+    font-weight: 600 !important;
+}
+
 tr {
     vertical-align: middle;
 }
@@ -88,6 +94,21 @@ tr {
         box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
 
+.btn-warning {
+    background-color: var(--warning-color);
+    border-color: var(--warning-color);
+    color: white;
+    transition: all 0.3s ease;
+}
+
+    .btn-warning:hover {
+        background-color: var(--warning-color-dark);
+        border-color: var(--warning-color-dark);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
 .btn:hover {
     transition: all 0.3s ease;
     transform: translateY(-2px);
@@ -116,7 +137,7 @@ tr {
         background-color: var(--primary-color) !important;
         border-color: var(--primary-color) !important;
         color: white;
-        box-shadow: none; /* Optional: Removes any additional box shadow */
+        box-shadow: none;
     }
 
 button.change-status {

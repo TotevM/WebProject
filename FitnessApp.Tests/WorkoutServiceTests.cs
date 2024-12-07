@@ -34,6 +34,85 @@ namespace FitnessApp.Tests
         }
 
         [Test]
+        public async Task RemoveFromMyWorkoutsAsync_WorkoutExists_RemovesWorkout()
+        {
+            var _testWorkoutId = Guid.NewGuid();
+            var _testUserId = Guid.NewGuid().ToString();
+
+            var userWorkoutRecord = new UserWorkout
+            {
+                UserId = _testUserId,
+                WorkoutId = _testWorkoutId
+            };
+
+            _userWorkoutRepositoryMock
+                .Setup(x => x.FirstOrDefaultAsync(It.IsAny<Expression<Func<UserWorkout, bool>>>()))
+                .ReturnsAsync(userWorkoutRecord);
+
+            var result = await _workoutService.RemoveFromMyWorkoutsAsync(_testWorkoutId, _testUserId);
+
+            Assert.IsTrue(result);
+
+            _userWorkoutRepositoryMock.Verify(x => x.DeleteAsync(userWorkoutRecord), Times.Once);
+        }
+
+
+        [Test]
+        public async Task RemoveFromDefaultWorkoutsAsync_WorkoutExists_ShouldDeleteWorkout()
+        {
+            var workoutGuid = Guid.NewGuid();
+            var workout = new Workout { Id = workoutGuid };
+
+            _workoutRepositoryMock
+                .Setup(x => x.FirstOrDefaultAsync(It.Is<Expression<Func<Workout, bool>>>(
+                    f => f.Compile()(workout))))
+                .ReturnsAsync(workout);
+
+            await _workoutService.RemoveFromDefaultWorkoutsAsync(workoutGuid);
+
+            _workoutRepositoryMock.Verify(
+                x => x.DeleteAsync(It.Is<Workout>(w => w.Id == workoutGuid)),
+                Times.Once);
+        }
+
+        [Test]
+        public async Task RemoveFromDefaultWorkoutsAsync_WorkoutNotFound_ShouldNotDeleteAnything()
+        {
+            var workoutGuid = Guid.NewGuid();
+
+            _workoutRepositoryMock
+                .Setup(x => x.FirstOrDefaultAsync(It.IsAny<Expression<Func<Workout, bool>>>()))
+                .ReturnsAsync((Workout)null);
+
+            await _workoutService.RemoveFromDefaultWorkoutsAsync(workoutGuid);
+
+            _workoutRepositoryMock.Verify(
+                x => x.DeleteAsync(It.IsAny<Workout>()),
+                Times.Never);
+        }
+
+        [Test]
+        public async Task RemoveFromDefaultWorkoutsAsync_RepositoryThrowsException_ShouldPropagateException()
+        {
+            var workoutGuid = Guid.NewGuid();
+            var workout = new Workout { Id = workoutGuid };
+
+            _workoutRepositoryMock
+                .Setup(x => x.FirstOrDefaultAsync(It.Is<Expression<Func<Workout, bool>>>(
+                    f => f.Compile()(workout))))
+                .ReturnsAsync(workout);
+
+            _workoutRepositoryMock
+                .Setup(x => x.DeleteAsync(It.Is<Workout>(w => w.Id == workoutGuid)))
+                .ThrowsAsync(new Exception("Database error"));
+
+            var exception = Assert.ThrowsAsync<Exception>(
+                async () => await _workoutService.RemoveFromDefaultWorkoutsAsync(workoutGuid)
+            );
+            Assert.That(exception.Message, Is.EqualTo("Database error"));
+        }
+
+        [Test]
         public async Task IsExerciseInWorkoutAsync_ShouldReturnTrue_WhenExerciseExistsInWorkout()
         {
             var workoutId = Guid.NewGuid();

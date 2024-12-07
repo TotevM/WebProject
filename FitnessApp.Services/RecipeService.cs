@@ -129,7 +129,6 @@ namespace FitnessApp.Services
         public async Task<Recipe?> GetRecipeAsync(Guid id)
         {
             var recipe = await recipeRepository.GetByIdAsync(id);
-
             return recipe;
         }
         public RecipeDetailsViewModel RecipeDetailsView(Recipe recipe)

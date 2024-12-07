@@ -6,7 +6,6 @@
     using FitnessApp.Data.Repository.Contracts;
     using FitnessApp.Services;
     using FitnessApp.Services.ServiceContracts;
-    using FitnessApp.Services.ServiceContracts.FitnessApp.Services.ServiceContracts;
     using Microsoft.Extensions.DependencyInjection;
 
     public static class ServiceCollectionExtensions

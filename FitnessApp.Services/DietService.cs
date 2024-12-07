@@ -67,10 +67,7 @@ namespace FitnessApp.Services
             }
 
             AddRecipeToDietViewModel viewModel = new AddRecipeToDietViewModel
-            {
-                RecipeId = recipeId.ToString(),
-                Diets = diets
-            };
+            {RecipeId = recipeId.ToString(), Diets = diets};
 
             return viewModel;
         }//completed
@@ -151,6 +148,7 @@ namespace FitnessApp.Services
                     Fats = recipe.Fats,
                     UserId = dietExists.UserID
                 }).ToListAsync();
+            ;
             ;
 
             return recipes;
@@ -370,9 +368,6 @@ namespace FitnessApp.Services
         public async Task<bool> RemoveFromMyDietsAsync(Guid dietId, string userId)
         {
             var record = await userDietRepository.FirstOrDefaultAsync(ud => ud.UserId == userId && ud.DietId == dietId);
-            //GetAllAttached()
-            //.Where(ud => ud.UserId == userId && ud.DietId == dietId)
-            //.FirstOrDefault();
 
             if (record == null)
             {
@@ -385,11 +380,6 @@ namespace FitnessApp.Services
 
         public async Task UpdateDietMacronutrientsAsync(Guid dietId)
         {
-            //var diet = await dietRepository.GetAllAttached()
-            //        .Include(d => d.DietsRecipes)
-            //        .ThenInclude(dr => dr.Recipe)
-            //        .FirstOrDefaultAsync(d => d.Id == dietId);
-
             var diet = await dietRepository.GetByIdAsync(dietId);
 
             if (diet != null)

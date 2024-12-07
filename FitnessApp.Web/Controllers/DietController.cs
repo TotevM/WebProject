@@ -54,28 +54,6 @@ namespace FitnessApp.Web.Controllers
             return View(dietsViewModel);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> RecipeDetailsInDiet(string recipeId, string dietId)
-        {
-            Guid dietGuid = Guid.Empty;
-            bool isDietGuidValid = this.IsGuidValid(dietId, ref dietGuid);
-            Guid recipeGuid = Guid.Empty;
-            bool isRecipeGuidValid = this.IsGuidValid(recipeId, ref recipeGuid);
-            if (!isDietGuidValid || !isRecipeGuidValid)
-            {
-                return this.RedirectToAction(nameof(MyDiets));
-            }
-
-            ViewModels.RecipeDetailsInDiet viewModel = await dietService.RecipeDetailsInDietAsync(recipeGuid, dietGuid);
-
-            if (viewModel == null)
-            {
-                return this.RedirectToAction(nameof(MyDiets));
-            }
-
-            return View(viewModel);
-        }
-
         [HttpPost]
         public async Task<IActionResult> RemoveFromDiet(string dietId, string recipeId)
         {
@@ -112,35 +90,12 @@ namespace FitnessApp.Web.Controllers
             return RedirectToAction("DietDetails", new { dietId });
         }
 
-        [HttpGet]
-        public async Task<IActionResult> AddRecipeToDiet(string recipeId)
-        {
-            Guid recipeGuid = Guid.Empty;
-            bool isRecipeGuidValid = this.IsGuidValid(recipeId, ref recipeGuid);
-
-            if (!isRecipeGuidValid)
-            {
-                return this.RedirectToAction("Index", "Recipe");
-            }
-
-            bool role = User.IsInRole(AdminRole) || User.IsInRole(TrainerRole);
-            var viewModel = await dietService.AddRecipeToDietViewAsync(recipeGuid, role);
-
-            if (viewModel == null)
-            {
-                return this.RedirectToAction("Index", "Recipe");
-            }
-
-            return View(viewModel);
-        }
-
         [HttpPost]
         public async Task<IActionResult> AddRecipeToDiet(AddRecipeToDietViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                model.Diets = await dietService.GetDietsSelectListAsync();
-                return View(model);
+                return this.RedirectToAction("Index", "Recipe");
             }
             Guid dietGuid = Guid.Empty;
             bool isDietGuidValid = this.IsGuidValid(model.SelectedDietId, ref dietGuid);
@@ -158,8 +113,23 @@ namespace FitnessApp.Web.Controllers
 
             if (!recipeExists || !dietExists)
             {
-                model.Diets = await dietService.GetDietsSelectListAsync();
-                return View(model);
+                return RedirectToAction("Index", "Recipe");
+            }
+
+            var isDefault =await dietService.IsDefaultDiet(dietGuid);
+            bool isInRole = User.IsInRole(TrainerRole);
+
+            if (isDefault==true)
+            {
+                if (isInRole)
+                {
+                    await dietService.AddRecipeToDietAsync(recipeGuid, dietGuid);
+                    await dietService.UpdateDietMacronutrientsAsync(dietGuid);
+
+                    return RedirectToAction("DietDetails", new { dietId = model.SelectedDietId });
+                }
+                TempData["ErrorMessage"] = "You arent allowed to edit a default diet.";
+                return RedirectToAction("Index", "Recipe");
             }
 
             var isPresent = await dietService.IsRecipeInDietAsync(recipeGuid, dietGuid);

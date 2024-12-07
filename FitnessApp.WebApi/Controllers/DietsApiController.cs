@@ -2,6 +2,7 @@
 using FitnessApp.ViewModels;
 using FitnessApp.ViewModels.ApiDTOs;
 using Microsoft.AspNetCore.Mvc;
+using static FitnessApp.Common.ApplicationConstants;
 
 [ApiController]
 [Route("api/[controller]")]

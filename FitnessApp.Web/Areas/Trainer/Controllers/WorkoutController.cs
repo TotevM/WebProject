@@ -91,7 +91,6 @@ namespace FitnessApp.Web.Areas.Trainer.Controllers
         {
             if (!ModelState.IsValid)
             {
-                //model.Exercises = await workoutService.GetExercisesSelectListAsync();
                 return RedirectToAction(nameof(ManageDefaultWorkouts));
             }
             Guid workoutGuid = Guid.Empty;
@@ -111,8 +110,6 @@ namespace FitnessApp.Web.Areas.Trainer.Controllers
 
             if (!recipeExists || !dietExists)
             {
-                //model.Exercises = await workoutService.GetExercisesSelectListAsync();
-                //return View(model);
                 return RedirectToAction(nameof(ManageDefaultWorkouts));
             }
 

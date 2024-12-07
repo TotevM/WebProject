@@ -1,5 +1,5 @@
 ﻿using FitnessApp.Data.Models;
-using FitnessApp.Services.ServiceContracts.FitnessApp.Services.ServiceContracts;
+using FitnessApp.Services.ServiceContracts;
 using FitnessApp.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
