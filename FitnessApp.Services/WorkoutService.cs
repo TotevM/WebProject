@@ -60,48 +60,57 @@ namespace FitnessApp.Services
             return availableExercises!;
         }
 
-        public async Task<List<MyWorkoutsView>> DefaultWorkoutsForTrainers(string userId)
+        //public async Task<List<MyWorkoutsView>> DefaultWorkoutsForTrainers(string userId)
+        //{
+        //    var workouts = await workoutRepository.GetAllAttached()
+        //        .Where(w => w.UserID == null)
+        //        .OrderByDescending(u => u.CreatedOn)
+        //        .Select(w => new MyWorkoutsView
+        //        {
+        //            Id = w.Id.ToString(),
+        //            Name = w.Name,
+        //            Exercises = exerciseRepository.GetAllAttached()
+        //            .Where(e => e.WorkoutsExercises.Any(x => x.WorkoutId == w.Id && !x.IsDeleted))
+        //            .Select(x => new ExercisesInMyWorkoutsView
+        //            {
+        //                Id = x.Id.ToString(),
+        //                Name = x.Name,
+        //                ImageUrl = x.ImageUrl
+        //            })
+        //            .ToList()
+        //        })
+        //        .ToListAsync();
+
+        //    return workouts;
+        //}
+
+        public async Task<List<MyWorkoutsView>> DefaultWorkouts(string userId = null)
         {
-            var workouts = await workoutRepository.GetAllAttached()
-                .Where(w => w.UserID == null)
+            var query = workoutRepository.GetAllAttached()
+                .Where(w => w.UserID == null);
+
+            if (!string.IsNullOrEmpty(userId))
+            {
+                query = query.Where(w => !w.UsersWorkouts.Any(u => u.UserId == userId));
+            }
+
+            var workouts = await query
                 .OrderByDescending(u => u.CreatedOn)
                 .Select(w => new MyWorkoutsView
                 {
                     Id = w.Id.ToString(),
                     Name = w.Name,
                     Exercises = exerciseRepository.GetAllAttached()
-                    .Where(e => e.WorkoutsExercises.Any(x => x.WorkoutId == w.Id && !x.IsDeleted))
-                    .Select(x => new ExercisesInMyWorkoutsView
-                    {
-                        Id = x.Id.ToString(),
-                        Name = x.Name,
-                        ImageUrl = x.ImageUrl
-                    })
-                    .ToList()
+                        .Where(e => e.WorkoutsExercises.Any(x => x.WorkoutId == w.Id && !x.IsDeleted))
+                        .Select(x => new ExercisesInMyWorkoutsView
+                        {
+                            Id = x.Id.ToString(),
+                            Name = x.Name,
+                            ImageUrl = x.ImageUrl
+                        })
+                        .ToList()
                 })
                 .ToListAsync();
-
-            return workouts;
-        }
-
-        public async Task<List<MyWorkoutsView>> DefaultWorkouts(string userId)
-        {
-            var workouts = await workoutRepository.GetAllAttached()
-                .Where(w => w.UserID == null && !w.UsersWorkouts.Any(u => u.UserId == userId))
-                .OrderByDescending(u => u.CreatedOn)
-                .Select(w => new MyWorkoutsView
-                {
-                    Id = w.Id.ToString(),
-                    Name = w.Name,
-                    Exercises = exerciseRepository.GetAllAttached()
-                    .Where(e => e.WorkoutsExercises.Any(x => x.WorkoutId == w.Id && !x.IsDeleted))
-                    .Select(x => new ExercisesInMyWorkoutsView
-                    {
-                        Id = x.Id.ToString(),
-                        Name = x.Name,
-                        ImageUrl=x.ImageUrl
-                    }).ToList()
-                }).ToListAsync();
 
             return workouts;
         }

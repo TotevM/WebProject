@@ -1,0 +1,105 @@
+﻿@using System.Security.Claims
+@model List<DietDetailsView>
+
+<div class="container my-5">
+    <h2 class="mb-4">Recipes List</h2>
+    <div class="row mt-4">
+        <div class="col-12 text-end">
+            <button onclick="window.history.back()" class="btn btn-secondary">Go Back</button>
+        </div>
+    </div>
+    <div class="row">
+        @if (Model.Count > 0)
+        {
+            @foreach (var recipe in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        @if (!string.IsNullOrEmpty(recipe.ImageUrl))
+                        {
+                            <img src="@recipe.ImageUrl" class="card-img-top" alt="@recipe.Name" style="max-height: 200px; object-fit: cover;">
+                        }
+                        else
+                        {
+                            <img src="~/images/NoPictureAvailable.png" class="card-img-top" alt="@recipe.Name" style="max-height: 200px; object-fit: cover;">
+                        }
+                        <div class="card-body text-center">
+                            <h5 class="card-title">@recipe.Name</h5>
+                        </div>
+                        <div class="card-footer">
+                            <p><strong>Calories:</strong> @recipe.Calories</p>
+                            <p><strong>Protein:</strong> @(recipe.Protein?.ToString())g</p>
+                            <p><strong>Carbohydrates:</strong> @(recipe.Carbohydrates?.ToString())g</p>
+                            <p><strong>Fats:</strong> @(recipe.Fats?.ToString())g</p>
+                            <button type="button" class="card-btn details" data-recipe-id="@recipe.RecipeId" data-bs-toggle="modal" data-bs-target="#recipeModal">
+                                View Details
+                            </button>
+
+                            <form action="@Url.Action("RemoveFromDiet", "Diet", new { dietId = recipe.DietId, recipeId = recipe.RecipeId })" method="post" class="d-inline">
+                                <button type="submit" class="card-btn warning">Remove</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12 text-center">
+                <p>Your diet does not contain any recipes yet!</p>
+            </div>
+        }
+    </div>
+
+    <div class="row">
+        <div class="col-12 text-end">
+            <a asp-controller="Recipe" asp-action="Index" class="btn btn-primary">Add New Recipe</a>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="recipeModal" tabindex="-1" aria-labelledby="recipeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="recipeModalLabel"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <img id="recipeImage" src="#" alt="" class="img-fluid mb-4" style="max-height: 400px; object-fit: cover;">
+                    </div>
+                    <div class="col-md-6">
+                        <h4>Nutritional Information</h4>
+                        <p><strong>Calories:</strong> <span id="recipeCalories"></span></p>
+                        <p><strong>Protein:</strong> <span id="recipeProtein"></span> g</p>
+                        <p><strong>Carbohydrates:</strong> <span id="recipeCarbohydrates"></span> g</p>
+                        <p><strong>Fats:</strong> <span id="recipeFats"></span> g</p>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <h4>Ingredients</h4>
+                        <p id="recipeIngredients"></p>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <h4>Preparation</h4>
+                        <p id="recipePreparation"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer"></div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/diet-details.css" />
+}
+
+@section Scripts {
+    <script src="~/js/diet-details.js" asp-append-version="true"></script>
+}

@@ -155,6 +155,9 @@ namespace FitnessApp.Services
             await recipeRepository.UpdateAsync(recipe);
         }
 
+
+
+
         public async Task UpdateDietsAsync(Guid id)
         {
             var diets = dietRepository.GetAllAttached().Where(d => d.DietsRecipes.Any(x => x.RecipeId == id)).ToList();

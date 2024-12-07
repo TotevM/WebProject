@@ -1,16 +1,10 @@
-﻿using FitnessApp.Common.Enumerations;
+﻿using System.Linq.Expressions;
 using FitnessApp.Data.Models;
 using FitnessApp.Data.Repository.Contracts;
 using FitnessApp.Services;
+using FitnessApp.ViewModels;
 using Moq;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using FitnessApp.ViewModels;
-using System.Linq.Expressions;
 
 namespace FitnessApp.Tests
 {
@@ -40,177 +34,219 @@ namespace FitnessApp.Tests
         }
 
         [Test]
+        public async Task IsExerciseInWorkoutAsync_ShouldReturnTrue_WhenExerciseExistsInWorkout()
+        {
+            var workoutId = Guid.NewGuid();
+            var exerciseId = Guid.NewGuid();
+            var workoutExercise = new WorkoutExercise { WorkoutId = workoutId, ExerciseId = exerciseId };
+
+            _workoutExerciseRepositoryMock
+                .Setup(repo => repo.FirstOrDefaultAsync(It.IsAny<Expression<Func<WorkoutExercise, bool>>>()))
+                .ReturnsAsync(workoutExercise);
+
+            var result = await _workoutService.IsExerciseInWorkoutAsync(workoutId, exerciseId);
+
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public async Task IsExerciseInWorkoutAsync_ShouldReturnFalse_WhenExerciseDoesNotExistInWorkout()
+        {
+            var workoutId = Guid.NewGuid();
+            var exerciseId = Guid.NewGuid();
+
+            _workoutExerciseRepositoryMock
+                .Setup(repo => repo.FirstOrDefaultAsync(It.IsAny<Expression<Func<WorkoutExercise, bool>>>()))
+                .ReturnsAsync((WorkoutExercise)null);
+
+            var result = await _workoutService.IsExerciseInWorkoutAsync(workoutId, exerciseId);
+
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public async Task WorkoutExist_ShouldReturnTrue_WhenWorkoutExists()
+        {
+            var workoutId = Guid.NewGuid();
+            var workout = new Workout { Id = workoutId };
+
+            _workoutRepositoryMock
+                .Setup(repo => repo.FirstOrDefaultAsync(It.IsAny<Expression<Func<Workout, bool>>>()))
+                .ReturnsAsync(workout);
+
+            var result = await _workoutService.WorkoutExist(workoutId);
+
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public async Task WorkoutExist_ShouldReturnFalse_WhenWorkoutDoesNotExist()
+        {
+            var workoutId = Guid.NewGuid();
+
+            _workoutRepositoryMock
+                .Setup(repo => repo.FirstOrDefaultAsync(It.IsAny<Expression<Func<Workout, bool>>>()))
+                .ReturnsAsync((Workout)null);
+
+            var result = await _workoutService.WorkoutExist(workoutId);
+
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public async Task RemoveExerciseFromWorkout_ShouldReturnTrue_WhenExerciseExists()
+        {
+            var workoutId = Guid.NewGuid();
+            var exerciseId = Guid.NewGuid();
+            var workoutExercise = new WorkoutExercise { WorkoutId = workoutId, ExerciseId = exerciseId };
+
+            _workoutExerciseRepositoryMock
+                .Setup(repo => repo.FirstOrDefaultAsync(It.IsAny<Expression<Func<WorkoutExercise, bool>>>()))
+                .ReturnsAsync(workoutExercise);
+
+            var result = await _workoutService.RemoveExerciseFromWorkout(exerciseId, workoutId);
+
+            Assert.IsTrue(result);
+            _workoutExerciseRepositoryMock.Verify(repo => repo.DeleteAsync(workoutExercise), Times.Once);
+        }
+
+        [Test]
+        public async Task RemoveExerciseFromWorkout_ShouldReturnFalse_WhenExerciseDoesNotExist()
+        {
+            var workoutId = Guid.NewGuid();
+            var exerciseId = Guid.NewGuid();
+
+            _workoutExerciseRepositoryMock
+                .Setup(repo => repo.FirstOrDefaultAsync(It.IsAny<Expression<Func<WorkoutExercise, bool>>>()))
+                .ReturnsAsync((WorkoutExercise)null);
+
+            var result = await _workoutService.RemoveExerciseFromWorkout(exerciseId, workoutId);
+
+            Assert.IsFalse(result);
+            _workoutExerciseRepositoryMock.Verify(repo => repo.DeleteAsync(It.IsAny<WorkoutExercise>()), Times.Never);
+        }
+
+        [Test]
+        public async Task GetWorkoutAsync_ShouldReturnWorkout_WhenWorkoutExists()
+        {
+            var workoutId = Guid.NewGuid();
+            var workout = new Workout { Id = workoutId, Name = "Test Workout" };
+
+            _workoutRepositoryMock
+                .Setup(repo => repo.GetByIdAsync(workoutId))
+                .ReturnsAsync(workout);
+
+            var result = await _workoutService.GetWorkoutAsync(workoutId);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(workoutId, result.Id);
+            _workoutRepositoryMock.Verify(repo => repo.GetByIdAsync(workoutId), Times.Once);
+        }
+
+        [Test]
         public async Task AddUserWorkoutAsync_ShouldReturnFalse_WhenUserWorkoutAlreadyExists()
         {
-            // Arrange
             var workoutId = Guid.NewGuid();
             var userId = "user123";
             var existingRecord = new UserWorkout { WorkoutId = workoutId, UserId = userId };
 
-            // Mock the repository to return an existing UserWorkout
             _userWorkoutRepositoryMock.Setup(repo => repo.FirstOrDefaultAsync(It.IsAny<System.Linq.Expressions.Expression<Func<UserWorkout, bool>>>()))
                 .ReturnsAsync(existingRecord);
 
-            // Act
             var result = await _workoutService.AddUserWorkoutAsync(workoutId, userId);
 
-            // Assert
-            Assert.IsFalse(result); // Should return false since the record exists
+            Assert.IsFalse(result); 
         }
 
         [Test]
         public async Task AddUserWorkoutAsync_ShouldReturnTrue_WhenUserWorkoutDoesNotExist()
         {
-            // Arrange
             var workoutId = Guid.NewGuid();
             var userId = "user123";
 
-            // Mock the repository to return null (no existing record)
             _userWorkoutRepositoryMock.Setup(repo => repo.FirstOrDefaultAsync(It.IsAny<System.Linq.Expressions.Expression<Func<UserWorkout, bool>>>()))
                 .ReturnsAsync((UserWorkout?)null);
 
-            // Mock the AddAsync to return a completed task
             _userWorkoutRepositoryMock.Setup(repo => repo.AddAsync(It.IsAny<UserWorkout>()))
                 .Returns(Task.CompletedTask);
 
-            // Act
             var result = await _workoutService.AddUserWorkoutAsync(workoutId, userId);
 
-            // Assert
-            Assert.IsTrue(result); // Should return true since no record exists
+            Assert.IsTrue(result); 
             _userWorkoutRepositoryMock.Verify(repo => repo.AddAsync(It.Is<UserWorkout>(uw => uw.UserId == userId && uw.WorkoutId == workoutId)), Times.Once);
         }
-
-
-
 
         [Test]
         public async Task AddWorkoutsExercisesToWorkout_ShouldCallAddAsync_WhenValidWorkoutAndExerciseGuid()
         {
-            // Arrange
             var workout = new Workout { Id = Guid.NewGuid(), Name = "Strength Training", UserID = "user123" };
             var exerciseGuid = Guid.NewGuid();
 
-            // Act
             await _workoutService.AddWorkoutsExercisesToWorkout(workout, exerciseGuid);
 
-            // Assert
             _workoutExerciseRepositoryMock.Verify(repo => repo.AddAsync(It.Is<WorkoutExercise>(we =>
                 we.WorkoutId == workout.Id && we.ExerciseId == exerciseGuid)), Times.Once);
         }
 
-
-
-
-
-
         [Test]
         public async Task RemoveFromMyWorkoutsAsync_ShouldReturnFalse_WhenUserWorkoutDoesNotExist()
         {
-            // Arrange
             var workoutId = Guid.NewGuid();
             var userId = "user123";
 
-            // Create the Expression<Func<T, bool>> for the filter
             Expression<Func<UserWorkout, bool>> filter = uw => uw.UserId == userId && uw.WorkoutId == workoutId;
 
-            // Mock repository methods (synchronously returning wrapped in Task)
             _userWorkoutRepositoryMock
                 .Setup(repo => repo.FirstOrDefaultAsync(It.Is<Expression<Func<UserWorkout, bool>>>(e => e.Body.ToString() == filter.Body.ToString())))
-                .Returns(Task.FromResult<UserWorkout?>(null));  // Simulate that no record exists.
+                .Returns(Task.FromResult<UserWorkout?>(null));
 
-            // Act
             var result = await _workoutService.RemoveFromMyWorkoutsAsync(workoutId, userId);
 
-            // Assert
             Assert.IsFalse(result);
             _userWorkoutRepositoryMock.Verify(repo => repo.DeleteAsync(It.IsAny<UserWorkout>()), Times.Never);
         }
 
-
-
         [Test]
         public async Task CreateAndReturnWorkout_ShouldCreateWorkoutAndReturnIt()
         {
-            // Arrange
             var workoutDto = new WorkoutCreationViewModel
             {
                 WorkoutName = "New Workout",
                 UserId = "user123"
             };
 
-            // Mock AddAsync to simulate adding the workout (no actual repository interaction)
             _workoutRepositoryMock.Setup(repo => repo.AddAsync(It.IsAny<Workout>())).Returns(Task.CompletedTask);
 
-            // Act
             var result = await _workoutService.CreateAndReturnWorkout(workoutDto);
 
-            // Assert
-            Assert.NotNull(result);  // Ensure the result is not null
-            Assert.AreEqual(workoutDto.WorkoutName, result.Name);  // Ensure the Name matches
-            Assert.AreEqual(workoutDto.UserId, result.UserID);  // Ensure the UserId matches
-            Assert.AreNotEqual(Guid.Empty, result.Id);  // Ensure a valid GUID is assigned
+            Assert.NotNull(result);
+            Assert.AreEqual(workoutDto.WorkoutName, result.Name);
+            Assert.AreEqual(workoutDto.UserId, result.UserID);
+            Assert.AreNotEqual(Guid.Empty, result.Id);
         }
-
-
-
-        //[Test]
-        //public async Task AddUserWorkoutAsync_ShouldReturnFalse_WhenUserWorkoutAlreadyExists()
-        //{
-        //    // Arrange
-        //    var workoutId = Guid.NewGuid();
-        //    var userId = "user123";
-        //    var existingRecord = new UserWorkout { WorkoutId = workoutId, UserId = userId };
-
-        //    // Mock the GetAllAttached method to return a collection containing the existing user-workout record
-        //    _userWorkoutRepositoryMock.Setup(repo => repo.GetAllAttached())
-        //        .Returns(new List<UserWorkout> { existingRecord }.AsQueryable()); // Convert list to IQueryable
-
-        //    // Act
-        //    var result = await _workoutService.AddUserWorkoutAsync(workoutId, userId);
-
-        //    // Assert
-        //    Assert.IsFalse(result);  // Expecting false because the user-workout already exists
-        //}
-
-
-
-
-
-
-
-
-
-
 
         [Test]
         public async Task ExerciseExist_ShouldReturnTrue_WhenExerciseExists()
         {
-            // Arrange
             var exerciseId = Guid.NewGuid();
             var exercise = new Exercise { Id = exerciseId, Name = "Push Up" };
 
             _exerciseRepositoryMock.Setup(repo => repo.GetByIdAsync(exerciseId)).ReturnsAsync(exercise);
 
-            // Act
             var result = await _workoutService.ExerciseExist(exerciseId);
 
-            // Assert
             Assert.IsTrue(result);
         }
 
         [Test]
         public async Task ExerciseExist_ShouldReturnFalse_WhenExerciseDoesNotExist()
         {
-            // Arrange
             var exerciseId = Guid.NewGuid();
 
             _exerciseRepositoryMock.Setup(repo => repo.GetByIdAsync(exerciseId)).ReturnsAsync((Exercise?)null);
 
-            // Act
             var result = await _workoutService.ExerciseExist(exerciseId);
 
-            // Assert
             Assert.IsFalse(result);
         }
     }

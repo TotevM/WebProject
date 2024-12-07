@@ -46,13 +46,13 @@ namespace FitnessApp.Services
             if (role)
             {
                 diets = await dietRepository.GetAllAttached()
-      .Where(x => x.UserID == null)
-     .Select(d => new SelectListItem
-     {
-         Value = d.Id.ToString(),
-         Text = d.Name
-     })
-     .ToListAsync();
+                          .Where(x => x.UserID == null)
+                         .Select(d => new SelectListItem
+                         {
+                             Value = d.Id.ToString(),
+                             Text = d.Name
+                         })
+                         .ToListAsync();
             }
             else
             {
@@ -85,10 +85,18 @@ namespace FitnessApp.Services
             await userDietRepository.AddAsync(model);
         }//completed
 
-        public async Task<List<DietIndexView>> DefaultDietsAsync(string userId)
+
+        public async Task<List<DietIndexView>> DefaultDietsAsync(string userId = null)
         {
-            var diets = await dietRepository.GetAllAttached()
-                .Where(d => !d.UserDiets.Any(ud => ud.UserId == userId) && d.UserID == null)
+            var query = dietRepository.GetAllAttached()
+                .Where(d => d.UserID == null);
+
+            if (!string.IsNullOrEmpty(userId))
+            {
+                query = query.Where(d => !d.UserDiets.Any(ud => ud.UserId == userId));
+            }
+
+            var diets = await query
                 .Select(diet => new DietIndexView
                 {
                     DietId = diet.Id.ToString(),
@@ -101,7 +109,25 @@ namespace FitnessApp.Services
                 }).ToListAsync();
 
             return diets;
-        }//completed
+        }
+
+        //public async Task<List<DietIndexView>> DefaultDietsAsync(string userId)
+        //{
+        //    var diets = await dietRepository.GetAllAttached()
+        //        .Where(d => !d.UserDiets.Any(ud => ud.UserId == userId) && d.UserID == null)
+        //        .Select(diet => new DietIndexView
+        //        {
+        //            DietId = diet.Id.ToString(),
+        //            Name = diet.Name,
+        //            ImageUrl = diet.ImageUrl,
+        //            Calories = diet.Calories,
+        //            Protein = diet.Proteins,
+        //            Carbohydrates = diet.Carbohydrates,
+        //            Fats = diet.Fats
+        //        }).ToListAsync();
+
+        //    return diets;
+        //}//completed
 
         public async Task<List<DietDetailsView>?> DietDetailsAsync(Guid dietId)
         {
@@ -203,24 +229,24 @@ namespace FitnessApp.Services
             return true;
         }
 
-        public async Task<List<DietIndexView>> DefaultDietsForTrainersAsync()
-        {
+        //public async Task<List<DietIndexView>> DefaultDietsForTrainersAsync()
+        //{
 
-                var diets = await dietRepository.GetAllAttached()
-                    .Where(d => d.UserID == null)
-                    .Select(diet => new DietIndexView
-                    {
-                        DietId = diet.Id.ToString(),
-                        Name = diet.Name,
-                        ImageUrl = diet.ImageUrl,
-                        Calories = diet.Calories,
-                        Protein = diet.Proteins,
-                        Carbohydrates = diet.Carbohydrates,
-                        Fats = diet.Fats
-                    }).ToListAsync();
+        //    var diets = await dietRepository.GetAllAttached()
+        //        .Where(d => d.UserID == null)
+        //        .Select(diet => new DietIndexView
+        //        {
+        //            DietId = diet.Id.ToString(),
+        //            Name = diet.Name,
+        //            ImageUrl = diet.ImageUrl,
+        //            Calories = diet.Calories,
+        //            Protein = diet.Proteins,
+        //            Carbohydrates = diet.Carbohydrates,
+        //            Fats = diet.Fats
+        //        }).ToListAsync();
 
-                return diets;
-        }
+        //    return diets;
+        //}
 
         public async Task<List<SelectListItem>> GetDietsSelectListAsync()
         {
@@ -254,7 +280,7 @@ namespace FitnessApp.Services
             var model = await dietRecipeRepository.FirstOrDefaultAsync(dr =>
                 dr.DietId == selectedDietId && dr.RecipeId == recipeId);
 
-            if (model==null)
+            if (model == null)
             {
                 return false;
             }
@@ -320,11 +346,9 @@ namespace FitnessApp.Services
 
         public async Task RemoveFromDietAsync(Guid dietId, Guid recipeId)
         {
-            var toRemove =
+            DietRecipe? toRemove =
                 await dietRecipeRepository.FirstOrDefaultAsync(x => x.RecipeId == recipeId && x.DietId == dietId);
-            //    .GetAllAttached()
-            //    .Where(x => x.RecipeId == recipeId && x.DietId == dietId)
-            //.FirstOrDefault();
+
 
             if (toRemove != null)
             {

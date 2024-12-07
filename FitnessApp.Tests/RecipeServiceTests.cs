@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using NUnit.Framework;
-using Moq;
-using FitnessApp.Data.Repository.Contracts;
+﻿using FitnessApp.Common.Enumerations;
 using FitnessApp.Data.Models;
+using FitnessApp.Data.Repository.Contracts;
 using FitnessApp.Services;
-using FitnessApp.Common.Enumerations;
 using FitnessApp.ViewModels.RecipeModels;
-using Microsoft.EntityFrameworkCore;
+using Moq;
+using NUnit.Framework;
 
 namespace FitnessApp.Tests
 {
@@ -37,91 +32,34 @@ namespace FitnessApp.Tests
             );
         }
 
+        [Test]
+        public async Task SoftDeleteRecipe_ShouldSetIsDeletedToTrueAndUpdateRecipe()
+        {
+            var recipeId = Guid.NewGuid();
+            var recipe = new Recipe
+            {
+                Id = recipeId,
+                Name = "Test Recipe",
+                Carbohydrates = 2,
+                Proteins = 2,
+                Calories = 2,
+                Fats = 4,
+                IsDeleted = false
+            };
 
-        //[Test]
-        //public async Task UpdateRecipe_ValidInput_UpdatesRecipeCorrectly()
-        //{
-        //    // Arrange
-        //    var originalRecipe = new Recipe
-        //    {
-        //        Id = Guid.NewGuid(),
-        //        Name = "Original Recipe",
-        //        Preparation = "Old preparation",
-        //        Ingredients = "Old ingredients",
-        //        ImageUrl = "old-image.jpg",
-        //        Calories = 100,
-        //        Proteins = 10,
-        //        Carbohydrates = 20,
-        //        Fats = 5
-        //    };
-        //    var goal = Goal.Health;
-        //    var updateModel = new RecipeEditViewModel
-        //    {
-        //        RecipeName = "Updated Recipe",
-        //        Preparation = "New preparation steps",
-        //        Ingredients = "New ingredients list",
-        //        ImageUrl = "new-image.jpg",
-        //        Calories = 150,
-        //        Protein = 15,
-        //        Carbohydrates = 25,
-        //        Fats = 8
-        //    };
+            await _recipeService.SoftDeleteRecipe(recipe);
 
-        //    // Setup repository update method
-        //    _mockRecipeRepository
-        //        .Setup(repo => repo.UpdateAsync(It.IsAny<Recipe>()))
-        //        .Returns((Task<bool>)Task.CompletedTask);
+            Assert.IsTrue(recipe.IsDeleted, "The recipe's IsDeleted property should be set to true.");
 
-        //    // Act
-        //    await _recipeService.UpdateRecipe(originalRecipe, updateModel, goal);
-
-        //    // Assert
-        //    _mockRecipeRepository.Verify(repo => repo.UpdateAsync(It.Is<Recipe>(r =>
-        //        r.Name == updateModel.RecipeName &&
-        //        r.Preparation == updateModel.Preparation &&
-        //        r.Ingredients == updateModel.Ingredients &&
-        //        r.ImageUrl == updateModel.ImageUrl &&
-        //        r.Goal == goal &&
-        //        r.Calories == updateModel.Calories &&
-        //        r.Proteins == updateModel.Protein &&
-        //        r.Carbohydrates == updateModel.Carbohydrates &&
-        //        r.Fats == updateModel.Fats
-        //    )), Times.Once);
-        //}
-
-        //[Test]
-        //public void UpdateRecipe_NullCalories_ThrowsArgumentException()
-        //{
-        //    // Arrange
-        //    var recipe = new Recipe
-        //    {
-        //        Id = Guid.NewGuid(),
-        //        Name = "Original Recipe",
-        //        Preparation = "Old preparation",
-        //        Ingredients = "Old ingredients",
-        //        ImageUrl = "old-image.jpg",
-        //        Calories = 100,
-        //        Proteins = 10,
-        //        Carbohydrates = 20,
-        //        Fats = 5
-        //    };
-        //    var updateModel = new RecipeEditViewModel
-        //    {
-        //        RecipeName = "Test Recipe",
-        //        Calories = null  // Null value
-        //    };
-        //    var goal = Goal.Health;
-
-        //    // Act & Assert
-        //    Assert.ThrowsAsync<ArgumentException>(
-        //        async () => await _recipeService.UpdateRecipe(recipe, updateModel, goal)
-        //    );
-        //}
+            _mockRecipeRepository.Verify(repo => repo.UpdateAsync(It.Is<Recipe>(r =>
+                r.Id == recipeId &&
+                r.IsDeleted == true
+            )), Times.Once);
+        }
 
         [Test]
         public void UpdateRecipe_NullProtein_ThrowsInvalidOperationException()
         {
-            // Arrange
             var recipe = new Recipe
             {
                 Id = Guid.NewGuid(),
@@ -138,30 +76,18 @@ namespace FitnessApp.Tests
             {
                 RecipeName = "Test Recipe",
                 Calories = 100,
-                Protein = null  // Null value
+                Protein = null
             };
             var goal = Goal.Health;
 
-            // Act & Assert
             Assert.ThrowsAsync<InvalidOperationException>(
                 async () => await _recipeService.UpdateRecipe(recipe, updateModel, goal)
             );
         }
 
-
-
-
-
-
-
-
-
-
-
         [Test]
         public async Task UpdateRecipe_RepositoryUpdateFails_PropagatesException()
         {
-            // Arrange
             var recipe = new Recipe
             {
                 Id = Guid.NewGuid(),
@@ -184,17 +110,14 @@ namespace FitnessApp.Tests
             };
             var goal = new Goal();
 
-            // Setup repository to throw an exception
             _mockRecipeRepository
                 .Setup(repo => repo.UpdateAsync(It.IsAny<Recipe>()))
                 .ThrowsAsync(new Exception("Database update failed"));
 
-            // Act & Assert
             Assert.ThrowsAsync<Exception>(
                 async () => await _recipeService.UpdateRecipe(recipe, updateModel, goal)
             );
         }
-
 
         [Test]
         public void DeleteView_ShouldMapRecipeToDeleteRecipeView()
@@ -303,10 +226,8 @@ namespace FitnessApp.Tests
         [Test]
         public void AddRecipe_ReturnsCorrectViewModel()
         {
-            // Act
             var result = _recipeService.AddRecipe();
 
-            // Assert
             Assert.IsNotNull(result);
             Assert.IsInstanceOf<AddRecipeView>(result);
             Assert.AreEqual(Enum.GetValues(typeof(Goal)).Length, result.Goals.Count);

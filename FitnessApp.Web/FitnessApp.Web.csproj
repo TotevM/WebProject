@@ -35,4 +35,11 @@
 	<ProjectReference Include="..\FitnessApp.Infrastructure\FitnessApp.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Areas\Trainer\Views\Diet\DietDetails.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

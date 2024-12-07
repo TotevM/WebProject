@@ -8,7 +8,7 @@ namespace FitnessApp.Services.ServiceContracts
     public interface IDietService
     {
         Task<List<MyDietsIndexView>> MyDietsAsync(string userId);//completed
-        Task<List<DietIndexView>> DefaultDietsAsync(string userId); //completed
+        /*Task<List<DietIndexView>> DefaultDietsAsync(string userId);*/ //completed
         Task<List<DietDetailsView>?> DietDetailsAsync(Guid dietId);//completed
         Task<RecipeDetailsInDiet> RecipeDetailsInDietAsync(Guid recipeId, Guid dietId);//completed
         Task RemoveFromDietAsync(Guid dietId, Guid recipeId);//completed
@@ -26,6 +26,7 @@ namespace FitnessApp.Services.ServiceContracts
         Task<Diet> CreateAndReturnDiet(DietCreationViewModel dietDto);
         Task AddDietsRecipesToDiet(Diet diet, Guid recipeGuid);
         Task<bool> AddUserDietAsync(Guid dietGuid, string userId);
-        Task<List<DietIndexView>> DefaultDietsForTrainersAsync();
+        //Task<List<DietIndexView>> DefaultDietsForTrainersAsync();
+        Task<List<DietIndexView>> DefaultDietsAsync(string? userId);
     }
 }

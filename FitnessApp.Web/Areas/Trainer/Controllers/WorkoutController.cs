@@ -24,7 +24,7 @@ namespace FitnessApp.Web.Areas.Trainer.Controllers
         public async Task<IActionResult> ManageDefaultWorkouts()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var workouts = await workoutService.DefaultWorkoutsForTrainers(userId!);
+            var workouts = await workoutService.DefaultWorkouts(null);
 
             return View(workouts);
         }
