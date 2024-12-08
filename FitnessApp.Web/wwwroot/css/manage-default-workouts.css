@@ -220,6 +220,11 @@
     font-size: 1rem !important;
 }
 
+.close-btn {
+    background-color: transparent;
+    border: none;
+}
+
 #actionBtn {
     font-weight: 600;
     font-size: 1rem;

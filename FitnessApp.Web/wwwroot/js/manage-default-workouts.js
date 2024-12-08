@@ -58,6 +58,26 @@
         exerciseSelect.innerHTML = `<option value="" disabled selected>Loading exercises...</option>`;
         await loadExercises(workoutId);
     });
+
+    const errorMessage = document.querySelector('.alert.alert-danger');
+
+    const closeMessages = (message) => {
+        if (message) {
+            const closeButton = message.querySelector('.close-btn');
+            closeButton.addEventListener('click', () => {
+                message.classList.add('d-none');
+            });
+        }
+    };
+
+    closeMessages(errorMessage);
+
+    // Auto-hide messages after 3 seconds
+    if (errorMessage) {
+        setTimeout(() => {
+            if (errorMessage) errorMessage.classList.add('d-none');
+        }, 3000);
+    }
 });
 
 document.addEventListener('DOMContentLoaded', () => {

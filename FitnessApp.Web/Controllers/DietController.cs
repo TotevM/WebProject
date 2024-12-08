@@ -55,42 +55,6 @@ namespace FitnessApp.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> RemoveFromDiet(string dietId, string recipeId)
-        {
-            Guid dietGuid = Guid.Empty;
-            bool isDietGuidValid = this.IsGuidValid(dietId, ref dietGuid);
-
-            Guid recipeGuid = Guid.Empty;
-            bool isRecipeGuidValid = this.IsGuidValid(recipeId, ref recipeGuid);
-
-            if (!isDietGuidValid || !isRecipeGuidValid)
-            {
-                return this.RedirectToAction(nameof(MyDiets));
-            }
-
-            var isDefault = await dietService.IsDefaultDiet(dietGuid);
-            var recipeExists = await dietService.RecipeExists(recipeGuid);
-
-            if (isDefault == null || !recipeExists)
-            {
-                //sth is wrong display msg
-                return RedirectToAction("MyDiets", "Diet");
-            }
-
-            var role = User.IsInRole(TrainerRole);
-
-            if (isDefault == true && !role)
-            {
-                //msg display cant change the recipes default diet
-                /*await dietService.RemoveFromDietAsync(dietGuid, recipeGuid);*///To remove after implementing add custom diet
-                return RedirectToAction("MyDiets", "Diet");
-            }
-
-            await dietService.RemoveFromDietAsync(dietGuid, recipeGuid);
-            return RedirectToAction("DietDetails", new { dietId });
-        }
-
-        [HttpPost]
         public async Task<IActionResult> AddRecipeToDiet(AddRecipeToDietViewModel model)
         {
             if (!ModelState.IsValid)
@@ -205,6 +169,40 @@ namespace FitnessApp.Web.Controllers
             ViewBag.AvailableRecipes = availableRecipes;
 
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveFromDiet(string dietId, string recipeId)
+        {
+            Guid dietGuid = Guid.Empty;
+            bool isDietGuidValid = this.IsGuidValid(dietId, ref dietGuid);
+
+            Guid recipeGuid = Guid.Empty;
+            bool isRecipeGuidValid = this.IsGuidValid(recipeId, ref recipeGuid);
+
+            if (!isDietGuidValid && !isRecipeGuidValid)
+            {
+                return this.RedirectToAction(nameof(MyDiets));
+            }
+
+            var isDefault = await dietService.IsDefaultDiet(dietGuid);
+            var recipeExists = await dietService.RecipeExists(recipeGuid);
+
+            if (isDefault == null && !recipeExists)
+            {
+                return RedirectToAction("MyDiets", "Diet");
+            }
+
+            var role = User.IsInRole(TrainerRole);
+
+            if (isDefault == true && !role)
+            { 
+                await dietService.RemoveFromDietAsync(dietGuid, recipeGuid);
+                return RedirectToAction("MyDiets", "Diet");
+            }
+
+            await dietService.RemoveFromDietAsync(dietGuid, recipeGuid);
+            return RedirectToAction("DietDetails", new { dietId });
         }
     }
 }

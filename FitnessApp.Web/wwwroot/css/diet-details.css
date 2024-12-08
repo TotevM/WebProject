@@ -18,26 +18,63 @@
     transition: background-color 0.3s ease;
 }
 
-    .card-btn.details {
-        background-color: var(--primary-color);
-        color: white;
-        border: none;
+.heading-buttons {
+    display: flex;
+    gap: 20px;
+}
+
+.go-back {
+    transition: all 0.3s ease;
+}
+
+    .go-back:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
 
-        .card-btn.details:hover {
-            background-color: var(--primary-color-dark);
-        }
+.card-btn.create {
+    background-color: var(--success-color);
+    border: 0;
+    color: white;
+    transition: all 0.3s ease;
+}
 
-    .card-btn.warning {
-        background-color: var(--warning-color);
+    .card-btn.create:hover {
+        background-color: var(--success-color-dark);
+        border: 0;
         color: white;
-        border: none;
-        cursor: pointer;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
 
-        .card-btn.warning:hover {
-            background-color: var(--warning-color-dark);
-        }
+.card-btn.details {
+    background-color: var(--primary-color);
+    border: 0;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+    .card-btn.details:hover {
+        background-color: var(--primary-color-dark);
+        border: 0;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+.card-btn.warning {
+    background-color: var(--warning-color);
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+    .card-btn.warning:hover {
+        background-color: var(--warning-color-dark);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
 
 /*view details modal*/
 .modal {
@@ -163,3 +200,20 @@
         .modal-footer .btn-danger:hover {
             background-color: #c82333;
         }
+
+.card-title {
+    flex: 1 0;
+    margin-bottom: 0 !important;
+}
+
+    .card-title h5 {
+        margin-bottom: 0 !important;
+    }
+
+.macros {
+    flex-basis: 45%;
+}
+
+.card-buttons {
+    flex-basis: 250px;
+}

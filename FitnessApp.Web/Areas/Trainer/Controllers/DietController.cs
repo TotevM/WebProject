@@ -1,4 +1,5 @@
 ﻿using System.Security.Claims;
+using FitnessApp.Data.Models;
 using FitnessApp.Services;
 using FitnessApp.Services.ServiceContracts;
 using FitnessApp.Web.Controllers;
@@ -92,6 +93,28 @@ namespace FitnessApp.Web.Areas.Trainer.Controllers
 
             await dietService.RemoveFromDietAsync(dietGuid, recipeGuid);
             return RedirectToAction("DietDetails", new { dietId });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteDefaultDiet(string dietId)
+        {
+            Guid dietGuid = Guid.Empty;
+            bool isDietGuidValid = this.IsGuidValid(dietId, ref dietGuid);
+
+            if (!isDietGuidValid)
+            {
+                return this.RedirectToAction(nameof(ManageDefaultDiets));
+            }
+
+            bool exists = await dietService.DietExists(dietGuid);
+            if (!exists)
+            {
+                return this.RedirectToAction(nameof(ManageDefaultDiets));
+            }
+
+            await dietService.DeleteDefaultDiet(dietGuid);
+
+            return this.RedirectToAction(nameof(ManageDefaultDiets));
         }
     }
 }

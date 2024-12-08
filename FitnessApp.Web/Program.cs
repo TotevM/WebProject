@@ -2,6 +2,7 @@ using FitnessApp.Data;
 using FitnessApp.Data.Models;
 using FitnessApp.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace FitnessApp.Web
@@ -28,7 +29,11 @@ namespace FitnessApp.Web
             builder.Services.RegisterRepositories(typeof(ApplicationUser).Assembly);
             builder.Services.RegisterUserDefinedServices();
 
-            builder.Services.AddControllersWithViews();
+            builder.Services.AddControllersWithViews(cfg =>
+            {
+                cfg.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+            });
+
             builder.Services.AddRazorPages();
 
             builder.Services.ConfigureApplicationCookie(options =>

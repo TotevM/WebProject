@@ -67,9 +67,17 @@
                             <p><strong>Fats:</strong> @diet.Fats?.ToString()g</p>
                         </div>
                         <div class="card-buttons">
-                            <a asp-area="Trainer" asp-controller="Diet" asp-action="DietDetails" asp-route-dietid="@diet.DietId" class="card-btn details">
-                                <i class="bi bi-info-circle"></i> View Details
-                            </a>
+                            <a asp-area="Trainer" asp-controller="Diet" asp-action="DietDetails" asp-route-dietid="@diet.DietId" class="card-button btn btn-primary btn-sm">
+		                        <i class="bi bi-info-circle"></i> View Details
+	                        </a>
+                            <form asp-area="Trainer" asp-controller="Diet" asp-action="DeleteDefaultDiet" method="post" class="card-button btn btn-danger">
+		                        <input type="hidden" name="dietId" value="@diet.DietId" />
+		                        @Html.AntiForgeryToken()
+		                        <button type="submit" class="btn delete">
+			                         Delete
+		                        </button>
+	                        </form>
+
                         </div>
                     </div>
                 </div>

@@ -108,6 +108,13 @@ namespace FitnessApp.Services
             return diets;
         }
 
+        public async Task DeleteDefaultDiet(Guid dietId)
+        {
+            var diet = await dietRepository.FirstOrDefaultAsync(x => x.Id == dietId);
+
+            await dietRepository.DeleteAsync(diet);
+        }
+
         //public async Task<List<DietIndexView>> DefaultDietsAsync(string userId)
         //{
         //    var diets = await dietRepository.GetAllAttached()
