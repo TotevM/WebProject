@@ -19,5 +19,6 @@ namespace FitnessApp.Services.ServiceContracts
         Task RemoveFromDefaultWorkoutsAsync(Guid workoutGuid);
         Task<bool> RemoveExerciseFromWorkout(Guid exerciseId, Guid workoutId);
         Task<bool> IsExerciseInWorkoutAsync(Guid workoutId, Guid selectedExerciseId);
+        Task<bool> IsDefaultWorkout(Guid workoutId);
     }
 }

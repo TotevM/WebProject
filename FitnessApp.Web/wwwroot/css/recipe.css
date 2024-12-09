@@ -317,6 +317,11 @@
     font-size: 1.2rem;
 }
 
+.close-btn {
+    background-color: transparent;
+    border: none;
+}
+
 .modal-body {
     background: #f0f8ff;
     padding: 2rem;

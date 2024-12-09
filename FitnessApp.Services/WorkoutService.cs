@@ -75,6 +75,7 @@ namespace FitnessApp.Services
                 {
                     Id = w.Id.ToString(),
                     Name = w.Name,
+                    UserId=w.UserID,
                     Exercises = exerciseRepository.GetAllAttached()
                         .Where(e => e.WorkoutsExercises.Any(x => x.WorkoutId == w.Id && !x.IsDeleted))
                         .Select(x => new ExercisesInMyWorkoutsView
@@ -99,12 +100,14 @@ namespace FitnessApp.Services
                 {
                     Id = w.Id.ToString(),
                     Name = w.Name,
+                    UserId = w.UserID,
                     Exercises = exerciseRepository.GetAllAttached()
                     .Where(e => e.WorkoutsExercises.Any(x => x.WorkoutId == w.Id && !x.IsDeleted))
                     .Select(x => new ExercisesInMyWorkoutsView
                     {
                         Id = x.Id.ToString(),
-                        Name = x.Name
+                        Name = x.Name,
+                        ImageUrl = x.ImageUrl
                     }).ToList()
                 }).ToListAsync();
 
@@ -208,6 +211,15 @@ namespace FitnessApp.Services
             }
 
             return true;
+        }
+
+        public async Task<bool> IsDefaultWorkout(Guid workoutId)
+        {
+            var workout = await workoutRepository.GetByIdAsync(workoutId);
+
+            bool isDefault = workout!.UserID == null;
+
+            return isDefault;
         }
     }
 }

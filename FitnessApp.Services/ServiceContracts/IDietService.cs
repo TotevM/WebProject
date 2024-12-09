@@ -26,7 +26,6 @@ namespace FitnessApp.Services.ServiceContracts
         Task AddDietsRecipesToDiet(Diet diet, Guid recipeGuid);
         Task<bool> AddUserDietAsync(Guid dietGuid, string userId);
         Task<List<DietIndexView>> DefaultDietsAsync(string? userId);
-
         Task DeleteDefaultDiet(Guid dietId);
     }
 }

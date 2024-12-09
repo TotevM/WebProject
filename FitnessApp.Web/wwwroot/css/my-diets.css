@@ -2,7 +2,6 @@
 :root {
     --card-height: 514px;
     --img-max-h: 280px;
-    --card-text-p: 1rem;
     --primary-color: #007bff;
     --primary-color-dark: #0056b3;
     --secondary-color: #6c757d;
@@ -221,22 +220,30 @@
     color: #fff;
     background-color: #dc3545;
     border-color: #dc3545;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
     .btn-danger:hover {
         color: #fff;
         background-color: #c82333;
         border-color: #bd2130;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
 
 .btn-primary {
     color: #fff;
     background-color: #007bff;
     border-color: #007bff;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
     .btn-primary:hover {
         color: #fff;
         background-color: #0069d9;
         border-color: #0062cc;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }

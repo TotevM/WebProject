@@ -1,8 +1,9 @@
-﻿using FitnessApp.Services.ServiceContracts;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+
+using FitnessApp.Services.ServiceContracts;
 using FitnessApp.ViewModels;
 using FitnessApp.ViewModels.ApiDTOs;
-using Microsoft.AspNetCore.Mvc;
-using static FitnessApp.Common.ApplicationConstants;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -16,14 +17,20 @@ public class DietsApiController : ControllerBase
     }
 
     [HttpGet("GetDiets")]
+    [ProducesResponseType(typeof(List<SelectListItem>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetDiets()
     {
         var diets = await dietService.GetDietsSelectListAsync();
-
+        
         return Ok(diets);
     }
 
     [HttpPost("CreateDiet")]
+    [ProducesResponseType(typeof(DietDto), StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> CreateDiet([FromBody] DietCreationViewModel dietDto)
     {
         if (!ModelState.IsValid)

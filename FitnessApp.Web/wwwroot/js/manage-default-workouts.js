@@ -78,6 +78,8 @@
             if (errorMessage) errorMessage.classList.add('d-none');
         }, 3000);
     }
+
+
 });
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -90,5 +92,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 new bootstrap.Dropdown(trigger);
             });
         });
+    }
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    window.addEventListener('load', equalizeCardHeights);
+    window.addEventListener('resize', equalizeCardHeights);
+
+    function equalizeCardHeights() {
+        const cards = document.querySelectorAll('.card');
+        let maxHeight = 0;
+
+        // Reset heights
+        cards.forEach(card => card.style.height = 'auto');
+
+        // Find the tallest card
+        cards.forEach(card => {
+            const height = card.offsetHeight;
+            if (height > maxHeight) maxHeight = height;
+        });
+
+        // Apply the tallest height to all cards
+        cards.forEach(card => card.style.height = `${maxHeight}px`);
     }
 });

@@ -9,12 +9,13 @@
 <div class="recipe-page-container">
 	@if (TempData["ErrorMessage"] != null)
 	{
-		<div class="alert alert-danger">
+		<div class="alert alert-danger d-flex justify-content-between">
 			@TempData["ErrorMessage"]
+			<button class="close-btn">x</button>
 		</div>
 	}
 
-	<input type="hidden" id="loggedUserId" value="@User.FindFirstValue(ClaimTypes.NameIdentifier)"/>
+	<input type="hidden" id="loggedUserId" value="@User.FindFirstValue(ClaimTypes.NameIdentifier)" />
 	<!-- Header Section -->
 	<div class="page-header">
 		<h1>Available Recipes</h1>
@@ -33,9 +34,9 @@
 		<div class="search-container">
 			<i class="fas fa-search search-icon"></i>
 			<input type="text"
-			       id="recipeSearch"
-			       class="search-input"
-			       placeholder="Search recipe by name...">
+				   id="recipeSearch"
+				   class="search-input"
+				   placeholder="Search recipe by name...">
 		</div>
 
 		<div class="filter-groups">
@@ -126,7 +127,7 @@
 
 
 					<form asp-controller="Diet" asp-action="AddRecipeToDiet" method="post" style="display: inline;">
-						<input type="hidden" id="modalRecipeId" name="RecipeId"/>
+						<input type="hidden" id="modalRecipeId" name="RecipeId" />
 						<div class="form-group">
 							<label for="dietSelect">Select Diet</label>
 							<select id="dietSelect" name="SelectedDietId" class="form-control" required>

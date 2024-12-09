@@ -6,6 +6,8 @@
     --card-border-color: #e0e0e0;
     --success-color: #28a745;
     --success-color-dark: #1e7e34;
+    --danger-color: #dc3545;
+    --danger-color-dark: #c82333;
 }
 
 .recipe-page-container {
@@ -180,7 +182,6 @@
 }
 
 .card-btn {
-    flex-grow: 1;
     padding: 8px 15px;
     text-align: center;
     text-decoration: none;
@@ -191,10 +192,15 @@
     .card-btn.details {
         background-color: var(--primary-color);
         color: white;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
     }
 
         .card-btn.details:hover {
             background-color: var(--primary-color-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
     .card-btn.add-to-diet {
@@ -202,10 +208,27 @@
         color: white;
         border: none;
         cursor: pointer;
+        transition: all 0.3s ease;
     }
 
         .card-btn.add-to-diet:hover {
             background-color: var(--success-color-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+    .card-btn.delete {
+        background-color: var(--danger-color);
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+        .card-btn.delete:hover {
+            background-color: var(--danger-color-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
 .calorie-filter-container {
@@ -228,6 +251,11 @@
 #calorieValue {
     color: #666;
     font-size: 0.9rem;
+}
+
+#actionBtn {
+    width: 120px;
+    font-weight: 600;
 }
 
 /* For smaller screens */

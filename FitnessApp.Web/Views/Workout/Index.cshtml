@@ -5,51 +5,142 @@
     ViewData["Title"] = "My Workouts";
 }
 
-<div class="container mt-4">
-    <div class="jumbotron text-center bg-primary text-white p-4 rounded">
-        <h1 class="display-4">Get Fit with FitJourney</h1>
-        <p class="lead">Your journey to a better you starts here. Explore our workout routines and track your progress.</p>
-        <a asp-controller="Workout" asp-action="AddToMyWorkouts" class="btn btn-light btn-lg" data-bs-toggle="modal" data-bs-target="#startWorkoutModal">Start a New Workout</a>
-    </div>
-</div>
+@if (TempData["ErrorMessage"] != null)
+{
+	<div class="alert alert-danger d-flex justify-content-between">
+		@TempData["ErrorMessage"]
+		<button class="close-btn">x</button>
+	</div>
+}
 
 <h1>My Workouts</h1>
 
-@if (!Model.Any())
-{
-    <p>You have no workouts.</p>
-}
-else
-{
-    <ul class="list-group">
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    @if(Model.Any())
+    {
         @foreach (var workout in Model)
         {
-            <li class="list-group-item">
-                <h2>@workout.Name</h2>
-
-                @if (!workout.Exercises.Any())
-                {
-                    <p>No exercises in this workout.</p>
-                }
-                else
-                {
-                    <ul class="list-unstyled">
-                        @foreach (var exercise in workout.Exercises)
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">@workout.Name</h5>
+                    </div>
+                    <div class="card-body">
+                        @if (!workout.Exercises.Any())
                         {
-                            <li>
-                                <strong>Exercise Name:</strong> @exercise.Name
-                            </li>
+                            <p class="text-muted">No exercises in this workout.</p>
                         }
-                    </ul>
-                }
-                <form asp-controller="Workout" asp-action="RemoveFromMyWorkouts" method="post" style="display:inline;">
-                    <input type="hidden" name="workoutId" value="@workout.Id" />
-                    <button type="submit" class="btn btn-danger flex-fill">Remove Workout</button>
-                </form>
-            </li>
+                        else
+                        {
+                            <div class="row g-2">
+                                @foreach (var (exercise, index) in workout.Exercises.Select((ex, i) => (ex, i)))
+                                {
+                                    <div class="col-12">
+                                        <div class="d-flex align-items-center">
+	                                        @if (workout.UserId != null)
+	                                        {
+	                                        <form asp-controller="Workout" asp-action="DeleteExercise"
+                                                  asp-route-exerciseId="@exercise.Id"
+                                                  asp-route-workoutId="@workout.Id" method="post"
+                                                  class="position-relative flex-grow-1">
+                                                <button type="button"
+                                                        class="btn btn-outline-primary w-100 text-start position-relative"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#exerciseModal-@workout.Id-@index">
+                                                    @exercise.Name
+                                                    <button type="submit"
+                                                            class="delete-btn btn btn-sm btn-danger position-absolute top-50 end-0 translate-middle-y me-2">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </button>
+                                            </form>
+	                                        }
+	                                        else
+	                                        {
+		                                        <button type="button"
+		                                                class="btn btn-outline-primary w-100 text-start position-relative"
+		                                                data-bs-toggle="modal"
+		                                                data-bs-target="#exerciseModal-@workout.Id-@index">
+			                                        @exercise.Name
+		                                        </button>
+	                                        }
+	                                        <!-- Exercise Modal -->
+	                                        <div class="modal fade exerciseModal"
+	                                             id="exerciseModal-@workout.Id-@index"
+	                                             tabindex="-1"
+	                                             aria-labelledby="exerciseModalLabel-@workout.Id-@index"
+	                                             aria-hidden="true">
+		                                        <div class="modal-dialog modal-dialog-centered">
+			                                        <div class="modal-content">
+				                                        <!-- Modal Header -->
+				                                        <div class="modal-header">
+					                                        <h5 class="modal-title" id="exerciseModalLabel-@workout.Id-@index">
+						                                        @exercise.Name
+					                                        </h5>
+					                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				                                        </div>
+
+				                                        <!-- Modal Body -->
+				                                        <div class="modal-body text-center">
+					                                        @if (!string.IsNullOrEmpty(exercise.ImageUrl))
+					                                        {
+						                                        <img src="@exercise.ImageUrl"
+						                                             alt="@exercise.Name"
+						                                             class="img-fluid rounded mb-3"
+						                                             style="max-height: 300px; object-fit: cover;">
+					                                        }
+					                                        else
+					                                        {
+						                                        <p class="text-muted fst-italic">No image available</p>
+					                                        }
+				                                        </div>
+
+				                                        <!-- Modal Footer -->
+				                                        <div class="modal-footer">
+					                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+				                                        </div>
+			                                        </div>
+		                                        </div>
+	                                        </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        }
+                    </div>
+                    <div class="card-footer">
+                        <div class="d-flex justify-content-between">
+	                        @if (workout.UserId != null)
+	                        {
+		                        <button id="actionBtn" type="button" class="card-btn add-to-diet"
+		                                data-bs-toggle="modal" 
+		                                data-bs-target="#addToWorkoutModal" 
+		                                data-workout-id="@workout.Id">
+			                        Add Exercise
+		                        </button>
+	                        }
+                            <form asp-controller="Workout" asp-action="RemoveFromMyWorkouts" asp-route-workoutId="@workout.Id" method="post">
+                                <button id="actionBtn" type="submit" class="card-btn delete btn btn-danger btn-sm">Delete</button>
+                            </form> 
+                        </div>
+                    </div>
+                </div>
+            </div>
         }
-    </ul>
-}
+    }
+
+    <!-- Add Button Card -->
+    <div class="col">
+        <div class="card d-flex align-items-center justify-content-center">
+            <button id="addBtn" class="add-diet-button btn btn-primary w-100 h-100 d-flex flex-column align-items-center justify-content-center"
+                    data-bs-toggle="modal" data-bs-target="#startWorkoutModal">
+                <h3 class="mb-1">ADD</h3>
+                <i class="bi bi-plus-lg"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
 
 <div class="modal fade" id="startWorkoutModal" tabindex="-1" aria-labelledby="startWorkoutModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -71,3 +162,77 @@ else
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="addToWorkoutModal" tabindex="-1" aria-labelledby="addToWorkoutModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addToWorkoutModalLabel">Add Exercise to Workout</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Filter Bar -->
+                <div class="filter-bar">
+	                <div class="filter-groups">
+		                <!-- Muscle Group Filters -->
+		                <div class="filter-group mb-3">
+			                <span class="filter-group-label">Muscle Group:</span>
+			                <div class="filter-buttons">
+				                <input type="checkbox" id="filterChest" class="filter-checkbox" data-filter="muscle" value="Chest">
+				                <label for="filterChest" class="filter-chip muscle-Chest">
+					                <span class="checkmark"></span>
+					                Chest
+				                </label>
+
+				                <input type="checkbox" id="filterBack" class="filter-checkbox" data-filter="muscle" value="Back">
+				                <label for="filterBack" class="filter-chip muscle-Back">
+					                <span class="checkmark"></span>
+					                Back
+				                </label>
+
+				                <input type="checkbox" id="filterLegs" class="filter-checkbox" data-filter="muscle" value="Legs">
+				                <label for="filterLegs" class="filter-chip muscle-Legs">
+					                <span class="checkmark"></span>
+					                Legs
+				                </label>
+
+				                <input type="checkbox" id="filterArms" class="filter-checkbox" data-filter="muscle" value="Arms">
+				                <label for="filterArms" class="filter-chip muscle-Arms">
+					                <span class="checkmark"></span>
+					                Arms
+				                </label>
+
+				                <button class="btn btn-secondary btn-sm clear-filters-btn">Clear Filters</button>
+			                </div>
+		                </div>
+
+	                </div>
+                </div>
+            </div>
+                
+
+                <!-- Exercise Dropdown -->
+                <form asp-controller="Workout" asp-action="AddExerciseToWorkout" method="post">
+	                <input type="hidden" id="modalWorkoutId" name="WorkoutId" />
+
+	                <div class="form-group mt-3">
+		                <label for="exerciseSelect">Select Exercise</label>
+		                <select id="exerciseSelect" name="SelectedExerciseId" class="form-control" required>
+			                <option value="" disabled selected>Loading exercises...</option>
+		                </select>
+	                </div>
+
+	                <button type="submit" class="card-btn add-to-diet btn btn-success mt-3">Add Exercise</button>
+                </form>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/manage-default-workouts.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+}
+
+@section Scripts {
+    <script src="~/js/manage-default-workouts.js" asp-append-version="true"></script>
+}

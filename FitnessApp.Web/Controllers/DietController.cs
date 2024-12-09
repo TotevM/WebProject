@@ -83,6 +83,13 @@ namespace FitnessApp.Web.Controllers
             var isDefault =await dietService.IsDefaultDiet(dietGuid);
             bool isInRole = User.IsInRole(TrainerRole);
 
+            var isPresent = await dietService.IsRecipeInDietAsync(recipeGuid, dietGuid);
+            if (isPresent)
+            {
+                TempData["ErrorMessage"] = "This recipe is already added to the selected diet.";
+                return RedirectToAction("Index", "Recipe");
+            }
+
             if (isDefault==true)
             {
                 if (isInRole)
@@ -96,12 +103,6 @@ namespace FitnessApp.Web.Controllers
                 return RedirectToAction("Index", "Recipe");
             }
 
-            var isPresent = await dietService.IsRecipeInDietAsync(recipeGuid, dietGuid);
-            if (isPresent)
-            {
-                TempData["ErrorMessage"] = "This recipe is already added to the selected diet.";
-                return RedirectToAction("Index", "Recipe");
-            }
 
             await dietService.AddRecipeToDietAsync(recipeGuid, dietGuid);
             await dietService.UpdateDietMacronutrientsAsync(dietGuid);

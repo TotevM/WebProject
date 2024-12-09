@@ -1,4 +1,9 @@
 ﻿@model List<DietIndexView>
+
+@section Styles {
+	<link rel="stylesheet" href="~/css/default-diet.css" />
+}
+
 @{
     ViewData["Title"] = "Diet List";
 }
@@ -7,11 +12,11 @@
     <div class="page-header">
         <h1>Diet Plans</h1>
 
-            <div class="action-buttons">
-                <a asp-controller="Diet" asp-action="Create" class="btn btn-primary btn-add-recipe">
-                    Create New Diet
-                </a>
-            </div>
+        <div class="action-buttons">
+            <a asp-controller="Diet" asp-action="Create" class="btn btn-primary btn-add-recipe">
+                Create New Diet
+            </a>
+        </div>
     </div>
 
     <!-- Filter Bar -->
@@ -67,16 +72,16 @@
                             <p><strong>Fats:</strong> @diet.Fats?.ToString()g</p>
                         </div>
                         <div class="card-buttons">
-                            <a asp-area="Trainer" asp-controller="Diet" asp-action="DietDetails" asp-route-dietid="@diet.DietId" class="card-button btn btn-primary btn-sm">
-		                        <i class="bi bi-info-circle"></i> View Details
-	                        </a>
-                            <form asp-area="Trainer" asp-controller="Diet" asp-action="DeleteDefaultDiet" method="post" class="card-button btn btn-danger">
-		                        <input type="hidden" name="dietId" value="@diet.DietId" />
-		                        @Html.AntiForgeryToken()
-		                        <button type="submit" class="btn delete">
-			                         Delete
-		                        </button>
-	                        </form>
+                            <a asp-area="Trainer" asp-controller="Diet" asp-action="DietDetails" asp-route-dietid="@diet.DietId" id="actionBtn" class="card-btn details">
+                                Details
+                            </a>
+                            <form asp-area="Trainer" asp-controller="Diet" asp-action="DeleteDefaultDiet" method="post" class="card-btn-form">
+                                <input type="hidden" name="dietId" value="@diet.DietId" />
+                                @Html.AntiForgeryToken()
+                                <button id="actionBtn" type="submit" class="card-btn delete">
+                                    Delete
+                                </button>
+                            </form>
 
                         </div>
                     </div>
@@ -85,10 +90,6 @@
         }
     </div>
 </div>
-
-@section Styles {
-    <link rel="stylesheet" href="~/css/default-diet.css" />
-}
 
 @section Scripts {
     <script src="~/js/diet.js" asp-append-version="true"></script>

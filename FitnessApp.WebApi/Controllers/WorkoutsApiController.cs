@@ -1,10 +1,9 @@
-﻿using FitnessApp.Services.ServiceContracts;
-using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
+﻿using Microsoft.AspNetCore.Mvc;
+
 using FitnessApp.Data;
-using FitnessApp.Data.Models;
 using FitnessApp.ViewModels;
 using FitnessApp.ViewModels.ApiDTOs;
+using FitnessApp.Services.ServiceContracts;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -20,6 +19,10 @@ public class WorkoutsApiController : ControllerBase
     }
 
     [HttpPost("CreateWorkout")]
+    [ProducesResponseType(typeof(WorkoutDto), StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> CreateWorkout([FromBody] WorkoutCreationViewModel workoutDto)
     {
         if (!ModelState.IsValid)

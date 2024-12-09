@@ -1,6 +1,7 @@
-using FitnessApp.Data.Models;
-using FitnessApp.Services.ServiceContracts;
 using Microsoft.AspNetCore.Mvc;
+
+using FitnessApp.Services.ServiceContracts;
+using FitnessApp.ViewModels.RecipeModels;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -14,6 +15,9 @@ public class RecipesApiController : ControllerBase
     }
 
     [HttpGet("GetRecipes")]
+    [ProducesResponseType(typeof(List<RecipeViewModel>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetRecipes()
     {
         var viewModel = await recipeService.GetAllRecipeModelAsync();
@@ -26,6 +30,10 @@ public class RecipesApiController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [ProducesResponseType(typeof(RecipeDetailsViewModel), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetRecipeDetails(string id)
     {
         if (!Guid.TryParse(id, out var recipeGuid))
