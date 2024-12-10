@@ -30,7 +30,8 @@ Welcome to **FitJourney**, your ultimate fitness companion! Whether you're looki
 
 ## Test Coverage
 
-![image](https://github.com/user-attachments/assets/0f4605f3-c994-43c8-99b0-5128908a816d)
+![image](https://github.com/user-attachments/assets/584e0738-2942-4bd0-9195-4a608cd63adb)
+
 
 
 ## Roles
