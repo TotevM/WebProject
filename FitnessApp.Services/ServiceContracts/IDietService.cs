@@ -9,10 +9,10 @@ namespace FitnessApp.Services.ServiceContracts
     {
         Task<List<MyDietsIndexView>> MyDietsAsync(string userId);
         Task<List<DietDetailsView>?> DietDetailsAsync(Guid dietId);
-        Task<RecipeDetailsInDiet> RecipeDetailsInDietAsync(Guid recipeId, Guid dietId);
+        //Task<RecipeDetailsInDiet> RecipeDetailsInDietAsync(Guid recipeId, Guid dietId);
         Task RemoveFromDietAsync(Guid dietId, Guid recipeId);
         Task AddRecipeToDietAsync(Guid recipeId, Guid dietId);
-        Task<AddRecipeToDietViewModel?> AddRecipeToDietViewAsync(Guid recipeId, bool role);
+        //Task<AddRecipeToDietViewModel?> AddRecipeToDietViewAsync(Guid recipeId, bool role);
         Task AddToMyDietsAsync(Guid dietId, string userId);
         Task<bool> RemoveFromMyDietsAsync(Guid dietId, string userId);
         Task<List<SelectListItem>> GetDietsSelectListAsync();

@@ -1,4 +1,12 @@
-﻿function manageTeamButtons() {
+﻿document.addEventListener("DOMContentLoaded", () => {
+    const heading = document.querySelector("#about-us h2");
+
+    setTimeout(() => {
+        heading.classList.add("done");
+    }, 1600); // Matches the animation duration (2 seconds)
+});
+
+function manageTeamButtons() {
     const buttons = document.querySelectorAll(".btn[data-bs-toggle='collapse']");
 
     buttons.forEach(button => {

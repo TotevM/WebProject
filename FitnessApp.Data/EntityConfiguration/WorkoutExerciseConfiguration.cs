@@ -23,9 +23,6 @@ namespace FitnessApp.Data.EntityConfiguration
 
 			builder.Property(uw => uw.IsDeleted).HasDefaultValue(false);
 
-            builder.Property(uw => uw.Sets).HasDefaultValue(4);
-            builder.Property(uw => uw.Repetitions).HasDefaultValue(10);
-
             string path = Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "FitnessApp.Data", "Datasets", "workoutExercise.json");
             string data = File.ReadAllText(path);
             var workoutsExercises = JsonSerializer.Deserialize<List<WorkoutExercise>>(data);

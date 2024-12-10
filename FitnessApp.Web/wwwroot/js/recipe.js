@@ -82,12 +82,6 @@
             modalElements.fats.textContent = recipe.Fats || 'N/A';
             modalElements.ingredients.textContent = recipe.Ingredients || 'No ingredients listed.';
             modalElements.preparation.textContent = recipe.Preparation || 'No preparation instructions available.';
-
-            // Add footer buttons if applicable
-            modalElements.footer.innerHTML = loggedUserId === recipe.UserId
-                ? `<a href="/Recipe/Edit/${recipe.RecipeId}" class="btn btn-primary me-2">Edit</a>
-                   <a href="/Recipe/Delete/${recipe.RecipeId}" class="btn btn-danger">Delete</a>`
-                : '';
         } catch (error) {
             console.error('Error fetching recipe details:', error);
             modalElements.title.textContent = 'Error Loading Recipe';

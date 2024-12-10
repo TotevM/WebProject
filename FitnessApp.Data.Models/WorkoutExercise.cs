@@ -19,12 +19,5 @@ namespace FitnessApp.Data.Models
         [Comment("Does exercise-workout relationship exist")]
         public bool IsDeleted { get; set; }
 		public virtual Exercise Exercise { get; set; } = null!;
-
-        [Required]
-        [Comment("Number of sets")]
-        public int Sets { get; set; }
-        [Required]
-        [Comment("Number of repetitions")]
-        public int Repetitions { get; set; }
     }
 }

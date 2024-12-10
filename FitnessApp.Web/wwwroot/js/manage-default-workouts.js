@@ -79,40 +79,29 @@
         }, 3000);
     }
 
-
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-    const modalElement = document.getElementById('addToWorkoutModal'); // Adjust ID if necessary
-
-    if (modalElement) {
-        modalElement.addEventListener('hide.bs.modal', () => {
-            const dropdownTriggers = document.querySelectorAll('.dropdown-toggle');
-            dropdownTriggers.forEach(trigger => {
-                new bootstrap.Dropdown(trigger);
-            });
-        });
-    }
 });
 
 document.addEventListener('DOMContentLoaded', function () {
-    window.addEventListener('load', equalizeCardHeights);
-    window.addEventListener('resize', equalizeCardHeights);
+    function adjustCardHeights() {
+        const rows = document.querySelectorAll('.row.row-cols-1.row-cols-md-2.row-cols-lg-3');
+        rows.forEach(row => {
+            let maxHeight = 0;
+            const cards = row.querySelectorAll('.card:not(.d-flex)'); // Select all cards except the "Add" button
 
-    function equalizeCardHeights() {
-        const cards = document.querySelectorAll('.card');
-        let maxHeight = 0;
+            // Calculate the maximum height of the cards
+            cards.forEach(card => {
+                maxHeight = Math.max(maxHeight, card.offsetHeight);
+            });
 
-        // Reset heights
-        cards.forEach(card => card.style.height = 'auto');
-
-        // Find the tallest card
-        cards.forEach(card => {
-            const height = card.offsetHeight;
-            if (height > maxHeight) maxHeight = height;
+            // Apply the maxHeight or a fallback height to the "Add" button container
+            const addCard = row.querySelector('.card.d-flex');
+            if (addCard) {
+                addCard.style.height = maxHeight > 0 ? `${maxHeight}px` : '514px'; // Fallback height of 300px
+            }
         });
-
-        // Apply the tallest height to all cards
-        cards.forEach(card => card.style.height = `${maxHeight}px`);
     }
+
+    // Call the function initially and whenever the window resizes
+    adjustCardHeights();
+    window.addEventListener('resize', adjustCardHeights);
 });

@@ -34,43 +34,43 @@ namespace FitnessApp.Services
             await dietRecipeRepository.AddAsync(dietRecipe);
         }
 
-        public async Task<AddRecipeToDietViewModel?> AddRecipeToDietViewAsync(Guid recipeId, bool role)
-        {
-            var recipe = recipeRepository.GetById(recipeId);
+        //public async Task<AddRecipeToDietViewModel?> AddRecipeToDietViewAsync(Guid recipeId, bool role)
+        //{
+        //    var recipe = recipeRepository.GetById(recipeId);
 
-            if (recipe == null)
-            {
-                return null;
-            }
-            List<SelectListItem> diets = null!;
-            if (role)
-            {
-                diets = await dietRepository.GetAllAttached()
-                          .Where(x => x.UserID == null)
-                         .Select(d => new SelectListItem
-                         {
-                             Value = d.Id.ToString(),
-                             Text = d.Name
-                         })
-                         .ToListAsync();
-            }
-            else
-            {
-                diets = await dietRepository.GetAllAttached()
-                        .Where(x => x.UserID != null)
-                       .Select(d => new SelectListItem
-                       {
-                           Value = d.Id.ToString(),
-                           Text = d.Name
-                       })
-                       .ToListAsync();
-            }
+        //    if (recipe == null)
+        //    {
+        //        return null;
+        //    }
+        //    List<SelectListItem> diets = null!;
+        //    if (role)
+        //    {
+        //        diets = await dietRepository.GetAllAttached()
+        //                  .Where(x => x.UserID == null)
+        //                 .Select(d => new SelectListItem
+        //                 {
+        //                     Value = d.Id.ToString(),
+        //                     Text = d.Name
+        //                 })
+        //                 .ToListAsync();
+        //    }
+        //    else
+        //    {
+        //        diets = await dietRepository.GetAllAttached()
+        //                .Where(x => x.UserID != null)
+        //               .Select(d => new SelectListItem
+        //               {
+        //                   Value = d.Id.ToString(),
+        //                   Text = d.Name
+        //               })
+        //               .ToListAsync();
+        //    }
 
-            AddRecipeToDietViewModel viewModel = new AddRecipeToDietViewModel
-            {RecipeId = recipeId.ToString(), Diets = diets};
+        //    AddRecipeToDietViewModel viewModel = new AddRecipeToDietViewModel
+        //    {RecipeId = recipeId.ToString(), Diets = diets};
 
-            return viewModel;
-        }//completed
+        //    return viewModel;
+        //}//completed
 
         public async Task AddToMyDietsAsync(Guid dietId, string userId)
         {
@@ -234,24 +234,6 @@ namespace FitnessApp.Services
             return true;
         }
 
-        //public async Task<List<DietIndexView>> DefaultDietsForTrainersAsync()
-        //{
-
-        //    var diets = await dietRepository.GetAllAttached()
-        //        .Where(d => d.UserID == null)
-        //        .Select(diet => new DietIndexView
-        //        {
-        //            DietId = diet.Id.ToString(),
-        //            Name = diet.Name,
-        //            ImageUrl = diet.ImageUrl,
-        //            Calories = diet.Calories,
-        //            Protein = diet.Proteins,
-        //            Carbohydrates = diet.Carbohydrates,
-        //            Fats = diet.Fats
-        //        }).ToListAsync();
-
-        //    return diets;
-        //}
 
         public async Task<List<SelectListItem>> GetDietsSelectListAsync()
         {
@@ -311,32 +293,32 @@ namespace FitnessApp.Services
             return diets;
         }//completed
 
-        public async Task<RecipeDetailsInDiet> RecipeDetailsInDietAsync(Guid recipeId, Guid dietId)
-        {
-            var recipe = await recipeRepository.GetByIdAsync(recipeId);
-            var diet = await dietRepository.GetByIdAsync(dietId);
+        //public async Task<RecipeDetailsInDiet> RecipeDetailsInDietAsync(Guid recipeId, Guid dietId)
+        //{
+        //    var recipe = await recipeRepository.GetByIdAsync(recipeId);
+        //    var diet = await dietRepository.GetByIdAsync(dietId);
 
-            if (recipe == null || diet == null)
-            {
-                return null!;
-            }
+        //    if (recipe == null || diet == null)
+        //    {
+        //        return null!;
+        //    }
 
-            RecipeDetailsInDiet viewModel = new RecipeDetailsInDiet
-            {
-                DietId = dietId.ToString(),
-                RecipeId = recipeId.ToString(),
-                Name = recipe.Name,
-                Calories = recipe.Calories,
-                Protein = recipe.Proteins,
-                Carbohydrates = recipe.Carbohydrates,
-                Fats = recipe.Fats,
-                ImageUrl = recipe.ImageUrl!,
-                Ingredients = recipe.Ingredients,
-                Preparation = recipe.Preparation
-            };
+        //    RecipeDetailsInDiet viewModel = new RecipeDetailsInDiet
+        //    {
+        //        DietId = dietId.ToString(),
+        //        RecipeId = recipeId.ToString(),
+        //        Name = recipe.Name,
+        //        Calories = recipe.Calories,
+        //        Protein = recipe.Proteins,
+        //        Carbohydrates = recipe.Carbohydrates,
+        //        Fats = recipe.Fats,
+        //        ImageUrl = recipe.ImageUrl!,
+        //        Ingredients = recipe.Ingredients,
+        //        Preparation = recipe.Preparation
+        //    };
 
-            return viewModel;
-        }//completed
+        //    return viewModel;
+        //}//completed
 
         public async Task<bool> RecipeExists(Guid recipeId)
         {

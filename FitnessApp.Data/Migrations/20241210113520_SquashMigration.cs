@@ -345,9 +345,7 @@ namespace FitnessApp.Data.Migrations
                 {
                     WorkoutId = table.Column<Guid>(type: "uniqueidentifier", nullable: false, comment: "The Id of the workout"),
                     ExerciseId = table.Column<Guid>(type: "uniqueidentifier", nullable: false, comment: "The Id of the exercise"),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false, comment: "Does exercise-workout relationship exist"),
-                    Sets = table.Column<int>(type: "int", nullable: false, defaultValue: 4, comment: "Number of sets"),
-                    Repetitions = table.Column<int>(type: "int", nullable: false, defaultValue: 10, comment: "Number of repetitions")
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false, comment: "Does exercise-workout relationship exist")
                 },
                 constraints: table =>
                 {

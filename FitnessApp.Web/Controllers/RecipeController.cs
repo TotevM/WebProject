@@ -104,7 +104,7 @@ namespace FitnessApp.Web.Controllers
             await recipeService.UpdateRecipe(recipe, model, goal);
             await recipeService.UpdateDietsAsync(exerciseGuid);
 
-            return RedirectToAction(nameof(Details), new { id = model.Id });
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
@@ -127,28 +127,6 @@ namespace FitnessApp.Web.Controllers
 
             var viewModel = recipeService.RecipeDetailsView(recipe);
             return View(viewModel);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Delete(string id)
-        {
-            Guid exerciseGuid = Guid.Empty;
-            bool isGuidValid = this.IsGuidValid(id, ref exerciseGuid);
-
-            if (!isGuidValid)
-            {
-                return NotFound();
-            }
-
-            var recipe = await recipeService.GetRecipeAsync(exerciseGuid);
-
-            if (recipe == null)
-            {
-                return NotFound("Recipe not found");
-            }
-
-            var model = recipeService.DeleteView(recipe);
-            return View(model);
         }
 
         [HttpPost]

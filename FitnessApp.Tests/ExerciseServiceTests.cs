@@ -5,8 +5,10 @@ using FitnessApp.Services;
 using FitnessApp.Services.ServiceContracts;
 using FitnessApp.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using MockQueryable;
 using Moq;
 using NUnit.Framework;
+using System.Linq.Expressions;
 
 namespace FitnessApp.Tests
 {
@@ -23,6 +25,94 @@ namespace FitnessApp.Tests
             _mockExerciseRepo = new Mock<IRepository<Exercise, Guid>>();
             _mockWorkoutExerciseRepo = new Mock<IRepository<WorkoutExercise, object>>();
             _exerciseService = new ExerciseService(_mockExerciseRepo.Object, _mockWorkoutExerciseRepo.Object);
+        }
+
+        [Test]
+        public async Task GetAllExercisesAsync_ReturnsFilteredAndMappedExercises()
+        {
+            var areDeleted = false;
+            var exercise1 = new Exercise
+            {
+                Id = Guid.NewGuid(),
+                Name = "Exercise 1",
+                IsDeleted = false,
+                Difficulty = Difficulty.Intermediate,
+                ImageUrl = "image1.jpg",
+                MuscleGroup = MuscleGroup.Chest,
+                CreatedOn = DateTime.Now.AddDays(-2)
+            };
+            var exercise2 = new Exercise
+            {
+                Id = Guid.NewGuid(),
+                Name = "Exercise 2",
+                IsDeleted = false,
+                Difficulty = Difficulty.Beginner,
+                ImageUrl = "image2.jpg",
+                MuscleGroup = MuscleGroup.Legs,
+                CreatedOn = DateTime.Now.AddDays(-1)
+            };
+
+            var exercises = new List<Exercise> { exercise1, exercise2 }.AsQueryable();
+            var exercisesMock = exercises.BuildMock();
+
+            _mockExerciseRepo
+                .Setup(repo => repo.GetAllAttached())
+                .Returns(exercisesMock);
+
+            var result = await _exerciseService.GetAllExercisesAsync(areDeleted);
+
+            _mockExerciseRepo.Verify(repo => repo.GetAllAttached(), Times.Once);
+
+            Assert.AreEqual(2, result.Count);
+
+            var resultItem1 = result[0];
+            Assert.AreEqual(exercise2.Id.ToString(), resultItem1.Id);
+            Assert.AreEqual("Exercise 2", resultItem1.Name);
+            Assert.AreEqual("Beginner", resultItem1.Difficulty);
+            Assert.AreEqual("image2.jpg", resultItem1.ImageUrl);
+            Assert.AreEqual("Legs", resultItem1.MuscleGroup);
+
+            var resultItem2 = result[1];
+            Assert.AreEqual(exercise1.Id.ToString(), resultItem2.Id);
+            Assert.AreEqual("Exercise 1", resultItem2.Name);
+            Assert.AreEqual("Intermediate", resultItem2.Difficulty);
+            Assert.AreEqual("image1.jpg", resultItem2.ImageUrl);
+            Assert.AreEqual("Chest", resultItem2.MuscleGroup);
+        }
+
+        [Test]
+        public async Task ChangeExerciseWorkoutsStateAsync_UpdatesWorkoutExerciseStates()
+        {
+            // Arrange
+            var exerciseId = Guid.NewGuid();
+            var workoutExercise1 = new WorkoutExercise { ExerciseId = exerciseId, IsDeleted = false };
+            var workoutExercise2 = new WorkoutExercise { ExerciseId = exerciseId, IsDeleted = false };
+
+            var workoutExercises = new List<WorkoutExercise> { workoutExercise1, workoutExercise2 }.AsQueryable();
+            var workoutExercisesMock = workoutExercises.BuildMock();
+
+            // Mock GetAllAttached to return the mock IQueryable
+            _mockWorkoutExerciseRepo
+                .Setup(repo => repo.GetAllAttached())
+                .Returns(workoutExercisesMock);
+
+            // Mock UpdateAsync to simulate successful updates
+            _mockWorkoutExerciseRepo
+                .Setup(repo => repo.UpdateAsync(It.IsAny<WorkoutExercise>()));
+                //.Returns(Task.CompletedTask);
+
+            var newState = true;
+
+            // Act
+            await _exerciseService.ChangeExerciseWorkoutsStateAsync(exerciseId, newState);
+
+            // Assert
+            // Verify GetAllAttached was called once
+            _mockWorkoutExerciseRepo.Verify(repo => repo.GetAllAttached(), Times.Once);
+
+            // Verify UpdateAsync was called for each workout exercise
+            _mockWorkoutExerciseRepo.Verify(repo => repo.UpdateAsync(It.Is<WorkoutExercise>(we =>
+                we.ExerciseId == exerciseId && we.IsDeleted == newState)), Times.Exactly(2));
         }
 
         [Test]

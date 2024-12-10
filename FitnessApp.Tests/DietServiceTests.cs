@@ -1,13 +1,14 @@
-﻿using System.Linq.Expressions;
-using FitnessApp.Common.Enumerations;
+﻿using FitnessApp.Common.Enumerations;
 using FitnessApp.Data.Models;
 using FitnessApp.Data.Repository.Contracts;
 using FitnessApp.Services;
 using FitnessApp.ViewModels;
 using Microsoft.AspNetCore.Identity;
+using MockQueryable;
 using MockQueryable.Moq;
 using Moq;
 using NUnit.Framework;
+using System.Linq.Expressions;
 
 namespace FitnessApp.Tests
 {
@@ -40,6 +41,179 @@ namespace FitnessApp.Tests
                 _recipeRepositoryMock.Object,
                 _dietRecipeRepositoryMock.Object,
                 _userDietRepositoryMock.Object);
+        }
+
+
+        [Test]
+        public async Task AddUserDietAsync_WhenUserDietDoesNotExist_ShouldAddUserDietAndReturnTrue()
+        {
+            var dietGuid = Guid.NewGuid();
+            var userId = "testUser123";
+
+            _userDietRepositoryMock
+                .Setup(repo => repo.FirstOrDefaultAsync(
+                    It.Is<System.Linq.Expressions.Expression<Func<UserDiet, bool>>>(
+                        predicate => CheckUserDietPredicate(predicate, userId, dietGuid))))
+                .ReturnsAsync((UserDiet)null);
+
+            _userDietRepositoryMock
+                .Setup(repo => repo.AddAsync(It.IsAny<UserDiet>()))
+                .Returns(Task.CompletedTask);
+
+            var result = await _dietService.AddUserDietAsync(dietGuid, userId);
+
+            Assert.IsTrue(result);
+            _userDietRepositoryMock.Verify(
+                repo => repo.AddAsync(It.Is<UserDiet>(
+                    ud => ud.UserId == userId && ud.DietId == dietGuid)),
+                Times.Once);
+        }
+
+        [Test]
+        public async Task AddUserDietAsync_WhenUserDietAlreadyExists_ShouldNotAddAndReturnFalse()
+        {
+            var dietGuid = Guid.NewGuid();
+            var userId = "testUser123";
+
+            var existingUserDiet = new UserDiet
+            {
+                UserId = userId,
+                DietId = dietGuid
+            };
+
+            _userDietRepositoryMock
+                .Setup(repo => repo.FirstOrDefaultAsync(
+                    It.Is<System.Linq.Expressions.Expression<Func<UserDiet, bool>>>(
+                        predicate => CheckUserDietPredicate(predicate, userId, dietGuid))))
+                .ReturnsAsync(existingUserDiet);
+
+            var result = await _dietService.AddUserDietAsync(dietGuid, userId);
+
+            Assert.IsFalse(result);
+            _userDietRepositoryMock.Verify(
+                repo => repo.AddAsync(It.IsAny<UserDiet>()),
+                Times.Never);
+        }
+
+        [Test]
+        public async Task DeleteDefaultDiet_WithValidDietId_DeletesDiet()
+        {
+            var testDietId = Guid.NewGuid();
+
+            var mockDiet = new Diet
+            {
+                Id = testDietId,
+                Name = "Test Diet",
+                Calories = 1500,
+                Proteins = 50,
+                Carbohydrates = 200,
+                Fats = 60,
+                UserDiets = new List<UserDiet>()
+            };
+
+            _dietRepositoryMock
+                .Setup(repo => repo.FirstOrDefaultAsync(It.IsAny<Expression<Func<Diet, bool>>>()))
+                .ReturnsAsync(mockDiet);
+
+            await _dietService.DeleteDefaultDiet(testDietId);
+
+            _dietRepositoryMock.Verify(repo => repo.FirstOrDefaultAsync(It.Is<Expression<Func<Diet, bool>>>(expr =>
+                expr.Compile().Invoke(mockDiet))), Times.Once);
+
+            _dietRepositoryMock.Verify(repo => repo.DeleteAsync(It.Is<Diet>(d => d.Id == testDietId)), Times.Once);
+        }
+
+        [Test]
+        public async Task DefaultDietsAsync_WithUserId_FiltersOutUserDiets()
+        {
+            string testUserId = "test-user-id";
+
+            var dietMockData = new List<Diet>
+        {
+            new Diet
+            {
+                Id = Guid.NewGuid(),
+                Name = "Diet 1",
+                ImageUrl = "/images/diet1.jpg",
+                Calories = 1200,
+                Proteins = 50,
+                Carbohydrates = 150,
+                Fats = 40,
+                UserDiets = new List<UserDiet>
+                {
+                    new UserDiet { UserId = testUserId }
+                }
+            },
+            new Diet
+            {
+                Id = Guid.NewGuid(),
+                Name = "Diet 2",
+                ImageUrl = "/images/diet2.jpg",
+                Calories = 1400,
+                Proteins = 60,
+                Carbohydrates = 170,
+                Fats = 45,
+                UserDiets = new List<UserDiet>()
+            }
+        };
+
+            var dietMockQueryable = dietMockData.AsQueryable().BuildMock();
+            _dietRepositoryMock
+                .Setup(repo => repo.GetAllAttached()).Returns(dietMockQueryable);
+
+            var result = await _dietService.DefaultDietsAsync(testUserId);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(1, result.Count);
+            var returnedDiet = result.First();
+            Assert.AreEqual("Diet 2", returnedDiet.Name);
+            Assert.AreEqual("/images/diet2.jpg", returnedDiet.ImageUrl);
+            Assert.AreEqual(1400, returnedDiet.Calories);
+            Assert.AreEqual(60, returnedDiet.Protein);
+            Assert.AreEqual(170, returnedDiet.Carbohydrates);
+            Assert.AreEqual(45, returnedDiet.Fats);
+        }
+
+        [Test]
+        public async Task DefaultDietsAsync_WithoutUserId_ReturnsAllDefaultDiets()
+        {
+            var dietMockData = new List<Diet>
+    {
+        new Diet
+        {
+            Id = Guid.NewGuid(),
+            Name = "Diet 1",
+            ImageUrl = "/images/diet1.jpg",
+            Calories = 1200,
+            Proteins = 50,
+            Carbohydrates = 150,
+            Fats = 40,
+            UserDiets = new List<UserDiet>()
+        },
+        new Diet
+        {
+            Id = Guid.NewGuid(),
+            Name = "Diet 2",
+            ImageUrl = "/images/diet2.jpg",
+            Calories = 1400,
+            Proteins = 60,
+            Carbohydrates = 170,
+            Fats = 45,
+            UserDiets = new List<UserDiet>()
+        }
+    };
+
+            var dietMockQueryable = dietMockData.AsQueryable().BuildMock();
+            _dietRepositoryMock
+                .Setup(repo => repo.GetAllAttached())
+                .Returns(dietMockQueryable);
+
+            var result = await _dietService.DefaultDietsAsync();
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual("Diet 1", result.First().Name);
+            Assert.AreEqual("Diet 2", result.Last().Name);
         }
 
         [Test]
@@ -337,89 +511,6 @@ namespace FitnessApp.Tests
         }
 
         [Test]
-        public async Task RecipeDetailsInDietAsync_ShouldReturnNull_WhenRecipeDoesNotExist()
-        {
-            var recipeId = Guid.NewGuid();
-            var dietId = Guid.NewGuid();
-
-            _recipeRepositoryMock.Setup(r => r.GetByIdAsync(recipeId)).ReturnsAsync((Recipe?)null);
-            _dietRepositoryMock.Setup(r => r.GetByIdAsync(dietId)).ReturnsAsync(new Diet());
-
-            var result = await _dietService.RecipeDetailsInDietAsync(recipeId, dietId);
-
-            Assert.IsNull(result);
-        }
-
-        [Test]
-        public async Task RecipeDetailsInDietAsync_ShouldReturnNull_WhenDietDoesNotExist()
-        {
-            var recipeId = Guid.NewGuid();
-            var dietId = Guid.NewGuid();
-
-            _recipeRepositoryMock.Setup(r => r.GetByIdAsync(recipeId)).ReturnsAsync(new Recipe
-            {
-                Id = recipeId,
-                Name = "Test Recipe",
-                Ingredients = "Test Ingredients",
-                Preparation = "Test Preparation",
-                CreatedOn = DateTime.UtcNow,
-                Calories = 200,
-                Proteins = 15,
-                Carbohydrates = 30,
-                Fats = 5,
-                Goal = Goal.WeightLoss
-            });
-
-            _dietRepositoryMock.Setup(r => r.GetByIdAsync(dietId)).ReturnsAsync((Diet?)null);
-
-            var result = await _dietService.RecipeDetailsInDietAsync(recipeId, dietId);
-
-            Assert.IsNull(result);
-        }
-
-        [Test]
-        public async Task RecipeDetailsInDietAsync_ShouldReturnRecipeDetailsInDiet_WhenRecipeAndDietExist()
-        {
-            var recipeId = Guid.NewGuid();
-            var dietId = Guid.NewGuid();
-            var recipe = new Recipe
-            {
-                Id = recipeId,
-                Name = "Test Recipe",
-                Calories = 300,
-                Proteins = 20,
-                Carbohydrates = 50,
-                Fats = 10,
-                ImageUrl = "test-image-url",
-                Ingredients = "Test Ingredients",
-                Preparation = "Test Preparation"
-            };
-
-            var diet = new Diet
-            {
-                Id = dietId,
-                Name = "Test Diet"
-            };
-
-            _recipeRepositoryMock.Setup(r => r.GetByIdAsync(recipeId)).ReturnsAsync(recipe);
-            _dietRepositoryMock.Setup(r => r.GetByIdAsync(dietId)).ReturnsAsync(diet);
-
-            var result = await _dietService.RecipeDetailsInDietAsync(recipeId, dietId);
-
-            Assert.IsNotNull(result);
-            Assert.AreEqual(dietId.ToString(), result.DietId);
-            Assert.AreEqual(recipeId.ToString(), result.RecipeId);
-            Assert.AreEqual("Test Recipe", result.Name);
-            Assert.AreEqual(300, result.Calories);
-            Assert.AreEqual(20, result.Protein);
-            Assert.AreEqual(50, result.Carbohydrates);
-            Assert.AreEqual(10, result.Fats);
-            Assert.AreEqual("test-image-url", result.ImageUrl);
-            Assert.AreEqual("Test Ingredients", result.Ingredients);
-            Assert.AreEqual("Test Preparation", result.Preparation);
-        }
-
-        [Test]
         public async Task IsDefaultDiet_ShouldReturnNull_WhenDietDoesNotExist()
         {
             var dietId = Guid.NewGuid();
@@ -569,16 +660,6 @@ namespace FitnessApp.Tests
             _dietRecipeRepositoryMock.Verify(r => r.AddAsync(It.Is<DietRecipe>(dr => dr.DietId == dietId && dr.RecipeId == recipeId)), Times.Once);
         }
 
-        [Test]
-        public async Task AddRecipeToDietViewAsync_ShouldReturnNullIfRecipeNotFound()
-        {
-            var recipeId = Guid.NewGuid();
-            _recipeRepositoryMock.Setup(r => r.GetById(recipeId)).Returns((Recipe)null);
-
-            var result = await _dietService.AddRecipeToDietViewAsync(recipeId, true);
-
-            Assert.IsNull(result);
-        }
 
         [Test]
         public async Task AddToMyDietsAsync_ShouldAddUserDiet()
@@ -591,6 +672,23 @@ namespace FitnessApp.Tests
             await _dietService.AddToMyDietsAsync(dietId, userId);
 
             _userDietRepositoryMock.Verify(r => r.AddAsync(It.Is<UserDiet>(ud => ud.UserId == userId && ud.DietId == dietId)), Times.Once);
+        }
+
+
+        private bool CheckUserDietPredicate(
+            System.Linq.Expressions.Expression<Func<UserDiet, bool>> predicate,
+            string userId,
+            Guid dietGuid)
+        {
+            var compiledPredicate = predicate.Compile();
+
+            var testUserDiet = new UserDiet
+            {
+                UserId = userId,
+                DietId = dietGuid
+            };
+
+            return compiledPredicate(testUserDiet);
         }
     }
 }
