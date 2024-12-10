@@ -6,10 +6,13 @@
     <div class="d-flex justify-content-between align-items-center mb-4 gap-3">
         <h2 class="mb-0">Recipes List</h2>
         <div class="heading-buttons">
+            @if (Model.FirstOrDefault() == null || Model.FirstOrDefault().UserId == User.FindFirstValue(ClaimTypes.NameIdentifier))
+        {
 	        <a asp-controller="Recipe" asp-action="Index" class="card-btn create btn btn-primary d-flex align-items-center">
 		        <i class="fa-solid fa-plus me-1"></i> Add New Recipe
 	        </a>
-            <button onclick="window.history.back()" class="go-back btn btn-secondary">Go Back</button>
+        }
+        <a asp-controller="Diet" asp-action="MyDiets" class="btn btn-secondary">Go Back</a>
         </div>
     </div>
     <div class="row align-items-center">

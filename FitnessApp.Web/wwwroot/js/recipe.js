@@ -82,6 +82,10 @@
             modalElements.fats.textContent = recipe.Fats || 'N/A';
             modalElements.ingredients.textContent = recipe.Ingredients || 'No ingredients listed.';
             modalElements.preparation.textContent = recipe.Preparation || 'No preparation instructions available.';
+
+            modalElements.footer.style.display = loggedUserId === recipe.UserId
+                ? `flex`
+                : 'none';
         } catch (error) {
             console.error('Error fetching recipe details:', error);
             modalElements.title.textContent = 'Error Loading Recipe';

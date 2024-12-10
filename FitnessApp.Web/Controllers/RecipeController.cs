@@ -130,10 +130,10 @@ namespace FitnessApp.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete(DeleteRecipeView model)
+        public async Task<IActionResult> Delete(string recipeId)
         {
             Guid exerciseGuid = Guid.Empty;
-            bool isGuidValid = this.IsGuidValid(model.Id, ref exerciseGuid);
+            bool isGuidValid = this.IsGuidValid(recipeId, ref exerciseGuid);
 
             if (!isGuidValid)
             {
