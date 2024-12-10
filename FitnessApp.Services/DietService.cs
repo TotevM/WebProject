@@ -108,7 +108,7 @@ namespace FitnessApp.Services
             return diets;
         }
 
-        public async Task DeleteDefaultDiet(Guid dietId)
+        public async Task DeleteDiet(Guid dietId)
         {
             var diet = await dietRepository.FirstOrDefaultAsync(x => x.Id == dietId);
 
@@ -235,14 +235,26 @@ namespace FitnessApp.Services
         }
 
 
-        public async Task<List<SelectListItem>> GetDietsSelectListAsync()
+        public async Task<List<SelectListItem>> GetCustomDietsSelectListAsync(string userId)
         {
             return await dietRepository.GetAllAttached()
-                    .Select(d => new SelectListItem
-                    {
-                        Value = d.Id.ToString(),
-                        Text = d.Name
-                    }).ToListAsync();
+                .Where(d => d.UserID == userId)
+                .Select(d => new SelectListItem
+                {
+                    Value = d.Id.ToString(),
+                    Text = d.Name
+                }).ToListAsync();
+        }
+
+        public async Task<List<SelectListItem>> GetCustomAndDefaultDietsSelectListAsync(string userId)
+        {
+            return await dietRepository.GetAllAttached()
+                .Where(d => d.UserID == null || d.UserID == userId)
+                .Select(d => new SelectListItem
+                {
+                    Value = d.Id.ToString(),
+                    Text = d.Name
+                }).ToListAsync();
         }
 
         public async Task<bool?> IsDefaultDiet(Guid id)

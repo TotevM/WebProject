@@ -9,13 +9,12 @@ namespace FitnessApp.Services.ServiceContracts
     {
         Task<List<MyDietsIndexView>> MyDietsAsync(string userId);
         Task<List<DietDetailsView>?> DietDetailsAsync(Guid dietId);
-        //Task<RecipeDetailsInDiet> RecipeDetailsInDietAsync(Guid recipeId, Guid dietId);
         Task RemoveFromDietAsync(Guid dietId, Guid recipeId);
         Task AddRecipeToDietAsync(Guid recipeId, Guid dietId);
-        //Task<AddRecipeToDietViewModel?> AddRecipeToDietViewAsync(Guid recipeId, bool role);
         Task AddToMyDietsAsync(Guid dietId, string userId);
         Task<bool> RemoveFromMyDietsAsync(Guid dietId, string userId);
-        Task<List<SelectListItem>> GetDietsSelectListAsync();
+        Task<List<SelectListItem>> GetCustomDietsSelectListAsync(string userId);
+        Task<List<SelectListItem>> GetCustomAndDefaultDietsSelectListAsync(string userId);
         Task<bool> IsRecipeInDietAsync(Guid recipeId, Guid selectedDietId);
         Task UpdateDietMacronutrientsAsync(Guid dietId);
         Task<bool?> IsDefaultDiet(Guid id);
@@ -26,6 +25,6 @@ namespace FitnessApp.Services.ServiceContracts
         Task AddDietsRecipesToDiet(Diet diet, Guid recipeGuid);
         Task<bool> AddUserDietAsync(Guid dietGuid, string userId);
         Task<List<DietIndexView>> DefaultDietsAsync(string? userId);
-        Task DeleteDefaultDiet(Guid dietId);
+        Task DeleteDiet(Guid dietId);
     }
 }

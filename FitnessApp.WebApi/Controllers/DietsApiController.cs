@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using FitnessApp.Services.ServiceContracts;
 using FitnessApp.ViewModels;
 using FitnessApp.ViewModels.ApiDTOs;
+using static FitnessApp.Common.ApplicationConstants;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -16,13 +17,21 @@ public class DietsApiController : ControllerBase
         this.dietService = dietService;
     }
 
-    [HttpGet("GetDiets")]
+    [HttpGet("GetCustomDiets/{userId}")]
     [ProducesResponseType(typeof(List<SelectListItem>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> GetDiets()
+    public async Task<IActionResult> GetCustomDiets(string userId)
     {
-        var diets = await dietService.GetDietsSelectListAsync();
-        
+        var diets = await dietService.GetCustomDietsSelectListAsync(userId);
+        return Ok(diets);
+    }
+
+    [HttpGet("GetCustomAndDefaultDiets/{userId}")]
+    [ProducesResponseType(typeof(List<SelectListItem>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> GetDefaultDiets(string userId)
+    {
+        var diets = await dietService.GetCustomAndDefaultDietsSelectListAsync(userId);
         return Ok(diets);
     }
 

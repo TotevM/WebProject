@@ -22,6 +22,7 @@
     const modalRecipeId = document.getElementById('modalRecipeId');
 
     const loggedUserId = document.getElementById('loggedUserId')?.value;
+    const isTrainer = document.getElementById('userRole').value === 'true';
 
     // Utility function: Filter recipes
     const filterRecipes = () => {
@@ -35,7 +36,11 @@
     // Utility function: Fetch and populate diets dropdown
     const populateDietsDropdown = async () => {
         try {
-            const response = await fetch('https://localhost:7136/api/DietsApi/GetDiets');
+            const FETCH_URL = isTrainer
+                ? `https://localhost:7136/api/DietsApi/GetCustomAndDefaultDiets/${loggedUserId}`
+                : `https://localhost:7136/api/DietsApi/GetCustomDiets/${loggedUserId}`;
+
+            const response = await fetch(FETCH_URL);
             if (!response.ok) throw new Error('Failed to load diets');
             const diets = await response.json();
 
@@ -52,6 +57,7 @@
             alert('Failed to load diets. Please try again later.');
         }
     };
+
 
     // Event: Filter recipes
     if (searchInput && clearFiltersBtn) {

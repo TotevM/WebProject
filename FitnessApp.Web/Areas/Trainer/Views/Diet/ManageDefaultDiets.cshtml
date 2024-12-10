@@ -75,7 +75,7 @@
                             <a asp-area="Trainer" asp-controller="Diet" asp-action="DietDetails" asp-route-dietid="@diet.DietId" id="actionBtn" class="card-btn details">
                                 Details
                             </a>
-                            <form asp-area="Trainer" asp-controller="Diet" asp-action="DeleteDefaultDiet" method="post" class="card-btn-form">
+                            <form asp-area="Trainer" asp-controller="Diet" asp-action="DeleteDiet" method="post" class="card-btn-form">
                                 <input type="hidden" name="dietId" value="@diet.DietId" />
                                 @Html.AntiForgeryToken()
                                 <button id="actionBtn" type="submit" class="card-btn delete">

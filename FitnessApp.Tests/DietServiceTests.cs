@@ -96,7 +96,7 @@ namespace FitnessApp.Tests
         }
 
         [Test]
-        public async Task DeleteDefaultDiet_WithValidDietId_DeletesDiet()
+        public async Task DeleteDiet_WithValidDietId_DeletesDiet()
         {
             var testDietId = Guid.NewGuid();
 
@@ -115,7 +115,7 @@ namespace FitnessApp.Tests
                 .Setup(repo => repo.FirstOrDefaultAsync(It.IsAny<Expression<Func<Diet, bool>>>()))
                 .ReturnsAsync(mockDiet);
 
-            await _dietService.DeleteDefaultDiet(testDietId);
+            await _dietService.DeleteDiet(testDietId);
 
             _dietRepositoryMock.Verify(repo => repo.FirstOrDefaultAsync(It.Is<Expression<Func<Diet, bool>>>(expr =>
                 expr.Compile().Invoke(mockDiet))), Times.Once);
@@ -546,31 +546,6 @@ namespace FitnessApp.Tests
             var result = await _dietService.IsDefaultDiet(dietId);
 
             Assert.IsFalse(result);
-        }
-
-        [Test]
-        public async Task GetDietsSelectListAsync_ShouldReturnSelectListItems()
-        {
-            var diets = new List<Diet>
-            {
-                new Diet { Id = Guid.NewGuid(), Name = "Diet 1" },
-                new Diet { Id = Guid.NewGuid(), Name = "Diet 2" },
-                new Diet { Id = Guid.NewGuid(), Name = "Diet 3" }
-            };
-
-            _dietRepositoryMock.Setup(r => r.GetAllAttached())
-                .Returns(diets.AsQueryable().BuildMockDbSet().Object);
-
-            var result = await _dietService.GetDietsSelectListAsync();
-
-            Assert.IsNotNull(result);
-            Assert.AreEqual(diets.Count, result.Count);
-
-            for (int i = 0; i < diets.Count; i++)
-            {
-                Assert.AreEqual(diets[i].Id.ToString(), result[i].Value);
-                Assert.AreEqual(diets[i].Name, result[i].Text);
-            }
         }
 
         [Test]

@@ -96,7 +96,7 @@ namespace FitnessApp.Web.Areas.Trainer.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeleteDefaultDiet(string dietId)
+        public async Task<IActionResult> DeleteDiet(string dietId)
         {
             Guid dietGuid = Guid.Empty;
             bool isDietGuidValid = this.IsGuidValid(dietId, ref dietGuid);
@@ -112,7 +112,7 @@ namespace FitnessApp.Web.Areas.Trainer.Controllers
                 return this.RedirectToAction(nameof(ManageDefaultDiets));
             }
 
-            await dietService.DeleteDefaultDiet(dietGuid);
+            await dietService.DeleteDiet(dietGuid);
 
             return this.RedirectToAction(nameof(ManageDefaultDiets));
         }

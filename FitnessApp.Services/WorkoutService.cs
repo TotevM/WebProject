@@ -46,6 +46,7 @@ namespace FitnessApp.Services
         public async Task<List<ExerciseViewModel>> GetAllExercisesModelAsync()
         {
             var availableExercises = await exerciseRepository.GetAllAttached()
+                .Where(x=>!x.IsDeleted)
                 .Select(e => new ExerciseViewModel
                 {
                     Id = e.Id.ToString(),

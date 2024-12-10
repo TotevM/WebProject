@@ -4,6 +4,7 @@
 @model List<RecipesIndexView>
 @{
 	ViewData["Title"] = "Recipes List";
+	bool isInRole = User.IsInRole(TrainerRole);
 }
 
 <div class="recipe-page-container">
@@ -16,6 +17,7 @@
 	}
 
 	<input type="hidden" id="loggedUserId" value="@User.FindFirstValue(ClaimTypes.NameIdentifier)" />
+	<input type="hidden" id="userRole" value="@isInRole.ToString().ToLower()" />
 	<!-- Header Section -->
 	<div class="page-header">
 		<h1>Available Recipes</h1>
@@ -121,8 +123,6 @@
 			</div>
 		}
 	</div>
-
-
 
 	<div class="modal fade" id="addToDietModal" tabindex="-1" aria-labelledby="addToDietModalLabel" aria-hidden="true">
 		<div class="modal-dialog">

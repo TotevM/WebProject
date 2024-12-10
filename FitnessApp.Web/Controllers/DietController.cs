@@ -151,7 +151,20 @@ namespace FitnessApp.Web.Controllers
                 return RedirectToAction("MyDiets", "Diet");
             }
 
+            var isDefault = await dietService.IsDefaultDiet(dietGuid);
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (isDefault==false)
+            {
+                bool successful = await dietService.RemoveFromMyDietsAsync(dietGuid, userId!);
+                if (!successful)
+                {
+                    return NotFound();
+                }
+
+                await dietService.DeleteDiet(dietGuid);
+                return RedirectToAction("MyDiets", "Diet");
+            }
+
             bool succeed = await dietService.RemoveFromMyDietsAsync(dietGuid, userId!);
 
             if (!succeed)
