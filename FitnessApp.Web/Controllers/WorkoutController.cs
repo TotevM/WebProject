@@ -104,7 +104,6 @@ namespace FitnessApp.Web.Controllers
             Guid exerciseGuid = Guid.Empty;
             bool isExerciseGuidValid = this.IsGuidValid(model.SelectedExerciseId, ref exerciseGuid);
 
-            //TODO: Change redirection
             if (!isWorkoutGuidValid || !isExerciseGuidValid)
             {
                 return RedirectToAction(nameof(Index));
@@ -129,7 +128,6 @@ namespace FitnessApp.Web.Controllers
             {
                 TempData["ErrorMessage"] = "This exercise is already in this workout.";
                 return RedirectToAction(nameof(Index));
-                //TODO: change redirection
             }
 
             var workout = await workoutService.GetWorkoutAsync(workoutGuid);

@@ -42,7 +42,6 @@ namespace FitnessApp.Web.Controllers
                 return RedirectToAction("Index");
             }
 
-            // TODO: make messages for wrong inputs
             return View("Index");
         }
     }

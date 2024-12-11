@@ -34,44 +34,6 @@ namespace FitnessApp.Services
             await dietRecipeRepository.AddAsync(dietRecipe);
         }
 
-        //public async Task<AddRecipeToDietViewModel?> AddRecipeToDietViewAsync(Guid recipeId, bool role)
-        //{
-        //    var recipe = recipeRepository.GetById(recipeId);
-
-        //    if (recipe == null)
-        //    {
-        //        return null;
-        //    }
-        //    List<SelectListItem> diets = null!;
-        //    if (role)
-        //    {
-        //        diets = await dietRepository.GetAllAttached()
-        //                  .Where(x => x.UserID == null)
-        //                 .Select(d => new SelectListItem
-        //                 {
-        //                     Value = d.Id.ToString(),
-        //                     Text = d.Name
-        //                 })
-        //                 .ToListAsync();
-        //    }
-        //    else
-        //    {
-        //        diets = await dietRepository.GetAllAttached()
-        //                .Where(x => x.UserID != null)
-        //               .Select(d => new SelectListItem
-        //               {
-        //                   Value = d.Id.ToString(),
-        //                   Text = d.Name
-        //               })
-        //               .ToListAsync();
-        //    }
-
-        //    AddRecipeToDietViewModel viewModel = new AddRecipeToDietViewModel
-        //    {RecipeId = recipeId.ToString(), Diets = diets};
-
-        //    return viewModel;
-        //}//completed
-
         public async Task AddToMyDietsAsync(Guid dietId, string userId)
         {
             var model = new UserDiet
@@ -80,7 +42,7 @@ namespace FitnessApp.Services
                 DietId = dietId,
             };
             await userDietRepository.AddAsync(model);
-        }//completed
+        }
 
 
         public async Task<List<DietIndexView>> DefaultDietsAsync(string userId = null)
@@ -115,24 +77,6 @@ namespace FitnessApp.Services
             await dietRepository.DeleteAsync(diet);
         }
 
-        //public async Task<List<DietIndexView>> DefaultDietsAsync(string userId)
-        //{
-        //    var diets = await dietRepository.GetAllAttached()
-        //        .Where(d => !d.UserDiets.Any(ud => ud.UserId == userId) && d.UserID == null)
-        //        .Select(diet => new DietIndexView
-        //        {
-        //            DietId = diet.Id.ToString(),
-        //            Name = diet.Name,
-        //            ImageUrl = diet.ImageUrl,
-        //            Calories = diet.Calories,
-        //            Protein = diet.Proteins,
-        //            Carbohydrates = diet.Carbohydrates,
-        //            Fats = diet.Fats
-        //        }).ToListAsync();
-
-        //    return diets;
-        //}//completed
-
         public async Task<List<DietDetailsView>?> DietDetailsAsync(Guid dietId)
         {
             var dietExists = await dietRepository.GetByIdAsync(dietId);
@@ -159,7 +103,7 @@ namespace FitnessApp.Services
             ;
 
             return recipes;
-        }//completed
+        }
 
         public async Task<bool> DietExists(Guid dietId)
         {
@@ -303,34 +247,7 @@ namespace FitnessApp.Services
                 }).ToListAsync();
 
             return diets;
-        }//completed
-
-        //public async Task<RecipeDetailsInDiet> RecipeDetailsInDietAsync(Guid recipeId, Guid dietId)
-        //{
-        //    var recipe = await recipeRepository.GetByIdAsync(recipeId);
-        //    var diet = await dietRepository.GetByIdAsync(dietId);
-
-        //    if (recipe == null || diet == null)
-        //    {
-        //        return null!;
-        //    }
-
-        //    RecipeDetailsInDiet viewModel = new RecipeDetailsInDiet
-        //    {
-        //        DietId = dietId.ToString(),
-        //        RecipeId = recipeId.ToString(),
-        //        Name = recipe.Name,
-        //        Calories = recipe.Calories,
-        //        Protein = recipe.Proteins,
-        //        Carbohydrates = recipe.Carbohydrates,
-        //        Fats = recipe.Fats,
-        //        ImageUrl = recipe.ImageUrl!,
-        //        Ingredients = recipe.Ingredients,
-        //        Preparation = recipe.Preparation
-        //    };
-
-        //    return viewModel;
-        //}//completed
+        }
 
         public async Task<bool> RecipeExists(Guid recipeId)
         {
@@ -364,7 +281,7 @@ namespace FitnessApp.Services
                 }
                 await dietRepository.UpdateAsync(diet!);
             }
-        }//completed
+        }
 
         public async Task<bool> RemoveFromMyDietsAsync(Guid dietId, string userId)
         {
@@ -377,7 +294,7 @@ namespace FitnessApp.Services
 
             await userDietRepository.DeleteAsync(record);
             return true;
-        }//completed
+        }
 
         public async Task UpdateDietMacronutrientsAsync(Guid dietId)
         {
