@@ -56,3 +56,6 @@ Welcome to **FitJourney**, your ultimate fitness companion! Whether you're looki
 - **Email:** admin@example.com  
 - **Password:** Admin@123
 
+## HOW TO RUN:
+
+### *To explore the project's capabilities, simply update the connection string and ensure both the web app and the API are running simultaneously. Enjoy!*
